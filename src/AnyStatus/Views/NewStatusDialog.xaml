@@ -1,0 +1,51 @@
+﻿<Window x:Class="AnyStatus.Views.NewStatusDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:local="clr-namespace:AnyStatus.Views"
+             xmlns:vm="clr-namespace:AnyStatus.ViewModels"
+             mc:Ignorable="d" 
+             Height="400"
+             Width="500"
+             Title="Add"
+             d:DataContext="{d:DesignInstance Type=vm:NewStatusViewModel}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="100" Width="Auto"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <ListBox Grid.Column="0" Grid.Row="0" ItemsSource="{Binding Templates}" SelectedItem="{Binding SelectedTemplate}" Margin="3">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Height="40" Text="{Binding Name}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <xctk:PropertyGrid Grid.Column="1"
+                           Grid.Row="0"
+                           Margin="3"
+                           ShowSearchBox="False" 
+                           ShowSortOptions="False" 
+                           ShowSummary="True"
+                           ShowTitle="True"
+                           Background="Transparent"
+                           SelectedObject="{Binding SelectedTemplate.Item}"
+                           SelectedObjectTypeName="{Binding SelectedTemplate.Name}">
+        </xctk:PropertyGrid>
+
+        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Command="{Binding AddCommand}" Width="70" Margin="3">Add</Button>
+            <Button Command="{Binding CancelCommand}" Width="70" Margin="3">Cancel</Button>
+        </StackPanel>
+
+    </Grid>
+</Window>
