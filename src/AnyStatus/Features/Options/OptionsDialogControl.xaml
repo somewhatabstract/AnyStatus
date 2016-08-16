@@ -14,7 +14,9 @@
 
     <ScrollViewer>
         <Grid>
+            <Button Command="{Binding ResetCommand}" Margin="3">Reset Settings</Button>
 
+            <!--
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -84,7 +86,7 @@
 
                 </Grid>
 
-            </GroupBox>
+            </GroupBox>-->
 
         </Grid>
 

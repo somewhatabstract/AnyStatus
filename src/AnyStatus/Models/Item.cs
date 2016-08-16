@@ -2,41 +2,61 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Media;
 using System.Xml.Serialization;
 
 namespace AnyStatus.Models
 {
     [Serializable]
-    [XmlInclude(typeof(Job))]
     [XmlInclude(typeof(Folder))]
+    [XmlInclude(typeof(JenkinsJob))]
+    [XmlInclude(typeof(HttpStatus))]
     public class Item : INotifyPropertyChanged
     {
+        private string _name;
         private bool _isExpanded;
+        private bool _isEnabled;
+        private Brush _brush;
 
         public Item()
         {
+            Brush = Brushes.Silver;
             Items = new ObservableCollection<Item>();
         }
 
-        public Item(Item parent) : this()
-        {
-            Parent = parent;
-        }
+        [Browsable(false)]
+        public Guid Id { get; set; }
 
-        public string Name { get; set; }
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value; OnPropertyChanged(); }
+        }
 
         [Browsable(false)]
         public bool IsExpanded
         {
             get { return _isExpanded; }
-            set {
-                _isExpanded = value;
-                OnPropertyChanged();
-            }
+            set { _isExpanded = value; OnPropertyChanged(); }
+        }
+
+        [Browsable(false)]
+        public bool IsEnabled
+        {
+            get { return _isEnabled; }
+            set { _isEnabled = value; OnPropertyChanged(); }
         }
 
         [Browsable(false)]
         public bool IsSelected { get; set; }
+
+        [XmlIgnore]
+        [Browsable(false)]
+        public Brush Brush
+        {
+            get { return _brush; }
+            set { _brush = value; OnPropertyChanged(); }
+        }
 
         [XmlIgnore]
         [Browsable(false)]
@@ -45,10 +65,15 @@ namespace AnyStatus.Models
         [Browsable(false)]
         public ObservableCollection<Item> Items { get; set; }
 
+        #region INotifyPropertyChanged
+
         public event PropertyChangedEventHandler PropertyChanged;
+
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        #endregion
     }
 }

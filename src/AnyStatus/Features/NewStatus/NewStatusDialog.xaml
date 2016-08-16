@@ -4,12 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:vsp="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.14.0"
              xmlns:local="clr-namespace:AnyStatus.Views"
              xmlns:vm="clr-namespace:AnyStatus.ViewModels"
              mc:Ignorable="d" 
              Height="400"
              Width="500"
-             Title="Add"
+             Background="{DynamicResource {x:Static vsp:EnvironmentColors.ToolWindowBackgroundBrushKey}}"
+             Foreground="{DynamicResource {x:Static vsp:EnvironmentColors.ToolWindowTextBrushKey}}"
+             Title="New Status"
              d:DataContext="{d:DesignInstance Type=vm:NewStatusViewModel}">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -22,10 +25,15 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <ListBox Grid.Column="0" Grid.Row="0" ItemsSource="{Binding Templates}" SelectedItem="{Binding SelectedTemplate}" Margin="3">
+        <ListBox Grid.Column="0" 
+                 Grid.Row="0" 
+                 ItemsSource="{Binding Templates}" 
+                 SelectedItem="{Binding SelectedTemplate}" 
+                 BorderBrush="{x:Null}"
+                 Margin="3">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Height="40" Text="{Binding Name}"/>
+                    <TextBlock Text="{Binding Name}" Height="40" Padding="12"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
@@ -37,7 +45,9 @@
                            ShowSortOptions="False" 
                            ShowSummary="True"
                            ShowTitle="True"
-                           Background="Transparent"
+                           Background="{DynamicResource {x:Static vsp:EnvironmentColors.ToolWindowBackgroundBrushKey}}"
+                           Foreground="{DynamicResource {x:Static vsp:EnvironmentColors.ToolWindowTextBrushKey}}"
+                           BorderBrush="{x:Null}"
                            SelectedObject="{Binding SelectedTemplate.Item}"
                            SelectedObjectTypeName="{Binding SelectedTemplate.Name}">
         </xctk:PropertyGrid>

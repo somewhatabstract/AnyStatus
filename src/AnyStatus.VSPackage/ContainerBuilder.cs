@@ -1,10 +1,11 @@
 ﻿using AnyStatus.Infrastructure;
 using AnyStatus.Interfaces;
+using AnyStatus.Models;
 using AnyStatus.ViewModels;
 using AnyStatus.Views;
 using Microsoft.VisualStudio.Shell;
-using TinyIoC;
 using System;
+using TinyIoC;
 
 namespace AnyStatus.VSPackage
 {
@@ -28,6 +29,11 @@ namespace AnyStatus.VSPackage
 
             container.Register<NewStatusDialog>().AsMultiInstance();
             container.Register<NewStatusViewModel>().AsMultiInstance();
+
+            //handlers
+            container.Register<IHandler<JenkinsJob>, JenkinsJobHandler>().AsMultiInstance();
+            container.Register<IHandler<HttpStatus>, HttpStatusHandler>().AsMultiInstance();
+
 
             return container;
         }

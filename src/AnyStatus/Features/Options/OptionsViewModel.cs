@@ -31,35 +31,35 @@ namespace AnyStatus.ViewModels
 
         private void Initialize()
         {
-            AddServerCommand = new RelayCommand(p =>
-            {
-                var server = new Server
-                {
-                    Name = "New Server",
-                    Url = "http://"
-                };
+            //AddServerCommand = new RelayCommand(p =>
+            //{
+            //    var server = new Server
+            //    {
+            //        Name = "New Server",
+            //        Url = "http://"
+            //    };
 
-                _userSettings.Servers.Add(server);
+            //    _userSettings.Servers.Add(server);
 
-                _userSettings.Save();
-            });
+            //    _userSettings.Save();
+            //});
 
-            RemoveServerCommand = new RelayCommand(p =>
-            {
-                var result = MessageBox.Show("Are you sure?", "Reset Settings", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
+            //RemoveServerCommand = new RelayCommand(p =>
+            //{
+            //    var result = MessageBox.Show("Are you sure?", "Reset Settings", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
 
-                if (result != MessageBoxResult.Yes) return;
+            //    if (result != MessageBoxResult.Yes) return;
 
-                var server = p as Server;
+            //    var server = p as Server;
 
-                if (server == null) return;
+            //    if (server == null) return;
 
-                _userSettings.Servers.Remove(server);
+            //    _userSettings.Servers.Remove(server);
 
-                _userSettings.Save();
-            });
+            //    _userSettings.Save();
+            //});
 
-            ApplyCommand = new RelayCommand(p => _userSettings.Save());
+            //ApplyCommand = new RelayCommand(p => _userSettings.Save());
 
             ResetCommand = new RelayCommand(p =>
             {
@@ -71,30 +71,30 @@ namespace AnyStatus.ViewModels
             });
         }
 
-        public ObservableCollection<Server> Servers
-        {
-            get
-            {
-                return _userSettings.Servers;
-            }
-        }
+        //public ObservableCollection<Server> Servers
+        //{
+        //    get
+        //    {
+        //        return _userSettings.Servers;
+        //    }
+        //}
 
-        public Server SelectedServer
-        {
-            get
-            {
-                return _selectedServer;
-            }
-            set
-            {
-                _selectedServer = value;
-                OnPropertyChanged();
-            }
-        }
+        //public Server SelectedServer
+        //{
+        //    get
+        //    {
+        //        return _selectedServer;
+        //    }
+        //    set
+        //    {
+        //        _selectedServer = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
 
-        public ICommand ApplyCommand { get; set; }
-        public ICommand AddServerCommand { get; set; }
-        public ICommand RemoveServerCommand { get; set; }
+        //public ICommand ApplyCommand { get; set; }
+        //public ICommand AddServerCommand { get; set; }
+        //public ICommand RemoveServerCommand { get; set; }
         public ICommand ResetCommand { get; set; }
 
         #region INotifyPropertyChanged

@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -131,8 +132,10 @@
     <Compile Include="Interfaces\ILogger.cs" />
     <Compile Include="Interfaces\IUserSettings.cs" />
     <Compile Include="Models\Folder.cs" />
+    <Compile Include="Interfaces\IHandler.cs" />
+    <Compile Include="Models\HttpStatus.cs" />
     <Compile Include="Models\Item.cs" />
-    <Compile Include="Models\Job.cs" />
+    <Compile Include="Models\JenkinsJob.cs" />
     <Compile Include="Models\Server.cs" />
     <Compile Include="Models\Template.cs" />
     <Compile Include="Models\View.cs" />
@@ -148,32 +151,32 @@
     <Compile Include="Infrastructure\TinyIoc.cs" />
     <Compile Include="Infrastructure\UserSettings.cs" />
     <Compile Include="Interfaces\IViewLocator.cs" />
-    <Compile Include="ViewModels\NewStatusViewModel.cs" />
-    <Compile Include="ViewModels\OptionsViewModel.cs" />
-    <Compile Include="ViewModels\ToolWindowViewModel.cs" />
-    <Compile Include="Views\NewStatusDialog.xaml.cs">
+    <Compile Include="Features\NewStatus\NewStatusViewModel.cs" />
+    <Compile Include="Features\Options\OptionsViewModel.cs" />
+    <Compile Include="Features\ToolWindow\ToolWindowViewModel.cs" />
+    <Compile Include="Features\NewStatus\NewStatusDialog.xaml.cs">
       <DependentUpon>NewStatusDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\OptionsDialogControl.xaml.cs">
+    <Compile Include="Features\Options\OptionsDialogControl.xaml.cs">
       <DependentUpon>OptionsDialogControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Options.cs">
+    <Compile Include="Features\Options\Options.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Views\ToolWindowControl.xaml.cs">
+    <Compile Include="Features\ToolWindow\ToolWindowControl.xaml.cs">
       <DependentUpon>ToolWindowControl.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\NewStatusDialog.xaml">
+    <Page Include="Features\NewStatus\NewStatusDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\OptionsDialogControl.xaml">
+    <Page Include="Features\Options\OptionsDialogControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ToolWindowControl.xaml">
+    <Page Include="Features\ToolWindow\ToolWindowControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -23,6 +23,7 @@ namespace AnyStatus
                 MessageBox.Show(ex.ToString());
             }
         }
+
         public ObservableCollection<Item> Items
         {
             get

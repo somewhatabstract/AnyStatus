@@ -11,8 +11,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="300"
              d:DesignWidth="300"
-             Background="{DynamicResource {x:Static vsp:EnvironmentColors.ToolWindowBackgroundBrushKey}}"
-             Foreground="{DynamicResource {x:Static vsp:EnvironmentColors.ToolWindowTextBrushKey}}"
              d:DataContext="{d:DesignInstance Type=vm:ToolWindowViewModel}">
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -48,15 +46,15 @@
                         </StackPanel>
                     </HierarchicalDataTemplate>
 
-                    <!--Jenkins Job-->
-                    <DataTemplate DataType="{x:Type models:Job}">
-                        <StackPanel Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
+                    <!--Item-->
+                    <DataTemplate DataType="{x:Type models:Item}">
+                        <StackPanel Orientation="Horizontal" Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
                             <StackPanel.ContextMenu>
                                 <ContextMenu>
-                                    <MenuItem Header="Build" 
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.BuildCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                                    <MenuItem Header="Pause" 
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.PauseCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}"/>
-                                    <MenuItem Header="Remove Status" 
+                                    <MenuItem Header="Remove" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.RemoveJobCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}"/>
                                     <MenuItem Header="Properties" 
@@ -64,7 +62,8 @@
                                           CommandParameter="{Binding}"/>
                                 </ContextMenu>
                             </StackPanel.ContextMenu>
-                            <TextBlock Text="{Binding Name}" />
+                            <Rectangle Width="7" Fill="{Binding Brush}" Margin="0,0,3,0" />
+                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
                         </StackPanel>
                     </DataTemplate>
 

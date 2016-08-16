@@ -1,5 +1,4 @@
-﻿using AnyStatus.Interfaces;
-using AnyStatus.Models;
+﻿using AnyStatus.Models;
 using System.Collections.ObjectModel;
 
 namespace AnyStatus.Properties
