@@ -13,6 +13,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Runtime.InteropServices;
 using TinyIoC;
+using AnyStatus.Infrastructure;
 
 namespace AnyStatus.VSPackage
 {
@@ -46,16 +47,16 @@ namespace AnyStatus.VSPackage
 
             TinyIoCContainer container = new ContainerBuilder().Build(this);
 
-            InitializeJobManager();
-
             container.Resolve<ToolWindowCommand>().Initialize();
+
+            JobManager.Initialize(container.Resolve<JobRegistry>());
 
             container.Resolve<ILogger>().Log("AnyStatus started.");
         }
 
         private static void InitializeJobManager()
         {
-            JobManager.Initialize(new Registry());
+            
 
             //var registry = new Registry();
             //registry.Schedule(() =>

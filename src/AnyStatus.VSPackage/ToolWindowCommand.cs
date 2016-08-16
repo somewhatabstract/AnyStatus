@@ -1,15 +1,8 @@
-﻿//------------------------------------------------------------------------------
-// <copyright file="ToolWindowCommand.cs" company="Company">
-//     Copyright (c) Company.  All rights reserved.
-// </copyright>
-//------------------------------------------------------------------------------
-
-using AnyStatus.Views;
+﻿using AnyStatus.Views;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.ComponentModel.Design;
-using System.Windows;
 
 namespace AnyStatus.VSPackage
 {
@@ -24,9 +17,7 @@ namespace AnyStatus.VSPackage
         public ToolWindowCommand(Package package)
         {
             if (package == null)
-            {
                 throw new ArgumentNullException(nameof(package));
-            }
 
             _package = package;
             _serviceProvider = package;
@@ -49,9 +40,9 @@ namespace AnyStatus.VSPackage
                 commandService.AddCommand(optionsToolbarMenuItem);
 
                 //refresh toolbar command
-                var refreshToolbarCommandId = new CommandID(CommandSet, 0x1003);
-                var refreshToolbarMenuItem = new MenuCommand(new EventHandler(RefreshButtonHandler), refreshToolbarCommandId);
-                commandService.AddCommand(refreshToolbarMenuItem);
+                //var refreshToolbarCommandId = new CommandID(CommandSet, 0x1003);
+                //var refreshToolbarMenuItem = new MenuCommand(new EventHandler(RefreshButtonHandler), refreshToolbarCommandId);
+                //commandService.AddCommand(refreshToolbarMenuItem);
             }
         }
 
@@ -74,9 +65,9 @@ namespace AnyStatus.VSPackage
             _package.ShowOptionPage(typeof(Options));
         }
 
-        private void RefreshButtonHandler(object sender, EventArgs e)
-        {
-            MessageBox.Show("Not Implemented");
-        }
+        //private void RefreshButtonHandler(object sender, EventArgs e)
+        //{
+        //    MessageBox.Show("Not Implemented");
+        //}
     }
 }

@@ -3,6 +3,7 @@ using AnyStatus.Interfaces;
 using AnyStatus.Models;
 using AnyStatus.ViewModels;
 using AnyStatus.Views;
+using FluentScheduler;
 using Microsoft.VisualStudio.Shell;
 using System;
 using TinyIoC;
@@ -20,9 +21,10 @@ namespace AnyStatus.VSPackage
             container.Register<ToolWindowCommand>().AsSingleton();
             container.Register<IUserSettings, UserSettings>().AsSingleton();
             container.Register<ILogger, Logger>().AsSingleton();
+            container.Register<Registry, JobRegistry>().AsSingleton();
 
             //views
-            container.Register<IViewLocator, ViewLocator>();
+            container.Register<IViewLocator, ViewLocator>().AsSingleton();
 
             container.Register<ToolWindowControl>().AsSingleton();
             container.Register<ToolWindowViewModel>().AsSingleton();
