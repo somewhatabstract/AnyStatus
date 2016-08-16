@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.ComponentModel.Design;
+using System.Diagnostics;
 
 namespace AnyStatus.VSPackage
 {
@@ -49,7 +50,7 @@ namespace AnyStatus.VSPackage
         private void ShowToolWindow(object sender, EventArgs e)
         {
             ToolWindowPane window = _package.FindToolWindow(typeof(ToolWindowHost), 0, true);
-
+            
             if ((null == window) || (null == window.Frame))
             {
                 throw new NotSupportedException("Cannot create tool window");
@@ -62,7 +63,14 @@ namespace AnyStatus.VSPackage
 
         private void OptionsButtonHandler(object sender, EventArgs e)
         {
-            _package.ShowOptionPage(typeof(Options));
+            try
+            {
+                _package.ShowOptionPage(typeof(Options));
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
         }
 
         //private void RefreshButtonHandler(object sender, EventArgs e)

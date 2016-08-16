@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using AnyStatus.Interfaces;
+﻿using AnyStatus.Interfaces;
 using AnyStatus.Models;
 using FluentScheduler;
-using System.Diagnostics;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace AnyStatus.Infrastructure
 {
-    public class JobRegistry : Registry
+    public class ItemRegistry : Registry
     {
-        public JobRegistry(IUserSettings userSettings)
+        public ItemRegistry(IUserSettings userSettings)
         {
             try
             {
@@ -40,6 +39,7 @@ namespace AnyStatus.Infrastructure
                 Action action = () =>
                 {
                     Debug.WriteLine(DateTime.Now + " handling " + item.Name);
+                    //Mediator
                     var a = typeof(IHandler<>);
                     var b = a.MakeGenericType(item.GetType());
                     var handler = TinyIoC.TinyIoCContainer.Current.Resolve(b);
@@ -49,9 +49,8 @@ namespace AnyStatus.Infrastructure
                 Schedule(action)
                     .NonReentrant()
                      .WithName(item.Id.ToString())
-                     .ToRunEvery(5).Seconds();
-
-
+                     .ToRunNow()
+                     .AndEvery(5).Seconds();
             }
         }
     }

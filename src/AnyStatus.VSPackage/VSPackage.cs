@@ -1,19 +1,14 @@
-﻿//------------------------------------------------------------------------------
-// <copyright file="ToolWindowPackage.cs" company="Company">
-//     Copyright (c) Company.  All rights reserved.
-// </copyright>
-//------------------------------------------------------------------------------
-
-using FluentScheduler;
+﻿using AnyStatus.Infrastructure;
 using AnyStatus.Interfaces;
 using AnyStatus.Views;
+using FluentScheduler;
 using Microsoft.VisualStudio.Shell;
 using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Runtime.InteropServices;
 using TinyIoC;
-using AnyStatus.Infrastructure;
 
 namespace AnyStatus.VSPackage
 {
@@ -43,31 +38,22 @@ namespace AnyStatus.VSPackage
         {
             base.Initialize();
 
-            ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true; //ignore ssl errors
+            try
+            {
+                ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true; //ignore ssl errors
 
-            TinyIoCContainer container = new ContainerBuilder().Build(this);
+                TinyIoCContainer container = new ContainerBuilder().Build(this);
 
-            container.Resolve<ToolWindowCommand>().Initialize();
+                container.Resolve<ToolWindowCommand>().Initialize();
 
-            JobManager.Initialize(container.Resolve<JobRegistry>());
+                JobManager.Initialize(container.Resolve<ItemRegistry>());
 
-            container.Resolve<ILogger>().Log("AnyStatus started.");
-        }
-
-        private static void InitializeJobManager()
-        {
-            
-
-            //var registry = new Registry();
-            //registry.Schedule(() =>
-            //{
-            //    if (outputWindowPane != null)
-            //    {
-            //        outputWindowPane.OutputString($"Thread: {System.Threading.Thread.CurrentThread.ManagedThreadId}\r\n");
-            //    }
-            //}).ToRunNow().AndEvery(2).Seconds();
-            //JobManager.Initialize(registry);
-            ////////////////////////////////
+                container.Resolve<ILogger>().Log("AnyStatus started.");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
         }
     }
 }

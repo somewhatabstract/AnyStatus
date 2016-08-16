@@ -21,7 +21,7 @@ namespace AnyStatus.VSPackage
             container.Register<ToolWindowCommand>().AsSingleton();
             container.Register<IUserSettings, UserSettings>().AsSingleton();
             container.Register<ILogger, Logger>().AsSingleton();
-            container.Register<Registry, JobRegistry>().AsSingleton();
+            container.Register<Registry, ItemRegistry>().AsSingleton();
 
             //views
             container.Register<IViewLocator, ViewLocator>().AsSingleton();
