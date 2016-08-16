@@ -23,7 +23,7 @@
                 
                 <TreeView.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="New Status" Command="{Binding Path=PlacementTarget.Tag.DataContext.AddJobCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"/>
+                        <MenuItem Header="New Item" Command="{Binding Path=PlacementTarget.Tag.DataContext.AddItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"/>
                         <MenuItem Header="New Folder" Command="{Binding Path=PlacementTarget.Tag.DataContext.AddFolderCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"/>
                     </ContextMenu>
                 </TreeView.ContextMenu>
