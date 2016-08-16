@@ -25,7 +25,7 @@
                 </TreeView.ContextMenu>
 
                 <TreeView.Resources>
-
+                    
                     <!--Folder-->
                     <HierarchicalDataTemplate DataType="{x:Type models:Folder}" ItemsSource="{Binding Items}">
                         <StackPanel Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
@@ -51,7 +51,7 @@
                         <StackPanel Orientation="Horizontal" Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
                             <StackPanel.ContextMenu>
                                 <ContextMenu>
-                                    <MenuItem Header="Pause" 
+                                    <MenuItem Header="Disable" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.PauseCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}"/>
                                     <MenuItem Header="Remove" 
