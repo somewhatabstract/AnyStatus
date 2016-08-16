@@ -137,7 +137,7 @@
     <Compile Include="Interfaces\IHandler.cs" />
     <Compile Include="Models\HttpStatus.cs" />
     <Compile Include="Models\Item.cs" />
-    <Compile Include="Models\JenkinsJob.cs" />
+    <Compile Include="Models\JenkinsBuild.cs" />
     <Compile Include="Models\Server.cs" />
     <Compile Include="Models\Template.cs" />
     <Compile Include="Models\View.cs" />

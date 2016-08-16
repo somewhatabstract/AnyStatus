@@ -9,7 +9,7 @@ namespace AnyStatus.Models
 {
     [Serializable]
     [XmlInclude(typeof(Folder))]
-    [XmlInclude(typeof(JenkinsJob))]
+    [XmlInclude(typeof(JenkinsBuild))]
     [XmlInclude(typeof(HttpStatus))]
     public class Item : INotifyPropertyChanged
     {

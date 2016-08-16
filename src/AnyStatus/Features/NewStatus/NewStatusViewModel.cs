@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
@@ -33,12 +34,12 @@ namespace AnyStatus.ViewModels
 
         private void Initialize()
         {
-            //todo: move to container
+            //todo: move to container/bootstrapper
             Templates = new List<Template> {
                 new Template
                 {
-                    Name = "Jenkins Job",
-                    Item = new JenkinsJob()
+                    Name = "Jenkins Build",
+                    Item = new JenkinsBuild()
                 },
                 new Template
                 {
@@ -46,6 +47,8 @@ namespace AnyStatus.ViewModels
                     Item = new HttpStatus()
                 }
             };
+
+            SelectedTemplate = Templates.FirstOrDefault();
 
             AddCommand = new RelayCommand(p =>
             {

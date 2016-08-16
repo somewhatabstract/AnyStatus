@@ -13,9 +13,10 @@ namespace AnyStatus.Infrastructure
         {
             try
             {
-                var items = userSettings.Items;
-
-                ScheduleJobs(items);
+                if (userSettings.Items != null)
+                {
+                    ScheduleJobs(userSettings.Items);
+                }
             }
             catch (Exception ex)
             {
@@ -39,11 +40,19 @@ namespace AnyStatus.Infrastructure
                 Action action = () =>
                 {
                     Debug.WriteLine(DateTime.Now + " handling " + item.Name);
-                    //Mediator
-                    var a = typeof(IHandler<>);
-                    var b = a.MakeGenericType(item.GetType());
-                    var handler = TinyIoC.TinyIoCContainer.Current.Resolve(b);
-                    b.GetMethod("Handle").Invoke(handler, new[] { item });
+
+                    try
+                    {
+                        //Mediator
+                        var a = typeof(IHandler<>);
+                        var b = a.MakeGenericType(item.GetType());
+                        var handler = TinyIoC.TinyIoCContainer.Current.Resolve(b);
+                        b.GetMethod("Handle").Invoke(handler, new[] { item });
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex);
+                    }
                 };
 
                 Schedule(action)
