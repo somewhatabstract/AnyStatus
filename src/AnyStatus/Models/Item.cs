@@ -17,6 +17,7 @@ namespace AnyStatus.Models
         private bool _isExpanded;
         private bool _isEnabled;
         private Brush _brush;
+        private bool _isEditing;
 
         public Item()
         {
@@ -64,6 +65,21 @@ namespace AnyStatus.Models
 
         [Browsable(false)]
         public ObservableCollection<Item> Items { get; set; }
+
+        [XmlIgnore]
+        [Browsable(false)]
+        public bool IsEditing
+        {
+            get
+            {
+                return _isEditing;
+            }
+
+            set
+            {
+                _isEditing = value; OnPropertyChanged();
+            }
+        }
 
         #region INotifyPropertyChanged
 

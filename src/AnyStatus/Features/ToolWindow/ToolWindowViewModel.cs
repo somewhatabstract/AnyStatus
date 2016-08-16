@@ -17,14 +17,10 @@ namespace AnyStatus.ViewModels
         public ToolWindowViewModel(IUserSettings userSettings, IViewLocator viewLocator)
         {
             if (userSettings == null)
-            {
                 throw new ArgumentNullException(nameof(userSettings));
-            }
 
             if (viewLocator == null)
-            {
                 throw new ArgumentNullException(nameof(viewLocator));
-            }
 
             _userSettings = userSettings;
             _viewLocator = viewLocator;
@@ -46,7 +42,7 @@ namespace AnyStatus.ViewModels
             {
                 var selectedItem = p as Item;
 
-                var item = new Folder()
+                var item = new Folder
                 {
                     Name = "New Folder"
                 };
@@ -65,7 +61,7 @@ namespace AnyStatus.ViewModels
                 _userSettings.Save();
             });
 
-            RemoveFolderCommand = new RelayCommand(p =>
+            RemoveCommand = new RelayCommand(p =>
             {
                 var result = MessageBox.Show("Are you sure?", "Remove", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
 
@@ -90,7 +86,7 @@ namespace AnyStatus.ViewModels
                 _userSettings.Save();
             });
 
-            AddJobCommand = new RelayCommand(p =>
+            AddItemCommand = new RelayCommand(p =>
             {
                 var selectedItem = p as Item;
 
@@ -99,28 +95,32 @@ namespace AnyStatus.ViewModels
                 dlg.ShowDialog();
             });
 
-            RemoveJobCommand = RemoveFolderCommand;
-
-            BuildCommand = new RelayCommand(p =>
+            RenameCommand = new RelayCommand(p =>
             {
-                var selectedItem = p as Item;
+                var item = p as Item;
 
-                if (selectedItem == null)
+                if (item != null)
                 {
-                    return;
+                    item.IsEditing = true;
                 }
+            });
 
-                MessageBox.Show("Build " + selectedItem.Name);
+            SaveCommand = new RelayCommand(p =>
+            {
+                _userSettings.Save();
             });
         }
 
         #region Commands
 
-        public ICommand BuildCommand { get; set; }
         public ICommand AddFolderCommand { get; set; }
-        public ICommand RemoveFolderCommand { get; set; }
-        public ICommand AddJobCommand { get; set; }
-        public ICommand RemoveJobCommand { get; set; }
+        public ICommand RemoveCommand { get; set; }
+        public ICommand RenameCommand { get; set; }
+
+        public ICommand AddItemCommand { get; set; }
+        public ICommand RemoveItemCommand { get; set; }
+
+        public ICommand SaveCommand { get; set; }
 
         #endregion
 

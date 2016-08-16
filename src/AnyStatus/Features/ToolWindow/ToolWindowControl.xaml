@@ -11,12 +11,16 @@
              mc:Ignorable="d" 
              d:DesignHeight="300"
              d:DesignWidth="300"
-             d:DataContext="{d:DesignInstance Type=vm:ToolWindowViewModel}">
+             d:DataContext="{d:DesignInstance Type=vm:ToolWindowViewModel}"
+             x:Name="ToolWindow">
 
-    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <StackPanel>
-
-            <TreeView Name="TreeView" Height="300" ItemsSource="{Binding Items}" Background="Transparent" BorderThickness="0" Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
+    <Grid>
+            <TreeView Name="TreeView" 
+                      ItemsSource="{Binding Items}" 
+                      Background="Transparent" 
+                      BorderThickness="0" 
+                      Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
+                
                 <TreeView.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="New Status" Command="{Binding Path=PlacementTarget.Tag.DataContext.AddJobCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"/>
@@ -25,45 +29,66 @@
                 </TreeView.ContextMenu>
 
                 <TreeView.Resources>
-                    
+
                     <!--Folder-->
                     <HierarchicalDataTemplate DataType="{x:Type models:Folder}" ItemsSource="{Binding Items}">
-                        <StackPanel Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
+                        <StackPanel Height="30" 
+                                    Width="150"
+                                    Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
                             <StackPanel.ContextMenu>
                                 <ContextMenu>
-                                    <MenuItem Header="New Status" 
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.AddJobCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                                    <MenuItem Header="New Item" 
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.AddItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}"/>
                                     <MenuItem Header="New Folder" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.AddFolderCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}"/>
-                                    <MenuItem Header="Remove Folder" 
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.RemoveFolderCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                                    <Separator/>
+                                    <MenuItem Header="Rename" 
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.RenameCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                                          CommandParameter="{Binding}"/>
+                                    <MenuItem Header="Remove" 
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.RemoveCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}"/>
                                 </ContextMenu>
                             </StackPanel.ContextMenu>
-                            <TextBlock Text="{Binding Name}"/>
+
+                            <views:EditableTextBlock Text="{Binding Name}" 
+                                                     VerticalAlignment="Center"
+                                                     IsEditing="{Binding IsEditing}" 
+                                                     SaveCommand="{Binding DataContext.SaveCommand, ElementName=ToolWindow}" />
                         </StackPanel>
                     </HierarchicalDataTemplate>
 
                     <!--Item-->
                     <DataTemplate DataType="{x:Type models:Item}">
-                        <StackPanel Orientation="Horizontal" Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
+                        <StackPanel Orientation="Horizontal"
+                                    Width="200"
+                                    Height="30"
+                                    Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
                             <StackPanel.ContextMenu>
                                 <ContextMenu>
                                     <MenuItem Header="Disable" 
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.PauseCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.DisableItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                                          CommandParameter="{Binding}"/>
+                                    <MenuItem Header="Rename" 
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.RenameCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}"/>
                                     <MenuItem Header="Remove" 
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.RemoveJobCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.RemoveCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}"/>
                                     <MenuItem Header="Properties" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.ShowPropertiesCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}"/>
                                 </ContextMenu>
                             </StackPanel.ContextMenu>
-                            <Rectangle Width="7" Fill="{Binding Brush}" Margin="0,0,3,0" />
-                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+
+                            <Rectangle Width="5" Fill="{Binding Brush}" Margin="0,0,5,0" />
+
+                            <views:EditableTextBlock Text="{Binding Name}"
+                                                     VerticalAlignment="Center"
+                                                     IsEditing="{Binding IsEditing}" 
+                                                     SaveCommand="{Binding DataContext.SaveCommand, ElementName=ToolWindow}" />
                         </StackPanel>
                     </DataTemplate>
 
@@ -71,14 +96,15 @@
 
                 <TreeView.ItemContainerStyle>
                     <Style TargetType="TreeViewItem">
+                        <Setter Property="Margin" Value="3" />
+                        <Setter Property="Background" Value="WhiteSmoke" />
+                        <Setter Property="VerticalAlignment" Value="Center" />
                         <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
                         <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
                     </Style>
                 </TreeView.ItemContainerStyle>
 
             </TreeView>
-
-        </StackPanel>
     </Grid>
 
 </UserControl>

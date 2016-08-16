@@ -127,6 +127,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Features\ToolWindow\EditableTextBlock.cs" />
     <Compile Include="Infrastructure\Logger.cs" />
     <Compile Include="Infrastructure\ViewLocator.cs" />
     <Compile Include="Interfaces\ILogger.cs" />
