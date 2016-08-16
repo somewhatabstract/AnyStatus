@@ -66,7 +66,7 @@
         <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1"/>
         <!--<Icon guid="guidImages" id="bmpPic1" />-->
         <Strings>
-          <ButtonText>Build Status</ButtonText>
+          <ButtonText>AnyStatus</ButtonText>
         </Strings>
       </Button>
 
@@ -79,14 +79,14 @@
         </Strings>
       </Button>
 
-      <Button guid="guidToolWindowPackageCmdSet" id="refreshToolbarCommandId" priority="0x0100" type="Button">
+      <!--<Button guid="guidToolWindowPackageCmdSet" id="refreshToolbarCommandId" priority="0x0100" type="Button">
         <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarGroupId"/>
         <Icon guid="guidOfficeIcon" id="msotcidNoIcon" />
         <Strings>
           <ButtonText>Refresh</ButtonText>
           <CommandName>refreshToolbarCommandId</CommandName>
         </Strings>
-      </Button>
+      </Button>-->
       
     </Buttons>
 
@@ -125,6 +125,7 @@
       <IDSymbol name="bmpPicArrows" value="5" />
       <IDSymbol name="bmpPicStrikethrough" value="6" />
     </GuidSymbol>
+    
   </Symbols>
 
 </CommandTable>
