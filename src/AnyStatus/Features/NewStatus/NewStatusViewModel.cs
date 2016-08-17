@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace AnyStatus.ViewModels
 {
@@ -35,7 +36,8 @@ namespace AnyStatus.ViewModels
 
         private void Initialize()
         {
-            //todo: move to container/bootstrapper
+            //todo: move to container/bootstrap
+
             Templates = new List<Template> {
                 new Template
                 {
@@ -82,6 +84,7 @@ namespace AnyStatus.ViewModels
                     catch (Exception ex)
                     {
                         Debug.WriteLine(ex);
+                        item.Brush = Brushes.Gray;
                     }
                 };
 

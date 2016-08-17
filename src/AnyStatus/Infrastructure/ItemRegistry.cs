@@ -4,6 +4,7 @@ using FluentScheduler;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Windows.Media;
 
 namespace AnyStatus.Infrastructure
 {
@@ -39,8 +40,6 @@ namespace AnyStatus.Infrastructure
 
                 Action action = () =>
                 {
-                    Debug.WriteLine(DateTime.Now + " handling " + item.Name);
-
                     try
                     {
                         var a = typeof(IHandler<>);
@@ -51,6 +50,7 @@ namespace AnyStatus.Infrastructure
                     catch (Exception ex)
                     {
                         Debug.WriteLine(ex);
+                        item.Brush = Brushes.Gray;
                     }
                 };
 

@@ -32,7 +32,7 @@
                 <!--Folder-->
                 <HierarchicalDataTemplate DataType="{x:Type models:Folder}" ItemsSource="{Binding Items}">
                     <StackPanel Height="30" 
-                                Width="200"
+                                Width="180"
                                 Orientation="Horizontal"
                                 Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
                         <StackPanel.ContextMenu>
@@ -53,7 +53,7 @@
                             </ContextMenu>
                         </StackPanel.ContextMenu>
 
-                        <Rectangle Width="5"  Margin="0,0,5,0" />
+                        <Rectangle Width="5" Margin="0,0,5,0" />
 
                         <views:EditableTextBlock Text="{Binding Name}" 
                                                  FontWeight="Bold"
@@ -66,32 +66,29 @@
                 <!--Item-->
                 <DataTemplate DataType="{x:Type models:Item}">
                     <StackPanel Orientation="Horizontal"
-                                    Width="200"
+                                    Width="180"
                                     Height="30"
                                     Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
                         <StackPanel.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="Disable" 
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.DisableItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding}"/>
                                 <MenuItem Header="Rename" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.RenameCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}"/>
                                 <MenuItem Header="Remove" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.RemoveCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}"/>
-                                <MenuItem Header="Properties" 
+                                <!--<MenuItem Header="Properties" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.ShowPropertiesCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding}"/>
+                                          CommandParameter="{Binding}"/>-->
                             </ContextMenu>
                         </StackPanel.ContextMenu>
 
                         <Rectangle Width="5" Fill="{Binding Brush}" Margin="0,0,5,0" />
 
                         <views:EditableTextBlock Text="{Binding Name}"
-                                                     VerticalAlignment="Center"
-                                                     IsEditing="{Binding IsEditing}" 
-                                                     SaveCommand="{Binding DataContext.SaveCommand, ElementName=ToolWindow}" />
+                                                 VerticalAlignment="Center"
+                                                 IsEditing="{Binding IsEditing}" 
+                                                 SaveCommand="{Binding DataContext.SaveCommand, ElementName=ToolWindow}" />
                     </StackPanel>
                 </DataTemplate>
 

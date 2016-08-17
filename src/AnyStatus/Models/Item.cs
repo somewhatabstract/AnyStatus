@@ -21,6 +21,7 @@ namespace AnyStatus.Models
 
         public Item()
         {
+            Interval = 5;
             Brush = Brushes.Silver;
             Items = new ObservableCollection<Item>();
         }
