@@ -50,7 +50,7 @@ namespace AnyStatus.Infrastructure
                     catch (Exception ex)
                     {
                         Debug.WriteLine(ex);
-                        item.Brush = Brushes.Gray;
+                        item.Brush = Brushes.Silver;
                     }
                 };
 

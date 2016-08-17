@@ -41,7 +41,7 @@ namespace AnyStatus.VSPackage
             container.Register<NewStatusViewModel>().AsMultiInstance();
 
             //handlers
-            container.Register<IHandler<JenkinsBuild>, JenkinsJobHandler>().AsMultiInstance();
+            container.Register<IHandler<JenkinsBuild>, JenkinsBuildHandler>().AsMultiInstance();
             container.Register<IHandler<HttpStatus>, HttpStatusHandler>().AsMultiInstance();
 
             return container;

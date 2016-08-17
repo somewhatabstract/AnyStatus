@@ -1,5 +1,6 @@
 ﻿using RestSharp;
 using RestSharp.Serializers;
+using System;
 using System.ComponentModel;
 using System.Windows.Media;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
@@ -10,7 +11,7 @@ namespace AnyStatus.Models
     public class JenkinsBuild : Item
     {
         [PropertyOrder(1)]
-        [Description("The Jenkins build URL address.")]
+        [Description("Jenkins build URL address.")]
         public string Url { get; set; }
 
         //[PropertyOrder(1)]
@@ -26,61 +27,92 @@ namespace AnyStatus.Models
         //public bool IgnoreSslErrors { get; set; }
     }
 
-    public class JenkinsJobHandler : IHandler<JenkinsBuild>
+    public class JenkinsBuildHandler : IHandler<JenkinsBuild>
     {
+        private const string ApiUrl = "/lastBuild/api/json?tree=result,building";
+
         public void Handle(JenkinsBuild item)
         {
+            Validate(item);
+
+            var build = GetBuildDetails(item);
+
+            if (build.IsInProgress)
+            {
+                build.Result = "INPROGRESS";
+            }
+
+            SetItemColor(item, build.Result);
+        }
+
+        private static void Validate(JenkinsBuild item)
+        {
+            //todo: replace with validation decorator
+
             if (item == null || string.IsNullOrEmpty(item.Url))
             {
-                return;
+                throw new InvalidOperationException("Invalid item."); 
             }
+        }
 
+        private static JenkinsBuildResponse GetBuildDetails(JenkinsBuild item)
+        {
             var client = new RestClient(item.Url);
 
-            var restRequest = new RestRequest("/lastBuild/api/json?tree=result,building");
+            var response = client.Execute<JenkinsBuildResponse>(new RestRequest(ApiUrl));
 
-            var response = client.Execute<JenkinsBuildResponse>(restRequest);
-
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
             {
-                if (response.Data.Building.Equals("True"))
-                {
+                throw new Exception($"Unexpected HTTP status code {response.StatusCode}");
+            }
+
+            return response.Data;
+        }
+
+        private static void SetItemColor(JenkinsBuild item, string status)
+        {
+            switch (status)
+            {
+                case "INPROGRESS":
                     item.Brush = Brushes.DodgerBlue;
-                }
-                else
-                {
-                    switch (response.Data.Result)
-                    {
-                        case "SUCCESS":
-                            item.Brush = Brushes.Green;
-                            break;
+                    break;
 
-                        case "ABORTED":
-                            item.Brush = Brushes.Green;
-                            break;
+                case "SUCCESS":
+                    item.Brush = Brushes.Green;
+                    break;
 
-                        case "FAILURE":
-                            item.Brush = Brushes.Red;
-                            break;
+                case "ABORTED":
+                    item.Brush = Brushes.Gray;
+                    break;
 
-                        case "UNSTABLE":
-                            item.Brush = Brushes.Yellow;
-                            break;
+                case "FAILURE":
+                    item.Brush = Brushes.Red;
+                    break;
 
-                        default:
-                            break;
-                    }
-                }
+                case "UNSTABLE":
+                    item.Brush = Brushes.Yellow;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    }
+
+    public class JenkinsBuildResponse
+    {
+        public bool IsInProgress
+        {
+            get
+            {
+                return bool.Parse(Building);
             }
         }
 
-        public class JenkinsBuildResponse
-        {
-            [SerializeAs(Name = "building")]
-            public string Building { get; set; } //todo: change to boolean
+        [SerializeAs(Name = "building")]
+        public string Building { get; set; }
 
-            [SerializeAs(Name = "result")]
-            public string Result { get; set; }
-        }
+        [SerializeAs(Name = "result")]
+        public string Result { get; set; }
     }
 }
