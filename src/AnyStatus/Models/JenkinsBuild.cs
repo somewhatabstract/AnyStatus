@@ -9,7 +9,7 @@ namespace AnyStatus.Models
     [DisplayName("Jenkins Build")] //todo: wire display-name to template name
     public class JenkinsBuild : Item
     {
-        [PropertyOrder(0)]
+        [PropertyOrder(1)]
         [Description("The Jenkins build URL address.")]
         public string Url { get; set; }
 
@@ -36,39 +36,49 @@ namespace AnyStatus.Models
             }
 
             var client = new RestClient(item.Url);
-            
-            var restRequest = new RestRequest("/lastBuild/api/json?tree=result[*]");
+
+            var restRequest = new RestRequest("/lastBuild/api/json?tree=result,building");
 
             var response = client.Execute<JenkinsBuildResponse>(restRequest);
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                switch (response.Data.Result)
+                if (response.Data.Building.Equals("True"))
                 {
-                    case "SUCCESS":
-                        item.Brush = Brushes.Green;
-                        break;
+                    item.Brush = Brushes.DodgerBlue;
+                }
+                else
+                {
+                    switch (response.Data.Result)
+                    {
+                        case "SUCCESS":
+                            item.Brush = Brushes.Green;
+                            break;
 
-                    case "ABORTED":
-                        item.Brush = Brushes.Green;
-                        break;
+                        case "ABORTED":
+                            item.Brush = Brushes.Green;
+                            break;
 
-                    case "FAILURE":
-                        item.Brush = Brushes.Red;
-                        break;
+                        case "FAILURE":
+                            item.Brush = Brushes.Red;
+                            break;
 
-                    case "UNSTABLE":
-                        item.Brush = Brushes.Yellow;
-                        break;
+                        case "UNSTABLE":
+                            item.Brush = Brushes.Yellow;
+                            break;
 
-                    default:
-                        break;
+                        default:
+                            break;
+                    }
                 }
             }
         }
 
         public class JenkinsBuildResponse
         {
+            [SerializeAs(Name = "building")]
+            public string Building { get; set; } //todo: change to boolean
+
             [SerializeAs(Name = "result")]
             public string Result { get; set; }
         }

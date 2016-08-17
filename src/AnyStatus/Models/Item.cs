@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Media;
 using System.Xml.Serialization;
+using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace AnyStatus.Models
 {
@@ -29,6 +30,7 @@ namespace AnyStatus.Models
         [Browsable(false)]
         public Guid Id { get; set; }
 
+        [PropertyOrder(0)]
         public string Name
         {
             get { return _name; }
@@ -49,7 +51,6 @@ namespace AnyStatus.Models
             set { _isEnabled = value; OnPropertyChanged(); }
         }
 
-        [DefaultValue(5)]
         [Description("The interval in minutes")]
         public int Interval { get; set; }
 

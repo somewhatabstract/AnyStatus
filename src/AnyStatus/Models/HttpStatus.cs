@@ -14,14 +14,14 @@ namespace AnyStatus.Models
             HttpStatusCode = HttpStatusCode.OK;
         }
 
-        [PropertyOrder(0)]
+        [PropertyOrder(1)]
         public string Url { get; set; }
 
-        [PropertyOrder(1)]
+        [PropertyOrder(2)]
         [DisplayName("HTTP Status Code")]
         public HttpStatusCode HttpStatusCode { get; set; }
 
-        [PropertyOrder(2)]
+        [PropertyOrder(3)]
         [DisplayName("Ignore SSL Errors")]
         public bool IgnoreSslErrors { get; set; }
     }
