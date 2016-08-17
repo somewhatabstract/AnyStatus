@@ -1,19 +1,13 @@
-﻿//------------------------------------------------------------------------------
-// <copyright file="ToolWindow.cs" company="Company">
-//     Copyright (c) Company.  All rights reserved.
-// </copyright>
-//------------------------------------------------------------------------------
+﻿using AnyStatus.Infrastructure;
+using AnyStatus.Views;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
+using System;
+using System.ComponentModel.Design;
+using System.Runtime.InteropServices;
 
 namespace AnyStatus.VSPackage
 {
-    using Microsoft.VisualStudio.Shell;
-    using Microsoft.VisualStudio.Shell.Interop;
-    using System;
-    using System.ComponentModel.Design;
-    using System.Runtime.InteropServices;
-    using TinyIoC;
-    using Views;
-
     /// <summary>
     /// This class implements the tool window exposed by this package and hosts a user control.
     /// </summary>

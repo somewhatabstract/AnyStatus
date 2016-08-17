@@ -1,4 +1,5 @@
-﻿using AnyStatus.Interfaces;
+﻿using AnyStatus.Infrastructure;
+using AnyStatus.Interfaces;
 using AnyStatus.Models;
 using FluentScheduler;
 using System;
@@ -74,7 +75,7 @@ namespace AnyStatus.ViewModels
                     Debug.WriteLine(DateTime.Now + " Running " + item.Name);
                     var a = typeof(IHandler<>);
                     var b = a.MakeGenericType(item.GetType());
-                    var handler = TinyIoC.TinyIoCContainer.Current.Resolve(b);
+                    var handler = TinyIoCContainer.Current.Resolve(b);
                     b.GetMethod("Handle").Invoke(handler, new[] { item });
                 };
 

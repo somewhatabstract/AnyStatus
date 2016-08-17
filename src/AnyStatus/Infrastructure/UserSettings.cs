@@ -2,25 +2,27 @@
 using AnyStatus.Models;
 using System;
 using System.Collections.ObjectModel;
-using System.Windows;
+using System.Diagnostics;
 
 namespace AnyStatus
 {
     /// <summary>
     /// Encapsulates access to Properties.Settings.Default
     /// </summary>
-    public sealed class UserSettings : IUserSettings
+    public class UserSettings : IUserSettings
     {
         public UserSettings()
         {
             try
             {
-                Properties.Settings.Default.Items = Properties.Settings.Default.Items ?? new ObservableCollection<Item>();
-                Properties.Settings.Default.Servers = Properties.Settings.Default.Servers ?? new ObservableCollection<Server>();
+                if (Properties.Settings.Default.Items == null)
+                {
+                    Properties.Settings.Default.Items = new ObservableCollection<Item>();
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                Debug.WriteLine(ex);
             }
         }
 
@@ -36,33 +38,34 @@ namespace AnyStatus
             }
         }
 
-        public ObservableCollection<Server> Servers
-        {
-            get
-            {
-                return Properties.Settings.Default.Servers;
-            }
-            set
-            {
-                Properties.Settings.Default.Servers = value;
-            }
-        }
-
         public void Save()
         {
-            Properties.Settings.Default.Save();
+            try
+            {
+                Properties.Settings.Default.Save();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
         }
 
         public void Reset()
         {
-            Properties.Settings.Default.Reset();
+            try
+            {
+                Properties.Settings.Default.Reset();
 
-            Properties.Settings.Default.Items = new ObservableCollection<Item>();
-            Properties.Settings.Default.Servers = new ObservableCollection<Server>();
+                Properties.Settings.Default.Items = new ObservableCollection<Item>();
 
-            Save();
+                Properties.Settings.Default.Save();
 
-            Properties.Settings.Default.Reload();//does not refresh ui
+                Properties.Settings.Default.Reload();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
         }
     }
 }

@@ -23,20 +23,6 @@ namespace AnyStatus.Properties
                 this[nameof(Items)] = value;
             }
         }
-
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public ObservableCollection<Server> Servers
-        {
-            get
-            {
-                return ((ObservableCollection<Server>)(this[nameof(Servers)]));
-            }
-            set
-            {
-                this[nameof(Servers)] = value;
-            }
-        }
     }
    
     internal static class SettingsExtensions

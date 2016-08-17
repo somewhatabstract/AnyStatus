@@ -2,7 +2,6 @@
 using AnyStatus.Models;
 using AnyStatus.ViewModels;
 using AnyStatus.Views;
-using TinyIoC;
 
 namespace AnyStatus.Infrastructure
 {

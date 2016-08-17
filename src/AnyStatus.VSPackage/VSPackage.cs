@@ -1,5 +1,4 @@
 ﻿using AnyStatus.Infrastructure;
-using AnyStatus.Interfaces;
 using AnyStatus.Views;
 using FluentScheduler;
 using Microsoft.VisualStudio.Shell;
@@ -8,7 +7,6 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Runtime.InteropServices;
-using TinyIoC;
 
 namespace AnyStatus.VSPackage
 {
@@ -40,20 +38,27 @@ namespace AnyStatus.VSPackage
 
             try
             {
-                ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true; //ignore ssl errors
+                IgnoreSslErrors();
 
-                TinyIoCContainer container = new ContainerBuilder().Build(this);
+                var container = new ContainerBuilder(this).Build();
 
-                container.Resolve<ToolWindowCommand>().Initialize();
+                var toolWindowCommand = container.Resolve<ToolWindowCommand>();
 
-                JobManager.Initialize(container.Resolve<ItemRegistry>());
+                var registry = container.Resolve<ItemRegistry>();
 
-                container.Resolve<ILogger>().Log("AnyStatus started.");
+                toolWindowCommand.Initialize();
+
+                JobManager.Initialize(registry);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
             }
+        }
+
+        private static void IgnoreSslErrors()
+        {
+            ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
         }
     }
 }

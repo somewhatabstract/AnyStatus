@@ -6,18 +6,26 @@ using AnyStatus.Views;
 using FluentScheduler;
 using Microsoft.VisualStudio.Shell;
 using System;
-using TinyIoC;
 
 namespace AnyStatus.VSPackage
 {
     internal class ContainerBuilder
     {
-        internal TinyIoCContainer Build(Package package)
+        private readonly Package _package;
+        public ContainerBuilder(Package package)
+        {
+            if (package == null)
+                throw new ArgumentNullException(nameof(package));
+
+            _package = package;
+        }
+
+        internal TinyIoCContainer Build()
         {
             var container = TinyIoCContainer.Current;
 
-            container.Register<Package>(package);
-            container.Register<IServiceProvider>(package);
+            container.Register<Package>(_package);
+            container.Register<IServiceProvider>(_package);
             container.Register<ToolWindowCommand>().AsSingleton();
             container.Register<IUserSettings, UserSettings>().AsSingleton();
             container.Register<ILogger, Logger>().AsSingleton();
@@ -35,7 +43,6 @@ namespace AnyStatus.VSPackage
             //handlers
             container.Register<IHandler<JenkinsBuild>, JenkinsJobHandler>().AsMultiInstance();
             container.Register<IHandler<HttpStatus>, HttpStatusHandler>().AsMultiInstance();
-
 
             return container;
         }

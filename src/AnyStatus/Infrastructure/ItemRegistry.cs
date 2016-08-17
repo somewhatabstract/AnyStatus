@@ -46,7 +46,7 @@ namespace AnyStatus.Infrastructure
                         //Mediator
                         var a = typeof(IHandler<>);
                         var b = a.MakeGenericType(item.GetType());
-                        var handler = TinyIoC.TinyIoCContainer.Current.Resolve(b);
+                        var handler = TinyIoCContainer.Current.Resolve(b);
                         b.GetMethod("Handle").Invoke(handler, new[] { item });
                     }
                     catch (Exception ex)
