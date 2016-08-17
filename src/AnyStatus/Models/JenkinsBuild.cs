@@ -19,16 +19,16 @@ namespace AnyStatus.Models
 
     public class JenkinsJobHandler : IHandler<JenkinsBuild>
     {
-        public void Handle(JenkinsBuild job)
+        public void Handle(JenkinsBuild item)
         {
-            if (job == null || string.IsNullOrEmpty(job.Url))
+            if (item == null || string.IsNullOrEmpty(item.Url))
             {
                 return;
             }
 
-            var client = new RestClient(job.Url);
+            var client = new RestClient(item.Url);
 
-            var restRequest = new RestRequest("/lastBuild/api/json");
+            var restRequest = new RestRequest("/lastBuild/api/json?tree=result[*]");
 
             var response = client.Execute<JenkinsBuildResponse>(restRequest);
 
@@ -37,19 +37,19 @@ namespace AnyStatus.Models
                 switch (response.Data.Result)
                 {
                     case "SUCCESS":
-                        job.Brush = Brushes.Green;
+                        item.Brush = Brushes.Green;
                         break;
 
                     case "ABORTED":
-                        job.Brush = Brushes.Green;
+                        item.Brush = Brushes.Green;
                         break;
 
                     case "FAILURE":
-                        job.Brush = Brushes.Red;
+                        item.Brush = Brushes.Red;
                         break;
 
                     case "UNSTABLE":
-                        job.Brush = Brushes.Yellow;
+                        item.Brush = Brushes.Yellow;
                         break;
 
                     default:

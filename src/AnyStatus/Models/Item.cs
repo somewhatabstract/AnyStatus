@@ -48,8 +48,9 @@ namespace AnyStatus.Models
             set { _isEnabled = value; OnPropertyChanged(); }
         }
 
-        [Browsable(false)]
-        public bool IsSelected { get; set; }
+        [DefaultValue(5)]
+        [Description("The interval in minutes")]
+        public int Interval { get; set; }
 
         [XmlIgnore]
         [Browsable(false)]
@@ -70,15 +71,8 @@ namespace AnyStatus.Models
         [Browsable(false)]
         public bool IsEditing
         {
-            get
-            {
-                return _isEditing;
-            }
-
-            set
-            {
-                _isEditing = value; OnPropertyChanged();
-            }
+            get { return _isEditing; }
+            set { _isEditing = value; OnPropertyChanged(); }
         }
 
         #region INotifyPropertyChanged

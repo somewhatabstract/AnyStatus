@@ -1,7 +1,4 @@
-﻿using AnyStatus.Models;
-using AnyStatus.Queries;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Net;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AnyStatus.Tests
 {
@@ -9,21 +6,10 @@ namespace AnyStatus.Tests
     public class UnitTest1
     {
 
+        [Ignore]
         [TestMethod]
         public void TestMethod1()
         {
-            ServicePointManager.ServerCertificateValidationCallback +=
-                (sender, certificate, chain, sslPolicyErrors) => true;
-
-            var server = new Server { Url = "https://ci.jenkins-ci.org" };
-
-            var request = new ViewsQuery.Request() { Server = server };
-
-            var query = new ViewsQuery.Handler();
-
-            var result = query.Handle(request);
-
-            Assert.IsNotNull(result);
         }
     }
 }

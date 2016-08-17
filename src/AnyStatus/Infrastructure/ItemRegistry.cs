@@ -43,7 +43,6 @@ namespace AnyStatus.Infrastructure
 
                     try
                     {
-                        //Mediator
                         var a = typeof(IHandler<>);
                         var b = a.MakeGenericType(item.GetType());
                         var handler = TinyIoCContainer.Current.Resolve(b);
@@ -59,7 +58,7 @@ namespace AnyStatus.Infrastructure
                     .NonReentrant()
                      .WithName(item.Id.ToString())
                      .ToRunNow()
-                     .AndEvery(5).Seconds();
+                     .AndEvery(item.Interval).Minutes();
             }
         }
     }

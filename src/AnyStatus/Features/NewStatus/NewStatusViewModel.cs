@@ -72,18 +72,24 @@ namespace AnyStatus.ViewModels
 
                 Action job = () =>
                 {
-                    Debug.WriteLine(DateTime.Now + " Running " + item.Name);
-                    var a = typeof(IHandler<>);
-                    var b = a.MakeGenericType(item.GetType());
-                    var handler = TinyIoCContainer.Current.Resolve(b);
-                    b.GetMethod("Handle").Invoke(handler, new[] { item });
+                    try
+                    {
+                        var a = typeof(IHandler<>);
+                        var b = a.MakeGenericType(item.GetType());
+                        var handler = TinyIoCContainer.Current.Resolve(b);
+                        b.GetMethod("Handle").Invoke(handler, new[] { item });
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex);
+                    }
                 };
 
                 Action<Schedule> schedule = s => {
                     s.NonReentrant()
                      .WithName(item.Id.ToString())
                      .ToRunNow()
-                     .AndEvery(5).Seconds();
+                     .AndEvery(item.Interval).Minutes();
                 };
 
                 JobManager.AddJob(job, schedule);
