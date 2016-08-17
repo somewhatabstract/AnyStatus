@@ -34,6 +34,7 @@
                     <StackPanel Height="30" 
                                 Width="180"
                                 Orientation="Horizontal"
+                                HorizontalAlignment="Stretch"
                                 Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
                         <StackPanel.ContextMenu>
                             <ContextMenu>
@@ -58,6 +59,7 @@
                         <views:EditableTextBlock Text="{Binding Name}" 
                                                  FontWeight="Bold"
                                                  VerticalAlignment="Center"
+                                                 HorizontalAlignment="Stretch"
                                                  IsEditing="{Binding IsEditing}" 
                                                  SaveCommand="{Binding DataContext.SaveCommand, ElementName=ToolWindow}" />
                     </StackPanel>
@@ -66,9 +68,10 @@
                 <!--Item-->
                 <DataTemplate DataType="{x:Type models:Item}">
                     <StackPanel Orientation="Horizontal"
-                                    Width="180"
-                                    Height="30"
-                                    Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
+                                Width="180"
+                                Height="30"
+                                HorizontalAlignment="Stretch"
+                                Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
                         <StackPanel.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Rename" 
@@ -87,6 +90,7 @@
 
                         <views:EditableTextBlock Text="{Binding Name}"
                                                  VerticalAlignment="Center"
+                                                 HorizontalAlignment="Stretch"
                                                  IsEditing="{Binding IsEditing}" 
                                                  SaveCommand="{Binding DataContext.SaveCommand, ElementName=ToolWindow}" />
                     </StackPanel>
@@ -96,10 +100,10 @@
 
             <TreeView.ItemContainerStyle>
                 <Style TargetType="TreeViewItem">
-                    <Setter Property="Margin" Value="3" />
-                    <Setter Property="Background" Value="WhiteSmoke" />
-                    <Setter Property="VerticalAlignment" Value="Center" />
-                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="Margin" Value="0,3,0,0"/>
+                    <Setter Property="Background" Value="WhiteSmoke"/>
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
                     <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
                 </Style>
             </TreeView.ItemContainerStyle>
