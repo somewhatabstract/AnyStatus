@@ -14,82 +14,10 @@
 
     <ScrollViewer>
         <Grid>
-            <Button Command="{Binding ResetCommand}" Margin="3">Reset Settings</Button>
-
-            <!--
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-
-            <GroupBox Header="Servers" Grid.Row="0" BorderThickness="0">
-
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="100" />
-                    </Grid.ColumnDefinitions>
-
-                    <ListBox Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch" Margin="3" BorderThickness="1"
-                             SelectedItem="{Binding SelectedServer}"
-                             ItemsSource="{Binding Servers}">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBlock Text="{Binding Name}"/>
-                                    <TextBlock FontSize="10" Text="{Binding Url}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-
-                    <StackPanel Grid.Row="0" Grid.Column="1">
-                        <Button Command="{Binding AddServerCommand}" Margin="3">Add</Button>
-                        <Button Command="{Binding RemoveServerCommand}" CommandParameter="{Binding SelectedServer}" Margin="3">Remove</Button>
-                        <Button Command="{Binding ResetCommand}" Margin="3">Reset</Button>
-                    </StackPanel>
-
-                    <Grid Grid.Row="1" Grid.Column="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-
-                        <Label Grid.Column="0" Grid.Row="0" Margin="3">Server Name</Label>
-                        <TextBox Text="{Binding SelectedServer.Name}" Grid.Column="1" Grid.Row="0" Margin="3"></TextBox>
-
-                        <Label Grid.Column="0" Grid.Row="1" Margin="3">Url</Label>
-                        <TextBox Text="{Binding SelectedServer.Url}" Grid.Column="1" Grid.Row="1" Margin="3"></TextBox>
-
-                        <Label Grid.Column="0" Grid.Row="2" Margin="3">User Name</Label>
-                        <TextBox Text="{Binding SelectedServer.UserName}" Grid.Column="1" Grid.Row="2" Margin="3"></TextBox>
-
-                        <Label Grid.Column="0" Grid.Row="3" Margin="3">API Token</Label>
-                        <TextBox Text="{Binding SelectedServer.ApiToken}" Grid.Column="1" Grid.Row="3" Margin="3"></TextBox>
-
-                    </Grid>
-
-                    <StackPanel Grid.Column="2" Grid.Row="2" VerticalAlignment="Bottom">
-                        <Button Command="{Binding ApplyCommand}" Margin="3">Apply</Button>
-                    </StackPanel>
-
-                </Grid>
-
-            </GroupBox>-->
-
+            <StackPanel HorizontalAlignment="Left">
+                <Button Width="Auto" Padding="2" Command="{Binding ResetAllSettingsCommand}" Margin="3">Reset all settings</Button>
+            </StackPanel>
         </Grid>
-
     </ScrollViewer>
 
 </UserControl>
