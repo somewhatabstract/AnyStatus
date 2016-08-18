@@ -5,7 +5,7 @@ namespace AnyStatus.Interfaces
 {
     public interface IUserSettings
     {
-        ObservableCollection<Item> Items { get; set; }
+        ObservableCollection<Item> Items { get; }
 
         void Save();
 

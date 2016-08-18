@@ -18,13 +18,13 @@ namespace AnyStatus.VSPackage
     [Guid(PackageGuidString)]
     [ProvideOptionPage(typeof(Options), "AnyStatus", "General", 0, 0, true)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
-    public sealed class VSPackage : Package
+    public sealed class AnyStatusPackage : Package
     {
         public const string PackageGuidString = "b8682407-a118-4468-9c71-d1f7c6a312ec";
 
         public const int ToolbarId = 0x1000;
 
-        public VSPackage()
+        public AnyStatusPackage()
         {
             // Inside this method you can place any initialization code that does not require
             // any Visual Studio service because at this point the package object is created but

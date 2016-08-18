@@ -1,4 +1,5 @@
-﻿using AnyStatus.Interfaces;
+﻿using AnyStatus.Infrastructure;
+using AnyStatus.Interfaces;
 using AnyStatus.Models;
 using System;
 using System.Collections.ObjectModel;
@@ -11,14 +12,13 @@ namespace AnyStatus
     /// </summary>
     public class UserSettings : IUserSettings
     {
+        private ObservableCollection<Item> _items;
+
         public UserSettings()
         {
             try
             {
-                if (Properties.Settings.Default.Items == null)
-                {
-                    Properties.Settings.Default.Items = new ObservableCollection<Item>();
-                }
+                _items = Properties.Settings.Default.Items ?? new ObservableCollection<Item>();
             }
             catch (Exception ex)
             {
@@ -30,23 +30,28 @@ namespace AnyStatus
         {
             get
             {
-                return Properties.Settings.Default.Items;
+                return _items;// Properties.Settings.Default.Items;
             }
-            set
-            {
-                Properties.Settings.Default.Items = value;
-            }
+            //set
+            //{
+            //    Properties.Settings.Default.Items = value;
+            //}
         }
 
         public void Save()
         {
             try
             {
-                Properties.Settings.Default.Save();
+                Retry.Do(() =>
+                {
+                    Properties.Settings.Default.Items = _items;
+                    Properties.Settings.Default.Save();
+                },
+                TimeSpan.FromSeconds(1), retryCount: 3);
             }
-            catch (Exception ex)
+            catch (AggregateException ex)
             {
-                Debug.WriteLine(ex);
+                Debug.WriteLine(ex.Flatten());
             }
         }
 

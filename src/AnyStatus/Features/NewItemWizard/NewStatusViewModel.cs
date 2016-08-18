@@ -41,13 +41,13 @@ namespace AnyStatus.ViewModels
             Templates = new List<Template> {
                 new Template
                 {
-                    Name = "Jenkins Build",
-                    Item = new JenkinsBuild()
+                    Name = "HTTP Status",
+                    Item = new HttpStatus()
                 },
                 new Template
                 {
-                    Name = "HTTP Status",
-                    Item = new HttpStatus()
+                    Name = "Jenkins Build",
+                    Item = new JenkinsBuild()
                 }
             };
 

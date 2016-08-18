@@ -132,16 +132,17 @@
     <Compile Include="Features\ToolWindow\EditableTextBlock.cs" />
     <Compile Include="Infrastructure\ItemRegistry.cs" />
     <Compile Include="Infrastructure\Logger.cs" />
+    <Compile Include="Infrastructure\Retry.cs" />
     <Compile Include="Infrastructure\ViewLocator.cs" />
     <Compile Include="Interfaces\ILogger.cs" />
     <Compile Include="Interfaces\IUserSettings.cs" />
-    <Compile Include="Models\Folder.cs" />
+    <Compile Include="Features\HealthChecks\Folder.cs" />
     <Compile Include="Interfaces\IHandler.cs" />
-    <Compile Include="Models\HttpStatus.cs" />
-    <Compile Include="Models\Item.cs" />
-    <Compile Include="Models\JenkinsBuild.cs" />
-    <Compile Include="Models\Ping.cs" />
-    <Compile Include="Models\Template.cs" />
+    <Compile Include="Features\HealthChecks\HttpStatus.cs" />
+    <Compile Include="Features\HealthChecks\Item.cs" />
+    <Compile Include="Features\HealthChecks\JenkinsBuild.cs" />
+    <Compile Include="Features\HealthChecks\Ping.cs" />
+    <Compile Include="Features\HealthChecks\Template.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -153,10 +154,10 @@
     <Compile Include="Infrastructure\TinyIoc.cs" />
     <Compile Include="Infrastructure\UserSettings.cs" />
     <Compile Include="Interfaces\IViewLocator.cs" />
-    <Compile Include="Features\NewStatus\NewStatusViewModel.cs" />
+    <Compile Include="Features\NewItemWizard\NewStatusViewModel.cs" />
     <Compile Include="Features\Options\OptionsViewModel.cs" />
     <Compile Include="Features\ToolWindow\ToolWindowViewModel.cs" />
-    <Compile Include="Features\NewStatus\NewStatusDialog.xaml.cs">
+    <Compile Include="Features\NewItemWizard\NewStatusDialog.xaml.cs">
       <DependentUpon>NewStatusDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Features\Options\OptionsDialogControl.xaml.cs">
@@ -170,7 +171,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Features\NewStatus\NewStatusDialog.xaml">
+    <Page Include="Features\NewItemWizard\NewStatusDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
