@@ -90,7 +90,7 @@ namespace AnyStatus.Models
                     break;
 
                 case "UNSTABLE":
-                    item.Brush = Brushes.Yellow;
+                    item.Brush = Brushes.Orange;
                     break;
 
                 default:

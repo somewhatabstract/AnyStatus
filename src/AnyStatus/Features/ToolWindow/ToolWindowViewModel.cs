@@ -49,7 +49,7 @@ namespace AnyStatus.ViewModels
                     var item = new Folder
                     {
                         Name = "New Folder",
-                        //IsEditing = true
+                        IsEditing = true
                     };
 
                     if (selectedItem != null)

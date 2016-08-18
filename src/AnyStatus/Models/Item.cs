@@ -17,8 +17,10 @@ namespace AnyStatus.Models
         private string _name;
         private bool _isExpanded;
         private bool _isEnabled;
-        private Brush _brush;
         private bool _isEditing;
+
+        [NonSerialized]
+        private Brush _brush;
 
         public Item()
         {

@@ -14,10 +14,9 @@ namespace AnyStatus.Infrastructure
         {
             try
             {
-                if (userSettings.Items != null)
-                {
-                    ScheduleJobs(userSettings.Items);
-                }
+                NonReentrantAsDefault();
+
+                Schedule(userSettings.Items);
             }
             catch (Exception ex)
             {
@@ -25,41 +24,54 @@ namespace AnyStatus.Infrastructure
             }
         }
 
-        private void ScheduleJobs(IEnumerable<Item> items)
+        private void Schedule(IEnumerable<Item> items)
         {
+            if (items == null)
+            {
+                return;
+            }
+
             foreach (var item in items)
             {
-                //todo: mark schedule jobs with interface
+                //todo: mark scheduled jobs with interface
 
-                if (item is Folder && item.Items != null)
+                if (item is Folder)
                 {
-                    ScheduleJobs(item.Items);
-
+                    Schedule(item.Items);
                     continue;
                 }
 
-                Action action = () =>
+                if (item.Interval <= 0)
                 {
-                    try
-                    {
-                        var a = typeof(IHandler<>);
-                        var b = a.MakeGenericType(item.GetType());
-                        var handler = TinyIoCContainer.Current.Resolve(b);
-                        b.GetMethod("Handle").Invoke(handler, new[] { item });
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.WriteLine(ex);
-                        item.Brush = Brushes.Silver;
-                    }
-                };
+                    continue;
+                }
 
-                Schedule(action)
-                    .NonReentrant()
-                     .WithName(item.Id.ToString())
-                     .ToRunNow()
-                     .AndEvery(item.Interval).Minutes();
+                Schedule(item);
             }
+        }
+
+        private void Schedule(Item item)
+        {
+            Action action = () =>
+            {
+                try
+                {
+                    var a = typeof(IHandler<>);
+                    var b = a.MakeGenericType(item.GetType());
+                    var handler = TinyIoCContainer.Current.Resolve(b);
+                    b.GetMethod("Handle").Invoke(handler, new[] { item });
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                    item.Brush = Brushes.Silver;
+                }
+            };
+
+            Schedule(action)
+                 .WithName(item.Id.ToString())
+                 .ToRunNow()
+                 .AndEvery(item.Interval).Minutes();
         }
     }
 }
