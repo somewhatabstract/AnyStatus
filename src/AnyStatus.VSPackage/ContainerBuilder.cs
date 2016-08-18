@@ -43,6 +43,7 @@ namespace AnyStatus.VSPackage
             //handlers
             container.Register<IHandler<JenkinsBuild>, JenkinsBuildHandler>().AsMultiInstance();
             container.Register<IHandler<HttpStatus>, HttpStatusHandler>().AsMultiInstance();
+            container.Register<IHandler<Ping>, PingHandler>().AsMultiInstance();
 
             return container;
         }

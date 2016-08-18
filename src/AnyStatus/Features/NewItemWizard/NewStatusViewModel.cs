@@ -46,6 +46,11 @@ namespace AnyStatus.ViewModels
                 },
                 new Template
                 {
+                    Name = "Ping",
+                    Item = new Ping()
+                },
+                new Template
+                {
                     Name = "Jenkins Build",
                     Item = new JenkinsBuild()
                 }
