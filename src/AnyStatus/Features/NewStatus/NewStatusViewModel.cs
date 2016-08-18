@@ -88,15 +88,8 @@ namespace AnyStatus.ViewModels
                     }
                 };
 
-                Action<Schedule> schedule = s => {
-                    s.NonReentrant()
-                     .WithName(item.Id.ToString())
-                     .ToRunNow()
-                     .AndEvery(item.Interval).Minutes();
-                };
+                JobManager.AddJob(job, schedule => schedule.NonReentrant().WithName(item.Id.ToString()).ToRunNow().AndEvery(item.Interval).Minutes());
 
-                JobManager.AddJob(job, schedule);
-                
                 CloseRequested?.Invoke(this, EventArgs.Empty);
             });
 

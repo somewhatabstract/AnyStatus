@@ -22,7 +22,7 @@
 
             <TreeView.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="New Item" Command="{Binding Path=PlacementTarget.Tag.DataContext.AddItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"/>
+                    <MenuItem Header="New Item..." Command="{Binding Path=PlacementTarget.Tag.DataContext.AddItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"/>
                     <MenuItem Header="New Folder" Command="{Binding Path=PlacementTarget.Tag.DataContext.AddFolderCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"/>
                 </ContextMenu>
             </TreeView.ContextMenu>
@@ -34,11 +34,11 @@
                     <StackPanel Height="30" 
                                 Width="180"
                                 Orientation="Horizontal"
-                                HorizontalAlignment="Stretch"
+                                Background="Transparent"
                                 Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
                         <StackPanel.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="New Item" 
+                                <MenuItem Header="New Item..." 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.AddItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}"/>
                                 <MenuItem Header="New Folder" 
@@ -70,7 +70,7 @@
                     <StackPanel Orientation="Horizontal"
                                 Width="180"
                                 Height="30"
-                                HorizontalAlignment="Stretch"
+                                Background="Transparent"
                                 Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
                         <StackPanel.ContextMenu>
                             <ContextMenu>

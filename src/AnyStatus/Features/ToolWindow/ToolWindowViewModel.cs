@@ -1,8 +1,10 @@
 ﻿using AnyStatus.Interfaces;
 using AnyStatus.Models;
+using FluentScheduler;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -40,59 +42,83 @@ namespace AnyStatus.ViewModels
         {
             AddFolderCommand = new RelayCommand(p =>
             {
-                var selectedItem = p as Item;
-
-                var item = new Folder
+                try
                 {
-                    Name = "New Folder"
-                };
+                    var selectedItem = p as Item;
 
-                if (selectedItem != null)
-                {
-                    item.Parent = selectedItem;
-                    selectedItem.Items.Add(item);
-                    selectedItem.IsExpanded = true;
+                    var item = new Folder
+                    {
+                        Name = "New Folder",
+                        IsEditing = true
+                    };
+
+                    if (selectedItem != null)
+                    {
+                        item.Parent = selectedItem;
+                        selectedItem.Items.Add(item);
+                        selectedItem.IsExpanded = true;
+                    }
+                    else
+                    {
+                        _userSettings.Items.Add(item);
+                    }
+
+                    _userSettings.Save();
                 }
-                else
+                catch (Exception ex)
                 {
-                    _userSettings.Items.Add(item);
+                    Debug.WriteLine(ex);
                 }
-
-                _userSettings.Save();
             });
 
             RemoveCommand = new RelayCommand(p =>
             {
-                var result = MessageBox.Show("Are you sure?", "Remove", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
-
-                if (result != MessageBoxResult.Yes) return;
-
-                var selectedItem = p as Item;
-
-                if (selectedItem == null)
+                try
                 {
-                    return;
-                }
+                    var result = MessageBox.Show("Are you sure?", "Remove", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
 
-                if (selectedItem.Parent != null)
-                {
-                    selectedItem.Parent.Items.Remove(selectedItem);
-                }
-                else
-                {
-                    _userSettings.Items.Remove(selectedItem);
-                }
+                    if (result != MessageBoxResult.Yes) return;
 
-                _userSettings.Save();
+                    var selectedItem = p as Item;
+
+                    if (selectedItem == null)
+                    {
+                        return;
+                    }
+
+                    if (selectedItem.Parent != null)
+                    {
+                        selectedItem.Parent.Items.Remove(selectedItem);
+                    }
+                    else
+                    {
+                        _userSettings.Items.Remove(selectedItem);
+                    }
+
+                    JobManager.RemoveJob(selectedItem.Id.ToString());
+
+                    _userSettings.Save();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                }
             });
 
             AddItemCommand = new RelayCommand(p =>
             {
-                var selectedItem = p as Item;
+                try
+                {
+                    var selectedItem = p as Item;
 
-                var dlg = _viewLocator.NewStatusDialog(selectedItem);
+                    var dlg = _viewLocator.NewStatusDialog(selectedItem);
 
-                dlg.ShowDialog();
+                    dlg.ShowDialog();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                }
             });
 
             RenameCommand = new RelayCommand(p =>
@@ -107,7 +133,14 @@ namespace AnyStatus.ViewModels
 
             SaveCommand = new RelayCommand(p =>
             {
-                _userSettings.Save();
+                try
+                {
+                    _userSettings.Save();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                }
             });
         }
 
