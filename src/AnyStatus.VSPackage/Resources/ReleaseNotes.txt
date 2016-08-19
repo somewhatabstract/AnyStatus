@@ -2,7 +2,8 @@
 
 0.3
 
-- Added Refresh button to tree view item context menu
+- Added a Refresh button to health check context menu
+- Added TCP port health check
 
 0.2
 

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AnyStatus.VSPackage
+﻿namespace AnyStatus.VSPackage
 {
     class GuidList
     {
+        //todo: move guids in here
     }
 }

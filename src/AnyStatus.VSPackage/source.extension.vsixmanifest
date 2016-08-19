@@ -4,6 +4,7 @@
     <Identity Id="AnyStatus.VSPackage.6f25620d-ff50-42d1-89da-709a45cebe10" Version="0.4" Language="en-US" Publisher="Alon Amsalem" />
     <DisplayName>AnyStatus</DisplayName>
     <Description xml:space="preserve">Monitor the health, status and availability of services.</Description>
+    <MoreInfo>https://github.com/AlonAm/AnyStatus</MoreInfo>
     <License>Resources\License.txt</License>
     <ReleaseNotes>Resources\ReleaseNotes.txt</ReleaseNotes>
     <PreviewImage>Resources\Preview.png</PreviewImage>
