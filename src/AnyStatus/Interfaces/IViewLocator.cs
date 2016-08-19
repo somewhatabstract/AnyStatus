@@ -5,6 +5,6 @@ namespace AnyStatus.Interfaces
 {
     public interface IViewLocator
     {
-        NewStatusDialog NewStatusDialog(Item parent);
+        NewItemDialog NewStatusDialog(Item parent);
     }
 }

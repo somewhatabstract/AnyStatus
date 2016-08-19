@@ -13,7 +13,7 @@ using System.Windows.Media;
 
 namespace AnyStatus.ViewModels
 {
-    public class NewStatusViewModel : INotifyPropertyChanged
+    public class NewItemViewModel : INotifyPropertyChanged
     {
         private Template _selectedTemplate;
         private IUserSettings _userSettings;
@@ -21,7 +21,7 @@ namespace AnyStatus.ViewModels
 
         public event EventHandler CloseRequested;
 
-        public NewStatusViewModel(IUserSettings userSettings,
+        public NewItemViewModel(IUserSettings userSettings,
                                   IEnumerable<Template> templates,
                                   ILogger logger)
         {

@@ -14,10 +14,10 @@ namespace AnyStatus.Infrastructure
             _container = container;
         }
 
-        public NewStatusDialog NewStatusDialog(Item parent)
+        public NewItemDialog NewStatusDialog(Item parent)
         {
-            var view = _container.Resolve<NewStatusDialog>();
-            var viewModel = _container.Resolve<NewStatusViewModel>();
+            var view = _container.Resolve<NewItemDialog>();
+            var viewModel = _container.Resolve<NewItemViewModel>();
 
             viewModel.CloseRequested += (s, e) => { view.Close(); };
 

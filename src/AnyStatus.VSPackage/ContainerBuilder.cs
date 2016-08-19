@@ -39,8 +39,8 @@ namespace AnyStatus.VSPackage
             container.Register<ToolWindowControl>().AsSingleton();
             container.Register<ToolWindowViewModel>().AsSingleton();
 
-            container.Register<NewStatusDialog>().AsMultiInstance();
-            container.Register<NewStatusViewModel>().AsMultiInstance();
+            container.Register<NewItemDialog>().AsMultiInstance();
+            container.Register<NewItemViewModel>().AsMultiInstance();
 
             //handlers
             container.Register<IHandler<JenkinsBuild>, JenkinsBuildHandler>().AsMultiInstance();
