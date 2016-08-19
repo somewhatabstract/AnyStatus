@@ -79,7 +79,6 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="Resources\Icons.png" />
-    <Content Include="Resources\ToolWindowCommand.png" />
     <Content Include="Resources\ToolWindowPackage.ico" />
     <VSCTCompile Include="ToolWindowPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
