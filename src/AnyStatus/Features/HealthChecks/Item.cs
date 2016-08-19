@@ -13,6 +13,7 @@ namespace AnyStatus.Models
     [XmlInclude(typeof(JenkinsBuild))]
     [XmlInclude(typeof(HttpStatus))]
     [XmlInclude(typeof(Ping))]
+    [XmlInclude(typeof(TcpPort))]
     public class Item : INotifyPropertyChanged
     {
         private string _name;

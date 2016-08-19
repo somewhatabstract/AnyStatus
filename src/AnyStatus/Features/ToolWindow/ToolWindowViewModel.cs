@@ -142,6 +142,27 @@ namespace AnyStatus.ViewModels
                     Debug.WriteLine(ex);
                 }
             });
+
+            RefreshItemCommand = new RelayCommand(p =>
+            {
+                try
+                {
+                    var item = p as Item;
+
+                    if (item == null)
+                    {
+                        return;
+                    }
+
+                    var job = JobManager.GetSchedule(item.Id.ToString());
+
+                    job.Execute();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                }
+            });
         }
 
         #region Commands
@@ -152,6 +173,8 @@ namespace AnyStatus.ViewModels
 
         public ICommand AddItemCommand { get; set; }
         public ICommand RemoveItemCommand { get; set; }
+
+        public ICommand RefreshItemCommand { get; set; }
 
         public ICommand SaveCommand { get; set; }
 

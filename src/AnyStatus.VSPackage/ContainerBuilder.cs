@@ -6,12 +6,14 @@ using AnyStatus.Views;
 using FluentScheduler;
 using Microsoft.VisualStudio.Shell;
 using System;
+using System.Collections.Generic;
 
 namespace AnyStatus.VSPackage
 {
     internal class ContainerBuilder
     {
         private readonly Package _package;
+
         public ContainerBuilder(Package package)
         {
             if (package == null)
@@ -44,6 +46,17 @@ namespace AnyStatus.VSPackage
             container.Register<IHandler<JenkinsBuild>, JenkinsBuildHandler>().AsMultiInstance();
             container.Register<IHandler<HttpStatus>, HttpStatusHandler>().AsMultiInstance();
             container.Register<IHandler<Ping>, PingHandler>().AsMultiInstance();
+            container.Register<IHandler<TcpPort>, TcpPortHandler>().AsMultiInstance();
+
+            //templates
+            var templates = new List<Template> {
+                new Template("HTTP Status", new HttpStatus()),
+                new Template("Ping", new Ping()),
+                new Template("TCP Port", new TcpPort()),
+                new Template("Jenkins Build", new JenkinsBuild())
+            };
+
+            container.Register<IEnumerable<Template>>(templates);
 
             return container;
         }

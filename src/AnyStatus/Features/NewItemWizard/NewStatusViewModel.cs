@@ -21,43 +21,24 @@ namespace AnyStatus.ViewModels
 
         public event EventHandler CloseRequested;
 
-        public NewStatusViewModel(IUserSettings userSettings, ILogger logger)
+        public NewStatusViewModel(IUserSettings userSettings,
+                                  IEnumerable<Template> templates,
+                                  ILogger logger)
         {
             if (userSettings == null)
-            {
                 throw new ArgumentNullException(nameof(userSettings));
-            }
 
             _userSettings = userSettings;
             _logger = logger;
+
+            Templates = templates.ToList();
+            SelectedTemplate = Templates?.FirstOrDefault();
 
             Initialize();
         }
 
         private void Initialize()
         {
-            //todo: move to container/bootstrap
-
-            Templates = new List<Template> {
-                new Template
-                {
-                    Name = "HTTP Status",
-                    Item = new HttpStatus()
-                },
-                new Template
-                {
-                    Name = "Ping",
-                    Item = new Ping()
-                },
-                new Template
-                {
-                    Name = "Jenkins Build",
-                    Item = new JenkinsBuild()
-                }
-            };
-
-            SelectedTemplate = Templates.FirstOrDefault();
-
             AddCommand = new RelayCommand(p =>
             {
                 var item = SelectedTemplate.Item;

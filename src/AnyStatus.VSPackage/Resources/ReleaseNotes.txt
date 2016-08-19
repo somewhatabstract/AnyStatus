@@ -1,1 +1,13 @@
-﻿
+﻿Release Notes
+
+0.3
+
+- Added Refresh button to tree view item context menu
+
+0.2
+
+- Added Ping
+
+0.1
+
+- Initial alpha version

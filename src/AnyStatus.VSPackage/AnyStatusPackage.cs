@@ -5,7 +5,6 @@ using Microsoft.VisualStudio.Shell;
 using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Net;
 using System.Runtime.InteropServices;
 
 namespace AnyStatus.VSPackage
@@ -24,22 +23,12 @@ namespace AnyStatus.VSPackage
 
         public const int ToolbarId = 0x1000;
 
-        public AnyStatusPackage()
-        {
-            // Inside this method you can place any initialization code that does not require
-            // any Visual Studio service because at this point the package object is created but
-            // not sited yet inside Visual Studio environment. The place to do all the other
-            // initialization is the Initialize method.
-        }
-
         protected override void Initialize()
         {
             base.Initialize();
 
             try
             {
-                IgnoreSslErrors();
-
                 var container = new ContainerBuilder(this).Build();
 
                 var toolWindowCommand = container.Resolve<ToolWindowCommand>();
@@ -54,11 +43,6 @@ namespace AnyStatus.VSPackage
             {
                 Debug.WriteLine(ex);
             }
-        }
-
-        private static void IgnoreSslErrors()
-        {
-            ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
         }
     }
 }
