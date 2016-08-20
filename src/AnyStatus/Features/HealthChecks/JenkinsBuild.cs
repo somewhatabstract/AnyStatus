@@ -32,7 +32,7 @@ namespace AnyStatus.Models
     {
         public void Handle(JenkinsBuild item)
         {
-            Validate(item);
+            Validate(item);//todo: move to handler validation decorator
 
             var build = GetBuildDetailsAsync(item).Result;
 
