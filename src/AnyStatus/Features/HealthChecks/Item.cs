@@ -9,11 +9,12 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 namespace AnyStatus.Models
 {
     [Serializable]
-    [XmlInclude(typeof(Folder))]
-    [XmlInclude(typeof(JenkinsBuild))]
-    [XmlInclude(typeof(HttpStatus))]
     [XmlInclude(typeof(Ping))]
     [XmlInclude(typeof(TcpPort))]
+    [XmlInclude(typeof(HttpStatus))]
+    [XmlInclude(typeof(Folder))]
+    [XmlInclude(typeof(JenkinsBuild))]
+    [XmlInclude(typeof(TeamCityBuild))]
     public class Item : INotifyPropertyChanged
     {
         private string _name;

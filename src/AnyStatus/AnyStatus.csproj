@@ -131,6 +131,7 @@
     </Compile>
     <Compile Include="Features\EditItem\EditItemViewModel.cs" />
     <Compile Include="Features\HealthChecks\TcpPort.cs" />
+    <Compile Include="Features\HealthChecks\TeamCityBuild.cs" />
     <Compile Include="Features\ToolWindow\EditableTextBlock.cs" />
     <Compile Include="Infrastructure\ItemRegistry.cs" />
     <Compile Include="Infrastructure\Logger.cs" />
