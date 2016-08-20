@@ -1,13 +1,14 @@
-﻿using RestSharp;
-using RestSharp.Serializers;
-using System;
+﻿using System;
 using System.ComponentModel;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 using System.Windows.Media;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace AnyStatus.Models
 {
-    [DisplayName("Jenkins Build")] //todo: wire display-name to template name
+    [DisplayName("Jenkins Build")]
     public class JenkinsBuild : Item
     {
         [PropertyOrder(1)]
@@ -22,61 +23,66 @@ namespace AnyStatus.Models
         //[DisplayName("API Token")]
         //public string ApiToken { get; set; }
 
-        //[PropertyOrder(3)]
-        //[DisplayName("Ignore SSL Errors")]
-        //public bool IgnoreSslErrors { get; set; }
+        [PropertyOrder(3)]
+        [DisplayName("Ignore SSL Errors")]
+        public bool IgnoreSslErrors { get; set; }
     }
 
     public class JenkinsBuildHandler : IHandler<JenkinsBuild>
     {
-        private const string ApiUrl = "/lastBuild/api/json?tree=result,building";
-
         public void Handle(JenkinsBuild item)
         {
             Validate(item);
 
-            var build = GetBuildDetails(item);
+            var build = GetBuildDetailsAsync(item).Result;
 
-            if (build.IsInProgress)
+            SetItemColor(item, build);
+        }
+
+        private async Task<JenkinsBuildDetails> GetBuildDetailsAsync(JenkinsBuild item)
+        {
+            using (var handler = new WebRequestHandler())
             {
-                build.Result = "INPROGRESS";
-            }
+                if (item.IgnoreSslErrors)
+                {
+                    handler.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
+                }
 
-            SetItemColor(item, build.Result);
+                using (var client = new HttpClient(handler))
+                {
+                    var apiUrl = $"{item.Url}/lastBuild/api/json?tree=result,building";
+
+                    var response = await client.GetAsync(apiUrl);
+
+                    response.EnsureSuccessStatusCode();
+
+                    var content = await response.Content.ReadAsStringAsync();
+
+                    var buildDetails = new JavaScriptSerializer().Deserialize<JenkinsBuildDetails>(content);
+
+                    return buildDetails;
+                }
+            }
         }
 
         private static void Validate(JenkinsBuild item)
         {
-            //todo: replace with validation decorator
-
             if (item == null || string.IsNullOrEmpty(item.Url))
             {
-                throw new InvalidOperationException("Invalid item."); 
+                throw new InvalidOperationException("Invalid item.");
             }
         }
 
-        private static JenkinsBuildResponse GetBuildDetails(JenkinsBuild item)
+        private static void SetItemColor(JenkinsBuild item, JenkinsBuildDetails build)
         {
-            var client = new RestClient(item.Url);
-
-            var response = client.Execute<JenkinsBuildResponse>(new RestRequest(ApiUrl));
-
-            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            if (build.IsInProgress)
             {
-                throw new Exception($"Unexpected HTTP status code {response.StatusCode}");
+                item.Brush = Brushes.DodgerBlue;
+                return;
             }
 
-            return response.Data;
-        }
-
-        private static void SetItemColor(JenkinsBuild item, string status)
-        {
-            switch (status)
+            switch (build.Result)
             {
-                case "INPROGRESS":
-                    item.Brush = Brushes.DodgerBlue;
-                    break;
-
                 case "SUCCESS":
                     item.Brush = Brushes.Green;
                     break;
@@ -99,20 +105,18 @@ namespace AnyStatus.Models
         }
     }
 
-    public class JenkinsBuildResponse
+    public class JenkinsBuildDetails
     {
         public bool IsInProgress
         {
             get
             {
-                return bool.Parse(Building);
+                return Building;
             }
         }
 
-        [SerializeAs(Name = "building")]
-        public string Building { get; set; }
+        public bool Building { get; set; }
 
-        [SerializeAs(Name = "result")]
         public string Result { get; set; }
     }
 }

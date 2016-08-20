@@ -37,7 +37,7 @@ namespace AnyStatus.Models
                     handler.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
                 }
 
-                using (var client = new HttpClient())
+                using (var client = new HttpClient(handler))
                 {
                     var response = client.GetAsync(item.Url).Result;
 
