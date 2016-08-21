@@ -15,9 +15,9 @@ namespace AnyStatus.ViewModels
 {
     public class NewItemViewModel : INotifyPropertyChanged
     {
+        private ILogger _logger;
         private Template _selectedTemplate;
         private IUserSettings _userSettings;
-        private ILogger _logger;
 
         public event EventHandler CloseRequested;
 
@@ -31,8 +31,15 @@ namespace AnyStatus.ViewModels
             _userSettings = userSettings;
             _logger = logger;
 
-            Templates = templates.ToList();
-            SelectedTemplate = Templates?.FirstOrDefault();
+            Templates = new List<Template> {
+                new Template("Ping", new Ping()),
+                new Template("TCP Port", new TcpPort()),
+                new Template("HTTP Status", new HttpStatus()),
+                new Template("Jenkins Build", new JenkinsBuild()),
+                new Template("TeamCity Build", new TeamCityBuild()),
+            };
+
+            SelectedTemplate = Templates.First();
 
             Initialize();
         }

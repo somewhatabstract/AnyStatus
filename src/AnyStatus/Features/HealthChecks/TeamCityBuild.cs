@@ -14,20 +14,24 @@ namespace AnyStatus.Models
     public class TeamCityBuild : Item
     {
         [PropertyOrder(1)]
-        [Description("TeamCity server host name or IP address.")]
+        [Description("TeamCity server Host Name or IP Address. For example: https://teamcity.jetbrains.com")]
         public string Host { get; set; }
 
         [PropertyOrder(2)]
+        [DisplayName("Build Type Id")]
+        [Description("TeamCity build type id (You can copy it from TeamCity build URL address).")]
         public string BuildTypeId { get; set; }
 
         [PropertyOrder(3)]
+        [DisplayName("Guest User")]
+        [Description("If checked, the User Name and Password fields are ignored.")]
         public bool GuestUser { get; set; }
 
         [PropertyOrder(4)]
         public string UserName { get; set; }
 
         [PropertyOrder(5)]
-        [PasswordPropertyText]
+        [PasswordPropertyText(true)]
         public string Password { get; set; }
 
         [PropertyOrder(6)]
