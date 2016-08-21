@@ -44,15 +44,13 @@
                            ShowSortOptions="False" 
                            ShowSummary="True"
                            ShowTitle="True"
-                           Background="{DynamicResource {x:Static vsp:EnvironmentColors.ToolWindowBackgroundBrushKey}}"
-                           Foreground="{DynamicResource {x:Static vsp:EnvironmentColors.ToolWindowTextBrushKey}}"
                            BorderBrush="{x:Null}"
                            SelectedObject="{Binding SelectedTemplate.Item}"
                            SelectedObjectTypeName="{Binding SelectedTemplate.Name}">
         </xctk:PropertyGrid>
 
         <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Command="{Binding AddCommand}" Width="70" Margin="3">Add</Button>
+            <Button Command="{Binding AddCommand}" CommandParameter="{Binding SelectedTemplate.Item}" Width="70" Margin="3">Add</Button>
             <Button Command="{Binding CancelCommand}" Width="70" Margin="3">Cancel</Button>
         </StackPanel>
 

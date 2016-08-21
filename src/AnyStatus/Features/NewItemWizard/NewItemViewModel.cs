@@ -5,11 +5,9 @@ using FluentScheduler;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace AnyStatus.ViewModels
 {
@@ -20,22 +18,19 @@ namespace AnyStatus.ViewModels
 
         public event EventHandler CloseRequested;
 
-        public NewItemViewModel(IUserSettings userSettings)
+        public NewItemViewModel(IUserSettings userSettings, IEnumerable<Template> templates)
         {
             if (userSettings == null)
                 throw new ArgumentNullException(nameof(userSettings));
 
+            if (templates == null)
+                throw new ArgumentNullException(nameof(templates));
+
             _userSettings = userSettings;
 
-            Templates = new List<Template> {
-                new Template("Ping", new Ping()),
-                new Template("TCP Port", new TcpPort()),
-                new Template("HTTP Status", new HttpStatus()),
-                new Template("Jenkins Build", new JenkinsBuild()),
-                new Template("TeamCity Build", new TeamCityBuild()),
-            };
+            Templates = templates;
 
-            SelectedTemplate = Templates.First();
+            SelectedTemplate = Templates?.FirstOrDefault();
 
             Initialize();
         }
@@ -44,7 +39,12 @@ namespace AnyStatus.ViewModels
         {
             AddCommand = new RelayCommand(p =>
             {
-                var item = SelectedTemplate.Item;
+                var item = p as Item;
+
+                if (item == null)
+                {
+                    return;
+                }
 
                 item.Id = Guid.NewGuid();
 
@@ -61,7 +61,8 @@ namespace AnyStatus.ViewModels
 
                 _userSettings.Save();
 
-                JobManager.AddJob(new ScheduledJob(item), schedule => schedule.WithName(item.Id.ToString()).ToRunNow().AndEvery(item.Interval).Minutes());
+                JobManager.AddJob(new ScheduledJob(item), 
+                    schedule => schedule.WithName(item.Id.ToString()).ToRunNow().AndEvery(item.Interval).Minutes());
 
                 CloseRequested?.Invoke(this, EventArgs.Empty);
             });
@@ -85,7 +86,7 @@ namespace AnyStatus.ViewModels
             }
         }
 
-        public List<Template> Templates { get; set; }
+        public IEnumerable<Template> Templates { get; set; }
 
         public Item Parent { get; internal set; }
 

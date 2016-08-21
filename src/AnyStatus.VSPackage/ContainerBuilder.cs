@@ -49,15 +49,17 @@ namespace AnyStatus.VSPackage
             container.Register<IHandler<TcpPort>, TcpPortHandler>().AsMultiInstance();
             container.Register<IHandler<TeamCityBuild>, TeamCityBuildHandler>().AsMultiInstance();
 
-            //templates - BUG - the list has to be re-created when the window opens
-            //var templates = new List<Template> {
-            //    new Template("HTTP Status", new HttpStatus()),
-            //    new Template("Ping", new Ping()),
-            //    new Template("TCP Port", new TcpPort()),
-            //    new Template("Jenkins Build", new JenkinsBuild()),
-            //    new Template("TeamCity Build", new TeamCityBuild()),
-            //};
-            //container.Register<IEnumerable<Template>>(templates);
+            //templates
+            container.Register<IEnumerable<Template>>((c, p) =>
+            {
+                return new List<Template>(){
+                    new Template("Ping", new Ping()),
+                    new Template("TCP Port", new TcpPort()),
+                    new Template("HTTP Status", new HttpStatus()),
+                    new Template("Jenkins Build", new JenkinsBuild()),
+                    new Template("TeamCity Build", new TeamCityBuild()),
+                };
+            });
 
             return container;
         }
