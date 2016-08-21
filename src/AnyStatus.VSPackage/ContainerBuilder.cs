@@ -35,10 +35,8 @@ namespace AnyStatus.VSPackage
 
             //views
             container.Register<IViewLocator, ViewLocator>().AsSingleton();
-
             container.Register<ToolWindowControl>().AsSingleton();
             container.Register<ToolWindowViewModel>().AsSingleton();
-
             container.Register<NewItemDialog>().AsMultiInstance();
             container.Register<NewItemViewModel>().AsMultiInstance();
 
