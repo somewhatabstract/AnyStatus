@@ -24,10 +24,11 @@ namespace AnyStatus.Models
 
         [PropertyOrder(3)]
         [DisplayName("Guest User")]
-        [Description("If checked, the User Name and Password fields are ignored.")]
+        [Description("Use TeamCity guest user to login. If checked, the User Name and Password are ignored.")]
         public bool GuestUser { get; set; }
 
         [PropertyOrder(4)]
+        [DisplayName("User Name")]
         public string UserName { get; set; }
 
         [PropertyOrder(5)]

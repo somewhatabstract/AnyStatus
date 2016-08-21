@@ -8,10 +8,10 @@
              xmlns:local="clr-namespace:AnyStatus.Views"
              xmlns:vm="clr-namespace:AnyStatus.ViewModels"
              mc:Ignorable="d" 
-             Height="350"
-             Width="550"
+             Height="400"
+             Width="650"
              WindowStartupLocation="CenterOwner"
-             Title="New"
+             Title="New Item"
              d:DataContext="{d:DesignInstance Type=vm:NewItemViewModel}">
     <Grid>
         <Grid.ColumnDefinitions>
