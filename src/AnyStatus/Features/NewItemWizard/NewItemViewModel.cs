@@ -15,21 +15,17 @@ namespace AnyStatus.ViewModels
 {
     public class NewItemViewModel : INotifyPropertyChanged
     {
-        private ILogger _logger;
         private Template _selectedTemplate;
         private IUserSettings _userSettings;
 
         public event EventHandler CloseRequested;
 
-        public NewItemViewModel(IUserSettings userSettings,
-                                  IEnumerable<Template> templates,
-                                  ILogger logger)
+        public NewItemViewModel(IUserSettings userSettings)
         {
             if (userSettings == null)
                 throw new ArgumentNullException(nameof(userSettings));
 
             _userSettings = userSettings;
-            _logger = logger;
 
             Templates = new List<Template> {
                 new Template("Ping", new Ping()),
@@ -65,23 +61,7 @@ namespace AnyStatus.ViewModels
 
                 _userSettings.Save();
 
-                Action job = () =>
-                {
-                    try
-                    {
-                        var a = typeof(IHandler<>);
-                        var b = a.MakeGenericType(item.GetType());
-                        var handler = TinyIoCContainer.Current.Resolve(b);
-                        b.GetMethod("Handle").Invoke(handler, new[] { item });
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.WriteLine(ex);
-                        item.Brush = Brushes.Gray;
-                    }
-                };
-
-                JobManager.AddJob(job, schedule => schedule.WithName(item.Id.ToString()).ToRunNow().AndEvery(item.Interval).Minutes());
+                JobManager.AddJob(new ScheduledJob(item), schedule => schedule.WithName(item.Id.ToString()).ToRunNow().AndEvery(item.Interval).Minutes());
 
                 CloseRequested?.Invoke(this, EventArgs.Empty);
             });
@@ -109,11 +89,9 @@ namespace AnyStatus.ViewModels
 
         public Item Parent { get; internal set; }
 
-        #region Command
+        #region Commands
 
         public ICommand AddCommand { get; set; }
-
-        public ICommand TestCommand { get; set; }
 
         public ICommand CancelCommand { get; set; }
 

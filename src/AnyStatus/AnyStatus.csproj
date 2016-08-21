@@ -134,6 +134,7 @@
     <Compile Include="Features\HealthChecks\TeamCityBuild.cs" />
     <Compile Include="Features\ToolWindow\EditableTextBlock.cs" />
     <Compile Include="Infrastructure\ItemRegistry.cs" />
+    <Compile Include="Infrastructure\ScheduledJob.cs" />
     <Compile Include="Infrastructure\Logger.cs" />
     <Compile Include="Infrastructure\Retry.cs" />
     <Compile Include="Infrastructure\ViewLocator.cs" />
