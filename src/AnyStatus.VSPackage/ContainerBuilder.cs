@@ -47,13 +47,15 @@ namespace AnyStatus.VSPackage
             container.Register<IHandler<HttpStatus>, HttpStatusHandler>().AsMultiInstance();
             container.Register<IHandler<Ping>, PingHandler>().AsMultiInstance();
             container.Register<IHandler<TcpPort>, TcpPortHandler>().AsMultiInstance();
+            container.Register<IHandler<TeamCityBuild>, TeamCityBuildHandler>().AsMultiInstance();
 
             //templates
             var templates = new List<Template> {
                 new Template("HTTP Status", new HttpStatus()),
                 new Template("Ping", new Ping()),
                 new Template("TCP Port", new TcpPort()),
-                new Template("Jenkins Build", new JenkinsBuild())
+                new Template("Jenkins Build", new JenkinsBuild()),
+                new Template("TeamCity Build", new TeamCityBuild()),
             };
 
             container.Register<IEnumerable<Template>>(templates);

@@ -75,7 +75,7 @@ namespace AnyStatus.Models
 
         private static void SetItemColor(JenkinsBuild item, JenkinsBuildDetails build)
         {
-            if (build.IsInProgress)
+            if (build.Building)
             {
                 item.Brush = Brushes.DodgerBlue;
                 return;
@@ -107,14 +107,6 @@ namespace AnyStatus.Models
 
     public class JenkinsBuildDetails
     {
-        public bool IsInProgress
-        {
-            get
-            {
-                return Building;
-            }
-        }
-
         public bool Building { get; set; }
 
         public string Result { get; set; }
