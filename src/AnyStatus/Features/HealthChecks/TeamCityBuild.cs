@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -47,14 +48,14 @@ namespace AnyStatus.Models
 
         private async Task<TeamCityBuildDetails> GetBuildDetailsAsync(TeamCityBuild item)
         {
-            string authType = string.Empty;
-
             using (var handler = new WebRequestHandler())
             {
                 if (item.IgnoreSslErrors)
                 {
                     handler.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
                 }
+
+                string authType = string.Empty;
 
                 if (item.GuestUser)
                 {
@@ -80,6 +81,11 @@ namespace AnyStatus.Models
 
                     var buildResponse = new JavaScriptSerializer().Deserialize<TeamCityBuildDetailsResponse>(content);
 
+                    if (buildResponse == null || !buildResponse.Build.Any())
+                    {
+                        throw new Exception("Invalid TeamCity response.");
+                    }
+
                     return buildResponse.Build[0];
                 }
             }
@@ -93,6 +99,12 @@ namespace AnyStatus.Models
                 return;
             }
 
+            //if (build.CancelledInfo)
+            //{
+            //    item.Brush = Brushes.Gray;
+            //    return;
+            //}
+
             switch (build.Status)
             {
                 case "SUCCESS":
@@ -100,7 +112,12 @@ namespace AnyStatus.Models
                     break;
 
                 case "FAILURE":
+                case "ERROR":
                     item.Brush = Brushes.Red;
+                    break;
+
+                case "UNKNOWN":
+                    item.Brush = Brushes.Gray;
                     break;
 
                 default:
@@ -110,6 +127,7 @@ namespace AnyStatus.Models
 
         private static void Validate(TeamCityBuild item)
         {
+            //todo: move to handler validation decorator
             if (item == null || string.IsNullOrEmpty(item.Host) || string.IsNullOrEmpty(item.BuildTypeId))
             {
                 throw new InvalidOperationException("Invalid item.");
