@@ -1,9 +1,18 @@
 version: 0.4.{build}
 
+branches:
+  only:
+  - master
+
+configuration: Release
+
+platform: Any CPU
+
 install:
   - ps: (new-object Net.WebClient).DownloadString("https://raw.github.com/madskristensen/ExtensionScripts/master/AppVeyor/vsix.ps1") | iex
 
 before_build:
+  - cmd: nuget restore src\AnyStatus.sln
   - ps: Vsix-IncrementVsixVersion | Vsix-UpdateBuildVersion
 
 build_script:
@@ -11,3 +20,7 @@ build_script:
 
 after_test:
   - ps: Vsix-PushArtifacts | Vsix-PublishToGallery
+  
+artifacts:
+- path: '**\*.vsix'
+  name: VSPackage
