@@ -22,5 +22,5 @@ after_test:
   - ps: Vsix-PushArtifacts | Vsix-PublishToGallery
   
 artifacts:
-- path: '**\*.vsix'
+- path: 'rc\AnyStatus.VSPackage\bin\$(configuration)\AnyStatus.vsix'
   name: VSPackage
