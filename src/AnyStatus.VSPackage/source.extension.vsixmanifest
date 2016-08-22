@@ -6,8 +6,9 @@
     <Description xml:space="preserve">Monitor the health, status and availability of services.</Description>
     <MoreInfo>https://github.com/AlonAm/AnyStatus</MoreInfo>
     <License>Resources\License.txt</License>
+    <Icon>Resources\StatusSecurityOK_32x.png</Icon>
     <PreviewImage>Resources\Preview.png</PreviewImage>
-    <Tags>Monitoring, Monitor, Status, Build, TFS, Jenkins, TeamCity, Health, Cloud</Tags>
+    <Tags>Monitoring, Monitor, Status, Build, TFS, Jenkins, TeamCity, CI, Cloud, AppVeyor, Travis CI</Tags>
   </Metadata>
   <Installation>
     <InstallationTarget Version="[12.0,15.0)" Id="Microsoft.VisualStudio.Community" />

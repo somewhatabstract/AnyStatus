@@ -75,6 +75,10 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="Resources\Icons.png" />
+    <Content Include="Resources\StatusSecurityOK_32x.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="Resources\ToolWindowPackage.ico" />
     <VSCTCompile Include="ToolWindowPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
@@ -222,7 +226,7 @@
   <Import Project="..\packages\Microsoft.VSSDK.BuildTools.14.3.25407\build\Microsoft.VSSDK.BuildTools.targets" Condition="Exists('..\packages\Microsoft.VSSDK.BuildTools.14.3.25407\build\Microsoft.VSSDK.BuildTools.targets')" />
   <PropertyGroup>
     <PostBuildEvent>del "$(TargetDir)AnyStatus.vsix"
-rename "$(TargetPath)" "AnyStatus.vsix"</PostBuildEvent>
+rename "$(TargetDir)AnyStatus.VSPackage.vsix" "AnyStatus.vsix"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
