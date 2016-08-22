@@ -1,0 +1,14 @@
+{
+  "images": {
+    "statussecurityok_16x": "StatusSecurityOK_16x.png",
+    "settings_16x": "Settings_16x.png"
+  },
+  "orientation": "horizontal",
+  "optimize": "lossless",
+  "padding": 0,
+  "output": "png",
+  "pathprefix": "",
+  "customstyles": {
+    "display": "block"
+  }
+}

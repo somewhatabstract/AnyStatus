@@ -58,7 +58,7 @@
 
       <Button guid="guidToolWindowPackageCmdSet" id="ToolWindowCommandId" priority="0x0100" type="Button">
         <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1"/>
-        <!--<Icon guid="guidImages" id="bmpPic1" />-->
+        <Icon guid="guidIcons" id="bmpLogo" />
         <Strings>
           <ButtonText>AnyStatus</ButtonText>
         </Strings>
@@ -86,7 +86,7 @@
     </Buttons>
 
     <Bitmaps>
-      <Bitmap guid="guidIcons" href="Resources\Icons.png" usedList="bmpSettings"/>
+      <Bitmap guid="guidIcons" href="Resources\Icons\Icons.sprite.png" usedList="bmpLogo,bmpSettings"/>
     </Bitmaps>
 
   </Commands>
@@ -107,7 +107,8 @@
     </GuidSymbol>
 
     <GuidSymbol name="guidIcons" value="{9A059648-419C-4693-B822-13AD144B8A62}">
-      <IDSymbol name="bmpSettings" value="1" />
+      <IDSymbol name="bmpLogo" value="1" />
+      <IDSymbol name="bmpSettings" value="2" />
     </GuidSymbol>
     
   </Symbols>
