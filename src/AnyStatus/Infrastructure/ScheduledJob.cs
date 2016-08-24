@@ -22,10 +22,10 @@ namespace AnyStatus.Infrastructure
         {
             try
             {
-                var a = typeof(IHandler<>);
-                var b = a.MakeGenericType(_item.GetType());
-                var handler = TinyIoCContainer.Current.Resolve(b);
-                b.GetMethod("Handle").Invoke(handler, new[] { _item });
+                var handlerType = typeof(IHandler<>);
+                var genericHandlerType = handlerType.MakeGenericType(_item.GetType());
+                var handler = TinyIoCContainer.Current.Resolve(genericHandlerType);
+                genericHandlerType.GetMethod("Handle").Invoke(handler, new[] { _item });
             }
             catch (Exception ex)
             {

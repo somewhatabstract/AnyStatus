@@ -10,12 +10,13 @@
              mc:Ignorable="d" 
              Height="400"
              Width="650"
-             WindowStartupLocation="CenterOwner"
-             Title="New Item"
+             WindowStartupLocation="CenterScreen"
+             Title="New"
              d:DataContext="{d:DesignInstance Type=vm:NewViewModel}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition MinWidth="100" Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="3"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
@@ -24,34 +25,39 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <ListBox Grid.Column="0" 
-                 Grid.Row="0" 
+        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical">
+            <!--<TextBlock FontWeight="Bold" HorizontalAlignment="Left">Health Checks</TextBlock>-->
+            <ListBox
                  ItemsSource="{Binding Templates}" 
                  SelectedItem="{Binding SelectedTemplate}" 
                  BorderBrush="{x:Null}"
                  Margin="3">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Name}" Height="40" Padding="12"/>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-
-        <xctk:PropertyGrid Grid.Column="1"
-                           Grid.Row="0"
-                           Margin="3"
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" Height="40" Padding="12"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+        
+        <GridSplitter Grid.Column="1" Grid.RowSpan="2" Foreground="Gray" HorizontalAlignment="Stretch"/>
+        
+        <StackPanel Grid.Column="2" Grid.Row="0" Orientation="Vertical">
+            <TextBlock FontSize="24" Text="{Binding SelectedTemplate.Name}" Margin="15,5,5,5"></TextBlock>
+            <xctk:PropertyGrid Margin="3"
                            ShowSearchBox="False" 
                            ShowSortOptions="False" 
                            ShowSummary="True"
-                           ShowTitle="True"
+                           ShowTitle="False"
                            BorderBrush="{x:Null}"
+                           Background="White"
                            SelectedObject="{Binding SelectedTemplate.Item}"
-                           SelectedObjectTypeName="{Binding SelectedTemplate.Name}">
-        </xctk:PropertyGrid>
-
-        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Command="{Binding AddCommand}" CommandParameter="{Binding SelectedTemplate.Item}" Width="70" Margin="3">Add</Button>
-            <Button Command="{Binding CancelCommand}" Width="70" Margin="3">Cancel</Button>
+                           SelectedObjectTypeName="{Binding SelectedTemplate.Name}"/>
+        </StackPanel>
+       
+        <StackPanel Grid.Column="2" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Command="{Binding AddCommand}" CommandParameter="{Binding SelectedTemplate.Item}" Width="70" Margin="5">Add</Button>
+            <Button Command="{Binding CancelCommand}" Width="70" Margin="5">Cancel</Button>
         </StackPanel>
 
     </Grid>
