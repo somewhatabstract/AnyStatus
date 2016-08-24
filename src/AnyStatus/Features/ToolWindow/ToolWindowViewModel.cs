@@ -111,7 +111,23 @@ namespace AnyStatus.ViewModels
                 {
                     var selectedItem = p as Item;
 
-                    var dlg = _viewLocator.NewStatusDialog(selectedItem);
+                    var dlg = _viewLocator.NewWindow(selectedItem);
+
+                    dlg.ShowDialog();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                }
+            });
+
+            EditItemCommand = new RelayCommand(p =>
+            {
+                try
+                {
+                    var selectedItem = p as Item;
+
+                    var dlg = _viewLocator.EditWindow(selectedItem);
 
                     dlg.ShowDialog();
                 }
@@ -173,7 +189,7 @@ namespace AnyStatus.ViewModels
 
         public ICommand AddItemCommand { get; set; }
         public ICommand RemoveItemCommand { get; set; }
-
+        public ICommand EditItemCommand { get; set; }
         public ICommand RefreshItemCommand { get; set; }
 
         public ICommand SaveCommand { get; set; }

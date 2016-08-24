@@ -77,7 +77,9 @@
                                 <MenuItem Header="Refresh" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.RefreshItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}"/>
-                                <Separator/>
+                                <MenuItem Header="Edit" 
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.EditItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                                          CommandParameter="{Binding}"/>
                                 <MenuItem Header="Rename" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.RenameCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}"/>

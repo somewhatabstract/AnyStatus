@@ -1,4 +1,5 @@
-﻿using AnyStatus.Infrastructure;
+﻿using AnyStatus.Features.Edit;
+using AnyStatus.Infrastructure;
 using AnyStatus.Interfaces;
 using AnyStatus.Models;
 using AnyStatus.ViewModels;
@@ -37,8 +38,10 @@ namespace AnyStatus.VSPackage
             container.Register<IViewLocator, ViewLocator>().AsSingleton();
             container.Register<ToolWindowControl>().AsSingleton();
             container.Register<ToolWindowViewModel>().AsSingleton();
-            container.Register<NewItemDialog>().AsMultiInstance();
-            container.Register<NewItemViewModel>().AsMultiInstance();
+            container.Register<NewWindow>().AsMultiInstance();
+            container.Register<NewViewModel>().AsMultiInstance();
+            container.Register<EditWindow>().AsMultiInstance();
+            container.Register<EditViewModel>().AsMultiInstance();
 
             //handlers
             container.Register<IHandler<JenkinsBuild>, JenkinsBuildHandler>().AsMultiInstance();

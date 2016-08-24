@@ -11,14 +11,14 @@ using System.Windows.Input;
 
 namespace AnyStatus.ViewModels
 {
-    public class NewItemViewModel : INotifyPropertyChanged
+    public class NewViewModel : INotifyPropertyChanged
     {
         private Template _selectedTemplate;
         private IUserSettings _userSettings;
 
         public event EventHandler CloseRequested;
 
-        public NewItemViewModel(IUserSettings userSettings, IEnumerable<Template> templates)
+        public NewViewModel(IUserSettings userSettings, IEnumerable<Template> templates)
         {
             if (userSettings == null)
                 throw new ArgumentNullException(nameof(userSettings));

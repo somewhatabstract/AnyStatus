@@ -5,9 +5,9 @@ namespace AnyStatus.Views
     /// <summary>
     /// Interaction logic for NewStatusDialog.xaml
     /// </summary>
-    public partial class NewItemDialog : Window
+    public partial class NewWindow : Window
     {
-        public NewItemDialog()
+        public NewWindow()
         {
             InitializeComponent();
         }

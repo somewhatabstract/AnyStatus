@@ -1,4 +1,5 @@
-﻿using AnyStatus.Interfaces;
+﻿using AnyStatus.Features.Edit;
+using AnyStatus.Interfaces;
 using AnyStatus.Models;
 using AnyStatus.ViewModels;
 using AnyStatus.Views;
@@ -14,14 +15,27 @@ namespace AnyStatus.Infrastructure
             _container = container;
         }
 
-        public NewItemDialog NewStatusDialog(Item parent)
+        public NewWindow NewWindow(Item parent)
         {
-            var view = _container.Resolve<NewItemDialog>();
-            var viewModel = _container.Resolve<NewItemViewModel>();
+            var view = _container.Resolve<NewWindow>();
+            var viewModel = _container.Resolve<NewViewModel>();
 
             viewModel.CloseRequested += (s, e) => { view.Close(); };
 
             viewModel.Parent = parent;
+            view.DataContext = viewModel;
+
+            return view;
+        }
+
+        public EditWindow EditWindow(Item item)
+        {
+            var view = _container.Resolve<EditWindow>();
+            var viewModel = _container.Resolve<EditViewModel>();
+
+            viewModel.CloseRequested += (s, e) => { view.Close(); };
+
+            viewModel.Item = item;
             view.DataContext = viewModel;
 
             return view;

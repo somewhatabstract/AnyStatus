@@ -126,10 +126,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Features\EditItem\EditItemDialog.xaml.cs">
-      <DependentUpon>EditItemDialog.xaml</DependentUpon>
+    <Compile Include="Features\Edit\EditWindow.xaml.cs">
+      <DependentUpon>EditWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Features\EditItem\EditItemViewModel.cs" />
+    <Compile Include="Features\Edit\EditViewModel.cs" />
     <Compile Include="Features\HealthChecks\TcpPort.cs" />
     <Compile Include="Features\HealthChecks\TeamCityBuild.cs" />
     <Compile Include="Features\ToolWindow\EditableTextBlock.cs" />
@@ -158,11 +158,11 @@
     <Compile Include="Infrastructure\TinyIoc.cs" />
     <Compile Include="Infrastructure\UserSettings.cs" />
     <Compile Include="Interfaces\IViewLocator.cs" />
-    <Compile Include="Features\NewItemWizard\NewItemViewModel.cs" />
+    <Compile Include="Features\New\NewViewModel.cs" />
     <Compile Include="Features\Options\OptionsViewModel.cs" />
     <Compile Include="Features\ToolWindow\ToolWindowViewModel.cs" />
-    <Compile Include="Features\NewItemWizard\NewItemDialog.xaml.cs">
-      <DependentUpon>NewItemDialog.xaml</DependentUpon>
+    <Compile Include="Features\New\NewWindow.xaml.cs">
+      <DependentUpon>NewWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Features\Options\OptionsDialogControl.xaml.cs">
       <DependentUpon>OptionsDialogControl.xaml</DependentUpon>
@@ -175,11 +175,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Features\EditItem\EditItemDialog.xaml">
+    <Page Include="Features\Edit\EditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Features\NewItemWizard\NewItemDialog.xaml">
+    <Page Include="Features\New\NewWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

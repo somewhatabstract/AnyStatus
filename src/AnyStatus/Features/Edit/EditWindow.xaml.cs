@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AnyStatus.Features.EditItem
+namespace AnyStatus.Features.Edit
 {
     /// <summary>
     /// Interaction logic for EditItemWindow.xaml
     /// </summary>
-    public partial class EditItemWindow : Window
+    public partial class EditWindow : Window
     {
-        public EditItemWindow()
+        public EditWindow()
         {
             InitializeComponent();
         }
