@@ -9,7 +9,6 @@
              Height="300" 
              Width="500"
              WindowStartupLocation="CenterScreen"
-             Title="Edit"
              d:DataContext="{d:DesignInstance Type=local:EditViewModel}" 
              Icon="/AnyStatus;component/Resources/StatusSecurityOK_16x.png">
     <Grid>
