@@ -49,6 +49,7 @@ namespace AnyStatus.VSPackage
             container.Register<IHandler<Ping>, PingHandler>().AsMultiInstance();
             container.Register<IHandler<TcpPort>, TcpPortHandler>().AsMultiInstance();
             container.Register<IHandler<TeamCityBuild>, TeamCityBuildHandler>().AsMultiInstance();
+            container.Register<IHandler<AppVeyorBuild>, AppVeyorBuildHandler>().AsMultiInstance();
 
             //templates
             container.Register<IEnumerable<Template>>((c, p) =>
@@ -59,6 +60,7 @@ namespace AnyStatus.VSPackage
                     new Template("HTTP Status", new HttpStatus()),
                     new Template("Jenkins Build", new JenkinsBuild()),
                     new Template("TeamCity Build", new TeamCityBuild()),
+                    new Template("AppVeyor Build", new AppVeyorBuild()),
                 };
             });
 

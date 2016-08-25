@@ -60,6 +60,11 @@ namespace AnyStatus.Models
 
                     var buildDetails = new JavaScriptSerializer().Deserialize<JenkinsBuildDetails>(content);
 
+                    if (buildDetails == null)
+                    {
+                        throw new Exception("Invalid Jenkins Build response.");
+                    }
+
                     return buildDetails;
                 }
             }

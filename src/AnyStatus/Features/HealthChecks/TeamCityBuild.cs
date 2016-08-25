@@ -88,7 +88,7 @@ namespace AnyStatus.Models
 
                     if (buildResponse == null || !buildResponse.Build.Any())
                     {
-                        throw new Exception("Invalid TeamCity response.");
+                        throw new Exception("Invalid TeamCity Build response.");
                     }
 
                     return buildResponse.Build[0];

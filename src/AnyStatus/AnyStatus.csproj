@@ -131,6 +131,7 @@
       <DependentUpon>EditWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Features\Edit\EditViewModel.cs" />
+    <Compile Include="Features\HealthChecks\AppVeyorBuild.cs" />
     <Compile Include="Features\HealthChecks\TcpPort.cs" />
     <Compile Include="Features\HealthChecks\TeamCityBuild.cs" />
     <Compile Include="Features\ToolWindow\EditableTextBlock.cs" />
