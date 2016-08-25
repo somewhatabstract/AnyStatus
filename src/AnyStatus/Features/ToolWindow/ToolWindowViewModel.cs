@@ -1,4 +1,5 @@
-﻿using AnyStatus.Interfaces;
+﻿using AnyStatus.Infrastructure;
+using AnyStatus.Interfaces;
 using AnyStatus.Models;
 using FluentScheduler;
 using System;
@@ -8,6 +9,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace AnyStatus.ViewModels
 {
@@ -95,7 +97,10 @@ namespace AnyStatus.ViewModels
                         _userSettings.Items.Remove(selectedItem);
                     }
 
-                    JobManager.RemoveJob(selectedItem.Id.ToString());
+                    if (!(selectedItem is Folder))
+                    {
+                        JobManager.RemoveJob(selectedItem.Id.ToString());
+                    }
 
                     _userSettings.Save();
                 }
@@ -149,21 +154,48 @@ namespace AnyStatus.ViewModels
 
             EnableItemCommand = new RelayCommand(p =>
             {
-                var item = p as Item;
-
-                if (item != null)
+                try
                 {
+                    var item = p as Item;
+
+                    if (item == null)
+                        return;
+
+                    JobManager.RemoveJob(item.Id.ToString());
+
+                    JobManager.AddJob(new ScheduledJob(item),
+                       schedule => schedule.WithName(item.Id.ToString()).ToRunNow().AndEvery(item.Interval).Minutes());
+
                     item.IsEnabled = true;
+
+                    _userSettings.Save();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
                 }
             });
 
             DisableItemCommand = new RelayCommand(p =>
             {
-                var item = p as Item;
-
-                if (item != null)
+                try
                 {
+                    var item = p as Item;
+
+                    if (item == null)
+                        return;
+
+                    JobManager.RemoveJob(item.Id.ToString());
+
                     item.IsEnabled = false;
+
+                    item.Brush = Brushes.Silver;
+
+                    _userSettings.Save();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
                 }
             });
 

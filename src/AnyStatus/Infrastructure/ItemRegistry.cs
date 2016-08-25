@@ -33,7 +33,7 @@ namespace AnyStatus.Infrastructure
                 {
                     Schedule(item.Items);
                 }
-                else
+                else if (item.IsEnabled)
                 {
                     Schedule(item);
                 }
