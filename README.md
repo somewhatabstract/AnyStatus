@@ -19,7 +19,7 @@ If you wish for other types of status and health checks, please write a review o
 
 ## License
 
-Apache 2.0
+[Apache 2.0](https://github.com/AlonAm/AnyStatus/blob/master/LICENSE)
 
 ## Roadmap
 
