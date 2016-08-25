@@ -8,12 +8,13 @@ AnyStatus is a free and open source Visual Studio extension that adds basic moni
 
 ## Features 
 
-Organize health checks in folders
-Colored status indicators
-Monitor Jenkins, TeamCity and AppVeyor builds
-Monitor HTTP response status codes
-Monitor Ping requests
-Monitor TCP ports
+* Organize health checks in folders
+* Colored status indicators
+* Monitor Jenkins, TeamCity and AppVeyor builds
+* Monitor HTTP response status codes
+* Monitor Ping requests
+* Monitor TCP ports
+
 If you wish for other types of status and health checks, please write a review or create a new issue on GitHub.
 
 ## License
