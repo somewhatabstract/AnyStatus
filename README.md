@@ -6,7 +6,7 @@ AnyStatus is a free and open source Visual Studio extension that adds basic moni
 
 **Note:** This is an alpha version that comes with an incomplete set of basic features and has some known issues. I will be constantly working on AnyStatus to make sure every bug is fixed and all designed features are implemented.
 
-## Features 
+### Features 
 
 * Organize health checks in folders
 * Colored status indicators
@@ -17,11 +17,11 @@ AnyStatus is a free and open source Visual Studio extension that adds basic moni
 
 If you wish for other types of status and health checks, please write a review or create a new issue on GitHub.
 
-## License
+### License
 
 [Apache 2.0](https://github.com/AlonAm/AnyStatus/blob/master/LICENSE)
 
-## Roadmap
+### Roadmap
 
 * TFS & VSO build status
 * Travis CI build status
@@ -30,28 +30,28 @@ If you wish for other types of status and health checks, please write a review o
 * Start/Cancel build
 * Visual Studio theme support
 
-## Release Notes
+### Release Notes
 
-0.4.24
+**0.4.24**
 - Added AppVoyer build status
 - Minor UI improvements
 
-0.4.22
+**0.4.22**
 - Edit health check
 
-0.4
+**0.4**
 - Fixed a critical bug in New Item Wizard
 - Added TeamCity build status
 - Visual Studio 2013 Support
 
-0.3
+**0.3**
 - Added a Refresh button to health check context menu
 - Added TCP port health check
 
-0.2
+**0.2**
 - Added Ping health check
 
-0.1
+**0.1**
 - Initial alpha release
 
 
