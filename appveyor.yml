@@ -1,5 +1,9 @@
 version: 0.5.{build}
 
+skip_commits:
+  files:
+  - '**/*.md'
+  
 branches:
   only:
   - master
