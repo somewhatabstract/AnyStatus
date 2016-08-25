@@ -33,35 +33,25 @@ Apache 2.0
 ## Release Notes
 
 0.4.24
-
 - Added AppVoyer build status
-
 - Minor UI improvements
 
 0.4.22
-
 - Edit health check
 
 0.4
-
 - Fixed a critical bug in New Item Wizard
-
 - Added TeamCity build status
-
 - Visual Studio 2013 Support
 
 0.3
-
 - Added a Refresh button to health check context menu
-
 - Added TCP port health check
 
 0.2
-
 - Added Ping health check
 
 0.1
-
 - Initial alpha release
 
 
