@@ -206,6 +206,25 @@
   <ItemGroup>
     <Resource Include="Resources\StatusSecurityOK_16x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\action_Cancel_16xLG.png" />
+    <Resource Include="Resources\DeleteFolder_16x.png" />
+    <Resource Include="Resources\properties_16xLG.png" />
+    <Resource Include="Resources\Refresh_16x.png" />
+    <Resource Include="Resources\Rename_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\StatusStop_grey_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\StatusRun_grey_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\AddFolder_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\NewItem_16x.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
@@ -30,6 +31,7 @@ namespace AnyStatus.Models
 
     public class JenkinsBuildHandler : IHandler<JenkinsBuild>
     {
+        [DebuggerStepThrough]
         public void Handle(JenkinsBuild item)
         {
             Validate(item);//todo: move to handler validation decorator

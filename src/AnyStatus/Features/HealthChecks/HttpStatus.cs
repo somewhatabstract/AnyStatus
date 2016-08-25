@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Windows.Media;
@@ -28,6 +29,7 @@ namespace AnyStatus.Models
 
     public class HttpStatusHandler : IHandler<HttpStatus>
     {
+        [DebuggerStepThrough]
         public void Handle(HttpStatus item)
         {
             using (var handler = new WebRequestHandler())

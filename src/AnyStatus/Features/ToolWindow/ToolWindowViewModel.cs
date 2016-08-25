@@ -147,6 +147,26 @@ namespace AnyStatus.ViewModels
                 }
             });
 
+            EnableItemCommand = new RelayCommand(p =>
+            {
+                var item = p as Item;
+
+                if (item != null)
+                {
+                    item.IsEnabled = true;
+                }
+            });
+
+            DisableItemCommand = new RelayCommand(p =>
+            {
+                var item = p as Item;
+
+                if (item != null)
+                {
+                    item.IsEnabled = false;
+                }
+            });
+
             SaveCommand = new RelayCommand(p =>
             {
                 try
@@ -191,6 +211,8 @@ namespace AnyStatus.ViewModels
         public ICommand RemoveItemCommand { get; set; }
         public ICommand EditItemCommand { get; set; }
         public ICommand RefreshItemCommand { get; set; }
+        public ICommand EnableItemCommand { get; set; }
+        public ICommand DisableItemCommand { get; set; }
 
         public ICommand SaveCommand { get; set; }
 

@@ -28,6 +28,7 @@ namespace AnyStatus.Models
 
         public Item()
         {
+            IsEnabled = true;
             Interval = 5;
             Brush = Brushes.Silver;
             Items = new ObservableCollection<Item>();
@@ -51,6 +52,7 @@ namespace AnyStatus.Models
         }
 
         [Browsable(false)]
+        [DisplayName("Enabled")]
         public bool IsEnabled
         {
             get { return _isEnabled; }

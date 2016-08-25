@@ -22,8 +22,21 @@
 
             <TreeView.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="New Item..." Command="{Binding Path=PlacementTarget.Tag.DataContext.AddItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"/>
-                    <MenuItem Header="New Folder" Command="{Binding Path=PlacementTarget.Tag.DataContext.AddFolderCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"/>
+                    
+                    <MenuItem Header="New Item..." 
+                              Command="{Binding Path=PlacementTarget.Tag.DataContext.AddItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
+                        <MenuItem.Icon>
+                            <Image Source="/AnyStatus;component/Resources/NewItem_16x.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <MenuItem Header="New Folder" 
+                              Command="{Binding Path=PlacementTarget.Tag.DataContext.AddFolderCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
+                        <MenuItem.Icon>
+                            <Image Source="/AnyStatus;component/Resources/AddFolder_16x.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    
                 </ContextMenu>
             </TreeView.ContextMenu>
 
@@ -38,19 +51,41 @@
                                 Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
                         <StackPanel.ContextMenu>
                             <ContextMenu>
+                                
                                 <MenuItem Header="New Item..." 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.AddItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding}"/>
+                                          CommandParameter="{Binding}">
+                                    <MenuItem.Icon>
+                                        <Image Source="/AnyStatus;component/Resources/NewItem_16x.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+
                                 <MenuItem Header="New Folder" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.AddFolderCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding}"/>
+                                          CommandParameter="{Binding}">
+                                    <MenuItem.Icon>
+                                        <Image Source="/AnyStatus;component/Resources/AddFolder_16x.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                
                                 <Separator/>
+                                
                                 <MenuItem Header="Rename" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.RenameCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding}"/>
+                                          CommandParameter="{Binding}">
+                                    <MenuItem.Icon>
+                                        <Image Source="/AnyStatus;component/Resources/Rename_16x.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                
                                 <MenuItem Header="Remove" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.RemoveCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding}"/>
+                                          CommandParameter="{Binding}">
+                                    <MenuItem.Icon>
+                                        <Image Source="/AnyStatus;component/Resources/DeleteFolder_16x.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                
                             </ContextMenu>
                         </StackPanel.ContextMenu>
 
@@ -74,21 +109,102 @@
                                 Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
                         <StackPanel.ContextMenu>
                             <ContextMenu>
+                                
                                 <MenuItem Header="Refresh" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.RefreshItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding}"/>
-                                <MenuItem Header="Edit" 
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.EditItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding}"/>
+                                          CommandParameter="{Binding}">
+                                    <MenuItem.Style>
+                                        <Style TargetType="{x:Type MenuItem}">
+                                            <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Path=IsEnabled}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible"></Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </MenuItem.Style>
+                                    <MenuItem.Icon>
+                                        <Image Source="/AnyStatus;component/Resources/Refresh_16x.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+
+                                <Separator>
+                                    <Separator.Style>
+                                        <Style TargetType="{x:Type Separator}">
+                                            <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Path=IsEnabled}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible"></Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Separator.Style>
+                                </Separator>
+                                
+                                <MenuItem Header="Enable" 
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.EnableItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                                          CommandParameter="{Binding}">
+                                    <MenuItem.Style>
+                                        <Style TargetType="{x:Type MenuItem}">
+                                            <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Path=IsEnabled}" Value="False">
+                                                    <Setter Property="Visibility" Value="Visible"></Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </MenuItem.Style>
+                                    <MenuItem.Icon>
+                                        <Image Source="/AnyStatus;component/Resources/StatusRun_grey_16x.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                
+                                <MenuItem Header="Disable" 
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.DisableItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                                          CommandParameter="{Binding}">
+                                    <MenuItem.Style>
+                                        <Style TargetType="{x:Type MenuItem}">
+                                            <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Path=IsEnabled}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible"></Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </MenuItem.Style>
+                                    <MenuItem.Icon>
+                                        <Image Source="/AnyStatus;component/Resources/StatusStop_grey_16x.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                
+                                <Separator/>
+                                
                                 <MenuItem Header="Rename" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.RenameCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding}"/>
+                                          CommandParameter="{Binding}">
+                                    <MenuItem.Icon>
+                                        <Image Source="/AnyStatus;component/Resources/Rename_16x.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                
                                 <MenuItem Header="Remove" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.RemoveCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding}"/>
-                                <!--<MenuItem Header="Properties" 
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.ShowPropertiesCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding}"/>-->
+                                          CommandParameter="{Binding}">
+                                    <MenuItem.Icon>
+                                        <Image Source="/AnyStatus;component/Resources/action_Cancel_16xLG.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                
+                                <Separator/>
+                                
+                                <MenuItem Header="Properties" 
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.EditItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                                          CommandParameter="{Binding}">
+                                    <MenuItem.Icon>
+                                        <Image Source="/AnyStatus;component/Resources/properties_16xLG.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                
                             </ContextMenu>
                         </StackPanel.ContextMenu>
 
