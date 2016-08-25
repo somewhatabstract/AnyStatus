@@ -25,8 +25,6 @@ If you wish for other types of status and health checks, please write a review o
 
 * TFS & VSO build status
 * Travis CI build status
-* Refresh All toolbar button
-* Enable/Disable health check
 * Start/Cancel build
 * Visual Studio theme support
 
