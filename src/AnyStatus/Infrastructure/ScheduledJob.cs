@@ -30,6 +30,7 @@ namespace AnyStatus.Infrastructure
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
+
                 _item.Brush = Brushes.Silver;
             }
         }
