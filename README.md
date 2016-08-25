@@ -32,12 +32,12 @@ If you wish for other types of status and health checks, please write a review o
 
 ### Release Notes
 
-**0.4.24**
+**0.5**
 - Added AppVoyer build status
-- Minor UI improvements
-
-**0.4.22**
-- Edit health check
+- Edit health check properties
+- Enable/Disable health check
+- Refresh all health checks toolbar button
+- UI improvements
 
 **0.4**
 - Fixed a critical bug in New Item Wizard
