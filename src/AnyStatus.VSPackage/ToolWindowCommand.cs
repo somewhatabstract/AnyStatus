@@ -1,9 +1,11 @@
 ﻿using AnyStatus.Views;
+using FluentScheduler;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.ComponentModel.Design;
 using System.Diagnostics;
+using System.Windows;
 
 namespace AnyStatus.VSPackage
 {
@@ -35,17 +37,24 @@ namespace AnyStatus.VSPackage
                 var menuItem = new MenuCommand(ShowToolWindow, menuCommandID);
                 commandService.AddCommand(menuItem);
 
+                //refresh toolbar command
+                var refreshToolbarCommandId = new CommandID(CommandSet, 0x1003);
+                var refreshToolbarMenuItem = new MenuCommand(new EventHandler(RefreshButtonHandler), refreshToolbarCommandId);
+                commandService.AddCommand(refreshToolbarMenuItem);
+
                 //options toolbar command
                 var optionsToolbarCommandId = new CommandID(CommandSet, 0x1002);
                 var optionsToolbarMenuItem = new MenuCommand(new EventHandler(OptionsButtonHandler), optionsToolbarCommandId);
                 commandService.AddCommand(optionsToolbarMenuItem);
 
-                //refresh toolbar command
-                //var refreshToolbarCommandId = new CommandID(CommandSet, 0x1003);
-                //var refreshToolbarMenuItem = new MenuCommand(new EventHandler(RefreshButtonHandler), refreshToolbarCommandId);
-                //commandService.AddCommand(refreshToolbarMenuItem);
+                //help toolbar command
+                var helpToolbarCommandId = new CommandID(CommandSet, 0x1004);
+                var helpToolbarMenuItem = new MenuCommand(new EventHandler(HelpButtonHandler), helpToolbarCommandId);
+                commandService.AddCommand(helpToolbarMenuItem);
             }
         }
+
+        
 
         private void ShowToolWindow(object sender, EventArgs e)
         {
@@ -73,9 +82,24 @@ namespace AnyStatus.VSPackage
             }
         }
 
-        //private void RefreshButtonHandler(object sender, EventArgs e)
-        //{
-        //    MessageBox.Show("Not Implemented");
-        //}
+        private void RefreshButtonHandler(object sender, EventArgs e)
+        {
+            try
+            {
+                foreach (var schedule in JobManager.AllSchedules)
+                {
+                    schedule.Execute();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+        }
+
+        private void HelpButtonHandler(object sender, EventArgs e)
+        {
+            Process.Start("https://github.com/AlonAm/AnyStatus/wiki");
+        }
     }
 }

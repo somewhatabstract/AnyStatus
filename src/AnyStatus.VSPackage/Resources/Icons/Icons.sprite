@@ -1,7 +1,9 @@
 {
   "images": {
     "statussecurityok_16x": "StatusSecurityOK_16x.png",
-    "settings_16x": "Settings_16x.png"
+    "settings_16x": "Settings_16x.png",
+    "question_16x": "Question_16x.png",
+    "refresh_16x": "Refresh_16x.png"
   },
   "orientation": "horizontal",
   "optimize": "lossless",

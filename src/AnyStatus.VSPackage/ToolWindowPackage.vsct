@@ -1,39 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-  <!--  This is the file that defines the actual layout and type of the commands.
-        It is divided in different sections (e.g. command definition, command
-        placement, ...), with each defining a specific set of properties.
-        See the comment before each section for more details about how to
-        use it. -->
-
-  <!--  The VSCT compiler (the tool that translates this file into the binary
-        format that VisualStudio will consume) has the ability to run a preprocessor
-        on the vsct file; this preprocessor is (usually) the C++ preprocessor, so
-        it is possible to define includes and macros with the same syntax used
-        in C++ files. Using this ability of the compiler here, we include some files
-        defining some of the constants that we will use inside the file. -->
-
-  <!--This is the file that defines the IDs for all the commands exposed by VisualStudio. -->
   <Extern href="stdidcmd.h"/>
-
-  <!--This header contains the command ids for the menus provided by the shell. -->
   <Extern href="vsshlids.h"/>
 
-  <!--<Extern href="msobtnid.h" xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" />-->
-  
-  <!--The Commands section is where commands, menus, and menu groups are defined.
-      This section uses a Guid to identify the package that provides the command defined inside it. -->
   <Commands package="guidToolWindowPackage">
-    <!-- Inside this section we have different sub-sections: one for the menus, another
-    for the menu groups, one for the buttons (the actual commands), one for the combos
-    and the last one for the bitmaps used. Each element is identified by a command id that
-    is a unique pair of guid and numeric identifier; the guid part of the identifier is usually
-    called "command set" and is used to group different command inside a logically related
-    group; your package should define its own command set in order to avoid collisions
-    with command ids defined by other packages. -->
 
-    <!--Menus section. -->
     <Menus>
       <Menu guid="guidToolWindowPackageCmdSet" id="ToolbarId" type="Toolbar">
         <CommandFlag>DefaultDocked</CommandFlag>
@@ -44,16 +16,12 @@
       </Menu>
     </Menus>
 
-    <!--Groups section. -->
     <Groups>
       <Group guid="guidToolWindowPackageCmdSet" id="ToolbarGroupId" priority="0x0000">
         <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarId" />
       </Group>
     </Groups>
 
-    <!--Buttons section. -->
-    <!--This section defines the elements the user can interact with, like a menu command or a button
-        or combo box in a toolbar. -->
     <Buttons>
 
       <Button guid="guidToolWindowPackageCmdSet" id="ToolWindowCommandId" priority="0x0100" type="Button">
@@ -64,9 +32,17 @@
         </Strings>
       </Button>
 
-      <Button guid="guidToolWindowPackageCmdSet" id="optionsToolbarCommandId" priority="0x0100" type="Button">
+      <Button guid="guidToolWindowPackageCmdSet" id="refreshToolbarCommandId" priority="0x0100" type="Button">
         <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarGroupId"/>
-        <!--<Icon guid="guidOfficeIcon" id="msotcidNoIcon" />-->
+        <Icon guid="guidIcons" id="bmpRefresh" />
+        <Strings>
+          <ButtonText>Refresh</ButtonText>
+          <CommandName>refreshToolbarCommandId</CommandName>
+        </Strings>
+      </Button>
+      
+      <Button guid="guidToolWindowPackageCmdSet" id="optionsToolbarCommandId" priority="0x0200" type="Button">
+        <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarGroupId"/>
         <Icon guid="guidIcons" id="bmpSettings" />
         <Strings>
           <ButtonText>Options</ButtonText>
@@ -74,41 +50,42 @@
         </Strings>
       </Button>
 
-      <!--<Button guid="guidToolWindowPackageCmdSet" id="refreshToolbarCommandId" priority="0x0100" type="Button">
+      <Button guid="guidToolWindowPackageCmdSet" id="helpToolbarCommandId" priority="0x0300" type="Button">
         <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarGroupId"/>
-        <Icon guid="guidOfficeIcon" id="msotcidNoIcon" />
+        <Icon guid="guidIcons" id="bmpQuestion" />
         <Strings>
-          <ButtonText>Refresh</ButtonText>
-          <CommandName>refreshToolbarCommandId</CommandName>
+          <ButtonText>Help</ButtonText>
+          <CommandName>helpToolbarCommandId</CommandName>
         </Strings>
-      </Button>-->
+      </Button>
       
     </Buttons>
 
     <Bitmaps>
-      <Bitmap guid="guidIcons" href="Resources\Icons\Icons.sprite.png" usedList="bmpLogo,bmpSettings"/>
+      <Bitmap guid="guidIcons" href="Resources\Icons\Icons.sprite.png" usedList="bmpLogo,bmpSettings,bmpQuestion,bmpRefresh"/>
     </Bitmaps>
 
   </Commands>
 
   <Symbols>
-    <!-- This is the package guid. -->
     <GuidSymbol name="guidToolWindowPackage" value="{b8682407-a118-4468-9c71-d1f7c6a312ec}" />
 
-    <!-- This is the guid used to group the menu commands together -->
     <GuidSymbol name="guidToolWindowPackageCmdSet" value="{c420854f-cac2-4492-8067-ecf632228390}">
       <IDSymbol name="ToolWindowCommandId" value="0x0100" />
-      <!--Tool bar-->
+      <!--Toolbar-->
       <IDSymbol name="ToolbarId" value="0x1000" />
       <IDSymbol name="ToolbarGroupId" value="0x1001" />
-
+      <!--Toolbar Buttons-->
       <IDSymbol name="optionsToolbarCommandId" value="0x1002" />
       <IDSymbol name="refreshToolbarCommandId" value="0x1003" />
+      <IDSymbol name="helpToolbarCommandId" value="0x1004" />
     </GuidSymbol>
 
     <GuidSymbol name="guidIcons" value="{9A059648-419C-4693-B822-13AD144B8A62}">
       <IDSymbol name="bmpLogo" value="1" />
       <IDSymbol name="bmpSettings" value="2" />
+      <IDSymbol name="bmpQuestion" value="3" />
+      <IDSymbol name="bmpRefresh" value="4" />
     </GuidSymbol>
     
   </Symbols>
