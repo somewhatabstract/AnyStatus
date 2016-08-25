@@ -214,7 +214,17 @@
                                                  VerticalAlignment="Center"
                                                  HorizontalAlignment="Stretch"
                                                  IsEditing="{Binding IsEditing}" 
-                                                 SaveCommand="{Binding DataContext.SaveCommand, ElementName=ToolWindow}" />
+                                                 SaveCommand="{Binding DataContext.SaveCommand, ElementName=ToolWindow}">
+                            <views:EditableTextBlock.Style>
+                                <Style TargetType="{x:Type views:EditableTextBlock}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=IsEnabled}" Value="False">
+                                            <Setter Property="Foreground" Value="Silver"></Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </views:EditableTextBlock.Style>
+                        </views:EditableTextBlock>
                     </StackPanel>
                 </DataTemplate>
 
