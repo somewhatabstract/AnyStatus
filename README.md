@@ -23,11 +23,12 @@ Apache 2.0
 
 ## Roadmap
 
-Health checks for TFS, AppVeyor & Travis CI builds
-Refresh All toolbar button
-Enable/Disable health check
-Start/Cancel build
-Visual Studio theme support
+* TFS & VSO build status
+* Travis CI build status
+* Refresh All toolbar button
+* Enable/Disable health check
+* Start/Cancel build
+* Visual Studio theme support
 
 ## Release Notes
 
