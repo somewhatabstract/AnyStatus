@@ -1,4 +1,5 @@
 # AnyStatus
+Monitor the health, status and availability of services
 
 [![Build status](https://ci.appveyor.com/api/projects/status/t7j7rnnci6lvv8jl?svg=true)](https://ci.appveyor.com/project/AlonAmsalem/anystatus)
 
@@ -25,8 +26,6 @@ If you wish for other types of status and health checks, please write a review o
 
 * TFS & VSO build status
 * Travis CI build status
-* Refresh All toolbar button
-* Enable/Disable health check
 * Start/Cancel build
 * Visual Studio theme support
 
