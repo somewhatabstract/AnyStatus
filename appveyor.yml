@@ -2,7 +2,7 @@ version: 0.5.{build}
 
 skip_commits:
   files:
-  - '**/*.md'
+  - 'README.md'
   
 branches:
   only:
