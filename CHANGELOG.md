@@ -33,7 +33,7 @@ on the official Visual Studio extension gallery.
 - [x] Fixed a critical bug in New Item Wizard
 - [x] TeamCity build status
 - [x] Visual Studio 2013 Support
-- 
+
 ## 0.3
 
 **2016-08-21**
