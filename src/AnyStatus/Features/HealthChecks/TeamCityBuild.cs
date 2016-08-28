@@ -88,12 +88,7 @@ namespace AnyStatus.Models
 
                     var buildResponse = new JavaScriptSerializer().Deserialize<TeamCityBuildDetailsResponse>(content);
 
-                    if (buildResponse == null || !buildResponse.Build.Any())
-                    {
-                        throw new Exception("Invalid TeamCity Build response.");
-                    }
-
-                    return buildResponse.Build[0];
+                    return buildResponse.Build.First();
                 }
             }
         }

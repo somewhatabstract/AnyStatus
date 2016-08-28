@@ -72,11 +72,6 @@ namespace AnyStatus.Models
 
                 var buildResponse = new JavaScriptSerializer().Deserialize<AppVeyorBuildResponse>(content);
 
-                if (buildResponse == null || buildResponse.Build == null)
-                {
-                    throw new Exception("Invalid AppVeyor Build response.");
-                }
-
                 return buildResponse.Build;
             }
         }
@@ -88,7 +83,6 @@ namespace AnyStatus.Models
                 throw new InvalidOperationException("Invalid item.");
             }
         }
-
     }
 
     public class AppVeyorBuildResponse

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -49,31 +51,41 @@ namespace AnyStatus.Models
         {
             Validate(item);
 
-            var buildId = GetBuildDefinitionIdAsync(item).Result;
+            var buildDefinitionId = GetBuildDefinitionIdAsync(item).Result;
 
             //var build = GetBuildDetailsAsync(item).Result;
         }
 
         private async Task<int> GetBuildDefinitionIdAsync(TfsBuild item)
         {
-            using (var handler = new WebRequestHandler { UseDefaultCredentials = true })
-            using (var client = new HttpClient(handler))
+            var useDefaultCredentials = string.IsNullOrEmpty(item.UserName) && string.IsNullOrEmpty(item.Password);
+
+            using (var handler = new WebRequestHandler())
             {
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                handler.UseDefaultCredentials = useDefaultCredentials;
 
-                if (!string.IsNullOrEmpty(item.UserName) && !string.IsNullOrEmpty(item.Password))
+                using (var client = new HttpClient(handler))
                 {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
-                        Convert.ToBase64String(Encoding.ASCII.GetBytes($"{item.UserName}:{item.Password}")));
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    if (!useDefaultCredentials)
+                    {
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
+                            Convert.ToBase64String(Encoding.ASCII.GetBytes($"{item.UserName}:{item.Password}")));
+                    }
+
+                    var url = $"{item.Host}/{item.Collection}/{item.TeamProject}/_apis/build/definitions?api-version=2.0&name={item.BuildDefinition}";
+
+                    var response = await client.GetAsync(url);
+
+                    response.EnsureSuccessStatusCode();
+
+                    var content = await response.Content.ReadAsStringAsync();
+
+                    var buildDefinitionResponse = new JavaScriptSerializer().Deserialize<BuildDefinitionResponse>(content);
+
+                    return buildDefinitionResponse.Value.First().Id;
                 }
-
-                var url = $"{item.Host}/{item.Collection}/{item.TeamProject}/_apis/build/definitions?api-version=2.0&name={item.BuildDefinition}";
-
-                var response = await client.GetAsync(url);
-
-                var content = await response.Content.ReadAsStringAsync();
-
-                return 0;
             }
         }
 
@@ -107,8 +119,17 @@ namespace AnyStatus.Models
         }
     }
 
+    public class BuildDefinitionResponse
+    {
+        public List<BuildDefinitionDetails> Value { get; set; }
+    }
+
+    public class BuildDefinitionDetails
+    {
+        public int Id { get; set; }
+    }
+
     public class TfsBuildDetails
     {
-
     }
 }
