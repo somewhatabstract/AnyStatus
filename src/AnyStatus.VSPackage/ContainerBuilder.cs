@@ -63,7 +63,7 @@ namespace AnyStatus.VSPackage
                     new Template("Jenkins Build", new JenkinsBuild()),
                     new Template("TeamCity Build", new TeamCityBuild()),
                     new Template("AppVeyor Build", new AppVeyorBuild()),
-                    new Template("TFS Build", new TfsBuild()),
+                    //new Template("TFS Build", new TfsBuild()),
                 };
             });
 
