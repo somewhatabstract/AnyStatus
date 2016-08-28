@@ -134,7 +134,6 @@ namespace AnyStatus.Models
 
         private static void Validate(TeamCityBuild item)
         {
-            //todo: move to handler validation decorator
             if (item == null || string.IsNullOrEmpty(item.Host) || string.IsNullOrEmpty(item.BuildTypeId))
             {
                 throw new InvalidOperationException("Invalid item.");

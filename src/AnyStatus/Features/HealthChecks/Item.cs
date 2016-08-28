@@ -16,6 +16,8 @@ namespace AnyStatus.Models
     [XmlInclude(typeof(JenkinsBuild))]
     [XmlInclude(typeof(TeamCityBuild))]
     [XmlInclude(typeof(AppVeyorBuild))]
+    [XmlInclude(typeof(TravisCIBuild))]
+    [XmlInclude(typeof(TfsBuild))]
     public class Item : INotifyPropertyChanged
     {
         private string _name;

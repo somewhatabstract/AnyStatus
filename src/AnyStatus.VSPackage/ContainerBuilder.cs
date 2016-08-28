@@ -50,6 +50,8 @@ namespace AnyStatus.VSPackage
             container.Register<IHandler<TcpPort>, TcpPortHandler>().AsMultiInstance();
             container.Register<IHandler<TeamCityBuild>, TeamCityBuildHandler>().AsMultiInstance();
             container.Register<IHandler<AppVeyorBuild>, AppVeyorBuildHandler>().AsMultiInstance();
+            container.Register<IHandler<TravisCIBuild>, TravisCIBuildHandler>().AsMultiInstance();
+            container.Register<IHandler<TfsBuild>, TfsBuildHandler>().AsMultiInstance();
 
             //templates
             container.Register<IEnumerable<Template>>((c, p) =>
@@ -61,6 +63,7 @@ namespace AnyStatus.VSPackage
                     new Template("Jenkins Build", new JenkinsBuild()),
                     new Template("TeamCity Build", new TeamCityBuild()),
                     new Template("AppVeyor Build", new AppVeyorBuild()),
+                    new Template("TFS Build", new TfsBuild()),
                 };
             });
 

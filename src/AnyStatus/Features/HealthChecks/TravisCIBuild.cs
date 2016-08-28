@@ -1,7 +1,6 @@
-﻿using AnyStatus.Models;
-using System;
+﻿using System;
 
-namespace AnyStatus.Features.HealthChecks
+namespace AnyStatus.Models
 {
     public class TravisCIBuild : Item
     {

@@ -134,6 +134,7 @@
     <Compile Include="Features\HealthChecks\AppVeyorBuild.cs" />
     <Compile Include="Features\HealthChecks\TcpPort.cs" />
     <Compile Include="Features\HealthChecks\TeamCityBuild.cs" />
+    <Compile Include="Features\HealthChecks\TfsBuild.cs" />
     <Compile Include="Features\HealthChecks\TravisCIBuild.cs" />
     <Compile Include="Features\ToolWindow\EditableTextBlock.cs" />
     <Compile Include="Infrastructure\ItemRegistry.cs" />
