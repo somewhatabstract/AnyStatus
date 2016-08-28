@@ -163,7 +163,7 @@
                                         </Style>
                                     </MenuItem.Style>
                                     <MenuItem.Icon>
-                                        <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.StatusRunning}" />
+                                        <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Play}" />
                                     </MenuItem.Icon>
                                 </MenuItem>
 
@@ -181,7 +181,7 @@
                                         </Style>
                                     </MenuItem.Style>
                                     <MenuItem.Icon>
-                                        <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.StatusStopped}" />
+                                        <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Stop}" />
                                     </MenuItem.Icon>
                                 </MenuItem>
 
