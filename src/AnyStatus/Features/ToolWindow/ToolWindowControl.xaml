@@ -8,35 +8,43 @@
              xmlns:models="clr-namespace:AnyStatus.Models"
              xmlns:vm="clr-namespace:AnyStatus.ViewModels"
              xmlns:vsp="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.14.0"
+             xmlns:imaging="clr-namespace:Microsoft.VisualStudio.Imaging;assembly=Microsoft.VisualStudio.Imaging"
+             xmlns:theming="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Imaging"
+             xmlns:catalog="clr-namespace:Microsoft.VisualStudio.Imaging;assembly=Microsoft.VisualStudio.ImageCatalog"
+             xmlns:utilities="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Utilities"
              mc:Ignorable="d" 
              d:DesignHeight="300"
              d:DesignWidth="300"
              d:DataContext="{d:DesignInstance Type=vm:ToolWindowViewModel}"
              x:Name="ToolWindow">
+    <UserControl.Resources>
+        <utilities:BrushToColorConverter x:Key="BrushToColorConverter"/>
+    </UserControl.Resources>
     <Grid>
         <TreeView Name="TreeView" 
                   ItemsSource="{Binding Items}" 
                   Background="Transparent" 
                   BorderThickness="0" 
                   PreviewMouseRightButtonDown="OnPreviewMouseRightButtonDown"
-                  Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
+                  Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
+                  theming:ImageThemingUtilities.ImageBackgroundColor="{Binding Background, RelativeSource={RelativeSource Self}, Converter={StaticResource BrushToColorConverter}}">
             <TreeView.ContextMenu>
                 <ContextMenu>
-                    
+
                     <MenuItem Header="New Item..." 
                               Command="{Binding Path=PlacementTarget.Tag.DataContext.AddItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
                         <MenuItem.Icon>
-                            <Image Source="/AnyStatus;component/Resources/NewItem_16x.png" />
+                            <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.NewItem}" />
                         </MenuItem.Icon>
                     </MenuItem>
 
                     <MenuItem Header="New Folder" 
                               Command="{Binding Path=PlacementTarget.Tag.DataContext.AddFolderCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
                         <MenuItem.Icon>
-                            <Image Source="/AnyStatus;component/Resources/AddFolder_16x.png" />
+                            <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.AddFolder}" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    
+
                 </ContextMenu>
             </TreeView.ContextMenu>
 
@@ -51,12 +59,12 @@
                                 Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
                         <StackPanel.ContextMenu>
                             <ContextMenu>
-                                
+
                                 <MenuItem Header="New Item..." 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.AddItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}">
                                     <MenuItem.Icon>
-                                        <Image Source="/AnyStatus;component/Resources/NewItem_16x.png" />
+                                        <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.NewItem}" />
                                     </MenuItem.Icon>
                                 </MenuItem>
 
@@ -64,28 +72,28 @@
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.AddFolderCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}">
                                     <MenuItem.Icon>
-                                        <Image Source="/AnyStatus;component/Resources/AddFolder_16x.png" />
+                                        <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.AddFolder}" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                
+
                                 <Separator/>
-                                
+
                                 <MenuItem Header="Rename" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.RenameCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}">
                                     <MenuItem.Icon>
-                                        <Image Source="/AnyStatus;component/Resources/Rename_16x.png" />
+                                        <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Rename}" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                
+
                                 <MenuItem Header="Remove" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.RemoveCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}">
                                     <MenuItem.Icon>
-                                        <Image Source="/AnyStatus;component/Resources/DeleteFolder_16x.png" />
+                                        <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.DeleteFolder}" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                
+
                             </ContextMenu>
                         </StackPanel.ContextMenu>
 
@@ -109,7 +117,7 @@
                                 Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
                         <StackPanel.ContextMenu>
                             <ContextMenu>
-                                
+
                                 <MenuItem Header="Refresh" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.RefreshItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}">
@@ -124,7 +132,7 @@
                                         </Style>
                                     </MenuItem.Style>
                                     <MenuItem.Icon>
-                                        <Image Source="/AnyStatus;component/Resources/Refresh_16x.png" />
+                                        <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Refresh}" />
                                     </MenuItem.Icon>
                                 </MenuItem>
 
@@ -140,7 +148,7 @@
                                         </Style>
                                     </Separator.Style>
                                 </Separator>
-                                
+
                                 <MenuItem Header="Enable" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.EnableItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}">
@@ -155,10 +163,10 @@
                                         </Style>
                                     </MenuItem.Style>
                                     <MenuItem.Icon>
-                                        <Image Source="/AnyStatus;component/Resources/StatusRun_grey_16x.png" />
+                                        <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.StatusRunning}" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                
+
                                 <MenuItem Header="Disable" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.DisableItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}">
@@ -173,38 +181,38 @@
                                         </Style>
                                     </MenuItem.Style>
                                     <MenuItem.Icon>
-                                        <Image Source="/AnyStatus;component/Resources/StatusStop_grey_16x.png" />
+                                        <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.StatusStopped}" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                
+
                                 <Separator/>
-                                
+
                                 <MenuItem Header="Rename" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.RenameCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}">
                                     <MenuItem.Icon>
-                                        <Image Source="/AnyStatus;component/Resources/Rename_16x.png" />
+                                        <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Rename}" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                
+
                                 <MenuItem Header="Remove" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.RemoveCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}">
                                     <MenuItem.Icon>
-                                        <Image Source="/AnyStatus;component/Resources/action_Cancel_16xLG.png" />
+                                        <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Cancel}" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                
+
                                 <Separator/>
-                                
+
                                 <MenuItem Header="Properties" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.EditItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}">
                                     <MenuItem.Icon>
-                                        <Image Source="/AnyStatus;component/Resources/properties_16xLG.png" />
+                                        <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Property}" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                
+
                             </ContextMenu>
                         </StackPanel.ContextMenu>
 

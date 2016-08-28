@@ -45,6 +45,10 @@
       <HintPath>..\packages\FluentScheduler.5.0.0\lib\net40\FluentScheduler.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.ImageCatalog, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.ImageCatalog.14.3.25407\lib\net45\Microsoft.VisualStudio.ImageCatalog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.Imaging, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.VisualStudio.Imaging.14.3.25407\lib\net45\Microsoft.VisualStudio.Imaging.dll</HintPath>
       <Private>True</Private>
@@ -203,28 +207,6 @@
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\StatusSecurityOK_16x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\action_Cancel_16xLG.png" />
-    <Resource Include="Resources\DeleteFolder_16x.png" />
-    <Resource Include="Resources\properties_16xLG.png" />
-    <Resource Include="Resources\Refresh_16x.png" />
-    <Resource Include="Resources\Rename_16x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\StatusStop_grey_16x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\StatusRun_grey_16x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\AddFolder_16x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\NewItem_16x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
