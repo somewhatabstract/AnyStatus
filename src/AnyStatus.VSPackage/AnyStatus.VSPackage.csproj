@@ -60,6 +60,7 @@
     <Compile Include="ToolWindowHost.cs" />
     <Compile Include="ToolWindowCommand.cs" />
     <Compile Include="AnyStatusPackage.cs" />
+    <Compile Include="Utils\TypeDiscovery.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Key.snk" />

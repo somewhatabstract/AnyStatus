@@ -18,6 +18,7 @@ namespace AnyStatus.Models
     [XmlInclude(typeof(AppVeyorBuild))]
     [XmlInclude(typeof(TravisCIBuild))]
     [XmlInclude(typeof(TfsBuild))]
+    [XmlInclude(typeof(WindowsService))]
     public class Item : INotifyPropertyChanged
     {
         private string _name;

@@ -139,6 +139,7 @@
     <Compile Include="Features\HealthChecks\TcpPort.cs" />
     <Compile Include="Features\HealthChecks\TeamCityBuild.cs" />
     <Compile Include="Features\HealthChecks\TfsBuild.cs" />
+    <Compile Include="Features\HealthChecks\WindowsService.cs" />
     <Compile Include="Features\HealthChecks\TravisCIBuild.cs" />
     <Compile Include="Features\ToolWindow\EditableTextBlock.cs" />
     <Compile Include="Infrastructure\ItemRegistry.cs" />
@@ -207,6 +208,9 @@
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\StatusSecurityOK_16x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

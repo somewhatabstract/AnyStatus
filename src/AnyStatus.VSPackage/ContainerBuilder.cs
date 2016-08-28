@@ -8,6 +8,8 @@ using FluentScheduler;
 using Microsoft.VisualStudio.Shell;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace AnyStatus.VSPackage
 {
@@ -43,15 +45,7 @@ namespace AnyStatus.VSPackage
             container.Register<EditWindow>().AsMultiInstance();
             container.Register<EditViewModel>().AsMultiInstance();
 
-            //handlers
-            container.Register<IHandler<JenkinsBuild>, JenkinsBuildHandler>().AsMultiInstance();
-            container.Register<IHandler<HttpStatus>, HttpStatusHandler>().AsMultiInstance();
-            container.Register<IHandler<Ping>, PingHandler>().AsMultiInstance();
-            container.Register<IHandler<TcpPort>, TcpPortHandler>().AsMultiInstance();
-            container.Register<IHandler<TeamCityBuild>, TeamCityBuildHandler>().AsMultiInstance();
-            container.Register<IHandler<AppVeyorBuild>, AppVeyorBuildHandler>().AsMultiInstance();
-            container.Register<IHandler<TravisCIBuild>, TravisCIBuildHandler>().AsMultiInstance();
-            container.Register<IHandler<TfsBuild>, TfsBuildHandler>().AsMultiInstance();
+            ScanAndRegisterHandlers();
 
             //templates
             container.Register<IEnumerable<Template>>((c, p) =>
@@ -68,6 +62,33 @@ namespace AnyStatus.VSPackage
             });
 
             return container;
+        }
+
+        private static void ScanAndRegisterHandlers()
+        {
+            var assembly = typeof(Item).Assembly;
+            var baseHandlerType = typeof(IHandler<>);
+            var baseHandlerTypeName = baseHandlerType.Name;
+
+            var handlerTypes = FindTypesOf(baseHandlerType, assembly);
+
+            foreach (var handlerType in handlerTypes)
+            {
+                TinyIoCContainer.Current.Register(handlerType.GetInterface(baseHandlerTypeName), handlerType).AsMultiInstance();
+            }
+        }
+
+        private static IEnumerable<Type> FindTypesOf(Type baseType, Assembly assembly)
+        {
+            return from type in assembly.GetTypes()
+                   where !type.IsAbstract && !type.IsGenericTypeDefinition
+                   let handlerInterfaces =
+                       from iface in type.GetInterfaces()
+                       where iface.IsGenericType
+                       where iface.GetGenericTypeDefinition() == baseType
+                       select iface
+                   where handlerInterfaces.Any()
+                   select type;
         }
     }
 }
