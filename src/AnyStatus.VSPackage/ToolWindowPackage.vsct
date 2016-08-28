@@ -3,7 +3,9 @@
 
   <Extern href="stdidcmd.h"/>
   <Extern href="vsshlids.h"/>
-
+  
+  <Include href="KnownImageIds.vsct"/>
+  
   <Commands package="guidToolWindowPackage">
 
     <Menus>
@@ -34,7 +36,8 @@
 
       <Button guid="guidToolWindowPackageCmdSet" id="refreshToolbarCommandId" priority="0x0100" type="Button">
         <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarGroupId"/>
-        <Icon guid="guidIcons" id="bmpRefresh" />
+        <Icon guid="ImageCatalogGuid" id="Refresh" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
         <Strings>
           <ButtonText>Refresh</ButtonText>
           <CommandName>refreshToolbarCommandId</CommandName>
@@ -43,7 +46,8 @@
       
       <Button guid="guidToolWindowPackageCmdSet" id="optionsToolbarCommandId" priority="0x0200" type="Button">
         <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarGroupId"/>
-        <Icon guid="guidIcons" id="bmpSettings" />
+        <Icon guid="ImageCatalogGuid" id="Settings" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
         <Strings>
           <ButtonText>Options</ButtonText>
           <CommandName>optionsToolbarCommandId</CommandName>
@@ -52,7 +56,8 @@
 
       <Button guid="guidToolWindowPackageCmdSet" id="helpToolbarCommandId" priority="0x0300" type="Button">
         <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarGroupId"/>
-        <Icon guid="guidIcons" id="bmpQuestion" />
+        <Icon guid="ImageCatalogGuid" id="QuestionMark" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
         <Strings>
           <ButtonText>Help</ButtonText>
           <CommandName>helpToolbarCommandId</CommandName>
@@ -62,7 +67,7 @@
     </Buttons>
 
     <Bitmaps>
-      <Bitmap guid="guidIcons" href="Resources\Icons\Icons.sprite.png" usedList="bmpLogo,bmpSettings,bmpQuestion,bmpRefresh"/>
+      <Bitmap guid="guidIcons" href="Resources\Icons\Icons.sprite.png" usedList="bmpLogo"/>
     </Bitmaps>
 
   </Commands>
@@ -83,9 +88,6 @@
 
     <GuidSymbol name="guidIcons" value="{9A059648-419C-4693-B822-13AD144B8A62}">
       <IDSymbol name="bmpLogo" value="1" />
-      <IDSymbol name="bmpSettings" value="2" />
-      <IDSymbol name="bmpQuestion" value="3" />
-      <IDSymbol name="bmpRefresh" value="4" />
     </GuidSymbol>
     
   </Symbols>

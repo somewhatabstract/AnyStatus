@@ -73,10 +73,7 @@
     <Content Include="Resources\Icons\Icons.sprite.png">
       <DependentUpon>Icons.sprite</DependentUpon>
     </Content>
-    <None Include="Resources\Icons\Question_16x.png" />
-    <None Include="Resources\Icons\Settings_16x.png" />
     <None Include="Resources\Icons\StatusSecurityOK_16x.png" />
-    <None Include="Resources\Icons\Refresh_16x.png" />
     <Content Include="Resources\Preview.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
