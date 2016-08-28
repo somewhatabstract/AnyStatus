@@ -18,6 +18,8 @@ namespace AnyStatus
         {
             try
             {
+                //Properties.Settings.Default.Upgrade()
+
                 _items = Properties.Settings.Default.Items ?? new ObservableCollection<Item>();
             }
             catch (Exception ex)
@@ -30,12 +32,8 @@ namespace AnyStatus
         {
             get
             {
-                return _items;// Properties.Settings.Default.Items;
+                return _items;
             }
-            //set
-            //{
-            //    Properties.Settings.Default.Items = value;
-            //}
         }
 
         public void Save()
