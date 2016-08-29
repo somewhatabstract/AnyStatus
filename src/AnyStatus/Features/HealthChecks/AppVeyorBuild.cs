@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -24,6 +25,7 @@ namespace AnyStatus.Models
 
     public class AppVeyorBuildHandler : IHandler<AppVeyorBuild>
     {
+        [DebuggerStepThrough]
         public void Handle(AppVeyorBuild item)
         {
             Validate(item);
@@ -71,7 +73,7 @@ namespace AnyStatus.Models
                 response.EnsureSuccessStatusCode();
 
                 var content = await response.Content.ReadAsStringAsync();
-
+                
                 var buildResponse = new JavaScriptSerializer().Deserialize<AppVeyorBuildResponse>(content);
 
                 return buildResponse.Build;
@@ -85,15 +87,15 @@ namespace AnyStatus.Models
                 throw new InvalidOperationException("Invalid item.");
             }
         }
-    }
 
-    public class AppVeyorBuildResponse
-    {
-        public AppVeyorBuildDetails Build { get; set; }
-    }
+        public class AppVeyorBuildResponse
+        {
+            public AppVeyorBuildDetails Build { get; set; }
+        }
 
-    public class AppVeyorBuildDetails
-    {
-        public string Status { get; set; }
+        public class AppVeyorBuildDetails
+        {
+            public string Status { get; set; }
+        }
     }
 }

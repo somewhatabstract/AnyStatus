@@ -15,7 +15,7 @@
              d:DataContext="{d:DesignInstance Type=vm:NewViewModel}" Icon="/AnyStatus;component/Resources/StatusSecurityOK_16x.png">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition MinWidth="100" Width="Auto"></ColumnDefinition>
+            <ColumnDefinition MinWidth="170" Width="Auto"></ColumnDefinition>
             <ColumnDefinition Width="3"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
@@ -25,11 +25,10 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <ListBox Grid.Column="0" Grid.Row="0"
+        <ListBox Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"
                  ItemsSource="{Binding Templates}" 
                  SelectedItem="{Binding SelectedTemplate}" 
-                 BorderBrush="{x:Null}"
-                 Margin="3">
+                 BorderBrush="{x:Null}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}" Height="40" Padding="12"/>
