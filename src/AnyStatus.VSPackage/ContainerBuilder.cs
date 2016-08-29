@@ -54,6 +54,7 @@ namespace AnyStatus.VSPackage
                     new Template("Ping", new Ping()),
                     new Template("TCP Port", new TcpPort()),
                     new Template("HTTP Status", new HttpStatus()),
+                    new Template("Windows Service", new WindowsService()),
                     new Template("Jenkins Build", new JenkinsBuild()),
                     new Template("TeamCity Build", new TeamCityBuild()),
                     new Template("AppVeyor Build", new AppVeyorBuild()),
