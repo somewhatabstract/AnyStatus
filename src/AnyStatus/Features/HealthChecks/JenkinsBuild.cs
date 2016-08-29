@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Windows.Media;
@@ -16,13 +18,15 @@ namespace AnyStatus.Models
         [Description("Jenkins build URL address.")]
         public string Url { get; set; }
 
-        //[PropertyOrder(1)]
-        //[DisplayName("User Name")]
-        //public string UserName { get; set; }
+        [PropertyOrder(1)]
+        [DisplayName("User Name")]
+        [Description("Optional.")]
+        public string UserName { get; set; }
 
-        //[PropertyOrder(2)]
-        //[DisplayName("API Token")]
-        //public string ApiToken { get; set; }
+        [PropertyOrder(2)]
+        [DisplayName("API Token")]
+        [Description("Optional.")]
+        public string ApiToken { get; set; }
 
         [PropertyOrder(3)]
         [DisplayName("Ignore SSL Errors")]
@@ -45,6 +49,8 @@ namespace AnyStatus.Models
         {
             using (var handler = new WebRequestHandler())
             {
+                handler.UseDefaultCredentials = true;
+
                 if (item.IgnoreSslErrors)
                 {
                     handler.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
@@ -52,6 +58,12 @@ namespace AnyStatus.Models
 
                 using (var client = new HttpClient(handler))
                 {
+                    if (!string.IsNullOrEmpty(item.UserName) && !string.IsNullOrEmpty(item.ApiToken))
+                    {
+                        client.DefaultRequestHeaders.Authorization = 
+                            new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", item.UserName, item.ApiToken))));
+                    }
+
                     var apiUrl = $"{item.Url}/lastBuild/api/json?tree=result,building";
 
                     var response = await client.GetAsync(apiUrl);

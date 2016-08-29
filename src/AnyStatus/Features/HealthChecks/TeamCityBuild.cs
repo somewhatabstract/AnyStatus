@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Windows.Media;
@@ -15,7 +16,7 @@ namespace AnyStatus.Models
     public class TeamCityBuild : Item
     {
         [PropertyOrder(1)]
-        [Description("TeamCity server Host Name or IP Address. For example: https://teamcity.jetbrains.com")]
+        [Description("TeamCity server Host Name or IP Address. For example: http://teamcity:8080 or https://teamcity.jetbrains.com")]
         public string Host { get; set; }
 
         [PropertyOrder(2)]
@@ -25,15 +26,17 @@ namespace AnyStatus.Models
 
         [PropertyOrder(3)]
         [DisplayName("Guest User")]
-        [Description("Use TeamCity guest user to login. If checked, the User Name and Password are ignored.")]
+        [Description("Use TeamCity guest user to log in.")]
         public bool GuestUser { get; set; }
 
         [PropertyOrder(4)]
         [DisplayName("User Name")]
+        [Description("Optional.")]
         public string UserName { get; set; }
 
         [PropertyOrder(5)]
         [PasswordPropertyText(true)]
+        [Description("Optional.")]
         public string Password { get; set; }
 
         [PropertyOrder(6)]
@@ -57,6 +60,8 @@ namespace AnyStatus.Models
         {
             using (var handler = new WebRequestHandler())
             {
+                handler.UseDefaultCredentials = true;
+
                 if (item.IgnoreSslErrors)
                 {
                     handler.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
@@ -71,12 +76,16 @@ namespace AnyStatus.Models
                 else
                 {
                     authType = "httpAuth";
-                    handler.Credentials = new NetworkCredential(item.UserName, item.Password);
+
+                    if (!string.IsNullOrEmpty(item.UserName) && !string.IsNullOrEmpty(item.Password))
+                    {
+                        handler.Credentials = new NetworkCredential(item.UserName, item.Password);
+                    }
                 }
 
                 using (var client = new HttpClient(handler))
                 {
-                    client.DefaultRequestHeaders.Add("Accept", "application/json");
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                     var apiUrl = $"{item.Host}/{authType}/app/rest/builds?locator=running:any,buildType:(id:{item.BuildTypeId}),count:1&fields=build(status,running)";
 

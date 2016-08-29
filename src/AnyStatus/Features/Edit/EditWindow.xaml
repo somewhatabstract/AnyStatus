@@ -6,8 +6,9 @@
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:local="clr-namespace:AnyStatus.Features.Edit"
              mc:Ignorable="d" 
-             Height="300" 
-             Width="500"
+             Height="400" 
+             Width="600"
+             Title="Properties"
              WindowStartupLocation="CenterScreen"
              d:DataContext="{d:DesignInstance Type=local:EditViewModel}" 
              Icon="/AnyStatus;component/Resources/StatusSecurityOK_16x.png">

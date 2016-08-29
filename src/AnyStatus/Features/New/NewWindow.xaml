@@ -10,6 +10,7 @@
              mc:Ignorable="d" 
              Height="400"
              Width="650"
+             Title="New Item"
              WindowStartupLocation="CenterScreen"
              d:DataContext="{d:DesignInstance Type=vm:NewViewModel}" Icon="/AnyStatus;component/Resources/StatusSecurityOK_16x.png">
     <Grid>
