@@ -19,8 +19,8 @@ namespace AnyStatus.Models
         }
 
         [PropertyOrder(1)]
-        [Description("Visual Studio Team Services account ({account}.visualstudio.com) or TFS server ({server:port}).")]
-        public string Host { get; set; }
+        [Description("Visual Studio Team Services account (https://{account}.visualstudio.com) or TFS server (http://{server:port}/tfs).")]
+        public string Url { get; set; }
 
         [PropertyOrder(2)]
         [Description()]
@@ -74,7 +74,7 @@ namespace AnyStatus.Models
                             Convert.ToBase64String(Encoding.ASCII.GetBytes($"{item.UserName}:{item.Password}")));
                     }
 
-                    var url = $"{item.Host}/{item.Collection}/{item.TeamProject}/_apis/build/definitions?api-version=2.0&name={item.BuildDefinition}";
+                    var url = $"{item.Url}/{item.Collection}/{item.TeamProject}/_apis/build/definitions?api-version=2.0&name={item.BuildDefinition}";
 
                     var response = await client.GetAsync(url);
 
@@ -96,7 +96,7 @@ namespace AnyStatus.Models
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json-patch+json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", item.UserName, item.Password))));
 
-                var apiUrl = $"{item.Host}/{item.Collection}/{item.TeamProject}/_apis/build/builds?definitions={item.BuildDefinition}&statusFilter=completed&$top=1&api-version=2.0";
+                var apiUrl = $"{item.Url}/{item.Collection}/{item.TeamProject}/_apis/build/builds?definitions={item.BuildDefinition}&statusFilter=completed&$top=1&api-version=2.0";
 
                 var response = await client.GetAsync(apiUrl);
 
@@ -112,7 +112,7 @@ namespace AnyStatus.Models
 
         private void Validate(TfsBuild item)
         {
-            if (item == null || item.Host == null)
+            if (item == null || item.Url == null)
             {
                 throw new InvalidOperationException("Invalid item.");
             }

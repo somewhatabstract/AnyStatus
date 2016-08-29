@@ -16,8 +16,12 @@ namespace AnyStatus.Models
     public class TeamCityBuild : Item
     {
         [PropertyOrder(1)]
-        [Description("TeamCity server Host Name or IP Address. For example: http://teamcity:8080 or https://teamcity.jetbrains.com")]
-        public string Host { get; set; }
+        [DisplayName("Url")]
+        [Description("TeamCity server URL address. For example: http://teamcity:8080 or https://teamcity.jetbrains.com")]
+        public string Url { get; set; }
+
+        [Browsable(false)] //TODO: Remove property. Use Url instead.
+        public string Host { get { return Url; } set { Url = value; } }
 
         [PropertyOrder(2)]
         [DisplayName("Build Type Id")]
@@ -87,7 +91,7 @@ namespace AnyStatus.Models
                 {
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                    var apiUrl = $"{item.Host}/{authType}/app/rest/builds?locator=running:any,buildType:(id:{item.BuildTypeId}),count:1&fields=build(status,running)";
+                    var apiUrl = $"{item.Url}/{authType}/app/rest/builds?locator=running:any,buildType:(id:{item.BuildTypeId}),count:1&fields=build(status,running)";
 
                     var response = await client.GetAsync(apiUrl);
 
@@ -138,7 +142,7 @@ namespace AnyStatus.Models
 
         private static void Validate(TeamCityBuild item)
         {
-            if (item == null || string.IsNullOrEmpty(item.Host) || string.IsNullOrEmpty(item.BuildTypeId))
+            if (item == null || string.IsNullOrEmpty(item.Url) || string.IsNullOrEmpty(item.BuildTypeId))
             {
                 throw new InvalidOperationException("Invalid item.");
             }
