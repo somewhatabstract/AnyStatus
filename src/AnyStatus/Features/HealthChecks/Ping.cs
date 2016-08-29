@@ -4,6 +4,8 @@ using System.Windows.Media;
 
 namespace AnyStatus.Models
 {
+    [DisplayName("Ping")]
+    [Description("")]
     public class Ping : Item
     {
         [Description("Host Name or IP Address")]

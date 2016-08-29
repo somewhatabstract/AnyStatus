@@ -13,6 +13,8 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace AnyStatus.Models
 {
+    [DisplayName("TeamCity Build")]
+    [Description("")]
     public class TeamCityBuild : Item
     {
         [PropertyOrder(1)]

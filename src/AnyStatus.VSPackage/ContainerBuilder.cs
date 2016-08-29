@@ -8,6 +8,7 @@ using FluentScheduler;
 using Microsoft.VisualStudio.Shell;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 
@@ -45,41 +46,63 @@ namespace AnyStatus.VSPackage
             container.Register<EditWindow>().AsMultiInstance();
             container.Register<EditViewModel>().AsMultiInstance();
 
-            ScanAndRegisterHandlers();
-
-            //templates
-            container.Register<IEnumerable<Template>>((c, p) =>
-            {
-                return new List<Template>(){
-                    new Template("Ping", new Ping()),
-                    new Template("TCP Port", new TcpPort()),
-                    new Template("HTTP Status", new HttpStatus()),
-                    new Template("Windows Service", new WindowsService()),
-                    new Template("Jenkins Build", new JenkinsBuild()),
-                    new Template("TeamCity Build", new TeamCityBuild()),
-                    new Template("AppVeyor Build", new AppVeyorBuild()),
-                    //new Template("TFS Build", new TfsBuild()),
-                };
-            });
+            ScanAndRegisterItems();
+            RegisterItemTemplates();
+            ScanAndRegisterItemHandlers();
 
             return container;
         }
 
-        private static void ScanAndRegisterHandlers()
+        private static void ScanAndRegisterItemHandlers()
         {
-            var assembly = typeof(Item).Assembly;
+            var assembly = typeof(IHandler<>).Assembly;
             var baseHandlerType = typeof(IHandler<>);
             var baseHandlerTypeName = baseHandlerType.Name;
 
-            var handlerTypes = FindTypesOf(baseHandlerType, assembly);
+            var handlerTypes = FindGenericTypesOf(baseHandlerType, assembly);
 
             foreach (var handlerType in handlerTypes)
             {
-                TinyIoCContainer.Current.Register(handlerType.GetInterface(baseHandlerTypeName), handlerType).AsMultiInstance();
+                TinyIoCContainer.Current
+                    .Register(handlerType.GetInterface(baseHandlerTypeName), handlerType)
+                    .AsMultiInstance();
             }
         }
 
-        private static IEnumerable<Type> FindTypesOf(Type baseType, Assembly assembly)
+        private static void ScanAndRegisterItems()
+        {
+            var types = FindTypesOf(typeof(Item), typeof(Item).Assembly);
+
+            TinyIoCContainer.Current.RegisterMultiple(typeof(Item), types);
+        }
+
+        private static void RegisterItemTemplates()
+        {
+            TinyIoCContainer.Current.Register<IEnumerable<Template>>((c, p) =>
+            {
+                var items = c.ResolveAll<Item>();
+
+                var templates = new List<Template>();
+
+                foreach (var item in items)
+                {
+                    var itemType = item.GetType();
+                    var nameAtt = itemType.GetCustomAttribute<DisplayNameAttribute>();
+                    var descAtt = itemType.GetCustomAttribute<DescriptionAttribute>();
+
+                    var displayName = nameAtt != null ? nameAtt.DisplayName : itemType.Name;
+                    var desc = descAtt?.Description;
+
+                    var template = new Template(item, displayName, desc);
+
+                    templates.Add(template);
+                }
+
+                return templates;
+            });
+        }
+
+        private static IEnumerable<Type> FindGenericTypesOf(Type baseType, Assembly assembly)
         {
             return from type in assembly.GetTypes()
                    where !type.IsAbstract && !type.IsGenericTypeDefinition
@@ -89,6 +112,13 @@ namespace AnyStatus.VSPackage
                        where iface.GetGenericTypeDefinition() == baseType
                        select iface
                    where handlerInterfaces.Any()
+                   select type;
+        }
+
+        private static IEnumerable<Type> FindTypesOf(Type baseType, Assembly assembly)
+        {
+            return from type in assembly.GetTypes()
+                   where type.BaseType == typeof(Item)
                    select type;
         }
     }

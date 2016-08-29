@@ -8,6 +8,8 @@ using System.Windows.Media;
 
 namespace AnyStatus.Models
 {
+    [DisplayName("AppVeyor Build")]
+    [Description("")]
     public class AppVeyorBuild : Item
     {
         [DisplayName("Account Name")]

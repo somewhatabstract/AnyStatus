@@ -11,6 +11,8 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace AnyStatus.Models
 {
+    [DisplayName("TFS 2015 Build")]
+    [Description("Microsoft Team Foundation Server 2015 build status.")]
     public class TfsBuild : Item
     {
         public TfsBuild()

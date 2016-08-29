@@ -5,6 +5,8 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace AnyStatus.Models
 {
+    [DisplayName("TCP Port")]
+    [Description("")]
     public class TcpPort : Item
     {
         [PropertyOrder(1)]

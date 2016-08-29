@@ -4,6 +4,8 @@ using System.Windows.Media;
 
 namespace AnyStatus.Models
 {
+    [DisplayName("Windows Service")]
+    [Description("")]
     public class WindowsService : Item
     {
         public WindowsService()

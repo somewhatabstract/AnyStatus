@@ -8,6 +8,7 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 namespace AnyStatus.Models
 {
     [DisplayName("HTTP Status")]
+    [Description("")]
     public class HttpStatus : Item
     {
         public HttpStatus()
