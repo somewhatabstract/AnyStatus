@@ -18,18 +18,18 @@ namespace AnyStatus.ViewModels
 
             _userSettings = userSettings;
 
-            ResetAllSettingsCommand = new RelayCommand(p => ResetAllSettings());
+            RestoreDefaultSettingsCommand = new RelayCommand(p => RestoreDefaultSettings());
         }
 
-        private void ResetAllSettings()
+        private void RestoreDefaultSettings()
         {
-            var result = MessageBox.Show("Are you sure?", "Reset All Settings", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
+            var result = MessageBox.Show("Are you sure?", "Restore Default Settings", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
 
             if (result != MessageBoxResult.Yes) return;
 
             _userSettings.Reset();
         }
 
-        public ICommand ResetAllSettingsCommand { get; set; }
+        public ICommand RestoreDefaultSettingsCommand { get; set; }
     }
 }
