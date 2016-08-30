@@ -1,7 +1,8 @@
 # Roadmap
 
-- [ ] Window service status
+- [x] Window service status
 - [ ] TFS & Visual Studio Online build status
+- [ ] GitHub issue status
 - [ ] Travis CI build status
 - [ ] Start/Cancel build
 - [ ] Visual Studio theme support
@@ -20,6 +21,8 @@ on the official Visual Studio extension gallery.
 
 **2016-08-26**
 
+- [x] Windows Service health check
+- [x] Added optional credentials to Jenkins build
 - [x] AppVoyer build status
 - [x] Edit health check properties
 - [x] Enable/Disable health check
