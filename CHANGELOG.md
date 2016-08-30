@@ -2,6 +2,7 @@
 
 - [x] Window service status
 - [ ] TFS & Visual Studio Online build status
+- [ ] GitHub issue status
 - [ ] Travis CI build status
 - [ ] Start/Cancel build
 - [ ] Visual Studio theme support
