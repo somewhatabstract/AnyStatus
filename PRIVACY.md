@@ -6,4 +6,5 @@ If “Help us improve by sending anonymous user data” is enabled in the option
 
 - Version
 - Language
-- Visual Studio version
+- Visual Studio Version
+- Number of items
