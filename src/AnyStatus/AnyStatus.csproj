@@ -112,6 +112,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.WebRequest" />
@@ -137,7 +138,8 @@
     </Compile>
     <Compile Include="Features\Edit\EditViewModel.cs" />
     <Compile Include="Features\HealthChecks\AppVeyorBuild.cs" />
-    <Compile Include="Features\HealthChecks\TcpPort.cs" />
+    <Compile Include="Infrastructure\Extensions.cs" />
+    <Compile Include="Features\HealthChecks\TCP.cs" />
     <Compile Include="Features\HealthChecks\TeamCityBuild.cs" />
     <Compile Include="Features\HealthChecks\TfsBuild.cs" />
     <Compile Include="Features\HealthChecks\WindowsService.cs" />

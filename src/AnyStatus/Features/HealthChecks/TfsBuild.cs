@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -11,6 +12,7 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace AnyStatus.Models
 {
+    [Browsable(false)]
     [DisplayName("TFS 2015 Build")]
     [Description("Microsoft Team Foundation Server 2015 build status.")]
     public class TfsBuild : Item
@@ -20,29 +22,36 @@ namespace AnyStatus.Models
             Collection = "DefaultCollection";
         }
 
-        [PropertyOrder(1)]
+        [Url]
+        [Required]
+        [PropertyOrder(10)]
         [Description("Visual Studio Team Services account (https://{account}.visualstudio.com) or TFS server (http://{server:port}/tfs).")]
         public string Url { get; set; }
 
-        [PropertyOrder(2)]
+        [Required]
+        [PropertyOrder(20)]
         [Description()]
         public string Collection { get; set; }
 
-        [PropertyOrder(3)]
+        [Required]
+        [PropertyOrder(30)]
         [DisplayName("Team Project")]
         [Description()]
         public string TeamProject { get; set; }
 
-        [PropertyOrder(4)]
+        [Required]
+        [PropertyOrder(40)]
         [DisplayName("Build Definition")]
         [Description()]
         public string BuildDefinition { get; set; }
 
-        [PropertyOrder(5)]
+        [PropertyOrder(50)]
         [DisplayName("User Name")]
+        [Description("Optional.")]
         public string UserName { get; set; }
 
-        [PropertyOrder(6)]
+        [PropertyOrder(60)]
+        [Description("Optional.")]
         [PasswordPropertyText(true)]
         public string Password { get; set; }
     }

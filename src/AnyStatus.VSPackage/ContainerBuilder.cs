@@ -55,25 +55,28 @@ namespace AnyStatus.VSPackage
 
         private static void ScanAndRegisterItemHandlers()
         {
-            var assembly = typeof(IHandler<>).Assembly;
-            var baseHandlerType = typeof(IHandler<>);
-            var baseHandlerTypeName = baseHandlerType.Name;
+            var baseHandler = typeof(IHandler<>);
 
-            var handlerTypes = FindGenericTypesOf(baseHandlerType, assembly);
+            var handlers = FindGenericTypesOf(baseHandler, typeof(IHandler<>).Assembly);
 
-            foreach (var handlerType in handlerTypes)
+            foreach (var handler in handlers)
             {
                 TinyIoCContainer.Current
-                    .Register(handlerType.GetInterface(baseHandlerTypeName), handlerType)
+                    .Register(handler.GetInterface(baseHandler.Name), handler)
                     .AsMultiInstance();
             }
         }
 
         private static void ScanAndRegisterItems()
         {
-            var types = FindTypesOf(typeof(Item), typeof(Item).Assembly);
+            var items = FindTypesOf(typeof(Item), typeof(Item).Assembly);
 
-            TinyIoCContainer.Current.RegisterMultiple(typeof(Item), types);
+            items = from item in items
+                    where item.IsBrowsable()
+                    orderby item.Name
+                    select item;
+
+            TinyIoCContainer.Current.RegisterMultiple(typeof(Item), items);
         }
 
         private static void RegisterItemTemplates()
@@ -86,14 +89,14 @@ namespace AnyStatus.VSPackage
 
                 foreach (var item in items)
                 {
-                    var itemType = item.GetType();
-                    var nameAtt = itemType.GetCustomAttribute<DisplayNameAttribute>();
-                    var descAtt = itemType.GetCustomAttribute<DescriptionAttribute>();
+                    var type = item.GetType();
 
-                    var displayName = nameAtt != null ? nameAtt.DisplayName : itemType.Name;
-                    var desc = descAtt?.Description;
+                    var nameAtt = type.GetCustomAttribute<DisplayNameAttribute>();
+                    var descAtt = type.GetCustomAttribute<DescriptionAttribute>();
 
-                    var template = new Template(item, displayName, desc);
+                    var displayName = nameAtt != null ? nameAtt.DisplayName : type.Name;
+
+                    var template = new Template(item, displayName, descAtt?.Description);
 
                     templates.Add(template);
                 }

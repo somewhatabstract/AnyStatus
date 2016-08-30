@@ -5,8 +5,11 @@ using FluentScheduler;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
+using System.Windows;
 using System.Windows.Input;
 
 namespace AnyStatus.ViewModels
@@ -46,6 +49,24 @@ namespace AnyStatus.ViewModels
                     return;
                 }
 
+                var context = new ValidationContext(item, serviceProvider: null, items: null);
+                var results = new List<ValidationResult>();
+                var isValid = Validator.TryValidateObject(item, context, results);
+
+                if (!isValid)
+                {
+                    var sb = new StringBuilder();
+
+                    foreach (var validationResult in results)
+                    {
+                        sb.AppendLine(validationResult.ErrorMessage);
+                    }
+
+                    MessageBox.Show(sb.ToString(), "Validation", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                    return;
+                }
+
                 item.Id = Guid.NewGuid();
 
                 if (Parent != null)
@@ -61,7 +82,7 @@ namespace AnyStatus.ViewModels
 
                 _userSettings.Save();
 
-                JobManager.AddJob(new ScheduledJob(item), 
+                JobManager.AddJob(new ScheduledJob(item),
                     schedule => schedule.WithName(item.Id.ToString()).ToRunNow().AndEvery(item.Interval).Minutes());
 
                 CloseRequested?.Invoke(this, EventArgs.Empty);

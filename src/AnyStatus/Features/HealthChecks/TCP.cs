@@ -2,18 +2,21 @@
 using System.Net.Sockets;
 using System.Windows.Media;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace AnyStatus.Models
 {
-    [DisplayName("TCP Port")]
+    [DisplayName("TCP")]
     [Description("")]
     public class TcpPort : Item
     {
-        [PropertyOrder(1)]
+        [Required]
+        [PropertyOrder(10)]
         [Description("Host Name or IP Address")]
         public string Host { get; set; }
 
-        [PropertyOrder(2)]
+        [Range(0, ushort.MaxValue)]
+        [PropertyOrder(20)]
         public int Port { get; set; }
     }
 

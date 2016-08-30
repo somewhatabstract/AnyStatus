@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ServiceProcess;
 using System.Windows.Media;
 
@@ -13,6 +14,7 @@ namespace AnyStatus.Models
             Status = ServiceControllerStatus.Running;
         }
 
+        [Required]
         [DisplayName("Service Name")]
         public string ServiceName { get; set; }
 

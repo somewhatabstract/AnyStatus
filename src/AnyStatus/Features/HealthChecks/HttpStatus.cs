@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
@@ -16,14 +17,15 @@ namespace AnyStatus.Models
             HttpStatusCode = HttpStatusCode.OK;
         }
 
-        [PropertyOrder(1)]
+        [Required]
+        [PropertyOrder(10)]
         public string Url { get; set; }
 
-        [PropertyOrder(2)]
+        [PropertyOrder(20)]
         [DisplayName("HTTP Status Code")]
         public HttpStatusCode HttpStatusCode { get; set; }
 
-        [PropertyOrder(3)]
+        [PropertyOrder(30)]
         [DisplayName("Ignore SSL Errors")]
         public bool IgnoreSslErrors { get; set; }
     }

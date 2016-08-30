@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -14,21 +15,23 @@ namespace AnyStatus.Models
     [DisplayName("Jenkins Build")]
     public class JenkinsBuild : Item
     {
-        [PropertyOrder(1)]
+        [Url]
+        [Required]
+        [PropertyOrder(10)]
         [Description("Jenkins build URL address.")]
         public string Url { get; set; }
 
-        [PropertyOrder(1)]
+        [PropertyOrder(20)]
         [DisplayName("User Name")]
         [Description("Optional.")]
         public string UserName { get; set; }
 
-        [PropertyOrder(2)]
+        [PropertyOrder(30)]
         [DisplayName("API Token")]
         [Description("Optional.")]
         public string ApiToken { get; set; }
 
-        [PropertyOrder(3)]
+        [PropertyOrder(40)]
         [DisplayName("Ignore SSL Errors")]
         public bool IgnoreSslErrors { get; set; }
     }

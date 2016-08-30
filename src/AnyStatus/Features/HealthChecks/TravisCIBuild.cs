@@ -3,8 +3,9 @@ using System.ComponentModel;
 
 namespace AnyStatus.Models
 {
+    [Browsable(false)]
     [DisplayName("Travis CI Build")]
-    [Description("Not implemented.")]
+    [Description("")]
     public class TravisCIBuild : Item
     {
     }

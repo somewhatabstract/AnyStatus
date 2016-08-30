@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -17,7 +18,9 @@ namespace AnyStatus.Models
     [Description("")]
     public class TeamCityBuild : Item
     {
-        [PropertyOrder(1)]
+        [Url]
+        [Required]
+        [PropertyOrder(10)]
         [DisplayName("Url")]
         [Description("TeamCity server URL address. For example: http://teamcity:8080 or https://teamcity.jetbrains.com")]
         public string Url { get; set; }
@@ -25,27 +28,28 @@ namespace AnyStatus.Models
         [Browsable(false)] //TODO: Remove property. Use Url instead.
         public string Host { get { return Url; } set { Url = value; } }
 
-        [PropertyOrder(2)]
+        [Required]
+        [PropertyOrder(20)]
         [DisplayName("Build Type Id")]
         [Description("TeamCity build type id (You can copy it from TeamCity build URL address).")]
         public string BuildTypeId { get; set; }
 
-        [PropertyOrder(3)]
-        [DisplayName("Guest User")]
-        [Description("Use TeamCity guest user to log in.")]
+        [PropertyOrder(30)]
+        [DisplayName("Use Guest User")]
+        [Description("Log in with TeamCity guest user. If checked, the User Name and Password are ignored.")]
         public bool GuestUser { get; set; }
 
-        [PropertyOrder(4)]
+        [PropertyOrder(40)]
         [DisplayName("User Name")]
         [Description("Optional.")]
         public string UserName { get; set; }
 
-        [PropertyOrder(5)]
+        [PropertyOrder(50)]
         [PasswordPropertyText(true)]
         [Description("Optional.")]
         public string Password { get; set; }
 
-        [PropertyOrder(6)]
+        [PropertyOrder(60)]
         [DisplayName("Ignore SSL Errors")]
         public bool IgnoreSslErrors { get; set; }
     }

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Net.NetworkInformation;
 using System.Windows.Media;
 
@@ -8,6 +9,7 @@ namespace AnyStatus.Models
     [Description("")]
     public class Ping : Item
     {
+        [Required]
         [Description("Host Name or IP Address")]
         public string Host { get; set; }
     }

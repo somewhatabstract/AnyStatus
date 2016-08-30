@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -13,12 +14,15 @@ namespace AnyStatus.Models
     [Description("")]
     public class AppVeyorBuild : Item
     {
+        [Required]
         [DisplayName("Account Name")]
         public string AccountName { get; set; }
 
+        [Required]
         [DisplayName("Project Name")]
         public string ProjectName { get; set; }
 
+        [Required]
         [DisplayName("API Token")]
         public string ApiToken { get; set; }
     }
