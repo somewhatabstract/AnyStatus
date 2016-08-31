@@ -1,6 +1,6 @@
 ﻿# AnyStatus
 
-[![Build status](https://ci.appveyor.com/api/projects/status/t7j7rnnci6lvv8jl?svg=true)](https://ci.appveyor.com/project/AlonAmsalem/anystatus)
+[![Build status](https://ci.appveyor.com/api/projects/status/bqr0m4e08nfkb6g2?svg=true)](https://ci.appveyor.com/project/AlonAmsalem/anystatus)
 
 Download this extension from the [VS Gallery](https://visualstudiogallery.msdn.microsoft.com/d2262fef-aeca-45dd-9c8c-87c290ee4eb0)
 or get the [CI build](http://vsixgallery.com/#/extension/AnyStatus.VSPackage.6f25620d-ff50-42d1-89da-709a45cebe10/).
