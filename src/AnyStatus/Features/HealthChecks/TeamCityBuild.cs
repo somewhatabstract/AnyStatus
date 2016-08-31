@@ -154,17 +154,21 @@ namespace AnyStatus.Models
                 throw new InvalidOperationException("Invalid item.");
             }
         }
-    }
 
-    public class TeamCityBuildDetailsResponse
-    {
-        public List<TeamCityBuildDetails> Build { get; set; }
-    }
+        #region Contracts
 
-    public class TeamCityBuildDetails
-    {
-        public bool Running { get; set; }
+        private class TeamCityBuildDetailsResponse
+        {
+            public List<TeamCityBuildDetails> Build { get; set; }
+        }
 
-        public string Status { get; set; }
+        private class TeamCityBuildDetails
+        {
+            public bool Running { get; set; }
+
+            public string Status { get; set; }
+        }
+
+        #endregion
     }
 }
