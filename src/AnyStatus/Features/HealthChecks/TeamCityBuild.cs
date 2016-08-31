@@ -47,6 +47,7 @@ namespace AnyStatus.Models
         [PropertyOrder(50)]
         [PasswordPropertyText(true)]
         [Description("Optional.")]
+        [Editor(typeof(PasswordEditor), typeof(PasswordEditor))]
         public string Password { get; set; }
 
         [PropertyOrder(60)]

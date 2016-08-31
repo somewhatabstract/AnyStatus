@@ -12,7 +12,7 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace AnyStatus.Models
 {
-    [Browsable(false)]
+    [Browsable(true)]
     [DisplayName("TFS 2015 Build")]
     [Description("Microsoft Team Foundation Server 2015 build status.")]
     public class TfsBuild : Item
@@ -52,7 +52,7 @@ namespace AnyStatus.Models
 
         [PropertyOrder(60)]
         [Description("Optional.")]
-        [PasswordPropertyText(true)]
+        [Editor(typeof(PasswordEditor), typeof(PasswordEditor))]
         public string Password { get; set; }
     }
 
