@@ -53,6 +53,8 @@ namespace AnyStatus.VSPackage
             return container;
         }
 
+        #region Helpers
+        
         private static void ScanAndRegisterItemHandlers()
         {
             var baseHandler = typeof(IHandler<>);
@@ -124,5 +126,7 @@ namespace AnyStatus.VSPackage
                    where type.BaseType == typeof(Item)
                    select type;
         }
+
+        #endregion
     }
 }
