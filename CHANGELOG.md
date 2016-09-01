@@ -1,14 +1,12 @@
 # Roadmap
 
+- [x] TFS & Team Foundation Services (Visual Studio Online) build status
 - [x] Window service status
-- [ ] TFS & Visual Studio Online build status
 - [ ] GitHub issue status
 - [ ] Travis CI build status
 - [ ] Start/Cancel build
 - [ ] Visual Studio theme support
 - [ ] Treeview drag and drop
-- [ ] Input validation
-
 
 Features that have a checkmark are complete and available for
 download in the
@@ -21,7 +19,7 @@ on the official Visual Studio extension gallery.
 
 ## 0.6
 
-- [x] TFS 2015 build status
+- [x] TFS 2015 & Team Foundation Services build status
 - [x] Plugable health checks infrastructure
 - [x] New item input validation
 - [x] Hide password characters
