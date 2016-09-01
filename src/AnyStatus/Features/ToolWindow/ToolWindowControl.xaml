@@ -22,9 +22,10 @@
     </UserControl.Resources>
     <Grid>
         <TreeView Name="TreeView" 
-                  ItemsSource="{Binding Items}" 
+                  ItemsSource="{Binding RootItem.Items}" 
                   Background="Transparent" 
                   BorderThickness="0" 
+                  AllowDrop="True"
                   PreviewMouseRightButtonDown="OnPreviewMouseRightButtonDown"
                   Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
                   theming:ImageThemingUtilities.ImageBackgroundColor="{Binding Background, RelativeSource={RelativeSource Self}, Converter={StaticResource BrushToColorConverter}}">
@@ -239,13 +240,21 @@
             </TreeView.Resources>
 
             <TreeView.ItemContainerStyle>
-                <Style TargetType="TreeViewItem">
+                <Style TargetType="{x:Type TreeViewItem}">
                     <Setter Property="Padding" Value="0"/>
                     <Setter Property="Margin" Value="0,3,0,0"/>
                     <Setter Property="Foreground" Value="{DynamicResource {x:Static vsp:EnvironmentColors.ToolWindowTextBrushKey}}"/>
                     <Setter Property="Background" Value="{DynamicResource {x:Static vsp:EnvironmentColors.SystemButtonFaceBrushKey}}"/>
                     <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
                     <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
+                    
+                    <!--<Setter Property="AllowDrop" Value="True" />-->
+                    <!--<Setter Property="IsHitTestVisible" Value="True"/>-->
+                    <EventSetter Event="TreeViewItem.MouseMove" Handler="TreeViewItem_MouseMove" />
+                    <EventSetter Event="TreeViewItem.DragEnter" Handler="TreeViewItem_DragEnter" />
+                    <EventSetter Event="TreeViewItem.DragLeave" Handler="TreeViewItem_DragLeave" />
+                    <EventSetter Event="TreeViewItem.DragOver" Handler="TreeViewItem_DragOver" />
+                    <EventSetter Event="TreeViewItem.Drop" Handler="TreeViewItem_Drop" />
                 </Style>
             </TreeView.ItemContainerStyle>
 

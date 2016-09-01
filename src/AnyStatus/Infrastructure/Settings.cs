@@ -1,4 +1,5 @@
 ﻿using AnyStatus.Models;
+using System;
 using System.Collections.ObjectModel;
 
 namespace AnyStatus.Properties
@@ -8,6 +9,26 @@ namespace AnyStatus.Properties
     /// </summary>
     public partial class Settings
     {
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public Item RootItem
+        {
+            get
+            {
+                var item = this[nameof(RootItem)] as Item;
+
+                item?.RestoreParentChildReferences();
+
+                return item;
+            }
+            set
+            {
+                this[nameof(RootItem)] = value;
+            }
+        }
+
+        //todo: remove Items property and restore-parents extension method
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         public ObservableCollection<Item> Items
@@ -25,12 +46,13 @@ namespace AnyStatus.Properties
         }
     }
    
-    internal static class SettingsExtensions
+    public static class SettingsExtensions
     {
         /// <summary>
         /// Restore tree structure (parent-child relationships).
         /// </summary>
-        public static ObservableCollection<Item> RestoreParents(this ObservableCollection<Item> items, Item parent = null)
+        [Obsolete]
+        internal static ObservableCollection<Item> RestoreParents(this ObservableCollection<Item> items, Item parent = null)
         {
             foreach (var item in items)
             {

@@ -15,7 +15,7 @@ namespace AnyStatus.Infrastructure
             {
                 NonReentrantAsDefault();
 
-                Schedule(userSettings.Items);
+                Schedule(userSettings?.RootItem?.Items);
             }
             catch (Exception ex)
             {

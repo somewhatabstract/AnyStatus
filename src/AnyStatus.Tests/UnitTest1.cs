@@ -1,6 +1,7 @@
 ﻿using AnyStatus.Infrastructure;
 using AnyStatus.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace AnyStatus.Tests
@@ -9,7 +10,7 @@ namespace AnyStatus.Tests
     public class UnitTest1
     {
         [TestMethod]
-        public void TestMethod1()
+        public void ObjectDiscoveryTest()
         {
             var baseHandlerType = typeof(IHandler<>);
 
@@ -35,6 +36,20 @@ namespace AnyStatus.Tests
 
             Assert.IsNotNull(handler);
             Assert.IsInstanceOfType(handler, typeof(WindowsServiceHandler));
+        }
+
+        [TestMethod]
+        public void ItemIsParentOfChildTest()
+        {
+            var item = new Item();
+            var child = new Item();
+
+            item.Items = new ObservableCollection<Item>()
+            {
+                child
+            };
+
+            Assert.IsTrue(item.IsParentOf(child));
         }
     }
 }

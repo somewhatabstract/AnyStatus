@@ -96,6 +96,16 @@ namespace AnyStatus.Models
 
         #endregion
 
+        public void RestoreParentChildReferences()
+        {
+            foreach (var child in Items)
+            {
+                child.Parent = this;
+
+                child.RestoreParentChildReferences();
+            }
+        }
+
         #region INotifyPropertyChanged
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -109,6 +119,25 @@ namespace AnyStatus.Models
         public IEnumerable GetErrors(string propertyName)
         {
             throw new NotImplementedException();
+        }
+
+        public bool IsParentOf(Item child)
+        {
+            if (this == child)
+            {
+                return true;
+            }
+
+            foreach (var item in Items)
+            {
+
+                if (item.IsParentOf(child))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         #endregion

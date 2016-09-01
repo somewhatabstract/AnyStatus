@@ -32,13 +32,7 @@ namespace AnyStatus.ViewModels
             Initialize();
         }
 
-        public ObservableCollection<Item> Items
-        {
-            get
-            {
-                return _userSettings.Items;
-            }
-        }
+        public Item RootItem { get { return _userSettings.RootItem; } }
 
         private void Initialize()
         {
@@ -46,7 +40,9 @@ namespace AnyStatus.ViewModels
             {
                 try
                 {
-                    var selectedItem = p as Item;
+                    var selectedItem = p as Item ?? _userSettings.RootItem;
+
+                    if (selectedItem == null) return;
 
                     var item = new Folder
                     {
@@ -54,16 +50,9 @@ namespace AnyStatus.ViewModels
                         IsEditing = true
                     };
 
-                    if (selectedItem != null)
-                    {
-                        item.Parent = selectedItem;
-                        selectedItem.Items.Add(item);
-                        selectedItem.IsExpanded = true;
-                    }
-                    else
-                    {
-                        _userSettings.Items.Add(item);
-                    }
+                    item.Parent = selectedItem;
+                    selectedItem.Items.Add(item);
+                    selectedItem.IsExpanded = true;
 
                     _userSettings.Save();
                 }
@@ -94,7 +83,7 @@ namespace AnyStatus.ViewModels
                     }
                     else
                     {
-                        _userSettings.Items.Remove(selectedItem);
+                        _userSettings.RootItem.Items.Remove(selectedItem);
                     }
 
                     if (!(selectedItem is Folder))

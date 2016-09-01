@@ -2,8 +2,9 @@
 using AnyStatus.Interfaces;
 using AnyStatus.Models;
 using System;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
+
+//todo: write debug log
 
 namespace AnyStatus
 {
@@ -12,15 +13,22 @@ namespace AnyStatus
     /// </summary>
     public class UserSettings : IUserSettings
     {
-        private ObservableCollection<Item> _items;
+        private Item _rootItem;
 
         public UserSettings()
         {
             try
             {
-                //Properties.Settings.Default.Upgrade()
+                if (Properties.Settings.Default.RootItem == null)
+                {
+                    Reset();
+                }
+                else
+                {
+                    _rootItem = Properties.Settings.Default.RootItem;
+                }
 
-                _items = Properties.Settings.Default.Items ?? new ObservableCollection<Item>();
+                Upgrade();
             }
             catch (Exception ex)
             {
@@ -28,11 +36,22 @@ namespace AnyStatus
             }
         }
 
-        public ObservableCollection<Item> Items
+        private void Upgrade()
+        {
+            if (Properties.Settings.Default.Items != null)
+            {
+                _rootItem.Items = Properties.Settings.Default.Items;
+                _rootItem.RestoreParentChildReferences();
+                Properties.Settings.Default.Items = null;
+                Save();
+            }
+        }
+
+        public Item RootItem
         {
             get
             {
-                return _items;
+                return _rootItem;
             }
         }
 
@@ -42,7 +61,7 @@ namespace AnyStatus
             {
                 Retry.Do(() =>
                 {
-                    Properties.Settings.Default.Items = _items;
+                    Properties.Settings.Default.RootItem = _rootItem;
                     Properties.Settings.Default.Save();
                 },
                 TimeSpan.FromSeconds(1), retryCount: 3);
@@ -59,11 +78,15 @@ namespace AnyStatus
             {
                 Properties.Settings.Default.Reset();
 
-                Properties.Settings.Default.Items = new ObservableCollection<Item>();
+                Properties.Settings.Default.RootItem = new Item();
+
+                Properties.Settings.Default.Items = new System.Collections.ObjectModel.ObservableCollection<Item>();//obsolete
 
                 Properties.Settings.Default.Save();
 
                 Properties.Settings.Default.Reload();
+
+                _rootItem = Properties.Settings.Default.RootItem;
             }
             catch (Exception ex)
             {

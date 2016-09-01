@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -63,6 +64,7 @@ namespace AnyStatus.Models
 
     public class TfsBuildHandler : IHandler<TfsBuild>
     {
+        [DebuggerStepThrough]
         public void Handle(TfsBuild item)
         {
             Validate(item);
