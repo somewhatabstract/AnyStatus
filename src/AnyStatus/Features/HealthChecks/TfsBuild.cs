@@ -15,19 +15,23 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 namespace AnyStatus.Models
 {
     [DisplayName("TFS 2015 Build")]
-    [Description("Microsoft Team Foundation Server 2015 build status.")]
+    [Description("Microsoft Team Foundation Server 2015 or Visual Studio Team Services build status")]
     public class TfsBuild : Item
     {
+        public TfsBuild()
+        {
+            Collection = "DefaultCollection";
+        }
+
         [Url]
         [Required]
         [PropertyOrder(10)]
-        [Description("Visual Studio Team Services account (https://{account}.visualstudio.com) or TFS server (http://{server:port}/tfs).")]
+        [Description("Visual Studio Team Services account (https://{account}.visualstudio.com) or TFS server (http://{server:port}/tfs)")]
         public string Url { get; set; }
 
         [Required]
         [PropertyOrder(20)]
         [Description()]
-        [DefaultValue("DefaultCollection")]
         public string Collection { get; set; }
 
         [Required]
