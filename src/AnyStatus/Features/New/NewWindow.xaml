@@ -47,9 +47,10 @@
                            ShowSummary="True"
                            ShowTitle="False"
                            BorderBrush="{x:Null}"
-                           Background="White"
+                           Background="Transparent"
                            SelectedObject="{Binding SelectedTemplate.Item}"
-                           SelectedObjectTypeName="{Binding SelectedTemplate.Name}"/>
+                           SelectedObjectTypeName="{Binding SelectedTemplate.Name}">
+            </xctk:PropertyGrid>
         </StackPanel>
 
         <StackPanel Grid.Column="2" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">

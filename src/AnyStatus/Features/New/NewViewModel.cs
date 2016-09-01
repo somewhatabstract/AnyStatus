@@ -62,7 +62,7 @@ namespace AnyStatus.ViewModels
                         sb.AppendLine(validationResult.ErrorMessage);
                     }
 
-                    MessageBox.Show(sb.ToString(), "Validation", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(sb.ToString(), "Validation", MessageBoxButton.OK, MessageBoxImage.Exclamation);
 
                     return;
                 }

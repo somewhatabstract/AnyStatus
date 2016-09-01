@@ -15,7 +15,8 @@ namespace AnyStatus.Models
         [Description("Host Name or IP Address")]
         public string Host { get; set; }
 
-        [Range(0, ushort.MaxValue)]
+        [Required]
+        [Range(0, ushort.MaxValue, ErrorMessage = "Port must be between 0 and 65535")]
         [PropertyOrder(20)]
         public int Port { get; set; }
     }
