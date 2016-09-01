@@ -6,7 +6,7 @@
 - [ ] Travis CI build status
 - [ ] Start/Cancel build
 - [ ] Visual Studio theme support
-- [ ] Treeview drag and drop
+- [ ] Reorder items using drag-and-drop
 
 Features that have a checkmark are complete and available for
 download in the
