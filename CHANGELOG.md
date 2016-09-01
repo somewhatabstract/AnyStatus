@@ -6,6 +6,8 @@
 - [ ] Travis CI build status
 - [ ] Start/Cancel build
 - [ ] Visual Studio theme support
+- [ ] Treeview drag and drop
+- [ ] Input validation
 
 
 Features that have a checkmark are complete and available for
@@ -16,6 +18,13 @@ download in the
 
 These are the changes to each version that has been released
 on the official Visual Studio extension gallery.
+
+## 0.6
+
+- [x] TFS 2015 build status
+- [x] Plugable health checks infrastructure
+- [x] New item input validation
+- [x] Hide password characters
 
 ## 0.5
 
@@ -28,6 +37,7 @@ on the official Visual Studio extension gallery.
 - [x] Enable/Disable health check
 - [x] Refresh all health checks toolbar button
 - [x] UI improvements
+
 
 ## 0.4
 
