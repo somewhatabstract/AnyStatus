@@ -6,7 +6,7 @@ namespace AnyStatus.Interfaces
     {
         Item RootItem { get; }
 
-        void Save();
+        void Save(bool reload = false);
 
         void Reset();
     }

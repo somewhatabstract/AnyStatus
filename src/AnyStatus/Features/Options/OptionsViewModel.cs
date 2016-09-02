@@ -1,4 +1,5 @@
-﻿using AnyStatus.Interfaces;
+﻿using AnyStatus.Infrastructure;
+using AnyStatus.Interfaces;
 using System;
 using System.Windows;
 using System.Windows.Input;
@@ -9,7 +10,7 @@ namespace AnyStatus.ViewModels
     {
         private IUserSettings _userSettings;
 
-        public OptionsViewModel() : this(new UserSettings()) { }
+        public OptionsViewModel() : this(new UserSettings(new NullLogger())) { }
 
         public OptionsViewModel(IUserSettings userSettings)
         {
@@ -28,6 +29,7 @@ namespace AnyStatus.ViewModels
             if (result != MessageBoxResult.Yes) return;
 
             _userSettings.Reset();
+            _userSettings.Save();
         }
 
         public ICommand RestoreDefaultSettingsCommand { get; set; }

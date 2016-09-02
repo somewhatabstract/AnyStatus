@@ -11,15 +11,43 @@ namespace AnyStatus.Properties
     {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public bool DebugMode
+        {
+            get
+            {
+                return (bool)this[nameof(DebugMode)];
+            }
+            set
+            {
+                this[nameof(DebugMode)] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public bool ReportAnonymousUsageData
+        {
+            get
+            {
+                return (bool)this[nameof(ReportAnonymousUsageData)];
+            }
+            set
+            {
+                this[nameof(ReportAnonymousUsageData)] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         public Item RootItem
         {
             get
             {
-                var item = this[nameof(RootItem)] as Item;
+                var rootItem = this[nameof(RootItem)] as Item;
 
-                item?.RestoreParentChildReferences();
+                rootItem?.RestoreParentChildRelationship();
 
-                return item;
+                return rootItem;
             }
             set
             {

@@ -1,6 +1,7 @@
 ﻿using AnyStatus.Interfaces;
 using Microsoft.VisualStudio.Shell.Interop;
 using System;
+using System.Diagnostics;
 
 namespace AnyStatus.Infrastructure
 {
@@ -27,12 +28,12 @@ namespace AnyStatus.Infrastructure
             {
                 if (EnsurePane())
                 {
-                    pane.OutputStringThreadSafe(DateTime.Now + ": " + message + Environment.NewLine);
+                    pane.OutputStringThreadSafe($"[{DateTime.Now}] {message}{Environment.NewLine}");
                 }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.Write(ex);
+                Debug.Write(ex);
             }
         }
 

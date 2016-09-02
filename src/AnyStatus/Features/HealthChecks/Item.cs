@@ -96,13 +96,13 @@ namespace AnyStatus.Models
 
         #endregion
 
-        public void RestoreParentChildReferences()
+        public void RestoreParentChildRelationship()
         {
             foreach (var child in Items)
             {
                 child.Parent = this;
 
-                child.RestoreParentChildReferences();
+                child.RestoreParentChildRelationship();
             }
         }
 
