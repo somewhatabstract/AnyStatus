@@ -3,23 +3,41 @@ using AnyStatus.Models;
 using FluentScheduler;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace AnyStatus.Infrastructure
 {
     public class ItemRegistry : Registry
     {
-        public ItemRegistry(IUserSettings userSettings)
+        private ILogger _logger;
+        private IUserSettings _userSettings;
+
+        public ItemRegistry(IUserSettings userSettings, ILogger logger)
+        {
+            if (userSettings == null)
+                throw new ArgumentNullException(nameof(userSettings));
+
+            if (logger == null)
+                throw new ArgumentNullException(nameof(logger));
+
+            _logger = logger;
+            _userSettings = userSettings;
+
+            Initialize();
+        }
+
+        private void Initialize()
         {
             try
             {
+                _logger.Log("Initializing scheduler.");
+
                 NonReentrantAsDefault();
 
-                Schedule(userSettings?.RootItem?.Items);
+                Schedule(_userSettings?.RootItem?.Items);
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                _logger.Log("Failed to initialize scheduler. Exception: " + ex.ToString());
             }
         }
 
@@ -30,20 +48,22 @@ namespace AnyStatus.Infrastructure
             foreach (var item in items)
             {
                 if (item is Folder)
-                {
                     Schedule(item.Items);
-                }
-                else if (item.IsEnabled)
-                {
+                else
                     Schedule(item);
-                }
             }
         }
 
         private void Schedule(Item item)
         {
-            Schedule(new ScheduledJob(item))
-                 .WithName(item.Id.ToString())
+            if (item.Id == Guid.Empty || !item.IsEnabled)
+                return;
+
+            var job = new ScheduledJob(item);
+            var jobName = item.Id.ToString();
+
+            Schedule(job)
+                 .WithName(jobName)
                  .ToRunNow()
                  .AndEvery(item.Interval).Minutes();
         }
