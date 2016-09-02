@@ -2,9 +2,6 @@
 using AnyStatus.Interfaces;
 using AnyStatus.Models;
 using System;
-using System.Diagnostics;
-
-//todo: write debug log
 
 namespace AnyStatus
 {
@@ -32,19 +29,19 @@ namespace AnyStatus
 
             try
             {
-                if (Properties.Settings.Default.RootItem == null)
-                {
-                    Reset();
-                    Save(reload: true);
-                }
 
                 LoadSettings();
+
+                if (RootItem == null)
+                {
+                    Reset();
+                }
 
                 Upgrade();
             }
             catch (Exception ex)
             {
-                _logger.Log("Failed to save user settings. Exception: " + ex.ToString());
+                _logger.Log("Failed to initialize user settings. Exception: " + ex.ToString());
             }
         }
 
@@ -66,11 +63,9 @@ namespace AnyStatus
 
             RootItem.Items = Properties.Settings.Default.Items;
 
-            RootItem.RestoreParentChildRelationship();
-
             Properties.Settings.Default.Items = null;
 
-            Save(reload: true);
+            Save();
         }
 
         public void Save(bool reload = false)
@@ -84,13 +79,12 @@ namespace AnyStatus
                     Properties.Settings.Default.RootItem = RootItem;
                     Properties.Settings.Default.DebugMode = DebugMode;
                     Properties.Settings.Default.ReportAnonymousUsageData = ReportAnonymousUsageData;
+
                     Properties.Settings.Default.Save();
 
                     if (reload)
                     {
                         Properties.Settings.Default.Reload();
-
-                        LoadSettings();
                     }
                 },
                 TimeSpan.FromSeconds(1), retryCount: 3);
@@ -109,11 +103,11 @@ namespace AnyStatus
             {
                 Properties.Settings.Default.Reset();
 
-                Properties.Settings.Default.RootItem = new Folder { Name = "Root Item" };
-                Properties.Settings.Default.DebugMode = true;
-                Properties.Settings.Default.ReportAnonymousUsageData = true;
+                RootItem = new RootItem { Name = "Root Item" };
+                DebugMode = true;
+                ReportAnonymousUsageData = true;
 
-                LoadSettings();
+                Save();
             }
             catch (Exception ex)
             {

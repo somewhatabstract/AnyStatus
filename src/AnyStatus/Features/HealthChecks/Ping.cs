@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Net.NetworkInformation;
 using System.Windows.Media;
 
@@ -16,6 +17,7 @@ namespace AnyStatus.Models
 
     public class PingHandler : IHandler<Ping>
     {
+        [DebuggerStepThrough]
         public void Handle(Ping item)
         {
             using (var ping = new System.Net.NetworkInformation.Ping())

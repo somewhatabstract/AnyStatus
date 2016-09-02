@@ -11,8 +11,10 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 namespace AnyStatus.Models
 {
     [Serializable]
-    [XmlInclude(typeof(Ping))]
     [XmlInclude(typeof(Folder))]
+    [XmlInclude(typeof(RootItem))]
+
+    [XmlInclude(typeof(Ping))]
     [XmlInclude(typeof(TcpPort))]
     [XmlInclude(typeof(TfsBuild))]
     [XmlInclude(typeof(HttpStatus))]
@@ -104,6 +106,24 @@ namespace AnyStatus.Models
 
                 child.RestoreParentChildRelationship();
             }
+        }
+
+        public void Reparent(Item newParent)
+        {
+            if (Items != null && Parent != null && Parent.Items != null)
+            {
+                Parent.Items.Remove(this);
+                Parent = newParent;
+                Parent.Items.Add(this);
+            }
+        }
+
+        public bool CanReparent(Item newParent)
+        {
+            return newParent != null &&
+                   newParent is Folder &&
+                   newParent != this.Parent &&
+                   !this.IsParentOf(newParent);
         }
 
         #region INotifyPropertyChanged

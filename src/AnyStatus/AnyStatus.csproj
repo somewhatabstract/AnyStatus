@@ -139,6 +139,7 @@
     <Compile Include="Features\Edit\EditViewModel.cs" />
     <Compile Include="Features\HealthChecks\AppVeyorBuild.cs" />
     <Compile Include="Features\HealthChecks\Editors\PasswordEditor.cs" />
+    <Compile Include="Features\HealthChecks\RootItem.cs" />
     <Compile Include="Infrastructure\Extensions.cs" />
     <Compile Include="Features\HealthChecks\TCP.cs" />
     <Compile Include="Features\HealthChecks\TeamCityBuild.cs" />

@@ -21,11 +21,12 @@
         <utilities:BrushToColorConverter x:Key="BrushToColorConverter"/>
     </UserControl.Resources>
     <Grid>
-        <TreeView Name="TreeView" 
+        <TreeView Name="TreeView"
                   ItemsSource="{Binding RootItem.Items}" 
                   Background="Transparent" 
                   BorderThickness="0" 
-                  AllowDrop="True"
+                  Drop="TreeViewItem_Drop"
+                  DragOver="TreeViewItem_DragOver"
                   PreviewMouseRightButtonDown="OnPreviewMouseRightButtonDown"
                   Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
                   theming:ImageThemingUtilities.ImageBackgroundColor="{Binding Background, RelativeSource={RelativeSource Self}, Converter={StaticResource BrushToColorConverter}}">
@@ -247,12 +248,7 @@
                     <Setter Property="Background" Value="{DynamicResource {x:Static vsp:EnvironmentColors.SystemButtonFaceBrushKey}}"/>
                     <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
                     <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
-                    
-                    <!--<Setter Property="AllowDrop" Value="True" />-->
-                    <!--<Setter Property="IsHitTestVisible" Value="True"/>-->
                     <EventSetter Event="TreeViewItem.MouseMove" Handler="TreeViewItem_MouseMove" />
-                    <EventSetter Event="TreeViewItem.DragEnter" Handler="TreeViewItem_DragEnter" />
-                    <EventSetter Event="TreeViewItem.DragLeave" Handler="TreeViewItem_DragLeave" />
                     <EventSetter Event="TreeViewItem.DragOver" Handler="TreeViewItem_DragOver" />
                     <EventSetter Event="TreeViewItem.Drop" Handler="TreeViewItem_Drop" />
                 </Style>

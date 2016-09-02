@@ -3,7 +3,6 @@ using AnyStatus.Interfaces;
 using AnyStatus.Models;
 using FluentScheduler;
 using System;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
@@ -234,6 +233,8 @@ namespace AnyStatus.ViewModels
         public ICommand RefreshItemCommand { get; set; }
         public ICommand EnableItemCommand { get; set; }
         public ICommand DisableItemCommand { get; set; }
+
+        //public ICommand ReparentItemCommand { get; set; }
 
         public ICommand SaveCommand { get; set; }
 
