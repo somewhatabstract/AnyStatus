@@ -129,6 +129,7 @@ namespace AnyStatus.Views
                     target.Items.Add(source);
                     source.Parent.Items.Remove(source);
                     source.Parent = target;
+                    target.IsExpanded = true;
                 }
 
                 if (_viewModel.SaveCommand.CanExecute(null))
