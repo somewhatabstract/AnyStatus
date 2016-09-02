@@ -30,6 +30,7 @@ namespace AnyStatus.Models
         private bool _isExpanded;
         private bool _isEnabled;
         private bool _isEditing;
+        private bool _isSelected;
 
         [NonSerialized]
         private Brush _brush;
@@ -39,6 +40,7 @@ namespace AnyStatus.Models
         public Item()
         {
             IsEnabled = true;
+            IsExpanded = true;
             Interval = 5;
             Brush = Brushes.Silver;
             Items = new ObservableCollection<Item>();
@@ -53,6 +55,7 @@ namespace AnyStatus.Models
         [PropertyOrder(0)]
         public string Name { get; set; }
 
+        [XmlIgnore]
         [Browsable(false)]
         public bool IsExpanded
         {
@@ -94,6 +97,14 @@ namespace AnyStatus.Models
         {
             get { return _isEditing; }
             set { _isEditing = value; OnPropertyChanged(); }
+        }
+
+        [XmlIgnore]
+        [Browsable(false)]
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set { _isSelected = value; OnPropertyChanged(); }
         }
 
         #endregion

@@ -25,6 +25,7 @@
                   ItemsSource="{Binding RootItem.Items}" 
                   Background="Transparent" 
                   BorderThickness="0" 
+                  MouseDown="TreeView_MouseDown"
                   Drop="TreeViewItem_Drop"
                   DragOver="TreeViewItem_DragOver"
                   PreviewMouseRightButtonDown="OnPreviewMouseRightButtonDown"

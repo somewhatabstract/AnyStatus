@@ -143,5 +143,17 @@ namespace AnyStatus.Views
         }
 
         #endregion
+
+        private void TreeView_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            TreeView treeView = sender as TreeView;
+
+            if (treeView != null && treeView.SelectedItem != null && treeView.SelectedItem is Item)
+            {
+                var item = (Item)treeView.SelectedItem;
+                item.IsSelected = false;
+                treeView.Focus();
+            }
+        }
     }
 }
