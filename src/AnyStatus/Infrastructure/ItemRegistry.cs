@@ -2,8 +2,6 @@
 using AnyStatus.Models;
 using FluentScheduler;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace AnyStatus.Infrastructure
 {
@@ -20,8 +18,8 @@ namespace AnyStatus.Infrastructure
             if (logger == null)
                 throw new ArgumentNullException(nameof(logger));
 
-            _logger = logger;
             _userSettings = userSettings;
+            _logger = logger;
 
             Initialize();
         }
@@ -50,9 +48,9 @@ namespace AnyStatus.Infrastructure
             if (item is IScheduledItem && item.IsEnabled && item.Id != Guid.Empty)
             {
                 Schedule(new ScheduledJob(item))
-                 .WithName(item.Id.ToString())
-                 .ToRunNow()
-                 .AndEvery(item.Interval).Minutes();
+                     .WithName(item.Id.ToString())
+                     .ToRunNow()
+                     .AndEvery(item.Interval).Minutes();
 
                 _logger.Log($"Item {item.Name} scheduled to run every {item.Interval} minutes.");
             }
