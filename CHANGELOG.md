@@ -7,7 +7,7 @@
 - [ ] CruiseControl.NET build status
 - [ ] Start/Cancel build
 - [ ] Visual Studio theme support
-- [ ] Reorder items using drag-and-drop
+- [ ] Drag-and-drop to move items between folders
 
 Features that have a checkmark are complete and available for
 download in the
