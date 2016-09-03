@@ -4,6 +4,7 @@
 - [x] Window service status
 - [ ] GitHub issue status
 - [ ] Travis CI build status
+- [ ] CruiseControl.Net build status
 - [ ] Start/Cancel build
 - [ ] Visual Studio theme support
 - [ ] Reorder items using drag-and-drop
