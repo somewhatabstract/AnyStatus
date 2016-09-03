@@ -12,7 +12,7 @@ namespace AnyStatus.Models
 {
     [DisplayName("AppVeyor Build")]
     [Description("")]
-    public class AppVeyorBuild : Item
+    public class AppVeyorBuild : Item, IScheduledItem
     {
         [Required]
         [DisplayName("Account Name")]

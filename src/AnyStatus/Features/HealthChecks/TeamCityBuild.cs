@@ -16,7 +16,7 @@ namespace AnyStatus.Models
 {
     [DisplayName("TeamCity Build")]
     [Description("")]
-    public class TeamCityBuild : Item
+    public class TeamCityBuild : Item, IScheduledItem
     {
         [Url]
         [Required]

@@ -7,7 +7,7 @@ namespace AnyStatus.Models
 {
     [DisplayName("Windows Service")]
     [Description("")]
-    public class WindowsService : Item
+    public class WindowsService : Item, IScheduledItem
     {
         public WindowsService()
         {

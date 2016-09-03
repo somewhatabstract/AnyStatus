@@ -3,6 +3,7 @@ using AnyStatus.Models;
 using FluentScheduler;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AnyStatus.Infrastructure
 {
@@ -33,7 +34,7 @@ namespace AnyStatus.Infrastructure
 
                 NonReentrantAsDefault();
 
-                Schedule(_userSettings?.RootItem?.Items);
+                Schedule(_userSettings.RootItem);
             }
             catch (Exception ex)
             {
@@ -41,31 +42,28 @@ namespace AnyStatus.Infrastructure
             }
         }
 
-        private void Schedule(IEnumerable<Item> items)
-        {
-            if (items == null) return;
-
-            foreach (var item in items)
-            {
-                if (item is Folder)
-                    Schedule(item.Items);
-                else
-                    Schedule(item);
-            }
-        }
-
         private void Schedule(Item item)
         {
-            if (item.Id == Guid.Empty || !item.IsEnabled)
+            if (item == null)
                 return;
 
-            var job = new ScheduledJob(item);
-            var jobName = item.Id.ToString();
-
-            Schedule(job)
-                 .WithName(jobName)
+            if (item is IScheduledItem && item.IsEnabled && item.Id != Guid.Empty)
+            {
+                Schedule(new ScheduledJob(item))
+                 .WithName(item.Id.ToString())
                  .ToRunNow()
                  .AndEvery(item.Interval).Minutes();
+
+                _logger.Log($"Item {item.Name} scheduled to run every {item.Interval} minutes.");
+            }
+
+            if (item.Items == null)
+                return;
+
+            foreach (var child in item.Items)
+            {
+                Schedule(child);
+            }
         }
     }
 }

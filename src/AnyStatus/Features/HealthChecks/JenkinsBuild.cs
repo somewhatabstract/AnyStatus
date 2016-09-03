@@ -13,7 +13,7 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 namespace AnyStatus.Models
 {
     [DisplayName("Jenkins Build")]
-    public class JenkinsBuild : Item
+    public class JenkinsBuild : Item, IScheduledItem
     {
         [Url]
         [Required]

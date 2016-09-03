@@ -71,6 +71,23 @@ namespace AnyStatus.Models
             set { _isEnabled = value; OnPropertyChanged(); }
         }
 
+        public void Add(Item item)
+        {
+            if (Items != null)
+            {
+                Items.Insert(0, item);
+                item.Parent = this;
+            }
+        }
+
+        public void Remove()
+        {
+            if (Parent != null && Parent.Items != null)
+            {
+                Parent.Items.Remove(this);
+            }
+        }
+
         [Required]
         [Range(0, ushort.MaxValue, ErrorMessage = "Interval must be between 0 and 65535")]
         [Description("The interval in minutes")]
@@ -119,22 +136,42 @@ namespace AnyStatus.Models
             }
         }
 
-        public void Reparent(Item newParent)
+        public void Reparent(Item target)
         {
-            if (Items != null && Parent != null && Parent.Items != null)
+            if (Parent == null || Parent.Items == null)
+                return;
+
+            if (target is Folder)
             {
                 Parent.Items.Remove(this);
-                Parent = newParent;
-                Parent.Items.Add(this);
+                Parent = target;
+                Parent.Items.Insert(0, this);
+                //Parent.Items.Add(this);
             }
+            //else if (target.Parent == Parent)
+            //{
+            //    var targetIndex = Parent.Items.IndexOf(target);
+            //    var sourceIndex = Parent.Items.IndexOf(this);
+            //    if (sourceIndex < targetIndex)
+            //    {
+            //        target.Parent.Items.Insert(targetIndex + 1, this);
+            //        Parent.Items.Remove(this);
+            //    }
+            //    else
+            //    {
+            //        Parent.Items.Remove(this);
+            //        target.Parent.Items.Insert(targetIndex, this);
+            //    }
+            //}
         }
 
-        public bool CanReparent(Item newParent)
+        public bool CanReparent(Item target)
         {
-            return newParent != null &&
-                   newParent is Folder &&
-                   newParent != this.Parent &&
-                   !this.IsParentOf(newParent);
+            return target != null &&
+                   target is Folder &&
+                   target != this.Parent &&
+                   !this.IsParentOf(target);
+            //&& (target is Folder || target.Parent == Parent);
         }
 
         #region INotifyPropertyChanged

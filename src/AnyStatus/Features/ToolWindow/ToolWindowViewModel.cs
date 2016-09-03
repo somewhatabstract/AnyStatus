@@ -16,17 +16,20 @@ namespace AnyStatus.ViewModels
     {
         private IUserSettings _userSettings;
         private IViewLocator _viewLocator;
+        private ILogger _logger;
 
-        public ToolWindowViewModel(IUserSettings userSettings, IViewLocator viewLocator)
+        public ToolWindowViewModel(IUserSettings userSettings, IViewLocator viewLocator, ILogger logger)
         {
             if (userSettings == null)
                 throw new ArgumentNullException(nameof(userSettings));
-
             if (viewLocator == null)
                 throw new ArgumentNullException(nameof(viewLocator));
+            if (logger == null)
+                throw new ArgumentNullException(nameof(logger));
 
             _userSettings = userSettings;
             _viewLocator = viewLocator;
+            _logger = logger;
 
             Initialize();
         }
@@ -43,21 +46,20 @@ namespace AnyStatus.ViewModels
 
                     if (selectedItem == null) return;
 
-                    var item = new Folder
+                    var folder = new Folder
                     {
                         Name = "New Folder",
                         IsEditing = true
                     };
 
-                    item.Parent = selectedItem;
-                    selectedItem.Items.Add(item);
+                    selectedItem.Add(folder);
                     selectedItem.IsExpanded = true;
 
                     _userSettings.Save();
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine(ex);
+                    _logger.Log("Failed to add a new folder. Exception: " + ex.ToString());
                 }
             });
 
@@ -76,25 +78,18 @@ namespace AnyStatus.ViewModels
                         return;
                     }
 
-                    if (selectedItem.Parent != null)
-                    {
-                        selectedItem.Parent.Items.Remove(selectedItem);
-                    }
-                    else
-                    {
-                        _userSettings.RootItem.Items.Remove(selectedItem);
-                    }
-
-                    if (!(selectedItem is Folder))
+                    if (selectedItem is IScheduledItem)
                     {
                         JobManager.RemoveJob(selectedItem.Id.ToString());
                     }
+
+                    selectedItem.Remove();
 
                     _userSettings.Save();
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine(ex);
+                    _logger.Log("Failed to remove an item. Exception: " + ex.ToString());
                 }
             });
 
@@ -110,7 +105,7 @@ namespace AnyStatus.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine(ex);
+                    _logger.Log("Failed to open a new item window. Exception: " + ex.ToString());
                 }
             });
 
@@ -126,7 +121,7 @@ namespace AnyStatus.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine(ex);
+                    _logger.Log("Failed to open item properties window. Exception: " + ex.ToString());
                 }
             });
 
@@ -160,7 +155,7 @@ namespace AnyStatus.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine(ex);
+                    _logger.Log("Failed to enable an item. Exception: " + ex.ToString());
                 }
             });
 
@@ -195,7 +190,7 @@ namespace AnyStatus.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine(ex);
+                    _logger.Log("Failed to save. Exception: " + ex.ToString());
                 }
             });
 
@@ -216,7 +211,7 @@ namespace AnyStatus.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine(ex);
+                    _logger.Log("Failed to refresh an item. Exception: " + ex.ToString());
                 }
             });
         }

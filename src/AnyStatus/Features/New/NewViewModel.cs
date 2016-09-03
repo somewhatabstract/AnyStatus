@@ -71,8 +71,7 @@ namespace AnyStatus.ViewModels
 
                 if (Parent != null)
                 {
-                    item.Parent = Parent;
-                    Parent.Items.Add(item);
+                    Parent.Add(item);
                     Parent.IsExpanded = true;
                 }
                 else
@@ -82,8 +81,13 @@ namespace AnyStatus.ViewModels
 
                 _userSettings.Save();
 
-                JobManager.AddJob(new ScheduledJob(item),
-                    schedule => schedule.WithName(item.Id.ToString()).ToRunNow().AndEvery(item.Interval).Minutes());
+                if (item is IScheduledItem)
+                {
+                    JobManager.AddJob(new ScheduledJob(item),
+                        s => s.WithName(item.Id.ToString())
+                                .ToRunNow()
+                                .AndEvery(item.Interval).Minutes());
+                }
 
                 CloseRequested?.Invoke(this, EventArgs.Empty);
             });

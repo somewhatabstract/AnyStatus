@@ -10,7 +10,7 @@ namespace AnyStatus.Models
 {
     [DisplayName("HTTP Status")]
     [Description("")]
-    public class HttpStatus : Item
+    public class HttpStatus : Item, IScheduledItem
     {
         public HttpStatus()
         {

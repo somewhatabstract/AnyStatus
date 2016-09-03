@@ -8,7 +8,7 @@ namespace AnyStatus.Models
 {
     [DisplayName("TCP")]
     [Description("")]
-    public class TcpPort : Item
+    public class TcpPort : Item, IScheduledItem
     {
         [Required]
         [PropertyOrder(10)]

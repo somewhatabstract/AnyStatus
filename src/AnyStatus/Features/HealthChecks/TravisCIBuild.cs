@@ -6,7 +6,7 @@ namespace AnyStatus.Models
     [Browsable(false)]
     [DisplayName("Travis CI Build")]
     [Description("")]
-    public class TravisCIBuild : Item
+    public class TravisCIBuild : Item, IScheduledItem
     {
     }
 

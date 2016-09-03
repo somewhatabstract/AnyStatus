@@ -49,6 +49,21 @@ namespace AnyStatus.Views
             return source as TreeViewItem;
         }
 
+        /// <summary>
+        /// Unselects an item when clicking on the empty space in the tree view.
+        /// </summary>
+        private void TreeView_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            TreeView treeView = sender as TreeView;
+
+            if (treeView != null && treeView.SelectedItem != null && treeView.SelectedItem is Item)
+            {
+                var item = (Item)treeView.SelectedItem;
+                item.IsSelected = false;
+                treeView.Focus();
+            }
+        }
+
         #region Drag and Drop
 
         private void TreeViewItem_MouseMove(object sender, MouseEventArgs e)
@@ -143,17 +158,5 @@ namespace AnyStatus.Views
         }
 
         #endregion
-
-        private void TreeView_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            TreeView treeView = sender as TreeView;
-
-            if (treeView != null && treeView.SelectedItem != null && treeView.SelectedItem is Item)
-            {
-                var item = (Item)treeView.SelectedItem;
-                item.IsSelected = false;
-                treeView.Focus();
-            }
-        }
     }
 }

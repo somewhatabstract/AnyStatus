@@ -8,7 +8,7 @@ namespace AnyStatus.Models
 {
     [DisplayName("Ping")]
     [Description("")]
-    public class Ping : Item
+    public class Ping : Item, IScheduledItem
     {
         [Required]
         [Description("Host Name or IP Address")]

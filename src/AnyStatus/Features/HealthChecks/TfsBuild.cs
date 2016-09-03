@@ -17,7 +17,7 @@ namespace AnyStatus.Models
 {
     [DisplayName("TFS 2015 Build")]
     [Description("Microsoft Team Foundation Server 2015 or Visual Studio Team Services build status")]
-    public class TfsBuild : Item
+    public class TfsBuild : Item, IScheduledItem
     {
         public TfsBuild()
         {
