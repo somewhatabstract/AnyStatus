@@ -90,7 +90,7 @@ namespace AnyStatus.Views
                 var source = GetSource(e);
                 var target = GetTarget(sender);
 
-                if (target != null && source != null && source.CanReparent(target))
+                if (target != null && source != null && source.CanMoveTo(target))
                 {
                     e.Effects = DragDropEffects.Move;
                 }
@@ -115,10 +115,10 @@ namespace AnyStatus.Views
                 var source = GetSource(e);
                 var target = GetTarget(sender);
 
-                if (target == null || source == null || !source.CanReparent(target))
+                if (target == null || source == null || !source.CanMoveTo(target))
                     return;
 
-                source.Reparent(target);
+                source.MoveTo(target);
 
                 target.IsExpanded = true;
 

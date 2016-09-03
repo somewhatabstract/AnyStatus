@@ -12,9 +12,10 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 namespace AnyStatus.Models
 {
     [Serializable]
+    //Folders////////////////////
     [XmlInclude(typeof(Folder))]
     [XmlInclude(typeof(RootItem))]
-
+    //Plug-ins////////////////////
     [XmlInclude(typeof(Ping))]
     [XmlInclude(typeof(TcpPort))]
     [XmlInclude(typeof(TfsBuild))]
@@ -56,55 +57,12 @@ namespace AnyStatus.Models
         [PropertyOrder(0)]
         public string Name { get; set; }
 
+        [Browsable(false)]
+        public ObservableCollection<Item> Items { get; set; }
+
         [XmlIgnore]
         [Browsable(false)]
-        public bool IsExpanded
-        {
-            get { return _isExpanded; }
-            set { _isExpanded = value; OnPropertyChanged(); }
-        }
-
-        [Browsable(false)]
-        [DisplayName("Enabled")]
-        public bool IsEnabled
-        {
-            get { return _isEnabled; }
-            set { _isEnabled = value; OnPropertyChanged(); }
-        }
-
-        public void Add(Item item)
-        {
-            if (Items == null)
-                return;
-
-            item.Parent = this;
-
-            if (item is Folder)
-            {
-                var lastFolder = Items.LastOrDefault(k => k is Folder);
-
-                if (lastFolder != null)
-                {
-                    var idx = Items.IndexOf(lastFolder);
-
-                    if (idx + 1 < Items.Count())
-                    {
-                        Items.Insert(idx + 1, item);
-                        return;
-                    }
-                }
-            }
-
-            Items.Add(item);
-        }
-
-        public void Remove()
-        {
-            if (Parent != null && Parent.Items != null)
-            {
-                Parent.Items.Remove(this);
-            }
-        }
+        public Item Parent { get; set; }
 
         [Required]
         [Range(0, ushort.MaxValue, ErrorMessage = "Interval must be between 0 and 65535")]
@@ -121,10 +79,19 @@ namespace AnyStatus.Models
 
         [XmlIgnore]
         [Browsable(false)]
-        public Item Parent { get; set; }
+        public bool IsExpanded
+        {
+            get { return _isExpanded; }
+            set { _isExpanded = value; OnPropertyChanged(); }
+        }
 
         [Browsable(false)]
-        public ObservableCollection<Item> Items { get; set; }
+        [DisplayName("Enabled")]
+        public bool IsEnabled
+        {
+            get { return _isEnabled; }
+            set { _isEnabled = value; OnPropertyChanged(); }
+        }
 
         [XmlIgnore]
         [Browsable(false)]
@@ -144,6 +111,40 @@ namespace AnyStatus.Models
 
         #endregion
 
+        #region Methods
+
+        public void Add(Item item)
+        {
+            if (item == null || Items == null)
+                throw new InvalidOperationException();
+
+            item.Parent = this;
+
+            Items.Add(item);
+
+            //if (item is Folder)
+            //{
+            //    var lastFolder = Items.LastOrDefault(k => k is Folder);
+            //    if (lastFolder != null)
+            //    {
+            //        var idx = Items.IndexOf(lastFolder);
+            //        if (idx + 1 < Items.Count())
+            //        {
+            //            Items.Insert(idx + 1, item);
+            //            return;
+            //        }
+            //    }
+            //}
+        }
+
+        public void Remove()
+        {
+            if (Parent == null || Parent.Items == null)
+                throw new InvalidOperationException();
+
+            Parent.Items.Remove(this);
+        }
+
         public void RestoreParentChildRelationship()
         {
             foreach (var child in Items)
@@ -154,45 +155,71 @@ namespace AnyStatus.Models
             }
         }
 
-        public void Reparent(Item target)
+        public void MoveUp()
         {
-            if (Parent == null || Parent.Items == null)
-                return;
-
-            if (target is Folder)
-            {
-                Remove();
-                target.Add(this);
-                //Parent.Items.Remove(this);
-                //Parent = target;
-                //Parent.Items.Insert(0, this);
-                //Parent.Items.Add(this);
-            }
-            //else if (target.Parent == Parent)
-            //{
-            //    var targetIndex = Parent.Items.IndexOf(target);
-            //    var sourceIndex = Parent.Items.IndexOf(this);
-            //    if (sourceIndex < targetIndex)
-            //    {
-            //        target.Parent.Items.Insert(targetIndex + 1, this);
-            //        Parent.Items.Remove(this);
-            //    }
-            //    else
-            //    {
-            //        Parent.Items.Remove(this);
-            //        target.Parent.Items.Insert(targetIndex, this);
-            //    }
-            //}
+            throw new NotImplementedException();
         }
 
-        public bool CanReparent(Item target)
+        public void MoveDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Move item into folder.
+        /// </summary>
+        /// <param name="folder">The target folder.</param>
+        private void MoveInto(Folder folder)
+        {
+            Remove();
+            folder.Add(this);
+        }
+
+        public bool CanMoveTo(Item target)
         {
             return target != null &&
-                   target is Folder &&
                    target != this.Parent &&
-                   !this.IsParentOf(target);
-            //&& (target is Folder || target.Parent == Parent);
+                  (target is Folder || target.Parent == this.Parent) &&
+                   this.IsNotParentOf(target);
         }
+
+        public void MoveTo(Item target)
+        {
+            if (target is Folder)
+            {
+                MoveInto((Folder)target);
+            }
+            else if (target.Parent == this.Parent)
+            {
+                MoveToPositionOf(target);
+            }
+        }
+
+        /// <summary>
+        /// Change item position in folder.
+        /// </summary>
+        /// <param name="target"></param>
+        private void MoveToPositionOf(Item target)
+        {
+            if (target.Parent != this.Parent)
+                return;
+
+            var targetIndex = Parent.Items.IndexOf(target);
+            var sourceIndex = Parent.Items.IndexOf(this);
+
+            if (sourceIndex < targetIndex)
+            {
+                Parent.Items.Insert(targetIndex + 1, this);
+                Parent.Items.Remove(this);
+            }
+            else
+            {
+                Parent.Items.Remove(this);
+                Parent.Items.Insert(targetIndex, this);
+            }
+        }
+
+        #endregion
 
         #region INotifyPropertyChanged
 
@@ -226,6 +253,11 @@ namespace AnyStatus.Models
             }
 
             return false;
+        }
+
+        public bool IsNotParentOf(Item item)
+        {
+            return !IsParentOf(item);
         }
 
         #endregion
