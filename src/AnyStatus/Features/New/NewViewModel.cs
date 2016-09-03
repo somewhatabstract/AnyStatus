@@ -76,7 +76,7 @@ namespace AnyStatus.ViewModels
                 }
                 else
                 {
-                    _userSettings.RootItem.Items.Add(item);
+                    _userSettings.RootItem.Add(item);
                 }
 
                 _userSettings.Save();

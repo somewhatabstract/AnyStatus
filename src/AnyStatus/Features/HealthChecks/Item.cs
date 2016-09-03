@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -73,11 +74,28 @@ namespace AnyStatus.Models
 
         public void Add(Item item)
         {
-            if (Items != null)
+            if (Items == null)
+                return;
+
+            item.Parent = this;
+
+            if (item is Folder)
             {
-                Items.Insert(0, item);
-                item.Parent = this;
+                var lastFolder = Items.LastOrDefault(k => k is Folder);
+
+                if (lastFolder != null)
+                {
+                    var idx = Items.IndexOf(lastFolder);
+
+                    if (idx + 1 < Items.Count())
+                    {
+                        Items.Insert(idx + 1, item);
+                        return;
+                    }
+                }
             }
+
+            Items.Add(item);
         }
 
         public void Remove()
@@ -143,9 +161,11 @@ namespace AnyStatus.Models
 
             if (target is Folder)
             {
-                Parent.Items.Remove(this);
-                Parent = target;
-                Parent.Items.Insert(0, this);
+                Remove();
+                target.Add(this);
+                //Parent.Items.Remove(this);
+                //Parent = target;
+                //Parent.Items.Insert(0, this);
                 //Parent.Items.Add(this);
             }
             //else if (target.Parent == Parent)
