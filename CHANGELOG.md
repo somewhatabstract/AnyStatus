@@ -8,6 +8,7 @@
 - [ ] Start/Cancel build
 - [ ] Visual Studio theme support
 - [ ] Drag-and-drop to move items between folders
+- [ ] Import/Export user settings
 
 Features that have a checkmark are complete and available for
 download in the
