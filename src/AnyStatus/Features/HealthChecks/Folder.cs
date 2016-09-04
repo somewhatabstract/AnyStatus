@@ -2,6 +2,7 @@
 
 namespace AnyStatus.Models
 {
+    [Browsable(false)]
     public class Folder : Item
     {
         [Browsable(false)]
