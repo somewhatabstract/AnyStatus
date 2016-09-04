@@ -11,9 +11,6 @@ namespace AnyStatus.VSPackage
 {
     internal sealed class ToolWindowCommand
     {
-        public const int CommandId = 0x0100;
-        public static readonly Guid CommandSet = new Guid("c420854f-cac2-4492-8067-ecf632228390");
-
         private readonly Package _package;
         private readonly IServiceProvider _serviceProvider;
 
@@ -33,22 +30,22 @@ namespace AnyStatus.VSPackage
             if (commandService != null)
             {
                 //view -> other windows 
-                var menuCommandID = new CommandID(CommandSet, CommandId);
+                var menuCommandID = new CommandID(PackageGuids.guidToolWindowPackageCmdSet, PackageIds.ToolWindowCommandId);
                 var menuItem = new MenuCommand(ShowToolWindow, menuCommandID);
                 commandService.AddCommand(menuItem);
 
                 //refresh toolbar command
-                var refreshToolbarCommandId = new CommandID(CommandSet, 0x1003);
+                var refreshToolbarCommandId = new CommandID(PackageGuids.guidToolWindowPackageCmdSet, PackageIds.refreshToolbarCommandId);
                 var refreshToolbarMenuItem = new MenuCommand(new EventHandler(RefreshButtonHandler), refreshToolbarCommandId);
                 commandService.AddCommand(refreshToolbarMenuItem);
 
                 //options toolbar command
-                var optionsToolbarCommandId = new CommandID(CommandSet, 0x1002);
+                var optionsToolbarCommandId = new CommandID(PackageGuids.guidToolWindowPackageCmdSet, PackageIds.optionsToolbarCommandId);
                 var optionsToolbarMenuItem = new MenuCommand(new EventHandler(OptionsButtonHandler), optionsToolbarCommandId);
                 commandService.AddCommand(optionsToolbarMenuItem);
 
                 //help toolbar command
-                var helpToolbarCommandId = new CommandID(CommandSet, 0x1004);
+                var helpToolbarCommandId = new CommandID(PackageGuids.guidToolWindowPackageCmdSet, PackageIds.helpToolbarCommandId);
                 var helpToolbarMenuItem = new MenuCommand(new EventHandler(HelpButtonHandler), helpToolbarCommandId);
                 commandService.AddCommand(helpToolbarMenuItem);
             }

@@ -29,7 +29,7 @@ namespace AnyStatus.VSPackage
         {
             Caption = "AnyStatus";
 
-            ToolBar = new CommandID(new Guid("{c420854f-cac2-4492-8067-ecf632228390}"), AnyStatusPackage.ToolbarId);
+            ToolBar = new CommandID(PackageGuids.guidToolWindowPackageCmdSet, AnyStatusPackage.ToolbarId);
             ToolBarLocation = (int)VSTWT_LOCATION.VSTWT_TOP;
 
             // This is the user control hosted by the tool window; Note that, even if this class implements IDisposable,

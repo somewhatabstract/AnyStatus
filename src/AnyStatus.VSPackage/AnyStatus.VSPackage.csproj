@@ -60,6 +60,11 @@
     <Compile Include="ToolWindowHost.cs" />
     <Compile Include="ToolWindowCommand.cs" />
     <Compile Include="AnyStatusPackage.cs" />
+    <Compile Include="ToolWindowPackage.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ToolWindowPackage.vsct</DependentUpon>
+    </Compile>
     <Compile Include="Utils\TypeDiscovery.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -95,6 +100,8 @@
     <VSCTCompile Include="ToolWindowPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
       <SubType>Designer</SubType>
+      <Generator>VsctGenerator</Generator>
+      <LastGenOutput>ToolWindowPackage.cs</LastGenOutput>
     </VSCTCompile>
   </ItemGroup>
   <ItemGroup>

@@ -19,9 +19,15 @@
     </Menus>
 
     <Groups>
-      <Group guid="guidToolWindowPackageCmdSet" id="ToolbarGroupId" priority="0x0000">
+      
+      <Group guid="guidToolWindowPackageCmdSet" id="ToolbarGroup1Id" priority="0x0000">
         <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarId" />
       </Group>
+
+      <Group guid="guidToolWindowPackageCmdSet" id="ToolbarGroup2Id" priority="0x0000">
+        <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarId" />
+      </Group>
+      
     </Groups>
 
     <Buttons>
@@ -35,7 +41,7 @@
       </Button>
 
       <Button guid="guidToolWindowPackageCmdSet" id="refreshToolbarCommandId" priority="0x0100" type="Button">
-        <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarGroupId"/>
+        <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarGroup1Id"/>
         <Icon guid="ImageCatalogGuid" id="Refresh" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <Strings>
@@ -45,7 +51,7 @@
       </Button>
       
       <Button guid="guidToolWindowPackageCmdSet" id="optionsToolbarCommandId" priority="0x0200" type="Button">
-        <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarGroupId"/>
+        <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarGroup2Id"/>
         <Icon guid="ImageCatalogGuid" id="Settings" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <Strings>
@@ -55,7 +61,7 @@
       </Button>
 
       <Button guid="guidToolWindowPackageCmdSet" id="helpToolbarCommandId" priority="0x0300" type="Button">
-        <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarGroupId"/>
+        <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarGroup2Id"/>
         <Icon guid="ImageCatalogGuid" id="QuestionMark" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <Strings>
@@ -77,13 +83,17 @@
 
     <GuidSymbol name="guidToolWindowPackageCmdSet" value="{c420854f-cac2-4492-8067-ecf632228390}">
       <IDSymbol name="ToolWindowCommandId" value="0x0100" />
+      
       <!--Toolbar-->
       <IDSymbol name="ToolbarId" value="0x1000" />
-      <IDSymbol name="ToolbarGroupId" value="0x1001" />
+      <IDSymbol name="ToolbarGroup1Id" value="0x1001" />
+      <IDSymbol name="ToolbarGroup2Id" value="0x1005" />
+
       <!--Toolbar Buttons-->
       <IDSymbol name="optionsToolbarCommandId" value="0x1002" />
       <IDSymbol name="refreshToolbarCommandId" value="0x1003" />
       <IDSymbol name="helpToolbarCommandId" value="0x1004" />
+      
     </GuidSymbol>
 
     <GuidSymbol name="guidIcons" value="{9A059648-419C-4693-B822-13AD144B8A62}">
