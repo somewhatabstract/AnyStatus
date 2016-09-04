@@ -1,4 +1,4 @@
-﻿# AnyStatus
+﻿# AnyStatus Visual Studio Extension
 
 [![Build status](https://ci.appveyor.com/api/projects/status/bqr0m4e08nfkb6g2?svg=true)](https://ci.appveyor.com/project/AlonAmsalem/anystatus)
 
