@@ -1,13 +1,10 @@
 # Roadmap
 
-- [x] TFS & Team Foundation Services (Visual Studio Online) build status
-- [x] Window service status
 - [ ] GitHub issue status
 - [ ] Travis CI build status
 - [ ] CruiseControl.NET build status
-- [ ] Start/Cancel build
-- [ ] Visual Studio theme support
-- [ ] Drag-and-drop to move items between folders
+- [ ] Start/Cancel/View build
+- [ ] Improve Visual Studio theme support
 - [ ] Import/Export user settings
 
 Features that have a checkmark are complete and available for
@@ -22,6 +19,7 @@ on the official Visual Studio extension gallery.
 ## 0.6
 
 - [x] TFS 2015 & Team Foundation Services build status
+- [x] Drag-and-drop to move items between folders or to reorder items within a folder
 - [x] Plugable health checks infrastructure
 - [x] New item input validation
 - [x] Hide password characters
