@@ -30,16 +30,17 @@ namespace AnyStatus.Models
         #region Fields
 
         private string _name;
+        private Item _parent;
+        private int _interval;
+        private ObservableCollection<Item> _items;
+
         private bool _isExpanded;
         private bool _isEnabled;
         private bool _isEditing;
         private bool _isSelected;
-        private ObservableCollection<Item> _items;
 
         [NonSerialized]
         private Brush _brush;
-        private Item _parent;
-        private int _interval;
 
         #endregion
 
