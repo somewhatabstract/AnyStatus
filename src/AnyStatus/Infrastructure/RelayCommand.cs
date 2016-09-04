@@ -18,7 +18,11 @@ namespace AnyStatus
         /// <summary>
         /// Raised when RaiseCanExecuteChanged is called.
         /// </summary>
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
 
         /// <summary>
         /// Creates a new command that can always execute.
@@ -71,9 +75,9 @@ namespace AnyStatus
         /// to indicate that the return value of the <see cref="CanExecute"/>
         /// method has changed.
         /// </summary>
-        public void RaiseCanExecuteChanged()
-        {
-            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
-        }
+        //public void RaiseCanExecuteChanged()
+        //{
+        //    CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        //}
     }
 }

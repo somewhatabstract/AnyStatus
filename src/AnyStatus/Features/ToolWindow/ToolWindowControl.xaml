@@ -80,16 +80,16 @@
                                 <Separator/>
 
                                 <MenuItem Header=" Move Up"
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.MoveUpCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding}">
+                                          CommandParameter="{Binding}"
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.MoveUpCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
                                     <MenuItem.Icon>
                                         <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.MoveUp}" />
                                     </MenuItem.Icon>
                                 </MenuItem>
 
                                 <MenuItem Header=" Move Down"
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.MoveDownCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding}">
+                                          CommandParameter="{Binding}"
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.MoveDownCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
                                     <MenuItem.Icon>
                                         <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.MoveDown}" />
                                     </MenuItem.Icon>
@@ -169,16 +169,16 @@
                                 </Separator>
 
                                 <MenuItem Header=" Move Up"
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.MoveUpCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding}">
+                                          CommandParameter="{Binding}"
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.MoveUpCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
                                     <MenuItem.Icon>
                                         <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.MoveUp}" />
                                     </MenuItem.Icon>
                                 </MenuItem>
 
                                 <MenuItem Header=" Move Down"
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.MoveDownCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding}">
+                                          CommandParameter="{Binding}"
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.MoveDownCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
                                     <MenuItem.Icon>
                                         <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.MoveDown}" />
                                     </MenuItem.Icon>
