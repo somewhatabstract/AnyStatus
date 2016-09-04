@@ -6,6 +6,7 @@
 - [ ] Start/Cancel/View build
 - [ ] Improve Visual Studio theme support
 - [ ] Import/Export user settings
+- [ ] Expand/Collapse All toolbar buttons
 
 Features that have a checkmark are complete and available for
 download in the
