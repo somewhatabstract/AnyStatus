@@ -18,6 +18,8 @@ on the official Visual Studio extension gallery.
 
 ## 0.6
 
+**2016-09-04**
+
 - [x] TFS 2015 & Team Foundation Services build status
 - [x] Drag-and-drop to move items between folders or to reorder items within a folder
 - [x] Plugable health checks infrastructure
