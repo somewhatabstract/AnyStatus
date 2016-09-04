@@ -4,7 +4,6 @@ skip_commits:
   files:
   - '**/*.md'
   
-
 branches:
   only:
   - master
