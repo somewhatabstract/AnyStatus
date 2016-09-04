@@ -69,33 +69,31 @@ namespace AnyStatus.ViewModels
                 }
             });
 
-            RemoveCommand = new RelayCommand(p =>
+            DeleteCommand = new RelayCommand(p =>
             {
                 try
                 {
-                    var result = MessageBox.Show("Are you sure?", "Remove", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
+                    var result = MessageBox.Show("Are you sure?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
 
                     if (result != MessageBoxResult.Yes) return;
 
                     var selectedItem = p as Item;
 
                     if (selectedItem == null)
-                    {
                         return;
-                    }
 
                     if (selectedItem is IScheduledItem)
                     {
                         JobManager.RemoveJob(selectedItem.Id.ToString());
                     }
 
-                    selectedItem.Remove();
+                    selectedItem.Delete();
 
                     _userSettings.Save();
                 }
                 catch (Exception ex)
                 {
-                    _logger.Log("Failed to remove an item. Exception: " + ex.ToString());
+                    _logger.Log("Failed to delete item. Exception: " + ex.ToString());
                 }
             });
 
@@ -262,7 +260,7 @@ namespace AnyStatus.ViewModels
         #region Commands
 
         public ICommand AddFolderCommand { get; set; }
-        public ICommand RemoveCommand { get; set; }
+        public ICommand DeleteCommand { get; set; }
         public ICommand RenameCommand { get; set; }
         public ICommand AddItemCommand { get; set; }
         public ICommand EditItemCommand { get; set; }

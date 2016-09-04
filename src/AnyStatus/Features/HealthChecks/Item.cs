@@ -157,7 +157,7 @@ namespace AnyStatus.Models
             //}
         }
 
-        public void Remove()
+        public void Delete()
         {
             if (Parent == null || Parent.Items == null)
                 throw new InvalidOperationException();
@@ -217,7 +217,7 @@ namespace AnyStatus.Models
         /// <param name="folder">The target folder.</param>
         private void MoveInto(Folder folder)
         {
-            Remove();
+            Delete();
             folder.Add(this);
         }
 

@@ -49,7 +49,7 @@ namespace AnyStatus.Tests
             var item = new Item();
             parent.Add(item);
 
-            item.Remove();
+            item.Delete();
 
             Assert.IsFalse(parent.Items.Contains(item));
         }
