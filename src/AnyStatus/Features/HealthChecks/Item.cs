@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Linq;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Media;
 using System.Xml.Serialization;
@@ -29,13 +29,17 @@ namespace AnyStatus.Models
     {
         #region Fields
 
+        private string _name;
         private bool _isExpanded;
         private bool _isEnabled;
         private bool _isEditing;
         private bool _isSelected;
+        private ObservableCollection<Item> _items;
 
         [NonSerialized]
         private Brush _brush;
+        private Item _parent;
+        private int _interval;
 
         #endregion
 
@@ -55,19 +59,34 @@ namespace AnyStatus.Models
 
         [Required]
         [PropertyOrder(0)]
-        public string Name { get; set; }
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value; OnPropertyChanged(); }
+        }
 
         [Browsable(false)]
-        public ObservableCollection<Item> Items { get; set; }
+        public ObservableCollection<Item> Items {
+            get { return _items; }
+            set { _items = value; OnPropertyChanged(); }
+        }
 
         [XmlIgnore]
         [Browsable(false)]
-        public Item Parent { get; set; }
+        public Item Parent
+        {
+            get { return _parent; }
+            set { _parent = value; OnPropertyChanged(); }
+        }
 
         [Required]
         [Range(0, ushort.MaxValue, ErrorMessage = "Interval must be between 0 and 65535")]
         [Description("The interval in minutes")]
-        public int Interval { get; set; }
+        public int Interval
+        {
+            get { return _interval; }
+            set { _interval = value; OnPropertyChanged(); }
+        }
 
         [XmlIgnore]
         [Browsable(false)]
