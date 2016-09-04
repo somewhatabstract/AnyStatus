@@ -18,15 +18,18 @@ namespace AnyStatus.Views
         public ToolWindowControl(ToolWindowViewModel viewModel)
         {
             if (viewModel == null)
-            {
                 throw new ArgumentNullException(nameof(viewModel));
-            }
 
             DataContext = _viewModel = viewModel;
 
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Select a tree view item on right-click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             var treeViewItem = VisualUpwardSearch(e.OriginalSource as DependencyObject);
@@ -50,7 +53,7 @@ namespace AnyStatus.Views
         }
 
         /// <summary>
-        /// Unselects an item when clicking on the empty space in the tree view.
+        /// Unselects a tree view item when clicking on the empty space in the tree view.
         /// </summary>
         private void TreeView_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -74,7 +77,7 @@ namespace AnyStatus.Views
             {
                 var data = new DataObject(typeof(Item), treeViewItem.DataContext);
 
-                DragDrop.DoDragDrop(treeViewItem, data, DragDropEffects.Move);
+                DragDrop.DoDragDrop(treeViewItem, data, DragDropEffects.Move | DragDropEffects.Copy);
             }
         }
 
@@ -92,7 +95,7 @@ namespace AnyStatus.Views
 
                 if (target != null && source != null && source.CanMoveTo(target))
                 {
-                    e.Effects = DragDropEffects.Move;
+                    e.Effects = target is Folder ? DragDropEffects.Copy : DragDropEffects.Move;
                 }
             }
             catch (Exception ex)
