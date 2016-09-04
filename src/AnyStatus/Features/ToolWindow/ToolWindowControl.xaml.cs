@@ -77,7 +77,7 @@ namespace AnyStatus.Views
             {
                 var data = new DataObject(typeof(Item), treeViewItem.DataContext);
 
-                DragDrop.DoDragDrop(treeViewItem, data, DragDropEffects.Move | DragDropEffects.Copy);
+                DragDrop.DoDragDrop(treeViewItem, data, DragDropEffects.Move);
             }
         }
 
@@ -95,7 +95,7 @@ namespace AnyStatus.Views
 
                 if (target != null && source != null && source.CanMoveTo(target))
                 {
-                    e.Effects = target is Folder ? DragDropEffects.Copy : DragDropEffects.Move;
+                    e.Effects = DragDropEffects.Move;
                 }
             }
             catch (Exception ex)
