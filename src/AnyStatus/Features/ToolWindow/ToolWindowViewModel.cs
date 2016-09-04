@@ -34,7 +34,13 @@ namespace AnyStatus.ViewModels
             Initialize();
         }
 
-        public Item RootItem { get { return _userSettings.RootItem; } }
+        public Item RootItem
+        {
+            get
+            {
+                return _userSettings.RootItem;
+            }
+        }
 
         private void Initialize()
         {
@@ -144,10 +150,13 @@ namespace AnyStatus.ViewModels
                     if (item == null)
                         return;
 
-                    JobManager.RemoveJob(item.Id.ToString());
+                    if (item is IScheduledItem)
+                    {
+                        JobManager.RemoveJob(item.Id.ToString());
 
-                    JobManager.AddJob(new ScheduledJob(item),
-                       schedule => schedule.WithName(item.Id.ToString()).ToRunNow().AndEvery(item.Interval).Minutes());
+                        JobManager.AddJob(new ScheduledJob(item),
+                           schedule => schedule.WithName(item.Id.ToString()).ToRunNow().AndEvery(item.Interval).Minutes());
+                    }
 
                     item.IsEnabled = true;
 
@@ -168,7 +177,8 @@ namespace AnyStatus.ViewModels
                     if (item == null)
                         return;
 
-                    JobManager.RemoveJob(item.Id.ToString());
+                    if (item is IScheduledItem)
+                        JobManager.RemoveJob(item.Id.ToString());
 
                     item.IsEnabled = false;
 
@@ -201,18 +211,51 @@ namespace AnyStatus.ViewModels
                     var item = p as Item;
 
                     if (item == null)
-                    {
                         return;
+
+                    if (item is IScheduledItem)
+                    {
+                        var schedule = JobManager.GetSchedule(item.Id.ToString());
+
+                        if (schedule != null) schedule.Execute();
                     }
-
-                    var job = JobManager.GetSchedule(item.Id.ToString());
-
-                    job.Execute();
                 }
                 catch (Exception ex)
                 {
-                    _logger.Log("Failed to refresh an item. Exception: " + ex.ToString());
+                    _logger.Log("Failed to refresh item. Exception: " + ex.ToString());
                 }
+            });
+
+            MoveUpCommand = new RelayCommand(p =>
+            {
+                var item = p as Item;
+
+                if (item == null)
+                    return;
+
+                item.MoveUp();
+            },
+            p =>
+            {
+                var item = p as Item;
+
+                return item != null && item.CanMoveUp();
+            });
+
+            MoveDownCommand = new RelayCommand(p =>
+            {
+                var item = p as Item;
+
+                if (item == null)
+                    return;
+
+                item.MoveDown();
+            },
+            p =>
+            {
+                var item = p as Item;
+
+                return item != null && item.CanMoveDown();
             });
         }
 
@@ -221,17 +264,14 @@ namespace AnyStatus.ViewModels
         public ICommand AddFolderCommand { get; set; }
         public ICommand RemoveCommand { get; set; }
         public ICommand RenameCommand { get; set; }
-
         public ICommand AddItemCommand { get; set; }
-        public ICommand RemoveItemCommand { get; set; }
         public ICommand EditItemCommand { get; set; }
         public ICommand RefreshItemCommand { get; set; }
         public ICommand EnableItemCommand { get; set; }
         public ICommand DisableItemCommand { get; set; }
-
-        //public ICommand ReparentItemCommand { get; set; }
-
         public ICommand SaveCommand { get; set; }
+        public ICommand MoveUpCommand { get; set; }
+        public ICommand MoveDownCommand { get; set; }
 
         #endregion
 

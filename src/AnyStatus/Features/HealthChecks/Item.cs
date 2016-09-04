@@ -157,12 +157,38 @@ namespace AnyStatus.Models
 
         public void MoveUp()
         {
-            throw new NotImplementedException();
+            if (CanMoveUp())
+            {
+                var index = Parent.Items.IndexOf(this);
+
+                Parent.Items.Move(index, index - 1);
+            }
+        }
+
+        public bool CanMoveUp()
+        {
+            if (Parent == null || Parent.Items == null)
+                return false;
+
+            return Parent.Items.IndexOf(this) > 0;
         }
 
         public void MoveDown()
         {
-            throw new NotImplementedException();
+            if (CanMoveDown())
+            {
+                var index = Parent.Items.IndexOf(this);
+
+                Parent.Items.Move(index, index + 1);
+            }
+        }
+
+        public bool CanMoveDown()
+        {
+            if (Parent == null || Parent.Items == null)
+                return false;
+
+            return Parent.Items.IndexOf(this) + 1 < Parent.Items.Count();
         }
 
         /// <summary>
@@ -259,6 +285,8 @@ namespace AnyStatus.Models
         {
             return !IsParentOf(item);
         }
+
+
 
         #endregion
     }
