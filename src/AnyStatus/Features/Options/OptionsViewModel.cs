@@ -1,5 +1,4 @@
-﻿using AnyStatus.Infrastructure;
-using AnyStatus.Interfaces;
+﻿using AnyStatus.Interfaces;
 using System;
 using System.Windows;
 using System.Windows.Input;

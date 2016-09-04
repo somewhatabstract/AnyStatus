@@ -16,13 +16,13 @@
         <StackPanel>
             <GroupBox Header="Privacy" Padding="5" Margin="5">
                 <StackPanel>
-                    <CheckBox IsEnabled="False">Help us improve by sending anonymous data usage</CheckBox>
+                    <CheckBox IsChecked="False" IsEnabled="False">Help us improve by sending anonymous data usage</CheckBox>
                     <TextBlock><Hyperlink NavigateUri="https://github.com/AlonAm/AnyStatus/blob/master/PRIVACY.md" RequestNavigate="Hyperlink_RequestNavigate">Learn more</Hyperlink></TextBlock>
                 </StackPanel>
             </GroupBox>
             <GroupBox Header="Debug" Padding="5" Margin="5">
                 <StackPanel>
-                    <CheckBox IsEnabled="False">Write debug information in the Output window</CheckBox>
+                    <CheckBox IsChecked="True" IsEnabled="False">Write debug information in the Output window</CheckBox>
                 </StackPanel>
             </GroupBox>
             <GroupBox Header="Restore Default Settings" Padding="5" Margin="5">
