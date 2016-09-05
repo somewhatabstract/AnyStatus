@@ -67,7 +67,8 @@ namespace AnyStatus.Models
         }
 
         [Browsable(false)]
-        public ObservableCollection<Item> Items {
+        public ObservableCollection<Item> Items
+        {
             get { return _items; }
             set { _items = value; OnPropertyChanged(); }
         }
@@ -141,20 +142,6 @@ namespace AnyStatus.Models
             item.Parent = this;
 
             Items.Add(item);
-
-            //if (item is Folder)
-            //{
-            //    var lastFolder = Items.LastOrDefault(k => k is Folder);
-            //    if (lastFolder != null)
-            //    {
-            //        var idx = Items.IndexOf(lastFolder);
-            //        if (idx + 1 < Items.Count())
-            //        {
-            //            Items.Insert(idx + 1, item);
-            //            return;
-            //        }
-            //    }
-            //}
         }
 
         public void Delete()
@@ -162,16 +149,22 @@ namespace AnyStatus.Models
             if (Parent == null || Parent.Items == null)
                 throw new InvalidOperationException();
 
-            Parent.Items.Remove(this);
+            if (Parent.Items.Remove(this))
+            {
+                Parent = null;
+            }
         }
 
         public void RestoreParentChildRelationship()
         {
-            foreach (var child in Items)
-            {
-                child.Parent = this;
+            if (Items == null)
+                throw new InvalidOperationException();
 
-                child.RestoreParentChildRelationship();
+            foreach (var item in Items)
+            {
+                item.Parent = this;
+
+                item.RestoreParentChildRelationship();
             }
         }
 
@@ -188,7 +181,7 @@ namespace AnyStatus.Models
         public bool CanMoveUp()
         {
             if (Parent == null || Parent.Items == null)
-                return false;
+                throw new InvalidOperationException();
 
             return Parent.Items.IndexOf(this) > 0;
         }
@@ -206,7 +199,7 @@ namespace AnyStatus.Models
         public bool CanMoveDown()
         {
             if (Parent == null || Parent.Items == null)
-                return false;
+                throw new InvalidOperationException();
 
             return Parent.Items.IndexOf(this) + 1 < Parent.Items.Count();
         }
@@ -215,9 +208,13 @@ namespace AnyStatus.Models
         /// Move item into folder.
         /// </summary>
         /// <param name="folder">The target folder.</param>
-        private void MoveInto(Folder folder)
+        private void MoveTo(Folder folder)
         {
+            if (folder.Items.Contains(this))
+                throw new InvalidOperationException("Target folder already contains this item.");
+
             Delete();
+
             folder.Add(this);
         }
 
@@ -233,9 +230,9 @@ namespace AnyStatus.Models
         {
             if (target is Folder)
             {
-                MoveInto((Folder)target);
+                MoveTo(target as Folder);
             }
-            else if (target.Parent == this.Parent)
+            else if (this.Parent == target.Parent)
             {
                 MoveToPositionOf(target);
             }
@@ -247,8 +244,8 @@ namespace AnyStatus.Models
         /// <param name="target"></param>
         private void MoveToPositionOf(Item target)
         {
-            if (target.Parent != this.Parent)
-                return;
+            if (this.Parent != target.Parent)
+                throw new InvalidOperationException("Item can only be moved within a folder.");
 
             var targetIndex = Parent.Items.IndexOf(target);
             var sourceIndex = Parent.Items.IndexOf(this);
