@@ -1,5 +1,9 @@
 # Roadmap
 
+- [x] TFS 2015 & Team Foundation Services build status
+- [x] Drag-and-drop to move items between folders or to reorder items within a folder
+- [x] Write debug information to output window
+- [x] Move item up/down context menu buttons
 - [ ] GitHub issue status
 - [ ] Travis CI build status
 - [ ] CruiseControl.NET build status
@@ -23,9 +27,11 @@ on the official Visual Studio extension gallery.
 
 - [x] TFS 2015 & Team Foundation Services build status
 - [x] Drag-and-drop to move items between folders or to reorder items within a folder
+- [x] Move item up/down context menu buttons
 - [x] Plugable health checks infrastructure
 - [x] New item input validation
 - [x] Hide password characters
+- [x] Write debug information to output window
 
 ## 0.5
 
