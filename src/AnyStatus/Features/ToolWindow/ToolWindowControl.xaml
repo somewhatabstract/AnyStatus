@@ -25,6 +25,7 @@
                   ItemsSource="{Binding RootItem.Items}" 
                   Background="Transparent" 
                   BorderThickness="0" 
+                  FocusVisualStyle="{x:Null}"
                   MouseDown="TreeView_MouseDown"
                   Drop="TreeViewItem_Drop"
                   DragOver="TreeViewItem_DragOver"
@@ -273,6 +274,8 @@
                     </StackPanel>
                 </DataTemplate>
 
+              
+                
             </TreeView.Resources>
 
             <TreeView.ItemContainerStyle>
