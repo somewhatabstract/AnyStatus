@@ -11,6 +11,7 @@
 - [ ] Improve Visual Studio theme support
 - [ ] Import/Export user settings
 - [ ] Expand/Collapse All toolbar buttons
+- [ ] Synchronize user settings between Visual Studio instances
 
 Features that have a checkmark are complete and available for
 download in the
