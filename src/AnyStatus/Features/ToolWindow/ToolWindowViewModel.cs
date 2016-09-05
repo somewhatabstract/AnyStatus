@@ -14,9 +14,9 @@ namespace AnyStatus.ViewModels
 {
     public class ToolWindowViewModel : INotifyPropertyChanged
     {
+        private ILogger _logger;
         private IUserSettings _userSettings;
         private IViewLocator _viewLocator;
-        private ILogger _logger;
 
         public ToolWindowViewModel(IUserSettings userSettings, IViewLocator viewLocator, ILogger logger)
         {
@@ -224,14 +224,24 @@ namespace AnyStatus.ViewModels
                 }
             });
 
-            MoveUpCommand = new RelayCommand(p =>
+            MoveUpCommand = new RelayCommand(
+            p =>
             {
-                var item = p as Item;
+                try
+                {
+                    var item = p as Item;
 
-                if (item == null)
-                    return;
+                    if (item == null)
+                        return;
 
-                item.MoveUp();
+                    item.MoveUp();
+
+                    _userSettings.Save();
+                }
+                catch (Exception ex)
+                {
+                    _logger.Log("Failed to move item up. Exception: " + ex.ToString());
+                }
             },
             p =>
             {
@@ -240,14 +250,24 @@ namespace AnyStatus.ViewModels
                 return item != null && item.CanMoveUp();
             });
 
-            MoveDownCommand = new RelayCommand(p =>
+            MoveDownCommand = new RelayCommand(
+            p =>
             {
-                var item = p as Item;
+                try
+                {
+                    var item = p as Item;
 
-                if (item == null)
-                    return;
+                    if (item == null)
+                        return;
 
-                item.MoveDown();
+                    item.MoveDown();
+
+                    _userSettings.Save();
+                }
+                catch (Exception ex)
+                {
+                    _logger.Log("Failed to move item down. Exception: " + ex.ToString());
+                }
             },
             p =>
             {
