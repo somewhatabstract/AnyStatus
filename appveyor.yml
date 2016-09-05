@@ -4,6 +4,7 @@ skip_commits:
   files:
   - art/*
   - '**/*.md'
+
   
 branches:
   only:
