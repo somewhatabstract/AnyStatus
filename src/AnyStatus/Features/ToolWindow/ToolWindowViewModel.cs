@@ -105,11 +105,11 @@ namespace AnyStatus.ViewModels
 
                     var dlg = _viewLocator.NewWindow(selectedItem);
 
-                    dlg.ShowDialog();
+                    dlg.ShowModal();
                 }
                 catch (Exception ex)
                 {
-                    _logger.Log("Failed to open a new item window. Exception: " + ex.ToString());
+                    _logger.Log("Failed to open a new item modal dialog. Exception: " + ex.ToString());
                 }
             });
 
@@ -121,11 +121,11 @@ namespace AnyStatus.ViewModels
 
                     var dlg = _viewLocator.EditWindow(selectedItem);
 
-                    dlg.ShowDialog();
+                    dlg.ShowModal();
                 }
                 catch (Exception ex)
                 {
-                    _logger.Log("Failed to open item properties window. Exception: " + ex.ToString());
+                    _logger.Log("Failed to open item properties modal dialog. Exception: " + ex.ToString());
                 }
             });
 
