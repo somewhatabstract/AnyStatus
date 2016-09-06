@@ -5,8 +5,6 @@
 - [x] Write debug information to output window
 - [x] Move item up/down context menu buttons
 - [ ] GitHub issue status
-- [ ] Travis CI build status
-- [ ] CruiseControl.NET build status
 - [ ] Start/Cancel/View build
 - [ ] Improve Visual Studio theme support
 - [ ] Import/Export user settings
