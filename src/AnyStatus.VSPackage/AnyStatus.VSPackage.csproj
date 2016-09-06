@@ -55,7 +55,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ContainerBuilder.cs" />
-    <Compile Include="GuidList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ToolWindowHost.cs" />
     <Compile Include="ToolWindowCommand.cs" />
@@ -65,7 +64,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ToolWindowPackage.vsct</DependentUpon>
     </Compile>
-    <Compile Include="Utils\TypeDiscovery.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Key.snk" />

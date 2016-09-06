@@ -101,7 +101,7 @@ namespace AnyStatus.VSPackage
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                _logger.Log("Failed to open options dialog. Exception: " + ex.ToString());
             }
         }
 
@@ -116,7 +116,7 @@ namespace AnyStatus.VSPackage
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                _logger.Log("Failed to refresh. Exception: " + ex.ToString());
             }
         }
 
