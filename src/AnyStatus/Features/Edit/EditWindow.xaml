@@ -20,13 +20,13 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Orientation="Vertical">
-            <TextBlock  FontSize="24" Text="{Binding Item.Name}" Margin="15,5,5,5"></TextBlock>
-            <xctk:PropertyGrid Margin="3"
+            <TextBlock  FontSize="24" Text="{Binding Item.Name}" Margin="7,7,7,3"></TextBlock>
+            <xctk:PropertyGrid Margin="6"
                            ShowSearchBox="False" 
                            ShowSortOptions="False" 
                            ShowSummary="True"
                            ShowTitle="False"
-                           Background="White"
+                           Background="Transparent"
                            BorderBrush="{x:Null}"
                            SelectedObject="{Binding Item}"/>
         </StackPanel>
