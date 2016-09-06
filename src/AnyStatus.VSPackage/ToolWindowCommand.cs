@@ -109,6 +109,8 @@ namespace AnyStatus.VSPackage
         {
             try
             {
+                _logger.Log("Refreshing all items.");
+
                 foreach (var schedule in JobManager.AllSchedules)
                 {
                     schedule.Execute();
@@ -116,13 +118,20 @@ namespace AnyStatus.VSPackage
             }
             catch (Exception ex)
             {
-                _logger.Log("Failed to refresh. Exception: " + ex.ToString());
+                _logger.Log("Failed to refresh all items. Exception: " + ex.ToString());
             }
         }
 
         private void HelpButtonHandler(object sender, EventArgs e)
         {
-            Process.Start("https://github.com/AlonAm/AnyStatus/wiki");
+            try
+            {
+                Process.Start("https://github.com/AlonAm/AnyStatus/wiki");
+            }
+            catch
+            {
+                // Ignore
+            }
         }
     }
 }

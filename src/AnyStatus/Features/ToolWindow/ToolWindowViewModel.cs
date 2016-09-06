@@ -152,8 +152,11 @@ namespace AnyStatus.ViewModels
                     {
                         JobManager.RemoveJob(item.Id.ToString());
 
-                        JobManager.AddJob(new ScheduledJob(item),
-                           schedule => schedule.WithName(item.Id.ToString()).ToRunNow().AndEvery(item.Interval).Minutes());
+                        var job = TinyIoCContainer.Current.Resolve<ScheduledJob>();
+                        job.Item = item;
+
+                        JobManager.AddJob(job, s => 
+                            s.WithName(item.Id.ToString()).ToRunNow().AndEvery(item.Interval).Minutes());
                     }
 
                     item.IsEnabled = true;

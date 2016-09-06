@@ -1,37 +1,45 @@
-﻿using AnyStatus.Models;
+﻿using AnyStatus.Interfaces;
+using AnyStatus.Models;
 using FluentScheduler;
 using System;
-using System.Diagnostics;
 using System.Windows.Media;
 
 namespace AnyStatus.Infrastructure
 {
     public class ScheduledJob : IJob
     {
-        private readonly Item _item;
+        private ILogger _logger;
 
-        public ScheduledJob(Item item)
+        public ScheduledJob(ILogger logger)
         {
-            if (item == null)
-                throw new ArgumentNullException(nameof(item));
+            _logger = logger;
+        }
 
-            _item = item;
+        public Item Item
+        {
+            get; set;
         }
 
         public void Execute()
         {
+            if (Item == null)
+                throw new InvalidOperationException("Item cannot be null.");
+
             try
             {
+                _logger.Log("Executing job " + Item.Name);
+
                 var handlerType = typeof(IHandler<>);
-                var genericHandlerType = handlerType.MakeGenericType(_item.GetType());
+                var genericHandlerType = handlerType.MakeGenericType(Item.GetType());
                 var handler = TinyIoCContainer.Current.Resolve(genericHandlerType);
-                genericHandlerType.GetMethod("Handle").Invoke(handler, new[] { _item });
+                genericHandlerType.GetMethod("Handle").Invoke(handler, new[] { Item });
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                _logger.Log("Failed to execute job " + Item.Name + ". Exception: " + ex.ToString());
 
-                _item.Brush = Brushes.Silver;
+                if (Item != null)
+                    Item.Brush = Brushes.Silver;
             }
         }
     }

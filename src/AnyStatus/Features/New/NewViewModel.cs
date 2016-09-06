@@ -83,7 +83,9 @@ namespace AnyStatus.ViewModels
 
                 if (item is IScheduledItem)
                 {
-                    JobManager.AddJob(new ScheduledJob(item),
+                    var job = TinyIoCContainer.Current.Resolve<ScheduledJob>();
+                    job.Item = item;
+                    JobManager.AddJob(job,
                         s => s.WithName(item.Id.ToString())
                                 .ToRunNow()
                                 .AndEvery(item.Interval).Minutes());

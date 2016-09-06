@@ -34,9 +34,10 @@ namespace AnyStatus.Features.Edit
 
                     //todo: this is needed only if the trigger has changed (?)
                     JobManager.RemoveJob(Item.Id.ToString());
-
-                    JobManager.AddJob(new ScheduledJob(Item),
-                        schedule => schedule.WithName(Item.Id.ToString()).ToRunNow().AndEvery(Item.Interval).Minutes());
+                    var job = TinyIoCContainer.Current.Resolve<ScheduledJob>();
+                    job.Item = Item;
+                    JobManager.AddJob(job,
+                        s => s.WithName(Item.Id.ToString()).ToRunNow().AndEvery(Item.Interval).Minutes());
                 }
                 catch (Exception ex)
                 {

@@ -47,7 +47,9 @@ namespace AnyStatus.Infrastructure
 
             if (item is IScheduledItem && item.IsEnabled && item.Id != Guid.Empty)
             {
-                Schedule(new ScheduledJob(item))
+                var job = TinyIoCContainer.Current.Resolve<ScheduledJob>();
+                job.Item = item;
+                Schedule(job)
                      .WithName(item.Id.ToString())
                      .ToRunNow()
                      .AndEvery(item.Interval).Minutes();
