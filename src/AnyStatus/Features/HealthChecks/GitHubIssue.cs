@@ -14,16 +14,17 @@ namespace AnyStatus.Models
     public class GitHubIssue : Item, IScheduledItem
     {
         [Required]
-        [Description("The repository owner.")]
+        [Description("The GitHub repository owner.")]
         public string Owner { get; set; }
 
         [Required]
-        [Description("The repository name.")]
+        [Description("The GitHub repository name.")]
         public string Repository { get; set; }
 
         [Required]
         [DisplayName("Issue Number")]
-        public string IssueNumber { get; set; }
+        [Description("The GitHub issue number.")]
+        public int IssueNumber { get; set; }
     }
 
     public class GitHubIssueHandler : IHandler<GitHubIssue>
