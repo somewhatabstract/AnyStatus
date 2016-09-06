@@ -20,6 +20,7 @@ namespace AnyStatus.Models
     [XmlInclude(typeof(TcpPort))]
     [XmlInclude(typeof(TfsBuild))]
     [XmlInclude(typeof(HttpStatus))]
+    [XmlInclude(typeof(GitHubIssue))]
     [XmlInclude(typeof(JenkinsBuild))]
     [XmlInclude(typeof(TeamCityBuild))]
     [XmlInclude(typeof(AppVeyorBuild))]
