@@ -14,10 +14,8 @@ namespace AnyStatus.VSPackage
     {
         public const string guidToolWindowPackageString = "b8682407-a118-4468-9c71-d1f7c6a312ec";
         public const string guidToolWindowPackageCmdSetString = "c420854f-cac2-4492-8067-ecf632228390";
-        public const string guidIconsString = "9a059648-419c-4693-b822-13ad144b8a62";
         public static Guid guidToolWindowPackage = new Guid(guidToolWindowPackageString);
         public static Guid guidToolWindowPackageCmdSet = new Guid(guidToolWindowPackageCmdSetString);
-        public static Guid guidIcons = new Guid(guidIconsString);
     }
     /// <summary>
     /// Helper class that encapsulates all CommandIDs uses across VS Package.
@@ -28,9 +26,11 @@ namespace AnyStatus.VSPackage
         public const int ToolbarId = 0x1000;
         public const int ToolbarGroup1Id = 0x1001;
         public const int ToolbarGroup2Id = 0x1005;
+        public const int ToolbarGroup3Id = 0x1006;
         public const int optionsToolbarCommandId = 0x1002;
         public const int refreshToolbarCommandId = 0x1003;
         public const int helpToolbarCommandId = 0x1004;
-        public const int bmpLogo = 0x0001;
+        public const int collapseToolbarCommandId = 0x1007;
+        public const int expandToolbarCommandId = 0x1008;
     }
 }

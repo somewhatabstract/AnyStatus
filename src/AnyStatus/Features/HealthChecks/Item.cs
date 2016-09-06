@@ -145,6 +145,36 @@ namespace AnyStatus.Models
             Items.Add(item);
         }
 
+        public void Collapse()
+        {
+            IsExpanded = false;
+        }
+
+        public void CollapseAll()
+        {
+            Collapse();
+
+            foreach (var item in Items)
+            {
+                item.CollapseAll();
+            }
+        }
+
+        public void Expand()
+        {
+            IsExpanded = true;
+        }
+
+        public void ExpandAll()
+        {
+            Expand();
+
+            foreach (var item in Items)
+            {
+                item.ExpandAll();
+            }
+        }
+
         public void Delete()
         {
             if (Parent == null || Parent.Items == null)

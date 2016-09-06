@@ -28,19 +28,23 @@
         <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarId" />
       </Group>
       
+      <Group guid="guidToolWindowPackageCmdSet" id="ToolbarGroup3Id" priority="0x0000">
+        <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarId" />
+      </Group>
+      
     </Groups>
 
     <Buttons>
 
       <Button guid="guidToolWindowPackageCmdSet" id="ToolWindowCommandId" priority="0x0100" type="Button">
         <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1"/>
-        <Icon guid="guidIcons" id="bmpLogo" />
+        <Icon guid="ImageCatalogGuid" id="StatusSecurityOK" />
         <Strings>
           <ButtonText>AnyStatus</ButtonText>
         </Strings>
       </Button>
 
-      <Button guid="guidToolWindowPackageCmdSet" id="refreshToolbarCommandId" priority="0x0100" type="Button">
+      <Button guid="guidToolWindowPackageCmdSet" id="refreshToolbarCommandId" priority="0x0200" type="Button">
         <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarGroup1Id"/>
         <Icon guid="ImageCatalogGuid" id="Refresh" />
         <CommandFlag>IconIsMoniker</CommandFlag>
@@ -49,9 +53,29 @@
           <CommandName>refreshToolbarCommandId</CommandName>
         </Strings>
       </Button>
-      
-      <Button guid="guidToolWindowPackageCmdSet" id="optionsToolbarCommandId" priority="0x0200" type="Button">
+
+      <Button guid="guidToolWindowPackageCmdSet" id="collapseToolbarCommandId" priority="0x0300" type="Button">
         <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarGroup2Id"/>
+        <Icon guid="ImageCatalogGuid" id="CollapseAll" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <ButtonText>Collapse</ButtonText>
+          <CommandName>collapseToolbarCommandId</CommandName>
+        </Strings>
+      </Button>
+      
+      <Button guid="guidToolWindowPackageCmdSet" id="expandToolbarCommandId" priority="0x0400" type="Button">
+        <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarGroup2Id"/>
+        <Icon guid="ImageCatalogGuid" id="ExpandAll" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <ButtonText>Expand</ButtonText>
+          <CommandName>expandToolbarCommandId</CommandName>
+        </Strings>
+      </Button>
+      
+      <Button guid="guidToolWindowPackageCmdSet" id="optionsToolbarCommandId" priority="0x0500" type="Button">
+        <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarGroup3Id"/>
         <Icon guid="ImageCatalogGuid" id="Settings" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <Strings>
@@ -60,8 +84,8 @@
         </Strings>
       </Button>
 
-      <Button guid="guidToolWindowPackageCmdSet" id="helpToolbarCommandId" priority="0x0300" type="Button">
-        <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarGroup2Id"/>
+      <Button guid="guidToolWindowPackageCmdSet" id="helpToolbarCommandId" priority="0x0600" type="Button">
+        <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarGroup3Id"/>
         <Icon guid="ImageCatalogGuid" id="QuestionMark" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <Strings>
@@ -72,9 +96,11 @@
       
     </Buttons>
 
+    <!--
     <Bitmaps>
       <Bitmap guid="guidIcons" href="Resources\Icons\Icons.sprite.png" usedList="bmpLogo"/>
     </Bitmaps>
+    -->
 
   </Commands>
 
@@ -82,23 +108,29 @@
     <GuidSymbol name="guidToolWindowPackage" value="{b8682407-a118-4468-9c71-d1f7c6a312ec}" />
 
     <GuidSymbol name="guidToolWindowPackageCmdSet" value="{c420854f-cac2-4492-8067-ecf632228390}">
+      
       <IDSymbol name="ToolWindowCommandId" value="0x0100" />
       
       <!--Toolbar-->
       <IDSymbol name="ToolbarId" value="0x1000" />
       <IDSymbol name="ToolbarGroup1Id" value="0x1001" />
       <IDSymbol name="ToolbarGroup2Id" value="0x1005" />
+      <IDSymbol name="ToolbarGroup3Id" value="0x1006" />
 
       <!--Toolbar Buttons-->
       <IDSymbol name="optionsToolbarCommandId" value="0x1002" />
       <IDSymbol name="refreshToolbarCommandId" value="0x1003" />
       <IDSymbol name="helpToolbarCommandId" value="0x1004" />
+      <IDSymbol name="collapseToolbarCommandId" value="0x1007" />
+      <IDSymbol name="expandToolbarCommandId" value="0x1008" />
       
     </GuidSymbol>
 
+    <!--
     <GuidSymbol name="guidIcons" value="{9A059648-419C-4693-B822-13AD144B8A62}">
       <IDSymbol name="bmpLogo" value="1" />
     </GuidSymbol>
+    -->
     
   </Symbols>
 
