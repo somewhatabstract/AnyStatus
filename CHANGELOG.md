@@ -4,11 +4,11 @@
 - [x] Drag-and-drop to move items between folders or to reorder items within a folder
 - [x] Write debug information to output window
 - [x] Move item up/down context menu buttons
-- [ ] GitHub issue status
+- [x] GitHub issue status
 - [ ] Start/Cancel/View build
 - [ ] Improve Visual Studio theme support
 - [ ] Import/Export user settings
-- [ ] Expand/Collapse All toolbar buttons
+- [x] Expand/Collapse All toolbar buttons
 - [ ] Synchronize user settings between Visual Studio instances
 - [ ] Replace AppSettings with WritableSettingsStore
 
