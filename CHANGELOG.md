@@ -10,6 +10,7 @@
 - [ ] Import/Export user settings
 - [ ] Expand/Collapse All toolbar buttons
 - [ ] Synchronize user settings between Visual Studio instances
+- [ ] Replace AppSettings with WritableSettingsStore
 
 Features that have a checkmark are complete and available for
 download in the
