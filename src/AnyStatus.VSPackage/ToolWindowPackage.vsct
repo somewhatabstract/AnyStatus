@@ -39,6 +39,7 @@
       <Button guid="guidToolWindowPackageCmdSet" id="ToolWindowCommandId" priority="0x0100" type="Button">
         <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1"/>
         <Icon guid="ImageCatalogGuid" id="StatusSecurityOK" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
         <Strings>
           <ButtonText>AnyStatus</ButtonText>
         </Strings>
@@ -59,7 +60,7 @@
         <Icon guid="ImageCatalogGuid" id="CollapseAll" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <Strings>
-          <ButtonText>Collapse</ButtonText>
+          <ButtonText>Collapse All</ButtonText>
           <CommandName>collapseToolbarCommandId</CommandName>
         </Strings>
       </Button>
@@ -69,7 +70,7 @@
         <Icon guid="ImageCatalogGuid" id="ExpandAll" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <Strings>
-          <ButtonText>Expand</ButtonText>
+          <ButtonText>Expand All</ButtonText>
           <CommandName>expandToolbarCommandId</CommandName>
         </Strings>
       </Button>
