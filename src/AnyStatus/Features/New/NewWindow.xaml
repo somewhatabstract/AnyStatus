@@ -12,6 +12,7 @@
              Width="650"
              Title="New Item"
              WindowStartupLocation="CenterScreen"
+             Background="{x:Static SystemColors.WindowBrush}"
              d:DataContext="{d:DesignInstance Type=vm:NewViewModel}">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -24,7 +25,6 @@
             <RowDefinition></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-
         
         <ListBox Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"
                  ItemsSource="{Binding Templates}" 

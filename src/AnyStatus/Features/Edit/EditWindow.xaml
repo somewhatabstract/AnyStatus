@@ -11,6 +11,7 @@
              Width="600"
              Title="Properties"
              WindowStartupLocation="CenterScreen"
+             Background="{x:Static SystemColors.WindowBrush}"
              d:DataContext="{d:DesignInstance Type=local:EditViewModel}">
     <Grid>
 
