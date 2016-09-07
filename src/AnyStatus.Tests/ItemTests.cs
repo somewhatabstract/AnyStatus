@@ -1,16 +1,12 @@
-﻿using AnyStatus.Infrastructure;
-using AnyStatus.Models;
+﻿using AnyStatus.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace AnyStatus.Tests
 {
     [TestClass]
     public class ItemTests
     {
-
-
         [TestMethod]
         public void IsParentOf()
         {
