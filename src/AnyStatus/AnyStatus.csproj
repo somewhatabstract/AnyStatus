@@ -153,6 +153,7 @@
     <Compile Include="Infrastructure\GoogleAnalytics\Preconditions.cs" />
     <Compile Include="Infrastructure\ItemRegistry.cs" />
     <Compile Include="Infrastructure\NullLogger.cs" />
+    <Compile Include="Infrastructure\ObjectCloner.cs" />
     <Compile Include="Infrastructure\ScheduledJob.cs" />
     <Compile Include="Infrastructure\Logger.cs" />
     <Compile Include="Infrastructure\Retry.cs" />
