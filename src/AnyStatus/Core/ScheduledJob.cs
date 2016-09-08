@@ -1,5 +1,4 @@
-﻿using AnyStatus.Interfaces;
-using AnyStatus.Models;
+﻿using AnyStatus.Models;
 using FluentScheduler;
 using System;
 using System.Windows.Media;
@@ -12,13 +11,13 @@ namespace AnyStatus.Infrastructure
 
         public ScheduledJob(ILogger logger)
         {
+            if (logger == null)
+                throw new ArgumentNullException(nameof(logger));
+
             _logger = logger;
         }
 
-        public Item Item
-        {
-            get; set;
-        }
+        public Item Item { get; set; }
 
         public void Execute()
         {
@@ -27,7 +26,7 @@ namespace AnyStatus.Infrastructure
 
             try
             {
-                _logger.Log("Executing job " + Item.Name);
+                _logger.Info("Updating " + Item.Name);
 
                 var handlerType = typeof(IHandler<>);
                 var genericHandlerType = handlerType.MakeGenericType(Item.GetType());
@@ -36,7 +35,7 @@ namespace AnyStatus.Infrastructure
             }
             catch (Exception ex)
             {
-                _logger.Log("Could not execute job " + Item.Name + ". Exception: " + ex.ToString());
+                _logger.Error(ex, $"Failed to update {Item.Name}.");
 
                 if (Item != null)
                     Item.Brush = Brushes.Silver;

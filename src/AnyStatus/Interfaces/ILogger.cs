@@ -1,7 +1,11 @@
-﻿namespace AnyStatus
+﻿using System;
+
+namespace AnyStatus
 {
     public interface ILogger
     {
-        void Log(string message);
+        void Info(string message);
+
+        void Error(Exception exception, string message);
     }
 }

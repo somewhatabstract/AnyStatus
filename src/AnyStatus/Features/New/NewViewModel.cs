@@ -1,7 +1,5 @@
-﻿using AnyStatus.Infrastructure;
-using AnyStatus.Interfaces;
+﻿using AnyStatus.Interfaces;
 using AnyStatus.Models;
-using FluentScheduler;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,21 +16,30 @@ namespace AnyStatus.ViewModels
     {
         private Template _selectedTemplate;
         private IUserSettings _userSettings;
+        private IJobScheduler _jobScheduler;
+        private ILogger _logger;
 
         public event EventHandler CloseRequested;
 
-        public NewViewModel(IUserSettings userSettings, IEnumerable<Template> templates)
+        public NewViewModel(IJobScheduler jobScheduler,
+            IUserSettings userSettings,
+            IEnumerable<Template> templates,
+            ILogger logger)
         {
+            if (jobScheduler == null)
+                throw new ArgumentNullException(nameof(jobScheduler));
             if (userSettings == null)
                 throw new ArgumentNullException(nameof(userSettings));
-
             if (templates == null)
                 throw new ArgumentNullException(nameof(templates));
+            if (logger == null)
+                throw new ArgumentNullException(nameof(logger));
 
+            _logger = logger;
+            _jobScheduler = jobScheduler;
             _userSettings = userSettings;
 
             Templates = templates;
-
             SelectedTemplate = Templates?.FirstOrDefault();
 
             Initialize();
@@ -42,62 +49,66 @@ namespace AnyStatus.ViewModels
         {
             AddCommand = new RelayCommand(p =>
             {
-                var item = p as Item;
-
-                if (item == null)
+                try
                 {
-                    return;
+                    AddNewItem(p as Item);
                 }
-
-                var context = new ValidationContext(item, serviceProvider: null, items: null);
-                var results = new List<ValidationResult>();
-                var isValid = Validator.TryValidateObject(item, context, results);
-
-                if (!isValid)
+                catch (Exception ex)
                 {
-                    var sb = new StringBuilder();
-
-                    foreach (var validationResult in results)
-                    {
-                        sb.AppendLine(validationResult.ErrorMessage);
-                    }
-
-                    MessageBox.Show(sb.ToString(), "Validation", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-
-                    return;
+                    _logger.Error(ex, "Failed to add new item.");
                 }
-
-                item.Id = Guid.NewGuid();
-
-                if (Parent != null)
-                {
-                    Parent.Add(item);
-                    Parent.IsExpanded = true;
-                }
-                else
-                {
-                    _userSettings.RootItem.Add(item);
-                }
-
-                _userSettings.Save();
-
-                if (item is IScheduledItem)
-                {
-                    var job = TinyIoCContainer.Current.Resolve<ScheduledJob>();
-                    job.Item = item;
-                    JobManager.AddJob(job,
-                        s => s.WithName(item.Id.ToString())
-                                .ToRunNow()
-                                .AndEvery(item.Interval).Minutes());
-                }
-
-                CloseRequested?.Invoke(this, EventArgs.Empty);
             });
 
             CancelCommand = new RelayCommand(p =>
             {
                 CloseRequested?.Invoke(this, EventArgs.Empty);
             });
+        }
+
+        private void AddNewItem(Item item)
+        {
+            if (item == null)
+                throw new InvalidOperationException("Item cannot be null.");
+
+            var context = new ValidationContext(item, serviceProvider: null, items: null);
+            var results = new List<ValidationResult>();
+
+            if (!Validator.TryValidateObject(item, context, results))
+            {
+                ShowValidationErrorsDialog(results);
+                return;
+            }
+
+            if (item.Id == Guid.Empty)
+                item.Id = Guid.NewGuid();
+
+            if (Parent != null)
+            {
+                Parent.Add(item);
+                Parent.IsExpanded = true;
+            }
+            else
+            {
+                _userSettings.RootItem.Add(item);
+            }
+
+            _userSettings.Save();
+
+            _jobScheduler.Schedule(item);
+
+            CloseRequested?.Invoke(this, EventArgs.Empty);
+        }
+
+        private static void ShowValidationErrorsDialog(IEnumerable<ValidationResult> validationResults)
+        {
+            var sb = new StringBuilder();
+
+            foreach (var result in validationResults)
+            {
+                sb.AppendLine(result.ErrorMessage);
+            }
+
+            MessageBox.Show(sb.ToString(), "Validation", MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
 
         public Template SelectedTemplate
@@ -115,7 +126,7 @@ namespace AnyStatus.ViewModels
 
         public IEnumerable<Template> Templates { get; set; }
 
-        public Item Parent { get; internal set; }
+        public Item Parent { get; set; }
 
         #region Commands
 

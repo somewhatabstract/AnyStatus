@@ -17,9 +17,15 @@ namespace AnyStatus.ViewModels
         private ILogger _logger;
         private IUserSettings _userSettings;
         private IViewLocator _viewLocator;
+        private IJobScheduler _jobScheduler;
 
-        public ToolWindowViewModel(IUserSettings userSettings, IViewLocator viewLocator, ILogger logger)
+        public ToolWindowViewModel(IJobScheduler jobScheduler,
+                                    IUserSettings userSettings,
+                                    IViewLocator viewLocator,
+                                    ILogger logger)
         {
+            if (jobScheduler == null)
+                throw new ArgumentNullException(nameof(jobScheduler));
             if (userSettings == null)
                 throw new ArgumentNullException(nameof(userSettings));
             if (viewLocator == null)
@@ -27,6 +33,7 @@ namespace AnyStatus.ViewModels
             if (logger == null)
                 throw new ArgumentNullException(nameof(logger));
 
+            _jobScheduler = jobScheduler;
             _userSettings = userSettings;
             _viewLocator = viewLocator;
             _logger = logger;
@@ -65,7 +72,7 @@ namespace AnyStatus.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    _logger.Log("Could not add a new folder. Exception: " + ex.ToString());
+                    _logger.Info("Could not add a new folder. Exception: " + ex.ToString());
                 }
             });
 
@@ -93,7 +100,7 @@ namespace AnyStatus.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    _logger.Log("Could not delete item. Exception: " + ex.ToString());
+                    _logger.Info("Could not delete item. Exception: " + ex.ToString());
                 }
             });
 
@@ -109,7 +116,7 @@ namespace AnyStatus.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    _logger.Log("Could not open a new item modal dialog. Exception: " + ex.ToString());
+                    _logger.Info("Could not open a new item modal dialog. Exception: " + ex.ToString());
                 }
             });
 
@@ -125,7 +132,7 @@ namespace AnyStatus.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    _logger.Log("Could not open item properties modal dialog. Exception: " + ex.ToString());
+                    _logger.Info("Could not open item properties modal dialog. Exception: " + ex.ToString());
                 }
             });
 
@@ -155,7 +162,7 @@ namespace AnyStatus.ViewModels
                         var job = TinyIoCContainer.Current.Resolve<ScheduledJob>();
                         job.Item = item;
 
-                        JobManager.AddJob(job, s => 
+                        JobManager.AddJob(job, s =>
                             s.WithName(item.Id.ToString()).ToRunNow().AndEvery(item.Interval).Minutes());
                     }
 
@@ -165,7 +172,7 @@ namespace AnyStatus.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    _logger.Log("Could not enable an item. Exception: " + ex.ToString());
+                    _logger.Info("Could not enable an item. Exception: " + ex.ToString());
                 }
             });
 
@@ -201,7 +208,7 @@ namespace AnyStatus.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    _logger.Log("Could not save. Exception: " + ex.ToString());
+                    _logger.Info("Could not save. Exception: " + ex.ToString());
                 }
             });
 
@@ -209,21 +216,11 @@ namespace AnyStatus.ViewModels
             {
                 try
                 {
-                    var item = p as Item;
-
-                    if (item == null)
-                        return;
-
-                    if (item is IScheduledItem)
-                    {
-                        var schedule = JobManager.GetSchedule(item.Id.ToString());
-
-                        if (schedule != null) schedule.Execute();
-                    }
+                    _jobScheduler.Execute(p as Item);
                 }
                 catch (Exception ex)
                 {
-                    _logger.Log("Could not refresh item. Exception: " + ex.ToString());
+                    _logger.Error(ex, "Could not refresh item.");
                 }
             });
 
@@ -243,7 +240,7 @@ namespace AnyStatus.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    _logger.Log("Could not move item up. Exception: " + ex.ToString());
+                    _logger.Info("Could not move item up. Exception: " + ex.ToString());
                 }
             },
             p =>
@@ -269,7 +266,7 @@ namespace AnyStatus.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    _logger.Log("Could not move item down. Exception: " + ex.ToString());
+                    _logger.Info("Could not move item down. Exception: " + ex.ToString());
                 }
             },
             p =>

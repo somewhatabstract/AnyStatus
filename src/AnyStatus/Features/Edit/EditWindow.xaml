@@ -7,8 +7,8 @@
              xmlns:local="clr-namespace:AnyStatus.Features.Edit"
              xmlns:vsp="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.14.0"
              mc:Ignorable="d" 
-             Height="320" 
-             Width="600"
+             Height="300" 
+             Width="500"
              Title="Properties"
              WindowStartupLocation="CenterScreen"
              d:DataContext="{d:DesignInstance Type=local:EditViewModel}">
@@ -23,7 +23,7 @@
             <xctk:PropertyGrid
                            ShowSearchBox="False" 
                            ShowSortOptions="False" 
-                           ShowSummary="False"
+                           ShowSummary="True"
                            ShowDescriptionByTooltip="True"
                            ShowTitle="False"
                            Background="{x:Null}"

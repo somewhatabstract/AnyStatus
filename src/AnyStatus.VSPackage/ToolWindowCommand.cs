@@ -101,7 +101,7 @@ namespace AnyStatus.VSPackage
             }
             catch (Exception ex)
             {
-                _logger.Log("Could not open options dialog. Exception: " + ex.ToString());
+                _logger.Error(ex, "Could not open options dialog.");
             }
         }
 
@@ -109,7 +109,7 @@ namespace AnyStatus.VSPackage
         {
             try
             {
-                _logger.Log("Refreshing all items.");
+                _logger.Info("Refreshing all items.");
 
                 foreach (var schedule in JobManager.AllSchedules)
                 {
@@ -118,7 +118,7 @@ namespace AnyStatus.VSPackage
             }
             catch (Exception ex)
             {
-                _logger.Log("Could not refresh all items. Exception: " + ex.ToString());
+                _logger.Error(ex, "Could not refresh all items.");
             }
         }
 

@@ -7,10 +7,11 @@
              xmlns:vsp="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.14.0"
              xmlns:local="clr-namespace:AnyStatus.Views"
              xmlns:vm="clr-namespace:AnyStatus.ViewModels"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
-             Height="450"
-             Width="650"
-             Title="New Item"
+             Height="420"
+             Width="600"
+             Title="Add New Item"
              WindowStartupLocation="CenterScreen"
              d:DataContext="{d:DesignInstance Type=vm:NewViewModel}">
     <Grid>
@@ -23,18 +24,28 @@
             <RowDefinition></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        
+
         <ListBox Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"
                  ItemsSource="{Binding Templates}" 
                  SelectedItem="{Binding SelectedTemplate}" 
                  BorderBrush="{x:Null}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Name}" Height="40" Padding="12" ToolTip="{Binding Description}"/>
+                    <TextBlock Text="{Binding Name}" Height="40" Padding="12">
+                        <!--<TextBlock.Style>
+                            <Style TargetType="ToolTip">
+                                <Style.Triggers>
+                                    <Trigger Property="Content" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>-->
+                    </TextBlock>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        
+
         <StackPanel Grid.Column="2" Grid.Row="0" Orientation="Vertical">
             <!--<TextBlock FontSize="24" Text="{Binding SelectedTemplate.Name}" Margin="4" />
             <TextBlock Text="{Binding SelectedTemplate.Description}" TextWrapping="Wrap" Margin="5">
@@ -51,7 +62,7 @@
             <xctk:PropertyGrid Margin="0,0,11,0"
                            ShowSearchBox="False" 
                            ShowSortOptions="False"
-                           ShowSummary="False"
+                           ShowSummary="True"
                            ShowDescriptionByTooltip="True"
                            ShowTitle="False"
                            BorderBrush="{x:Null}"

@@ -25,7 +25,7 @@ namespace AnyStatus
 
         private void Initialize()
         {
-            _logger.Log("Initializing user settings.");
+            _logger.Info("Initializing user settings.");
 
             try
             {
@@ -41,7 +41,7 @@ namespace AnyStatus
             }
             catch (Exception ex)
             {
-                _logger.Log("Could not initialize user settings. Exception: " + ex.ToString());
+                _logger.Info("Could not initialize user settings. Exception: " + ex.ToString());
             }
         }
 
@@ -59,7 +59,7 @@ namespace AnyStatus
                 return;
             }
 
-            _logger.Log("Upgrading user settings.");
+            _logger.Info("Upgrading user settings.");
 
             RootItem.Items = Properties.Settings.Default.Items;
 
@@ -70,7 +70,7 @@ namespace AnyStatus
 
         public void Save(bool reload = false)
         {
-            _logger.Log("Saving user settings.");
+            _logger.Info("Saving user settings.");
 
             try
             {
@@ -91,13 +91,13 @@ namespace AnyStatus
             }
             catch (AggregateException ex)
             {
-                _logger.Log("Could not save user settings. Exception: " + ex.Flatten());
+                _logger.Info("Could not save user settings. Exception: " + ex.Flatten());
             }
         }
 
         public void Reset()
         {
-            _logger.Log("Reseting user settings.");
+            _logger.Info("Reseting user settings.");
 
             try
             {
@@ -111,7 +111,7 @@ namespace AnyStatus
             }
             catch (Exception ex)
             {
-                _logger.Log("Could not reset user settings. Exception: " + ex.ToString());
+                _logger.Info("Could not reset user settings. Exception: " + ex.ToString());
             }
         }
     }

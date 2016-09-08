@@ -302,6 +302,18 @@ namespace AnyStatus.Models
             Parent.Items[index] = item;
         }
 
+        public bool ShouldSchedule()
+        {
+            return this is IScheduledItem &&
+                   this.IsEnabled &&
+                   this.Id != Guid.Empty;
+        }
+
+        public bool HasChildren()
+        {
+            return Items != null && Items.Any();
+        }
+
         #endregion
 
         #region INotifyPropertyChanged

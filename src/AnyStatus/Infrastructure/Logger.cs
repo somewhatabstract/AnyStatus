@@ -1,5 +1,4 @@
-﻿using AnyStatus.Interfaces;
-using Microsoft.VisualStudio.Shell.Interop;
+﻿using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.Diagnostics;
 
@@ -7,7 +6,7 @@ namespace AnyStatus.Infrastructure
 {
     public class Logger : ILogger
     {
-        private IVsOutputWindowPane pane;
+        private IVsOutputWindowPane _pane;
         private IServiceProvider _provider;
         private Guid _guid;
         private string _name;
@@ -19,7 +18,36 @@ namespace AnyStatus.Infrastructure
             _name = "AnyStatus";
         }
 
-        public void Log(string message)
+        public void Info(string message)
+        {
+            Log(message);
+        }
+
+        public void Error(Exception exception, string message)
+        {
+            Log($"{message}\nException: {exception.Message}");
+        }
+
+        private bool EnsurePane()
+        {
+            if (_pane == null)
+            {
+                lock (_syncRoot)
+                {
+                    if (_pane == null)
+                    {
+                        _guid = Guid.NewGuid();
+                        IVsOutputWindow output = (IVsOutputWindow)_provider.GetService(typeof(SVsOutputWindow));
+                        output.CreatePane(ref _guid, _name, 1, 1);
+                        output.GetPane(ref _guid, out _pane);
+                    }
+                }
+            }
+
+            return _pane != null;
+        }
+
+        private void Log(string message)
         {
             if (string.IsNullOrEmpty(message))
                 return;
@@ -27,33 +55,13 @@ namespace AnyStatus.Infrastructure
             try
             {
                 if (EnsurePane())
-                {
-                    pane.OutputStringThreadSafe($"[{DateTime.Now}] {message}{Environment.NewLine}");
-                }
+                    _pane.OutputStringThreadSafe(
+                        $"[{DateTime.Now}] {message}{Environment.NewLine}");
             }
             catch (Exception ex)
             {
                 Debug.Write(ex);
             }
-        }
-
-        private bool EnsurePane()
-        {
-            if (pane == null)
-            {
-                lock (_syncRoot)
-                {
-                    if (pane == null)
-                    {
-                        _guid = Guid.NewGuid();
-                        IVsOutputWindow output = (IVsOutputWindow)_provider.GetService(typeof(SVsOutputWindow));
-                        output.CreatePane(ref _guid, _name, 1, 1);
-                        output.GetPane(ref _guid, out pane);
-                    }
-                }
-            }
-
-            return pane != null;
         }
     }
 }
