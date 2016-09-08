@@ -15,15 +15,21 @@ namespace AnyStatus.Models
     public class AppVeyorBuild : Item, IScheduledItem
     {
         [Required]
+        [Category("AppVeyor")]
         [DisplayName("Account Name")]
+        [Description("The AppVeyor account name")]
         public string AccountName { get; set; }
 
         [Required]
+        [Category("AppVeyor")]
         [DisplayName("Project Name")]
+        [Description("The AppVeyor project name")]
         public string ProjectName { get; set; }
 
         [Required]
+        [Category("AppVeyor")]
         [DisplayName("API Token")]
+        [Description("The AppVeyor API token")]
         public string ApiToken { get; set; }
     }
 

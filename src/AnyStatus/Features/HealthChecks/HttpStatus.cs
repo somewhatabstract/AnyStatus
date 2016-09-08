@@ -18,10 +18,12 @@ namespace AnyStatus.Models
         }
 
         [Required]
+        [Category("HTTP Status")]
         [PropertyOrder(10)]
         public string Url { get; set; }
 
         [PropertyOrder(20)]
+        [Category("HTTP Status")]
         [DisplayName("HTTP Status Code")]
         public HttpStatusCode HttpStatusCode { get; set; }
 

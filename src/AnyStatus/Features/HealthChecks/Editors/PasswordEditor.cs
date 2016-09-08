@@ -7,15 +7,19 @@ namespace AnyStatus
 {
     public class PasswordEditor : ITypeEditor
     {
-        PropertyItem _propertyItem;
         PasswordBox _passwordBox;
+        PropertyItem _propertyItem;
 
         public FrameworkElement ResolveEditor(PropertyItem propertyItem)
         {
             _propertyItem = propertyItem;
 
-            _passwordBox = new PasswordBox();
-            _passwordBox.Password = (string)propertyItem.Value;
+            _passwordBox = new PasswordBox
+            {
+                BorderThickness = new Thickness(0),
+                Password = (string)_propertyItem.Value
+            };
+
             _passwordBox.LostFocus += OnLostFocus;
 
             return _passwordBox;
@@ -23,12 +27,12 @@ namespace AnyStatus
 
         private void OnLostFocus(object sender, RoutedEventArgs e)
         {
-            e.Handled = true;
-
             if (!_passwordBox.Password.Equals((string)_propertyItem.Value))
             {
                 _propertyItem.Value = _passwordBox.Password;
             }
+
+            e.Handled = true;
         }
     }
 }

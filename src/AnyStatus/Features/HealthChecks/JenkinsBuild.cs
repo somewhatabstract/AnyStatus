@@ -18,17 +18,20 @@ namespace AnyStatus.Models
         [Url]
         [Required]
         [PropertyOrder(10)]
-        [Description("Jenkins build URL address.")]
+        [Category("Jenkins")]
+        [Description("Jenkins build URL address")]
         public string Url { get; set; }
 
         [PropertyOrder(20)]
+        [Category("Jenkins")]
         [DisplayName("User Name")]
-        [Description("Optional.")]
+        [Description("The Jenkins user name (optional)")]
         public string UserName { get; set; }
 
         [PropertyOrder(30)]
+        [Category("Jenkins")]
         [DisplayName("API Token")]
-        [Description("Optional.")]
+        [Description("The Jenkins API token (optional)")]
         public string ApiToken { get; set; }
 
         [PropertyOrder(40)]

@@ -60,6 +60,7 @@ namespace AnyStatus.Models
         public Guid Id { get; set; }
 
         [Required]
+        [Category("General")]
         [PropertyOrder(0)]
         public string Name
         {
@@ -83,6 +84,7 @@ namespace AnyStatus.Models
         }
 
         [Required]
+        [Category("General")]
         [Range(0, ushort.MaxValue, ErrorMessage = "Interval must be between 0 and 65535")]
         [Description("The interval in minutes")]
         public int Interval

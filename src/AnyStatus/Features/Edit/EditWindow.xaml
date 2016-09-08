@@ -7,11 +7,10 @@
              xmlns:local="clr-namespace:AnyStatus.Features.Edit"
              xmlns:vsp="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.14.0"
              mc:Ignorable="d" 
-             Height="350" 
+             Height="320" 
              Width="600"
              Title="Properties"
              WindowStartupLocation="CenterScreen"
-             Background="{x:Static SystemColors.WindowBrush}"
              d:DataContext="{d:DesignInstance Type=local:EditViewModel}">
     <Grid>
 
@@ -21,13 +20,13 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Orientation="Vertical">
-            <TextBlock  FontSize="24" Text="{Binding Item.Name}" Margin="7,7,7,3"></TextBlock>
-            <xctk:PropertyGrid Margin="6"
+            <xctk:PropertyGrid
                            ShowSearchBox="False" 
                            ShowSortOptions="False" 
-                           ShowSummary="True"
-                           ShowTitle="False"
-                           Background="Transparent"
+                           ShowSummary="False"
+                           ShowDescriptionByTooltip="True"
+                           ShowTitle="True"
+                           Background="{x:Null}"
                            BorderBrush="{x:Null}"
                            SelectedObject="{Binding Item}"/>
         </StackPanel>

@@ -15,13 +15,16 @@ namespace AnyStatus.Models
         }
 
         [Required]
+        [Category("Windows Service")]
         [DisplayName("Service Name")]
         public string ServiceName { get; set; }
 
         [DisplayName("Machine Name")]
-        [Description("Optional. Leave blank for local computer.")]
+        [Category("Windows Service")]
+        [Description("The machine name (optional). Leave blank for local computer")]
         public string MachineName { get; set; }
 
+        [Category("Windows Service")]
         public ServiceControllerStatus Status { get; set; }
     }
 

@@ -11,13 +11,15 @@ namespace AnyStatus.Models
     public class TcpPort : Item, IScheduledItem
     {
         [Required]
+        [Category("TCP")]
         [PropertyOrder(10)]
         [Description("Host Name or IP Address")]
         public string Host { get; set; }
 
         [Required]
-        [Range(0, ushort.MaxValue, ErrorMessage = "Port must be between 0 and 65535")]
+        [Category("TCP")]
         [PropertyOrder(20)]
+        [Range(0, ushort.MaxValue, ErrorMessage = "Port must be between 0 and 65535")]
         public int Port { get; set; }
     }
 

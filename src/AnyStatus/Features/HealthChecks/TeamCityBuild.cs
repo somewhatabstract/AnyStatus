@@ -22,6 +22,7 @@ namespace AnyStatus.Models
         [Required]
         [PropertyOrder(10)]
         [DisplayName("Url")]
+        [Category("TeamCity")]
         [Description("TeamCity server URL address. For example: http://teamcity:8080 or https://teamcity.jetbrains.com")]
         public string Url { get; set; }
 
@@ -30,23 +31,27 @@ namespace AnyStatus.Models
 
         [Required]
         [PropertyOrder(20)]
+        [Category("TeamCity")]
         [DisplayName("Build Type Id")]
-        [Description("TeamCity build type id (You can copy it from TeamCity build URL address).")]
+        [Description("TeamCity build type id (Copy mfrom TeamCity build URL address)")]
         public string BuildTypeId { get; set; }
 
         [PropertyOrder(30)]
+        [Category("TeamCity")]
         [DisplayName("Use Guest User")]
-        [Description("Log in with TeamCity guest user. If checked, the User Name and Password are ignored.")]
+        [Description("Log in with TeamCity guest user. If checked, the User Name and Password are ignored")]
         public bool GuestUser { get; set; }
 
         [PropertyOrder(40)]
+        [Category("TeamCity")]
         [DisplayName("User Name")]
-        [Description("Optional.")]
+        [Description("The TeamCity user name (optional)")]
         public string UserName { get; set; }
 
         [PropertyOrder(50)]
+        [Category("TeamCity")]
         [PasswordPropertyText(true)]
-        [Description("Optional.")]
+        [Description("The TeamCity password (optional)")]
         [Editor(typeof(PasswordEditor), typeof(PasswordEditor))]
         public string Password { get; set; }
 

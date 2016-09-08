@@ -11,6 +11,7 @@ namespace AnyStatus.Models
     public class Ping : Item, IScheduledItem
     {
         [Required]
+        [Category("Ping")]
         [Description("Host Name or IP Address")]
         public string Host { get; set; }
     }

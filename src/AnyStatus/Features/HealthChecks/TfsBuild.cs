@@ -26,22 +26,26 @@ namespace AnyStatus.Models
 
         [Url]
         [Required]
+        [Category("TFS")]
         [PropertyOrder(10)]
         [Description("Visual Studio Team Services account (https://{account}.visualstudio.com) or TFS server (http://{server:port}/tfs)")]
         public string Url { get; set; }
 
         [Required]
+        [Category("TFS")]
         [PropertyOrder(20)]
         [Description()]
         public string Collection { get; set; }
 
         [Required]
+        [Category("TFS")]
         [PropertyOrder(30)]
         [DisplayName("Team Project")]
         [Description()]
         public string TeamProject { get; set; }
 
         [Required]
+        [Category("TFS")]
         [PropertyOrder(40)]
         [DisplayName("Build Definition")]
         [Description()]
@@ -52,12 +56,14 @@ namespace AnyStatus.Models
         public int BuildDefinitionId { get; set; }
 
         [PropertyOrder(50)]
+        [Category("TFS")]
         [DisplayName("User Name")]
-        [Description("Optional.")]
+        [Description("The TFS user name (optional)")]
         public string UserName { get; set; }
 
+        [Category("TFS")]
         [PropertyOrder(60)]
-        [Description("Optional.")]
+        [Description("The TFS password (optional)")]
         [Editor(typeof(PasswordEditor), typeof(PasswordEditor))]
         public string Password { get; set; }
     }

@@ -12,12 +12,10 @@
              Width="650"
              Title="New Item"
              WindowStartupLocation="CenterScreen"
-             Background="{x:Static SystemColors.WindowBrush}"
              d:DataContext="{d:DesignInstance Type=vm:NewViewModel}">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition MinWidth="170" Width="Auto"></ColumnDefinition>
-            <ColumnDefinition Width="3"></ColumnDefinition>
+            <ColumnDefinition MinWidth="150" Width="Auto"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
@@ -32,15 +30,13 @@
                  BorderBrush="{x:Null}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Name}" Height="40" Padding="12"/>
+                    <TextBlock Text="{Binding Name}" Height="40" Padding="12" ToolTip="{Binding Description}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
         
-        <GridSplitter Grid.Column="1" Grid.RowSpan="2" Foreground="Gray" HorizontalAlignment="Stretch"/>
-
         <StackPanel Grid.Column="2" Grid.Row="0" Orientation="Vertical">
-            <TextBlock FontSize="24" Text="{Binding SelectedTemplate.Name}" Margin="4" />
+            <!--<TextBlock FontSize="24" Text="{Binding SelectedTemplate.Name}" Margin="4" />
             <TextBlock Text="{Binding SelectedTemplate.Description}" TextWrapping="Wrap" Margin="5">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock">
@@ -51,14 +47,15 @@
                         </Style.Triggers>
                     </Style>
                 </TextBlock.Style>
-            </TextBlock>
-            <xctk:PropertyGrid Margin="3,3,8,10"
+            </TextBlock>-->
+            <xctk:PropertyGrid 
                            ShowSearchBox="False" 
                            ShowSortOptions="False"
-                           ShowSummary="True"
-                           ShowTitle="False"
+                           ShowSummary="False"
+                           ShowDescriptionByTooltip="True"
+                           ShowTitle="True"
                            BorderBrush="{x:Null}"
-                           Background="Transparent"
+                           Background="{x:Null}"
                            SelectedObject="{Binding SelectedTemplate.Item}"
                            SelectedObjectTypeName="{Binding SelectedTemplate.Name}">
             </xctk:PropertyGrid>
