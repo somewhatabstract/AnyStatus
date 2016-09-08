@@ -23,7 +23,7 @@ namespace AnyStatus.Models
         [PropertyOrder(10)]
         [DisplayName("Url")]
         [Category("TeamCity")]
-        [Description("TeamCity server URL address. For example: http://teamcity:8080 or https://teamcity.jetbrains.com")]
+        [Description("TeamCity server URL address. For example: http://teamcity:8080")]
         public string Url { get; set; }
 
         [Browsable(false)] //TODO: Remove property. Use Url instead.
@@ -33,7 +33,7 @@ namespace AnyStatus.Models
         [PropertyOrder(20)]
         [Category("TeamCity")]
         [DisplayName("Build Type Id")]
-        [Description("TeamCity build type id (Copy mfrom TeamCity build URL address)")]
+        [Description("TeamCity build type id (Copy from TeamCity build URL address)")]
         public string BuildTypeId { get; set; }
 
         [PropertyOrder(30)]
