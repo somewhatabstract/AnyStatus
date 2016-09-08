@@ -11,6 +11,7 @@
 - [x] Expand/Collapse All toolbar buttons
 - [ ] Synchronize user settings between Visual Studio instances
 - [ ] Replace AppSettings with WritableSettingsStore
+- [ ] PowerShell and/or batch script status
 
 Features that have a checkmark are complete and available for
 download in the
