@@ -1,7 +1,9 @@
 version: 0.6.{build}
 
-only_commits:
-  message: /build/
+skip_commits:
+  files:
+    - art/*
+    - '**/*.md'
   
 branches:
   only:
