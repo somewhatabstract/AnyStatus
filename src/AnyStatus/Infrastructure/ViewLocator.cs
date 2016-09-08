@@ -33,9 +33,9 @@ namespace AnyStatus.Infrastructure
             var view = _container.Resolve<EditWindow>();
             var viewModel = _container.Resolve<EditViewModel>();
 
-            viewModel.CloseRequested += (s, e) => { view.Close(); };
-
             viewModel.Item = item;
+            viewModel.CloseRequested += (s, e) => { view.Close(); };
+            
             view.DataContext = viewModel;
 
             return view;

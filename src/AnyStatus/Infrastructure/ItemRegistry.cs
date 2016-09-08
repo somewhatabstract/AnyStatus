@@ -36,7 +36,7 @@ namespace AnyStatus.Infrastructure
             }
             catch (Exception ex)
             {
-                _logger.Log("Failed to initialize scheduler. Exception: " + ex.ToString());
+                _logger.Log("Could not initialize scheduler. Exception: " + ex.ToString());
             }
         }
 

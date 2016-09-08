@@ -151,7 +151,9 @@
     <Compile Include="Features\ToolWindow\EditableTextBlock.cs" />
     <Compile Include="Infrastructure\GoogleAnalytics\GoogleAnalyticsReporter.cs" />
     <Compile Include="Infrastructure\GoogleAnalytics\Preconditions.cs" />
+    <Compile Include="Interfaces\IJobScheduler.cs" />
     <Compile Include="Infrastructure\ItemRegistry.cs" />
+    <Compile Include="Core\JobScheduler.cs" />
     <Compile Include="Infrastructure\NullLogger.cs" />
     <Compile Include="Infrastructure\ObjectCloner.cs" />
     <Compile Include="Infrastructure\ScheduledJob.cs" />

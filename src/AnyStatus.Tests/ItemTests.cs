@@ -1,5 +1,6 @@
 ﻿using AnyStatus.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.ObjectModel;
 
 namespace AnyStatus.Tests
@@ -81,6 +82,32 @@ namespace AnyStatus.Tests
             item1.MoveDown();
 
             Assert.IsTrue(parent.Items.IndexOf(item1) == 1);
+        }
+
+        [TestMethod]
+        public void Clone()
+        {
+            var item = new Item();
+
+            var copy = item.Clone();
+
+            Assert.AreNotSame(copy, item);
+        }
+
+        [TestMethod]
+        public void ReplaceWith()
+        {
+            var parent = new Item();
+            var item1 = new Item();
+            var item2 = new Item();
+
+            parent.Add(item1);
+
+            var index = parent.Items.IndexOf(item1);
+
+            item1.ReplaceWith(item2);
+
+            Assert.AreSame(parent.Items[index], item2);
         }
     }
 }

@@ -2,7 +2,7 @@
 using AnyStatus.Models;
 using AnyStatus.Views;
 
-namespace AnyStatus.Interfaces
+namespace AnyStatus
 {
     public interface IViewLocator
     {

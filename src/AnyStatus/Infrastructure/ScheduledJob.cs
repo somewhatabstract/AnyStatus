@@ -36,7 +36,7 @@ namespace AnyStatus.Infrastructure
             }
             catch (Exception ex)
             {
-                _logger.Log("Failed to execute job " + Item.Name + ". Exception: " + ex.ToString());
+                _logger.Log("Could not execute job " + Item.Name + ". Exception: " + ex.ToString());
 
                 if (Item != null)
                     Item.Brush = Brushes.Silver;

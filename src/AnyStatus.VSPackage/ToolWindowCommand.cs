@@ -101,7 +101,7 @@ namespace AnyStatus.VSPackage
             }
             catch (Exception ex)
             {
-                _logger.Log("Failed to open options dialog. Exception: " + ex.ToString());
+                _logger.Log("Could not open options dialog. Exception: " + ex.ToString());
             }
         }
 
@@ -118,7 +118,7 @@ namespace AnyStatus.VSPackage
             }
             catch (Exception ex)
             {
-                _logger.Log("Failed to refresh all items. Exception: " + ex.ToString());
+                _logger.Log("Could not refresh all items. Exception: " + ex.ToString());
             }
         }
 

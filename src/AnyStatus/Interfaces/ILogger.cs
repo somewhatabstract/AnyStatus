@@ -1,4 +1,4 @@
-﻿namespace AnyStatus.Interfaces
+﻿namespace AnyStatus
 {
     public interface ILogger
     {

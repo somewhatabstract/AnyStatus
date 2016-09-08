@@ -37,6 +37,7 @@ namespace AnyStatus.VSPackage
             container.Register<ILogger, Logger>().AsSingleton();
             container.Register<Registry, ItemRegistry>().AsSingleton();
             container.Register<ScheduledJob>().AsMultiInstance();
+            container.Register<IJobScheduler, JobScheduler>();
 
             //views
             container.Register<IViewLocator, ViewLocator>().AsSingleton();

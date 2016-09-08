@@ -1,24 +1,32 @@
-﻿using AnyStatus.Infrastructure;
-using AnyStatus.Interfaces;
+﻿using AnyStatus.Interfaces;
 using AnyStatus.Models;
-using FluentScheduler;
 using System;
-using System.Diagnostics;
 using System.Windows.Input;
 
 namespace AnyStatus.Features.Edit
 {
     public class EditViewModel
     {
-        private IUserSettings _userSettings;
+        private Item _item;
+        private Item _sourceItem;
+
+        private readonly ILogger _logger;
+        private readonly IUserSettings _userSettings;
+        private readonly IJobScheduler _jobScheduler;
 
         public event EventHandler CloseRequested;
 
-        public EditViewModel(IUserSettings userSettings)
+        public EditViewModel(IUserSettings userSettings, IJobScheduler jobScheduler, ILogger logger)
         {
+            if (logger == null)
+                throw new ArgumentNullException(nameof(logger));
             if (userSettings == null)
                 throw new ArgumentNullException(nameof(userSettings));
+            if (jobScheduler == null)
+                throw new ArgumentNullException(nameof(jobScheduler));
 
+            _logger = logger;
+            _jobScheduler = jobScheduler;
             _userSettings = userSettings;
 
             Initialize();
@@ -30,18 +38,17 @@ namespace AnyStatus.Features.Edit
             {
                 try
                 {
+                    //todo: add validation
+
+                    _sourceItem.ReplaceWith(_item);
+
                     _userSettings.Save();
 
-                    //todo: this is needed only if the trigger has changed (?)
-                    JobManager.RemoveJob(Item.Id.ToString());
-                    var job = TinyIoCContainer.Current.Resolve<ScheduledJob>();
-                    job.Item = Item;
-                    JobManager.AddJob(job,
-                        s => s.WithName(Item.Id.ToString()).ToRunNow().AndEvery(Item.Interval).Minutes());
+                    _jobScheduler.Reschedule(_item);
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine(ex);
+                    _logger.Log("Could not save changes. Exception:" + ex.ToString());
                 }
                 finally
                 {
@@ -55,7 +62,18 @@ namespace AnyStatus.Features.Edit
             });
         }
 
-        public Item Item { get; set; }
+        public Item Item
+        {
+            get
+            {
+                return _item;
+            }
+            set
+            {
+                _item = (Item)value.Clone();
+                _sourceItem = value;
+            }
+        }
 
         #region Commands
 

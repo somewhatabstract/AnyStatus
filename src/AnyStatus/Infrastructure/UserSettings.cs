@@ -41,7 +41,7 @@ namespace AnyStatus
             }
             catch (Exception ex)
             {
-                _logger.Log("Failed to initialize user settings. Exception: " + ex.ToString());
+                _logger.Log("Could not initialize user settings. Exception: " + ex.ToString());
             }
         }
 
@@ -91,7 +91,7 @@ namespace AnyStatus
             }
             catch (AggregateException ex)
             {
-                _logger.Log("Failed to save user settings. Exception: " + ex.Flatten());
+                _logger.Log("Could not save user settings. Exception: " + ex.Flatten());
             }
         }
 
@@ -111,7 +111,7 @@ namespace AnyStatus
             }
             catch (Exception ex)
             {
-                _logger.Log("Failed to reset user settings. Exception: " + ex.ToString());
+                _logger.Log("Could not reset user settings. Exception: " + ex.ToString());
             }
         }
     }

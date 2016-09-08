@@ -26,7 +26,7 @@ namespace AnyStatus.Models
     [XmlInclude(typeof(AppVeyorBuild))]
     [XmlInclude(typeof(TravisCIBuild))]
     [XmlInclude(typeof(WindowsService))]
-    public class Item : INotifyPropertyChanged
+    public class Item : INotifyPropertyChanged, ICloneable
     {
         #region Fields
 
@@ -295,6 +295,13 @@ namespace AnyStatus.Models
             }
         }
 
+        public void ReplaceWith(Item item)
+        {
+            var index = Parent.Items.IndexOf(this);
+
+            Parent.Items[index] = item;
+        }
+
         #endregion
 
         #region INotifyPropertyChanged
@@ -337,6 +344,15 @@ namespace AnyStatus.Models
         }
 
 
+
+        #endregion
+
+        #region ICloneable
+
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
 
         #endregion
     }
