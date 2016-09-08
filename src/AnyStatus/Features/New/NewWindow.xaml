@@ -48,12 +48,12 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>-->
-            <xctk:PropertyGrid 
+            <xctk:PropertyGrid Margin="0,0,11,0"
                            ShowSearchBox="False" 
                            ShowSortOptions="False"
                            ShowSummary="False"
                            ShowDescriptionByTooltip="True"
-                           ShowTitle="True"
+                           ShowTitle="False"
                            BorderBrush="{x:Null}"
                            Background="{x:Null}"
                            SelectedObject="{Binding SelectedTemplate.Item}"

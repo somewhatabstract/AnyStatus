@@ -25,7 +25,7 @@
                            ShowSortOptions="False" 
                            ShowSummary="False"
                            ShowDescriptionByTooltip="True"
-                           ShowTitle="True"
+                           ShowTitle="False"
                            Background="{x:Null}"
                            BorderBrush="{x:Null}"
                            SelectedObject="{Binding Item}"/>
