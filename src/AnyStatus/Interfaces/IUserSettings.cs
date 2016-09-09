@@ -1,13 +1,18 @@
 ﻿using AnyStatus.Models;
+using System;
 
 namespace AnyStatus.Interfaces
 {
     public interface IUserSettings
     {
+        event EventHandler SettingsReset;
+
         Item RootItem { get; }
+        bool DebugMode { get; set; }
+        bool ReportAnonymousUsage { get; set; }
 
         void Save(bool reload = false);
 
-        void Reset();
+        void RestoreDefault();
     }
 }

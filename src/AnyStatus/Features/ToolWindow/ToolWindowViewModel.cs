@@ -41,16 +41,21 @@ namespace AnyStatus.ViewModels
             Initialize();
         }
 
+        /// <summary>
+        /// The tree-view root item.
+        /// </summary>
         public Item RootItem
         {
-            get
-            {
-                return _userSettings.RootItem;
-            }
+            get { return _userSettings.RootItem; }
         }
 
         private void Initialize()
         {
+            _userSettings.SettingsReset += (s, e) =>
+            {
+                OnPropertyChanged("RootItem");
+            };
+
             AddFolderCommand = new RelayCommand(p =>
             {
                 try

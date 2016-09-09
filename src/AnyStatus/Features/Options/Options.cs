@@ -1,22 +1,51 @@
-﻿using Microsoft.VisualStudio.Shell;
+﻿using AnyStatus.Interfaces;
+using AnyStatus.ViewModels;
+using Microsoft.VisualStudio.Shell;
 using System.Windows;
+using System.ComponentModel;
+
+#warning Options and ToolWindow are using different instances of UserSettings
 
 namespace AnyStatus.Views
 {
     public class Options : UIElementDialogPage
     {
-        private OptionsDialogControl _optionsDialogControl;
+        private ILogger _logger;
+        private IUserSettings _userSettings;
+        private OptionsViewModel _viewModel;
+        private OptionsDialogControl _optionsDialog;
 
         public Options()
         {
-            _optionsDialogControl = new OptionsDialogControl();
+            _logger = new NullLogger();
+            _userSettings = new UserSettings(_logger);
+            _viewModel = new OptionsViewModel(_userSettings);
+            _optionsDialog = new OptionsDialogControl(_viewModel);
         }
 
         protected override UIElement Child
         {
-            get
+            get { return _optionsDialog; }
+        }
+
+        protected override void OnActivate(CancelEventArgs e)
+        {
+            base.OnActivate(e);
+
+            _viewModel.DebugMode = _userSettings.DebugMode;
+            _viewModel.ReportAnonymousUsage = _userSettings.ReportAnonymousUsage;
+        }
+
+        protected override void OnApply(PageApplyEventArgs e)
+        {
+            base.OnApply(e);
+
+            if (e.ApplyBehavior != ApplyKind.Apply)
+                return;
+
+            if (_viewModel.SaveCommand.CanExecute(null))
             {
-                return _optionsDialogControl;
+                _viewModel.SaveCommand.Execute(null);
             }
         }
     }
