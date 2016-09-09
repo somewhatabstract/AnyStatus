@@ -32,21 +32,20 @@ namespace AnyStatus.Views
         {
             base.OnActivate(e);
 
-            _viewModel.DebugMode = _userSettings.DebugMode;
-            _viewModel.ReportAnonymousUsage = _userSettings.ReportAnonymousUsage;
+            if (!_viewModel.ActivateCommand.CanExecute(null))
+                return;
+
+            _viewModel.ActivateCommand.Execute(null);
         }
 
         protected override void OnApply(PageApplyEventArgs e)
         {
             base.OnApply(e);
 
-            if (e.ApplyBehavior != ApplyKind.Apply)
+            if (e.ApplyBehavior != ApplyKind.Apply || !_viewModel.ApplyCommand.CanExecute(null))
                 return;
 
-            if (_viewModel.SaveCommand.CanExecute(null))
-            {
-                _viewModel.SaveCommand.Execute(null);
-            }
+            _viewModel.ApplyCommand.Execute(null);
         }
     }
 }

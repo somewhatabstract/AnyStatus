@@ -1,7 +1,6 @@
 ﻿using AnyStatus.Interfaces;
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -21,15 +20,18 @@ namespace AnyStatus.ViewModels
 
             _userSettings = userSettings;
 
-            SaveCommand = new RelayCommand(p => Save());
+            ApplyCommand = new RelayCommand(p => Save());
+            ActivateCommand = new RelayCommand(p => Load());
             RestoreDefaultSettingsCommand = new RelayCommand(p => RestoreDefaultSettings());
         }
 
         #region Properties
 
-        public ICommand RestoreDefaultSettingsCommand { get; set; }
+        public ICommand ApplyCommand { get; set; }
 
-        public ICommand SaveCommand { get; set; }
+        public ICommand ActivateCommand { get; set; }
+
+        public ICommand RestoreDefaultSettingsCommand { get; set; }
 
         public bool DebugMode
         {
@@ -57,17 +59,16 @@ namespace AnyStatus.ViewModels
 
         private void Save()
         {
-            try
-            {
-                _userSettings.DebugMode = DebugMode;
-                _userSettings.ReportAnonymousUsage = ReportAnonymousUsage;
+            _userSettings.DebugMode = DebugMode;
+            _userSettings.ReportAnonymousUsage = ReportAnonymousUsage;
 
-                _userSettings.Save();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
+            _userSettings.Save();
+        }
+
+        private void Load()
+        {
+            DebugMode = _userSettings.DebugMode;
+            ReportAnonymousUsage = _userSettings.ReportAnonymousUsage;
         }
 
         private void RestoreDefaultSettings()
@@ -78,8 +79,7 @@ namespace AnyStatus.ViewModels
             {
                 _userSettings.RestoreDefault();
 
-                DebugMode = _userSettings.DebugMode;
-                ReportAnonymousUsage = _userSettings.ReportAnonymousUsage;
+                Load();
             }
         }
 
