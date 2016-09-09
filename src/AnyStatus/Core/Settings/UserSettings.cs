@@ -3,8 +3,6 @@ using AnyStatus.Interfaces;
 using AnyStatus.Models;
 using System;
 
-#warning settings-reset event is static
-
 namespace AnyStatus
 {
     public class UserSettings : IUserSettings
