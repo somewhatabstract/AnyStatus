@@ -46,7 +46,7 @@ namespace AnyStatus
             if (item == null)
                 throw new InvalidOperationException();
 
-            if (item.ShouldSchedule())
+            if (item.IsSchedulable())
             {
                 ScheduleItem(item);
             }

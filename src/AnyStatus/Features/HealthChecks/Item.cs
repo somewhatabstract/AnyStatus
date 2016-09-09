@@ -12,13 +12,13 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 namespace AnyStatus.Models
 {
     [Serializable]
-    //Folders////////////////////
     [XmlInclude(typeof(Folder))]
     [XmlInclude(typeof(RootItem))]
-    //Plug-ins////////////////////
     [XmlInclude(typeof(Ping))]
     [XmlInclude(typeof(TcpPort))]
     [XmlInclude(typeof(TfsBuild))]
+    [XmlInclude(typeof(BatchFile))]
+    [XmlInclude(typeof(PowerShell))]
     [XmlInclude(typeof(HttpStatus))]
     [XmlInclude(typeof(GitHubIssue))]
     [XmlInclude(typeof(JenkinsBuild))]
@@ -237,10 +237,6 @@ namespace AnyStatus.Models
             return Parent.Items.IndexOf(this) + 1 < Parent.Items.Count();
         }
 
-        /// <summary>
-        /// Move item into folder.
-        /// </summary>
-        /// <param name="folder">The target folder.</param>
         private void MoveTo(Folder folder)
         {
             if (folder.Items.Contains(this))
@@ -271,10 +267,6 @@ namespace AnyStatus.Models
             }
         }
 
-        /// <summary>
-        /// Change item position in folder.
-        /// </summary>
-        /// <param name="target"></param>
         private void MoveToPositionOf(Item target)
         {
             if (this.Parent != target.Parent)
@@ -302,7 +294,7 @@ namespace AnyStatus.Models
             Parent.Items[index] = item;
         }
 
-        public bool ShouldSchedule()
+        public bool IsSchedulable()
         {
             return this is IScheduledItem &&
                    this.IsEnabled &&
