@@ -155,7 +155,6 @@
     <Compile Include="Interfaces\IJobScheduler.cs" />
     <Compile Include="Core\Monitoring\ItemRegistry.cs" />
     <Compile Include="Core\Monitoring\JobScheduler.cs" />
-    <Compile Include="Infrastructure\NullLogger.cs" />
     <Compile Include="Infrastructure\ObjectCloner.cs" />
     <Compile Include="Core\Monitoring\ScheduledJob.cs" />
     <Compile Include="Infrastructure\Logger.cs" />
