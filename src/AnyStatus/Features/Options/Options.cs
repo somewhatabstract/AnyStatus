@@ -1,8 +1,9 @@
-﻿using AnyStatus.Interfaces;
+﻿using AnyStatus.Infrastructure;
+using AnyStatus.Interfaces;
 using AnyStatus.ViewModels;
 using Microsoft.VisualStudio.Shell;
-using System.Windows;
 using System.ComponentModel;
+using System.Windows;
 
 #warning Options and ToolWindow are using different instances of UserSettings
 
@@ -10,16 +11,15 @@ namespace AnyStatus.Views
 {
     public class Options : UIElementDialogPage
     {
-        private ILogger _logger;
-        private IUserSettings _userSettings;
         private OptionsViewModel _viewModel;
         private OptionsDialogControl _optionsDialog;
 
         public Options()
         {
-            _logger = new NullLogger();
-            _userSettings = new UserSettings(_logger);
-            _viewModel = new OptionsViewModel(_userSettings);
+            var userSettings = TinyIoCContainer.Current.Resolve<IUserSettings>(); //todo: use MEF?
+
+            _viewModel = new OptionsViewModel(userSettings);
+
             _optionsDialog = new OptionsDialogControl(_viewModel);
         }
 

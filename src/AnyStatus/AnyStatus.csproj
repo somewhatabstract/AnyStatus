@@ -142,6 +142,7 @@
     <Compile Include="Features\HealthChecks\IScheduledItem.cs" />
     <Compile Include="Features\HealthChecks\RootItem.cs" />
     <Compile Include="Features\HealthChecks\GitHubIssue.cs" />
+    <Compile Include="Features\HealthChecks\PowerShell.cs" />
     <Compile Include="Infrastructure\Extensions.cs" />
     <Compile Include="Features\HealthChecks\TCP.cs" />
     <Compile Include="Features\HealthChecks\TeamCityBuild.cs" />
@@ -152,11 +153,11 @@
     <Compile Include="Infrastructure\GoogleAnalytics\GoogleAnalyticsReporter.cs" />
     <Compile Include="Infrastructure\GoogleAnalytics\Preconditions.cs" />
     <Compile Include="Interfaces\IJobScheduler.cs" />
-    <Compile Include="Core\ItemRegistry.cs" />
-    <Compile Include="Core\JobScheduler.cs" />
+    <Compile Include="Core\Monitoring\ItemRegistry.cs" />
+    <Compile Include="Core\Monitoring\JobScheduler.cs" />
     <Compile Include="Infrastructure\NullLogger.cs" />
     <Compile Include="Infrastructure\ObjectCloner.cs" />
-    <Compile Include="Core\ScheduledJob.cs" />
+    <Compile Include="Core\Monitoring\ScheduledJob.cs" />
     <Compile Include="Infrastructure\Logger.cs" />
     <Compile Include="Infrastructure\Retry.cs" />
     <Compile Include="Infrastructure\ViewLocator.cs" />
@@ -176,9 +177,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\RelayCommand.cs" />
-    <Compile Include="Infrastructure\Settings.cs" />
+    <Compile Include="Core\Settings\Settings.cs" />
     <Compile Include="Infrastructure\TinyIoc.cs" />
-    <Compile Include="Core\UserSettings.cs" />
+    <Compile Include="Core\Settings\UserSettings.cs" />
     <Compile Include="Interfaces\IViewLocator.cs" />
     <Compile Include="Features\New\NewViewModel.cs" />
     <Compile Include="Features\Options\OptionsViewModel.cs" />

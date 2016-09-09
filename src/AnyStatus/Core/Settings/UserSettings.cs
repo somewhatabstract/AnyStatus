@@ -11,8 +11,6 @@ namespace AnyStatus
     {
         private ILogger _logger;
 
-        private static event EventHandler _settingsReset;
-
         public UserSettings(ILogger logger)
         {
             if (logger == null)
@@ -25,11 +23,7 @@ namespace AnyStatus
 
         #region Properties
 
-        public event EventHandler SettingsReset
-        {
-            add { _settingsReset += value; }
-            remove { _settingsReset -= value; }
-        }
+        public event EventHandler SettingsReset;
 
         public Item RootItem { get; private set; }
 
@@ -82,7 +76,7 @@ namespace AnyStatus
 
                 Save();
 
-                _settingsReset?.Invoke(this, EventArgs.Empty);
+                SettingsReset?.Invoke(this, EventArgs.Empty);
             }
             catch (Exception ex)
             {
