@@ -145,7 +145,7 @@
     <Compile Include="Interfaces\IScheduledItem.cs" />
     <Compile Include="Features\HealthChecks\RootItem.cs" />
     <Compile Include="Features\HealthChecks\GitHubIssue.cs" />
-    <Compile Include="Features\HealthChecks\PowerShell.cs" />
+    <Compile Include="Features\HealthChecks\PowerShellScript.cs" />
     <Compile Include="Infrastructure\Extensions.cs" />
     <Compile Include="Features\HealthChecks\TCP.cs" />
     <Compile Include="Features\HealthChecks\TeamCityBuild.cs" />

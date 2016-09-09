@@ -9,13 +9,12 @@ namespace AnyStatus.Infrastructure
         private IVsOutputWindowPane _pane;
         private IServiceProvider _provider;
         private Guid _guid;
-        private string _name;
+        private const string paneName = "AnyStatus";
         private object _syncRoot = new object();
 
         public Logger(IServiceProvider provider)
         {
             _provider = provider;
-            _name = "AnyStatus";
         }
 
         public void Info(string message)
@@ -25,7 +24,7 @@ namespace AnyStatus.Infrastructure
 
         public void Error(Exception exception, string message)
         {
-            Log($"{message}\nException: {exception.Message}");
+            Log($"{message}\r\nException: {exception.Message}\r\nInner Exception: {exception.InnerException?.Message}");
         }
 
         private bool EnsurePane()
@@ -38,7 +37,7 @@ namespace AnyStatus.Infrastructure
                     {
                         _guid = Guid.NewGuid();
                         IVsOutputWindow output = (IVsOutputWindow)_provider.GetService(typeof(SVsOutputWindow));
-                        output.CreatePane(ref _guid, _name, 1, 1);
+                        output.CreatePane(ref _guid, paneName, 1, 1);
                         output.GetPane(ref _guid, out _pane);
                     }
                 }

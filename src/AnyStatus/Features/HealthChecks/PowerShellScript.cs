@@ -7,45 +7,45 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace AnyStatus.Models
 {
-    [CategoryOrder("Batch File", 10)]
-    [DisplayName("Batch File")]
-    [Description("Execute a batch file.")]
-    public class BatchFile : Item, IScheduledItem
+    [DisplayName("PowerShell Script")]
+    [Description("Execute a PowerShell script")]
+    public class PowerShellScript : Item, IScheduledItem
     {
-        public BatchFile()
+        public PowerShellScript()
         {
             Timeout = 1;
         }
 
         [Required]
         [PropertyOrder(10)]
-        [Category("Batch File")]
+        [Category("PowerShell")]
         [DisplayName("File Name")]
-        [Description("The batch file path")]
+        [Description("The script file path")]
         [Editor(typeof(FileEditor), typeof(FileEditor))]
         public string FileName { get; set; }
 
         [PropertyOrder(20)]
-        [Category("Batch File")]
-        [Description("The batch file arguments")]
+        [Category("PowerShell")]
+        [Description("The script arguments")]
         public string Arguments { get; set; }
 
         [PropertyOrder(30)]
-        [Category("Batch File")]
+        [Category("PowerShell")]
         [Description("The script execution timeout in minutes")]
         public int Timeout { get; set; }
     }
 
-    public class BatchFileHandler : IHandler<BatchFile>
+    public class PowerShellScriptHandler : IHandler<PowerShellScript>
     {
-        public void Handle(BatchFile item)
+        public void Handle(PowerShellScript item)
         {
             if (!File.Exists(item.FileName))
                 throw new FileNotFoundException(item.FileName);
 
             var startInfo = new ProcessStartInfo
             {
-                FileName = item.FileName,
+                FileName = "powershell.exe",
+                Arguments = $"&'{item.FileName}' {item.Arguments}",
                 CreateNoWindow = true,
                 ErrorDialog = false,
                 LoadUserProfile = false,

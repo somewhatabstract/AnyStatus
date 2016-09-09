@@ -12,13 +12,14 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 namespace AnyStatus.Models
 {
     [Serializable]
+    [CategoryOrder("General", 1)]
     [XmlInclude(typeof(Folder))]
     [XmlInclude(typeof(RootItem))]
     [XmlInclude(typeof(Ping))]
     [XmlInclude(typeof(TcpPort))]
     [XmlInclude(typeof(TfsBuild))]
     [XmlInclude(typeof(BatchFile))]
-    [XmlInclude(typeof(PowerShell))]
+    [XmlInclude(typeof(PowerShellScript))]
     [XmlInclude(typeof(HttpStatus))]
     [XmlInclude(typeof(GitHubIssue))]
     [XmlInclude(typeof(JenkinsBuild))]

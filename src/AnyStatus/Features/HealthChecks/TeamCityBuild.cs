@@ -14,6 +14,7 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace AnyStatus.Models
 {
+    [CategoryOrder("TeamCity", 10)]
     [DisplayName("TeamCity Build")]
     [Description("")]
     public class TeamCityBuild : Item, IScheduledItem
