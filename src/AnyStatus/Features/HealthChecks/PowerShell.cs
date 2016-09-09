@@ -1,11 +1,10 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace AnyStatus.Models
 {
     [Browsable(false)]
     [DisplayName("PowerShell")]
-    [Description("")]
+    [Description("Execute a PowerShell script")]
     public class PowerShell : Item, IScheduledItem
     {
     }
@@ -14,7 +13,9 @@ namespace AnyStatus.Models
     {
         public void Handle(PowerShell item)
         {
-            throw new NotImplementedException();
+            //using (PowerShell PowerShellInstance = PowerShell.Create())
+            //{
+            //}
         }
     }
 }
