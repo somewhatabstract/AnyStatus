@@ -31,6 +31,7 @@ namespace AnyStatus.Infrastructure
                 var handlerType = typeof(IHandler<>);
                 var genericHandlerType = handlerType.MakeGenericType(Item.GetType());
                 var handler = TinyIoCContainer.Current.Resolve(genericHandlerType);
+
                 genericHandlerType.GetMethod("Handle").Invoke(handler, new[] { Item });
             }
             catch (Exception ex)
