@@ -9,7 +9,7 @@
              xmlns:vm="clr-namespace:AnyStatus.ViewModels"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
-             Height="420"
+             Height="450"
              Width="600"
              Title="Add New Item"
              WindowStartupLocation="CenterScreen"

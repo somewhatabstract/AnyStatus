@@ -26,7 +26,7 @@ namespace AnyStatus.Infrastructure
 
             try
             {
-                _logger.Info("Updating " + Item.Name);
+                _logger.Info($"Updating {Item.Name}.");
 
                 var handlerType = typeof(IHandler<>);
                 var genericHandlerType = handlerType.MakeGenericType(Item.GetType());
