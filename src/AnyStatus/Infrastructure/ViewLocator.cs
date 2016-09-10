@@ -1,4 +1,5 @@
-﻿using AnyStatus.Features.Edit;
+﻿using System;
+using AnyStatus.Features.Edit;
 using AnyStatus.Interfaces;
 using AnyStatus.Models;
 using AnyStatus.ViewModels;
@@ -40,5 +41,10 @@ namespace AnyStatus.Infrastructure
 
             return view;
         }
+
+        //public OptionsDialogControl OptionsWindow()
+        //{
+        //    return _container.Resolve<OptionsDialogControl>();
+        //}
     }
 }

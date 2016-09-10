@@ -6,18 +6,11 @@ namespace AnyStatus
 {
     public interface IViewLocator
     {
-        /// <summary>
-        /// New item window
-        /// </summary>
-        /// <param name="parent"></param>
-        /// <returns></returns>
+
         NewWindow NewWindow(Item parent);
 
-        /// <summary>
-        /// Edit item window
-        /// </summary>
-        /// <param name="parent"></param>
-        /// <returns></returns>
         EditWindow EditWindow(Item parent);
+
+        //OptionsDialogControl OptionsWindow();
     }
 }

@@ -35,9 +35,8 @@ namespace AnyStatus.VSPackage
             container.Register<ToolWindowCommand>().AsSingleton();
             container.Register<IUserSettings, UserSettings>().AsSingleton();
             container.Register<ILogger, Logger>().AsSingleton();
-            container.Register<Registry, ItemRegistry>().AsSingleton();
-            container.Register<ScheduledJob>().AsMultiInstance();
             container.Register<IJobScheduler, JobScheduler>().AsSingleton();
+            container.Register<ScheduledJob>().AsMultiInstance();
 
             //views
             container.Register<IViewLocator, ViewLocator>().AsSingleton();
@@ -47,6 +46,7 @@ namespace AnyStatus.VSPackage
             container.Register<NewViewModel>().AsMultiInstance();
             container.Register<EditWindow>().AsMultiInstance();
             container.Register<EditViewModel>().AsMultiInstance();
+            container.Register<OptionsViewModel>().AsSingleton();
 
             ScanAndRegisterItems();
             RegisterItemTemplates();
@@ -56,7 +56,7 @@ namespace AnyStatus.VSPackage
         }
 
         #region Helpers
-        
+
         private static void ScanAndRegisterItemHandlers()
         {
             var baseHandler = typeof(IHandler<>);

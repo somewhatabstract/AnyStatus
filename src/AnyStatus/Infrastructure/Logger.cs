@@ -6,11 +6,14 @@ namespace AnyStatus.Infrastructure
 {
     public class Logger : ILogger
     {
+        private Guid _guid;
         private IVsOutputWindowPane _pane;
         private IServiceProvider _provider;
-        private Guid _guid;
-        private const string paneName = "AnyStatus";
         private object _syncRoot = new object();
+
+        private const string paneName = "AnyStatus";
+
+        public bool IsEnabled { get; set; } = true;
 
         public Logger(IServiceProvider provider)
         {
@@ -53,7 +56,7 @@ namespace AnyStatus.Infrastructure
 
             try
             {
-                if (EnsurePane())
+                if (IsEnabled && EnsurePane())
                     _pane.OutputStringThreadSafe(
                         $"[{DateTime.Now}] {message}{Environment.NewLine}");
             }

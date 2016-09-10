@@ -48,7 +48,7 @@ namespace AnyStatus.Features.Edit
                 }
                 catch (Exception ex)
                 {
-                    _logger.Info("Could not save changes. Exception:" + ex.ToString());
+                    _logger.Info("Failed to save changes. Exception:" + ex.ToString());
                 }
                 finally
                 {

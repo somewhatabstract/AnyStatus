@@ -77,7 +77,7 @@ namespace AnyStatus.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    _logger.Info("Could not add a new folder. Exception: " + ex.ToString());
+                    _logger.Info("Failed to add a new folder. Exception: " + ex.ToString());
                 }
             });
 
@@ -105,7 +105,7 @@ namespace AnyStatus.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    _logger.Info("Could not delete item. Exception: " + ex.ToString());
+                    _logger.Info("Failed to delete item. Exception: " + ex.ToString());
                 }
             });
 
@@ -121,7 +121,7 @@ namespace AnyStatus.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    _logger.Info("Could not open a new item modal dialog. Exception: " + ex.ToString());
+                    _logger.Info("Failed to open a new item modal dialog. Exception: " + ex.ToString());
                 }
             });
 
@@ -137,7 +137,7 @@ namespace AnyStatus.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    _logger.Info("Could not open item properties modal dialog. Exception: " + ex.ToString());
+                    _logger.Info("Failed to open item properties modal dialog. Exception: " + ex.ToString());
                 }
             });
 
@@ -177,7 +177,7 @@ namespace AnyStatus.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    _logger.Info("Could not enable an item. Exception: " + ex.ToString());
+                    _logger.Info("Failed to enable an item. Exception: " + ex.ToString());
                 }
             });
 
@@ -213,7 +213,7 @@ namespace AnyStatus.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    _logger.Info("Could not save. Exception: " + ex.ToString());
+                    _logger.Info("Failed to save. Exception: " + ex.ToString());
                 }
             });
 
@@ -225,7 +225,7 @@ namespace AnyStatus.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error(ex, "Could not refresh item.");
+                    _logger.Error(ex, "Failed to refresh item.");
                 }
             });
 
@@ -245,7 +245,7 @@ namespace AnyStatus.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    _logger.Info("Could not move item up. Exception: " + ex.ToString());
+                    _logger.Info("Failed to move item up. Exception: " + ex.ToString());
                 }
             },
             p =>
@@ -271,7 +271,7 @@ namespace AnyStatus.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    _logger.Info("Could not move item down. Exception: " + ex.ToString());
+                    _logger.Info("Failed to move item down. Exception: " + ex.ToString());
                 }
             },
             p =>

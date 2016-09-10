@@ -1,11 +1,9 @@
 ﻿using AnyStatus.Infrastructure;
-using AnyStatus.Interfaces;
 using AnyStatus.ViewModels;
 using Microsoft.VisualStudio.Shell;
+using System;
 using System.ComponentModel;
 using System.Windows;
-
-#warning Options and ToolWindow are using different instances of UserSettings
 
 namespace AnyStatus.Views
 {
@@ -14,13 +12,17 @@ namespace AnyStatus.Views
         private OptionsViewModel _viewModel;
         private OptionsDialogControl _optionsDialog;
 
-        public Options()
+        public Options() : this(TinyIoCContainer.Current.Resolve<OptionsViewModel>())
         {
-            var userSettings = TinyIoCContainer.Current.Resolve<IUserSettings>(); //todo: use MEF?
+        }
 
-            _viewModel = new OptionsViewModel(userSettings);
+        public Options(OptionsViewModel viewModel)
+        {
+            if (viewModel == null)
+                throw new ArgumentNullException(nameof(viewModel));
 
-            _optionsDialog = new OptionsDialogControl(_viewModel);
+            _viewModel = viewModel;
+            _optionsDialog = new OptionsDialogControl(viewModel);
         }
 
         protected override UIElement Child

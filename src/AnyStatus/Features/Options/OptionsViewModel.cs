@@ -12,12 +12,16 @@ namespace AnyStatus.ViewModels
         private bool _debugMode;
         private bool _reportAnonymousUsage;
         private IUserSettings _userSettings;
+        private ILogger _logger;
 
-        public OptionsViewModel(IUserSettings userSettings)
+        public OptionsViewModel(IUserSettings userSettings, ILogger logger)
         {
+            if (logger == null)
+                throw new ArgumentNullException(nameof(logger));
             if (userSettings == null)
                 throw new ArgumentNullException(nameof(userSettings));
 
+            _logger = logger;
             _userSettings = userSettings;
 
             ApplyCommand = new RelayCommand(p => Save());
@@ -59,9 +63,10 @@ namespace AnyStatus.ViewModels
 
         private void Save()
         {
+            _logger.IsEnabled = DebugMode;
+
             _userSettings.DebugMode = DebugMode;
             _userSettings.ReportAnonymousUsage = ReportAnonymousUsage;
-
             _userSettings.Save();
         }
 

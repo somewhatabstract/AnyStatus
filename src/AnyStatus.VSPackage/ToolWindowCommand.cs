@@ -11,10 +11,10 @@ namespace AnyStatus.VSPackage
 {
     internal sealed class ToolWindowCommand
     {
-        private readonly Package _package;
-        private readonly IServiceProvider _serviceProvider;
         private readonly ILogger _logger;
+        private readonly Package _package;
         private readonly IUserSettings _userSettings;
+        private readonly IServiceProvider _serviceProvider;
 
         public ToolWindowCommand(Package package, ILogger logger, IUserSettings userSettings)
         {
@@ -33,6 +33,8 @@ namespace AnyStatus.VSPackage
 
         public void Initialize()
         {
+            _logger.IsEnabled = _userSettings.DebugMode;
+
             OleMenuCommandService commandService = _serviceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
 
             if (commandService != null)
@@ -101,7 +103,7 @@ namespace AnyStatus.VSPackage
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Could not open options dialog.");
+                _logger.Error(ex, "Failed to open options dialog.");
             }
         }
 
@@ -118,7 +120,7 @@ namespace AnyStatus.VSPackage
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Could not refresh all items.");
+                _logger.Error(ex, "Failed to refresh all items.");
             }
         }
 
