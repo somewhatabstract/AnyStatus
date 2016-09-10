@@ -1,17 +1,12 @@
 # Roadmap
 
-- [x] TFS 2015 & Team Foundation Services build status
-- [x] Drag-and-drop to move items between folders or to reorder items within a folder
-- [x] Write debug information to output window
-- [x] Move item up/down context menu buttons
-- [x] GitHub issue status
-- [ ] Start/Cancel/View build
+- [x] PowerShell script status
+- [x] Batch file status
+- [ ] Custom commands (for example, queue new build context menu item)
 - [ ] Improve Visual Studio theme support
 - [ ] Import/Export user settings
-- [x] Expand/Collapse All toolbar buttons
 - [ ] Synchronize user settings between Visual Studio instances
 - [ ] Replace AppSettings with WritableSettingsStore
-- [ ] PowerShell and/or batch script status
 
 Features that have a checkmark are complete and available for
 download in the
@@ -21,6 +16,16 @@ download in the
 
 These are the changes to each version that has been released
 on the official Visual Studio extension gallery.
+
+## 0.7
+
+**2016-09-10**
+
+- [x] GitHub issue status
+- [x] PowerShell script status
+- [x] Batch file script status
+- [x] Expand/Collapse toolbar buttons
+- [x] Report anonymous usage data
 
 ## 0.6
 
