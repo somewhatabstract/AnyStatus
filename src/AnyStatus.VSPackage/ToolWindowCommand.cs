@@ -4,8 +4,10 @@ using FluentScheduler;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Diagnostics;
+using System.Net.Http;
 
 namespace AnyStatus.VSPackage
 {
@@ -34,6 +36,11 @@ namespace AnyStatus.VSPackage
         public void Initialize()
         {
             _logger.IsEnabled = _userSettings.DebugMode;
+
+            if (_userSettings.ReportAnonymousUsage)
+            {
+                ReportUsageAsync();
+            }
 
             OleMenuCommandService commandService = _serviceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
 
@@ -134,6 +141,28 @@ namespace AnyStatus.VSPackage
             {
                 // Ignore
             }
+        }
+
+        private async void ReportUsageAsync()
+        {
+            var serverUrl = "https://www.google-analytics.com/collect";
+
+            var hitData = new Dictionary<string, string>
+                {
+                    { "v", "1" },
+                    { "t", "screenview" },
+                    { "tid", "UA-83802855-1" },
+                    { "cid", Guid.NewGuid().ToString() },
+                    { "an", "AnyStatus" },
+                    { "av", "0.7" },
+                    { "aid", "AnyStatus_0.7" },
+                    { "aiid", "AnyStatus_0.7_Installer" },
+                    { "cd", "ToolWindow" },
+                };
+
+            using (var client = new HttpClient())
+            using (var form = new FormUrlEncodedContent(hitData))
+                await client.PostAsync(serverUrl, form).ConfigureAwait(false);
         }
     }
 }
