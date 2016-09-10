@@ -1,6 +1,4 @@
-﻿using System;
-using AnyStatus.Features.Edit;
-using AnyStatus.Interfaces;
+﻿using AnyStatus.Features.Edit;
 using AnyStatus.Models;
 using AnyStatus.ViewModels;
 using AnyStatus.Views;
