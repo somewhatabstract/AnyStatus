@@ -26,6 +26,7 @@ on the official Visual Studio extension gallery.
 - [x] Batch file script status
 - [x] Expand/Collapse toolbar buttons
 - [x] Report anonymous usage data
+- [x] Improved user settings management
 
 ## 0.6
 
