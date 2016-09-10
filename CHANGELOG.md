@@ -23,10 +23,12 @@ on the official Visual Studio extension gallery.
 
 - [x] GitHub issue status
 - [x] PowerShell script status
-- [x] Batch file script status
+- [x] Batch file status
 - [x] Expand/Collapse toolbar buttons
 - [x] Report anonymous usage data
+- [x] Enable or disable debug mode in Options dialog
 - [x] Improved user settings management
+- [x] Simplified Add New Item and Properties windows
 
 ## 0.6
 
@@ -39,6 +41,7 @@ on the official Visual Studio extension gallery.
 - [x] New item input validation
 - [x] Hide password characters
 - [x] Write debug information to output window
+- [x] Added categories to item properties
 
 ## 0.5
 
