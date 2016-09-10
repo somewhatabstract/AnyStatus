@@ -25,4 +25,3 @@ build_script:
 
 after_test:
   - ps: Vsix-PushArtifacts | Vsix-PublishToGallery
-  
