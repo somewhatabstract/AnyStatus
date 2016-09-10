@@ -145,7 +145,7 @@ namespace AnyStatus.VSPackage
 
         private async void ReportUsageAsync()
         {
-            var serverUrl = "https://www.google-analytics.com/collect";
+            const string serverUrl = "https://www.google-analytics.com/collect";
 
             var hitData = new Dictionary<string, string>
                 {
@@ -155,14 +155,19 @@ namespace AnyStatus.VSPackage
                     { "cid", Guid.NewGuid().ToString() },
                     { "an", "AnyStatus" },
                     { "av", "0.7" },
-                    { "aid", "AnyStatus_0.7" },
-                    { "aiid", "AnyStatus_0.7_Installer" },
+                    { "aid", "AnyStatus" },
                     { "cd", "ToolWindow" },
                 };
 
-            using (var client = new HttpClient())
-            using (var form = new FormUrlEncodedContent(hitData))
-                await client.PostAsync(serverUrl, form).ConfigureAwait(false);
+            try
+            {
+                using (var client = new HttpClient())
+                using (var form = new FormUrlEncodedContent(hitData))
+                    await client.PostAsync(serverUrl, form).ConfigureAwait(false);
+            }
+            catch
+            {
+            }
         }
     }
 }
