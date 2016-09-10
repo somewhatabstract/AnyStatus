@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AnyStatus.Infrastructure.GoogleAnalytics
+namespace AnyStatus.Infrastructure
 {
     /// <summary>
     /// Preconditions for checking method arguments, state etc.
