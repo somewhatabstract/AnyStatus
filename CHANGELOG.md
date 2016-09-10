@@ -38,7 +38,7 @@ on the official Visual Studio extension gallery.
 - [x] Drag-and-drop to move items between folders or to reorder items within a folder
 - [x] Move item up/down context menu buttons
 - [x] Plugable health checks infrastructure
-- [x] New item input validation
+- [x] Basic input validation
 - [x] Hide password characters
 - [x] Write debug information to output window
 - [x] Added categories to item properties
