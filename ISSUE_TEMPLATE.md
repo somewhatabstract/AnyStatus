@@ -1,6 +1,6 @@
 ### Installed product versions
 - Visual Studio: [example 2015 Professional]
-- This extension: [example 1.1.21]
+- AnyStatus: [example 0.7]
 
 ### Description
 Replace this text with a short description
