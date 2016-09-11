@@ -24,8 +24,8 @@ See the [changelog](CHANGELOG.md) for changes and roadmap.
     - Ping
     - TCP/IP
     - Windows Service
-  - Builds
-    - Team Foundation Service
+  - Continuous Integration
+    - Team Foundation Server
     - Team Foundation Services (Visual Studio Online)
     - Jenkins
     - TeamCity
@@ -34,10 +34,9 @@ See the [changelog](CHANGELOG.md) for changes and roadmap.
     - Batch File
     - PowerShell
 
-
 If you're interested in other types of status or health checks, please create a new issue on [GitHub](https://github.com/AlonAm/AnyStatus/issues).
 
-### Theme Support
+### Screenshots
 
 ![Blue Theme](art/Screenshot_blue.png)
 ![Dark Theme](art/Screenshot_dark.png)
