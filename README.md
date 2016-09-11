@@ -8,24 +8,35 @@ or get the [CI build](http://vsixgallery.com/#/extension/AnyStatus.VSPackage.6f2
 
 ---------------------------------------
 
-**AnyStatus** is a free and open source Visual Studio Extension that adds basic monitoring capabilities to Visual Studio for resources and applications you run on your development and other environments. AnyStatus can monitor Builds (Jenkins, TeamCity & AppVeyor), Ping, TCP and HTTP response status code. More status and health checks will be added in future versions. AnyStatus runs in the background and does not have a significant impact on the performance or startup of Visual Studio.
+**AnyStatus** is a free and open source Visual Studio Extension that adds monitoring capabilities to Visual Studio for resources and applications you run on your development or other environments. AnyStatus runs in the background and does not have a significant impact on the performance or startup of Visual Studio.
 
 See the [changelog](CHANGELOG.md) for changes and roadmap.
 
-**Note:** This is an alpha version that comes with an incomplete set of basic features and has some known issues. I will be constantly working on AnyStatus to make sure every bug is fixed and all designed features are implemented.
-
 ## Features 
 
-- Organize health checks in folders
 - Colored status indicators
-- Monitor Jenkins, TeamCity and AppVeyor builds
-- Monitor HTTP response status codes
-- Monitor Ping requests
-- Monitor TCP ports
+- Organize items in folders
+- Automatic and Manual status updates
+- Informative log messages in output window
+- Monitoring
+  - Basic
+    - Ping
+    - TCP/IP
+    - HTTP
+    - Windows Service
+  - Script
+    - Batch File
+    - PowerShell
+  - Continuous Integration
+    - Team Foundation Server
+    - Team Foundation Services (Visual Studio Online)
+    - Jenkins
+    - TeamCity
+    - AppVeyor
 
 If you're interested in other types of status or health checks, please create a new issue on [GitHub](https://github.com/AlonAm/AnyStatus/issues).
 
-### Theme Support
+### Screenshots
 
 ![Blue Theme](art/Screenshot_blue.png)
 ![Dark Theme](art/Screenshot_dark.png)

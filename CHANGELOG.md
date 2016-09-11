@@ -1,7 +1,7 @@
 # Roadmap
 
 - [x] PowerShell script status
-- [x] Batch file status
+- [x] Batch File status
 - [ ] Custom commands (for example, queue new build context menu item)
 - [ ] Improve Visual Studio theme support
 - [ ] Import/Export user settings
@@ -21,11 +21,11 @@ on the official Visual Studio extension gallery.
 
 **2016-09-10**
 
-- [x] GitHub issue status
-- [x] PowerShell script status
-- [x] Batch file status
+- [x] GitHub Issue status
+- [x] PowerShell Script status
+- [x] Batch File status
 - [x] Expand/Collapse toolbar buttons
-- [x] Report anonymous usage data
+- [x] Enable or disable Report Anonymous Usage in Options dialog
 - [x] Enable or disable debug mode in Options dialog
 - [x] Improved user settings management
 - [x] Simplified Add New Item and Properties windows
