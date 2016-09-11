@@ -158,6 +158,11 @@ namespace AnyStatus.Views
                 {
                     textBlockBindingExpression.UpdateTarget();
                 }
+
+                if (SaveCommand != null && SaveCommand.CanExecute(null))
+                {
+                    SaveCommand.Execute(null);
+                }
             }
 
             this.internalIsEditingChange = true;
@@ -170,11 +175,6 @@ namespace AnyStatus.Views
             if (this.oldfocus != null && this.oldfocus.IsVisible)
             {
                 this.oldfocus.Focus();
-            }
-
-            if (SaveCommand != null && SaveCommand.CanExecute(null))
-            {
-                SaveCommand.Execute(null);
             }
         }
 
