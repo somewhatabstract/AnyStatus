@@ -147,8 +147,14 @@ namespace AnyStatus.Views
 
             var textBoxBindingExpression = this.textBox.GetBindingExpression(TextBox.TextProperty);
             var textBlockBindingExpression = this.GetBindingExpression(TextProperty);
+
             if (commit)
             {
+                if (textBoxBindingExpression.IsDirty && SaveCommand != null && SaveCommand.CanExecute(null))
+                {
+                    SaveCommand.Execute(null);
+                }
+
                 if (textBoxBindingExpression != null)
                 {
                     textBoxBindingExpression.UpdateSource();
@@ -157,11 +163,6 @@ namespace AnyStatus.Views
                 if (textBlockBindingExpression != null)
                 {
                     textBlockBindingExpression.UpdateTarget();
-                }
-
-                if (SaveCommand != null && SaveCommand.CanExecute(null))
-                {
-                    SaveCommand.Execute(null);
                 }
             }
 
