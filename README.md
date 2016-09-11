@@ -30,7 +30,7 @@ See the [changelog](CHANGELOG.md) for changes and roadmap.
     - Jenkins
     - TeamCity
     - AppVeyor
-  - Scripts
+  - Script
     - Batch File
     - PowerShell
 
