@@ -69,7 +69,7 @@ namespace AnyStatus
                 Properties.Settings.Default.Reset();
 
                 RootItem = new RootItem { Name = "Root Item" };
-                DebugMode = true;
+                DebugMode = false;
                 ReportAnonymousUsage = true;
 
                 Save();
