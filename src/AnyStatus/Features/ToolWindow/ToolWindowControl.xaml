@@ -32,7 +32,7 @@
                   PreviewMouseRightButtonDown="OnPreviewMouseRightButtonDown"
                   Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
                   theming:ImageThemingUtilities.ImageBackgroundColor="{Binding Background, RelativeSource={RelativeSource Self}, Converter={StaticResource BrushToColorConverter}}">
-            
+
             <TreeView.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header=" New Item..." 
@@ -95,7 +95,7 @@
                                         <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.MoveDown}" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                
+
                                 <Separator/>
 
                                 <MenuItem Header=" Delete" 
@@ -105,7 +105,7 @@
                                         <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.DeleteFolder}" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                
+
                                 <MenuItem Header=" Rename" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.RenameCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}">
@@ -184,9 +184,9 @@
                                         <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.MoveDown}" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                
+
                                 <Separator/>
-                                
+
                                 <MenuItem Header=" Enable" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.EnableItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}">
@@ -232,7 +232,7 @@
                                         <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Cancel}" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                
+
                                 <MenuItem Header=" Rename" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.RenameCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}">
@@ -274,9 +274,11 @@
                     </StackPanel>
                 </DataTemplate>
 
-              
-                
             </TreeView.Resources>
+
+            <TreeView.InputBindings>
+                <KeyBinding Key="F2" Command="{Binding RenameCommand}" CommandParameter="{Binding ElementName=TreeView, Path=SelectedItem}"/>
+            </TreeView.InputBindings>
 
             <TreeView.ItemContainerStyle>
                 <Style TargetType="{x:Type TreeViewItem}">
