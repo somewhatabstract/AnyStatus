@@ -18,7 +18,7 @@ See the [changelog](CHANGELOG.md) for changes and roadmap.
 - Organize items in folders
 - Automatic and Manual status updates
 - Informative log messages in output window
-- Monitors
+- Monitoring
   - Basic
     - Ping
     - TCP/IP
