@@ -34,20 +34,16 @@ namespace AnyStatus.Views
         {
             base.OnActivate(e);
 
-            if (!_viewModel.ActivateCommand.CanExecute(null))
-                return;
-
-            _viewModel.ActivateCommand.Execute(null);
+            if (_viewModel.ActivateCommand.CanExecute(null))
+                _viewModel.ActivateCommand.Execute(null);
         }
 
         protected override void OnApply(PageApplyEventArgs e)
         {
+            if (e.ApplyBehavior == ApplyKind.Apply && _viewModel.ApplyCommand.CanExecute(null))
+                _viewModel.ApplyCommand.Execute(null);
+
             base.OnApply(e);
-
-            if (e.ApplyBehavior != ApplyKind.Apply || !_viewModel.ApplyCommand.CanExecute(null))
-                return;
-
-            _viewModel.ApplyCommand.Execute(null);
         }
     }
 }
