@@ -8,11 +8,9 @@ or get the [CI build](http://vsixgallery.com/#/extension/AnyStatus.VSPackage.6f2
 
 ---------------------------------------
 
-**AnyStatus** is a free and open source Visual Studio Extension that adds basic monitoring capabilities to Visual Studio for resources and applications you run on your development or other environments. AnyStatus can monitor Builds (TFS, Jenkins, TeamCity & AppVeyor), Ping, TCP, HTTP, Windows Services and more. AnyStatus runs in the background and does not have a significant impact on the performance or startup of Visual Studio.
+**AnyStatus** is a free and open source **Visual Studio Extension** that adds basic monitoring capabilities to Visual Studio for resources and applications you run on your development or other environments. AnyStatus runs in the background and does not have a significant impact on the performance or startup of Visual Studio.
 
 See the [changelog](CHANGELOG.md) for changes and roadmap.
-
-**Note:** This is an alpha version that comes with an incomplete set of basic features and has some known issues. I will be constantly working on AnyStatus to make sure every bug is fixed and all designed features are implemented.
 
 ## Features 
 
@@ -24,15 +22,15 @@ See the [changelog](CHANGELOG.md) for changes and roadmap.
     - Ping
     - TCP/IP
     - Windows Service
+  - Script
+    - Batch File
+    - PowerShell
   - Continuous Integration
     - Team Foundation Server
     - Team Foundation Services (Visual Studio Online)
     - Jenkins
     - TeamCity
     - AppVeyor
-  - Script
-    - Batch File
-    - PowerShell
 
 If you're interested in other types of status or health checks, please create a new issue on [GitHub](https://github.com/AlonAm/AnyStatus/issues).
 
