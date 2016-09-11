@@ -16,6 +16,8 @@ See the [changelog](CHANGELOG.md) for changes and roadmap.
 
 - Organize items in folders
 - Colored status indicators
+- Automatically updates statuses
+- Informative log messages in output window
 - Monitors
   - Basic
     - HTTP
