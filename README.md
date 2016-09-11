@@ -14,15 +14,15 @@ See the [changelog](CHANGELOG.md) for changes and roadmap.
 
 ## Features 
 
-- Organize items in folders
 - Colored status indicators
+- Organize items in folders
 - Automatic and Manual status updates
 - Informative log messages in output window
-- Monitoring
+- Monitors
   - Basic
-    - HTTP
     - Ping
     - TCP/IP
+    - HTTP
     - Windows Service
   - Script
     - Batch File
