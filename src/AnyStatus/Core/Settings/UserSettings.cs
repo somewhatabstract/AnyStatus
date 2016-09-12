@@ -2,12 +2,18 @@
 using AnyStatus.Interfaces;
 using AnyStatus.Models;
 using System;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace AnyStatus
 {
     public class UserSettings : IUserSettings
     {
         private ILogger _logger;
+
+        private UserSettings()
+        {
+        }
 
         public UserSettings(ILogger logger)
         {
@@ -23,7 +29,7 @@ namespace AnyStatus
 
         public event EventHandler SettingsReset;
 
-        public Item RootItem { get; private set; }
+        public Item RootItem { get; set; }
 
         public bool DebugMode { get; set; }
 
@@ -86,6 +92,48 @@ namespace AnyStatus
             }
         }
 
+        public void Export(string filePath)
+        {
+            TextWriter writer = null;
+
+            try
+            {
+                var serializer = new XmlSerializer(GetType());
+                writer = new StreamWriter(filePath);
+                serializer.Serialize(writer, this);
+            }
+            finally
+            {
+                if (writer != null)
+                    writer.Close();
+            }
+        }
+
+        public void Import(string filePath)
+        {
+            TextReader reader = null;
+
+            try
+            {
+                var serializer = new XmlSerializer(GetType());
+                reader = new StreamReader(filePath);
+                var userSettings = (UserSettings)serializer.Deserialize(reader);
+
+                RootItem = userSettings.RootItem;
+                DebugMode = userSettings.DebugMode;
+                ReportAnonymousUsage = userSettings.ReportAnonymousUsage;
+                ClientId = userSettings.ClientId;
+
+                Save();
+
+                SettingsReset?.Invoke(this, EventArgs.Empty);
+            }
+            finally
+            {
+                if (reader != null)
+                    reader.Close();
+            }
+        }
         #endregion
 
         #region Helpers

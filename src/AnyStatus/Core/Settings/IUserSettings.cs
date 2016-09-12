@@ -15,5 +15,9 @@ namespace AnyStatus.Interfaces
         void Save(bool reload = false);
 
         void RestoreDefault();
+
+        void Import(string filePath);
+
+        void Export(string filePath);
     }
 }

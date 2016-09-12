@@ -1,4 +1,5 @@
 ﻿using AnyStatus.Features.Edit;
+using AnyStatus.Features.Options;
 using AnyStatus.Infrastructure;
 using AnyStatus.Interfaces;
 using AnyStatus.Models;
@@ -29,6 +30,7 @@ namespace AnyStatus.VSPackage
         {
             var container = TinyIoCContainer.Current;
 
+            //Core
             container.Register<Package>(_package);
             container.Register<IServiceProvider>(_package);
             container.Register<ToolWindowCommand>().AsSingleton();
@@ -36,7 +38,6 @@ namespace AnyStatus.VSPackage
             container.Register<ILogger, Logger>().AsSingleton();
             container.Register<IJobScheduler, JobScheduler>().AsSingleton();
             container.Register<ScheduledJob>().AsMultiInstance();
-
             container.Register<IUsageReporter>((c, p) =>
             {
                 //todo: optimize startup
@@ -50,17 +51,25 @@ namespace AnyStatus.VSPackage
                 return reporter;
             });
 
-            //views
+            //User Interface
             container.Register<IViewLocator, ViewLocator>().AsSingleton();
+
             container.Register<ToolWindowControl>().AsSingleton();
             container.Register<ToolWindowViewModel>().AsSingleton();
+
             container.Register<NewWindow>().AsMultiInstance();
             container.Register<NewViewModel>().AsMultiInstance();
+
             container.Register<EditWindow>().AsMultiInstance();
             container.Register<EditViewModel>().AsMultiInstance();
+
+            container.Register<OptionsDialogControl>().AsSingleton();
             container.Register<OptionsViewModel>().AsSingleton();
 
-            //dynamic registration
+            container.Register<ImportExportViewModel>().AsSingleton();
+            container.Register<ImportExportControl>().AsSingleton();
+
+            //Dynamic registration
             ScanAndRegisterItems();
             RegisterItemTemplates();
             ScanAndRegisterItemHandlers();
@@ -121,6 +130,8 @@ namespace AnyStatus.VSPackage
                 return templates;
             });
         }
+
+        //todo: move these to another class
 
         private static IEnumerable<Type> FindGenericTypesOf(Type baseType, Assembly assembly)
         {

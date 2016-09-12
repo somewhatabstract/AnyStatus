@@ -11,8 +11,9 @@ namespace AnyStatus.ViewModels
     {
         private bool _debugMode;
         private bool _reportAnonymousUsage;
-        private IUserSettings _userSettings;
+
         private ILogger _logger;
+        private IUserSettings _userSettings;
 
         public OptionsViewModel(IUserSettings userSettings, ILogger logger)
         {
@@ -29,13 +30,17 @@ namespace AnyStatus.ViewModels
             RestoreDefaultSettingsCommand = new RelayCommand(p => RestoreDefaultSettings());
         }
 
-        #region Properties
+        #region Commands
 
         public ICommand ApplyCommand { get; set; }
 
         public ICommand ActivateCommand { get; set; }
 
         public ICommand RestoreDefaultSettingsCommand { get; set; }
+
+        #endregion
+
+        #region Properties
 
         public bool DebugMode
         {
