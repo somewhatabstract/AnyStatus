@@ -13,7 +13,7 @@
 
             <GroupBox Header="Privacy" Padding="5" Margin="5">
                 <StackPanel>
-                    <CheckBox IsChecked="{Binding ReportAnonymousUsage}">Help us improve by sending anonymous data usage</CheckBox>
+                    <CheckBox IsChecked="{Binding ReportAnonymousUsage}">Help us improve by sending anonymous usage data</CheckBox>
                     <TextBlock><Hyperlink NavigateUri="https://github.com/AlonAm/AnyStatus/blob/master/PRIVACY.md" RequestNavigate="Hyperlink_RequestNavigate">Learn more</Hyperlink></TextBlock>
                 </StackPanel>
             </GroupBox>
