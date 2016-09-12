@@ -14,14 +14,16 @@ namespace AnyStatus.ViewModels
 {
     public class ToolWindowViewModel : INotifyPropertyChanged
     {
-        private ILogger _logger;
-        private IUserSettings _userSettings;
-        private IViewLocator _viewLocator;
-        private IJobScheduler _jobScheduler;
+        private readonly ILogger _logger;
+        private readonly IUserSettings _userSettings;
+        private readonly IViewLocator _viewLocator;
+        private readonly IJobScheduler _jobScheduler;
+        private readonly IUsageReporter _usageReporter;
 
         public ToolWindowViewModel(IJobScheduler jobScheduler,
                                     IUserSettings userSettings,
                                     IViewLocator viewLocator,
+                                    IUsageReporter usageReporter,
                                     ILogger logger)
         {
             if (jobScheduler == null)
@@ -30,12 +32,15 @@ namespace AnyStatus.ViewModels
                 throw new ArgumentNullException(nameof(userSettings));
             if (viewLocator == null)
                 throw new ArgumentNullException(nameof(viewLocator));
+            if (usageReporter == null)
+                throw new ArgumentNullException(nameof(usageReporter));
             if (logger == null)
                 throw new ArgumentNullException(nameof(logger));
 
             _jobScheduler = jobScheduler;
             _userSettings = userSettings;
             _viewLocator = viewLocator;
+            _usageReporter = usageReporter;
             _logger = logger;
 
             Initialize();
@@ -51,6 +56,8 @@ namespace AnyStatus.ViewModels
 
         private void Initialize()
         {
+            _usageReporter.ReportScreen("ToolWindow");
+
             _userSettings.SettingsReset += (s, e) =>
             {
                 OnPropertyChanged("RootItem");

@@ -29,6 +29,8 @@ namespace AnyStatus
 
         public bool ReportAnonymousUsage { get; set; }
 
+        public string ClientId { get; set; }
+
         #endregion
 
         #region Methods
@@ -42,6 +44,7 @@ namespace AnyStatus
                 Retry.Do(() =>
                 {
                     Properties.Settings.Default.RootItem = RootItem;
+                    Properties.Settings.Default.ClientId = ClientId;
                     Properties.Settings.Default.DebugMode = DebugMode;
                     Properties.Settings.Default.ReportAnonymousUsageData = ReportAnonymousUsage;
 
@@ -68,6 +71,7 @@ namespace AnyStatus
             {
                 Properties.Settings.Default.Reset();
 
+                ClientId = Guid.NewGuid().ToString();
                 RootItem = new RootItem { Name = "Root Item" };
                 DebugMode = false;
                 ReportAnonymousUsage = true;
@@ -118,18 +122,14 @@ namespace AnyStatus
 
         private void Upgrade()
         {
-            if (Properties.Settings.Default.Items == null)
+            if (string.IsNullOrEmpty(Properties.Settings.Default.ClientId))
             {
-                return;
+                _logger.Info("Upgrading user settings.");
+
+                ClientId = Properties.Settings.Default.ClientId = Guid.NewGuid().ToString();
+
+                Save();
             }
-
-            _logger.Info("Upgrading user settings.");
-
-            RootItem.Items = Properties.Settings.Default.Items;
-
-            Properties.Settings.Default.Items = null;
-
-            Save();
         }
 
         #endregion

@@ -153,7 +153,8 @@
     <Compile Include="Features\HealthChecks\WindowsService.cs" />
     <Compile Include="Features\HealthChecks\TravisCIBuild.cs" />
     <Compile Include="Features\ToolWindow\EditableTextBlock.cs" />
-    <Compile Include="Infrastructure\GoogleAnalytics\GoogleAnalyticsReporter.cs" />
+    <Compile Include="Core\UsageReporting\AnalyticsReporter.cs" />
+    <Compile Include="Core\UsageReporting\IUsageReporter.cs" />
     <Compile Include="Infrastructure\Preconditions.cs" />
     <Compile Include="Core\Monitoring\IJobScheduler.cs" />
     <Compile Include="Core\Monitoring\JobScheduler.cs" />

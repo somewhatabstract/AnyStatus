@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ItemTests.cs" />
+    <Compile Include="AnalyticsReporterTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AnyStatus\AnyStatus.csproj">

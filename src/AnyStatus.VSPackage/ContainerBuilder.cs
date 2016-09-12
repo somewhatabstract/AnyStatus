@@ -4,7 +4,6 @@ using AnyStatus.Interfaces;
 using AnyStatus.Models;
 using AnyStatus.ViewModels;
 using AnyStatus.Views;
-using FluentScheduler;
 using Microsoft.VisualStudio.Shell;
 using System;
 using System.Collections.Generic;
@@ -38,6 +37,19 @@ namespace AnyStatus.VSPackage
             container.Register<IJobScheduler, JobScheduler>().AsSingleton();
             container.Register<ScheduledJob>().AsMultiInstance();
 
+            container.Register<IUsageReporter>((c, p) =>
+            {
+                //todo: optimize startup
+
+                var userSettings = c.Resolve<IUserSettings>();
+                var clientId = userSettings.ClientId ?? Guid.NewGuid().ToString();
+                var reporter = new AnalyticsReporter("UA-83802855-1", "AnyStatus", "AnyStatus", clientId, "0.7");
+
+                reporter.IsEnabled = userSettings.ReportAnonymousUsage;
+
+                return reporter;
+            });
+
             //views
             container.Register<IViewLocator, ViewLocator>().AsSingleton();
             container.Register<ToolWindowControl>().AsSingleton();
@@ -48,6 +60,7 @@ namespace AnyStatus.VSPackage
             container.Register<EditViewModel>().AsMultiInstance();
             container.Register<OptionsViewModel>().AsSingleton();
 
+            //dynamic registration
             ScanAndRegisterItems();
             RegisterItemTemplates();
             ScanAndRegisterItemHandlers();

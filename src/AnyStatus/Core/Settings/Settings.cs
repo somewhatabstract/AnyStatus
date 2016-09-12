@@ -1,6 +1,4 @@
 ﻿using AnyStatus.Models;
-using System;
-using System.Collections.ObjectModel;
 
 namespace AnyStatus.Properties
 {
@@ -39,6 +37,20 @@ namespace AnyStatus.Properties
 
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public string ClientId
+        {
+            get
+            {
+                return (string)this[nameof(ClientId)];
+            }
+            set
+            {
+                this[nameof(ClientId)] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         public Item RootItem
         {
             get
@@ -53,43 +65,6 @@ namespace AnyStatus.Properties
             {
                 this[nameof(RootItem)] = value;
             }
-        }
-
-        //todo: remove Items property and restore-parents extension method
-
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public ObservableCollection<Item> Items
-        {
-            get
-            {
-                var items = ((ObservableCollection<Item>)(this[nameof(Items)]));
-
-                return items?.RestoreParents();
-            }
-            set
-            {
-                this[nameof(Items)] = value;
-            }
-        }
-    }
-   
-    public static class SettingsExtensions
-    {
-        /// <summary>
-        /// Restore tree structure (parent-child relationships).
-        /// </summary>
-        [Obsolete]
-        internal static ObservableCollection<Item> RestoreParents(this ObservableCollection<Item> items, Item parent = null)
-        {
-            foreach (var item in items)
-            {
-                item.Parent = parent;
-
-                RestoreParents(item.Items, item);
-            }
-
-            return items;
         }
     }
 }

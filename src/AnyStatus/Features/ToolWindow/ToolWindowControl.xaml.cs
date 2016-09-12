@@ -15,6 +15,7 @@ namespace AnyStatus.Views
     public partial class ToolWindowControl : UserControl
     {
         ToolWindowViewModel _viewModel;
+
         public ToolWindowControl(ToolWindowViewModel viewModel)
         {
             if (viewModel == null)

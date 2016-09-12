@@ -10,6 +10,7 @@ namespace AnyStatus.Interfaces
         Item RootItem { get; }
         bool DebugMode { get; set; }
         bool ReportAnonymousUsage { get; set; }
+        string ClientId { get; set; }
 
         void Save(bool reload = false);
 

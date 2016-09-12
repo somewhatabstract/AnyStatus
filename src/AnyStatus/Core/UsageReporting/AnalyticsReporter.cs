@@ -1,10 +1,11 @@
-﻿using System;
+﻿using AnyStatus.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace AnyStatus.Infrastructure.GoogleAnalytics
+namespace AnyStatus
 {
     /// <summary>
     /// <para>
@@ -17,10 +18,12 @@ namespace AnyStatus.Infrastructure.GoogleAnalytics
     /// https://developers.google.com/analytics/devguides/collection/protocol/v1/
     /// </para>
     /// </summary>
-    public class AnalyticsReporter
+    public class AnalyticsReporter: IUsageReporter
     {
-        private const string ProductionServerUrl = "https://ssl.google-analytics.com/collect";
-        private const string DebugServerUrl = "https://ssl.google-analytics.com/debug/collect";
+        #region Fields
+
+        private const string ProductionServerUrl = "https://www.google-analytics.com/collect";
+        private const string DebugServerUrl = "https://www.google-analytics.com/debug/collect";
 
         private const string HitTypeParam = "t";
         private const string VersionParam = "v";
@@ -32,6 +35,7 @@ namespace AnyStatus.Infrastructure.GoogleAnalytics
         private const string PropertyIdParam = "tid";
         private const string ClientIdParam = "cid";
         private const string AppNameParam = "an";
+        private const string AppIdParam = "aid";
         private const string AppVersionParam = "av";
         private const string ScreenNameParam = "cd";
 
@@ -45,43 +49,35 @@ namespace AnyStatus.Infrastructure.GoogleAnalytics
         private readonly string _serverUrl;
         private readonly Dictionary<string, string> _baseHitData;
 
-        /// <summary>
-        /// The name of the application to use when reporting data.
-        /// </summary>
+        #endregion
+
+        #region Properties
+
         public string ApplicationName { get; }
 
-        /// <summary>
-        /// The version to use when reporting data.
-        /// </summary>
         public string ApplicationVersion { get; }
 
-        /// <summary>
-        /// The property ID being used by this reporter.
-        /// </summary>
+        public string ApplicationId { get; }
+
         public string PropertyId { get; }
 
-        /// <summary>
-        /// The client ID being used by this reporter.
-        /// </summary>
         public string ClientId { get; }
 
-        /// <summary>
-        /// Initializes the instance.
-        /// </summary>
-        /// <param name="propertyId">The property ID to use, string with the format US-XXXX. Must not be null.</param>
-        /// <param name="appName">The name of the app for which this reporter is reporting. Must not be null.</param>
-        /// <param name="clientId">The client id to use when reporting, if null a new random Guid will be generated.</param>
-        /// <param name="appVersion">Optional, the app version. Defaults to null.</param>
-        /// <param name="debug">Optional, whether this reporter is in debug mode. Defaults to false.</param>
+        public bool IsEnabled { get; set; }
+
+        #endregion
+
         public AnalyticsReporter(
             string propertyId,
             string appName,
+            string appId,
             string clientId = null,
             string appVersion = null,
             bool debug = false)
         {
             PropertyId = Preconditions.CheckNotNull(propertyId, nameof(propertyId));
             ApplicationName = Preconditions.CheckNotNull(appName, nameof(appName));
+            ApplicationId = Preconditions.CheckNotNull(appId, nameof(appId));
             ClientId = clientId ?? Guid.NewGuid().ToString();
             ApplicationVersion = appVersion;
 
@@ -90,43 +86,35 @@ namespace AnyStatus.Infrastructure.GoogleAnalytics
             _baseHitData = MakeBaseHitData();
         }
 
-        /// <summary>
-        /// Convenience method to report a single event to Google Analytics.
-        /// </summary>
-        /// <param name="category">The category for the event.</param>
-        /// <param name="action">The action that took place.</param>
-        /// <param name="label">The label affected by the event.</param>
-        /// <param name="value">The new value.</param>
-        public void ReportEvent(string category, string action, string label = null, int? value = null)
+        #region Public Methods
+
+        public void ReportEvent(string category, string action, string label, int? value = null)
         {
+            if (!IsEnabled) return;
+
             Preconditions.CheckNotNull(category, nameof(category));
             Preconditions.CheckNotNull(action, nameof(action));
 
-            // Data we will send along with the web request. Later baked into the HTTP
-            // request's payload.
             var hitData = new Dictionary<string, string>(_baseHitData)
             {
                 { HitTypeParam, EventTypeValue },
                 { EventCategoryParam, category },
                 { EventActionParam, action },
+                { EventLabelParam, label },
             };
-            if (label != null)
-            {
-                hitData[EventLabelParam] = label;
-            }
+
             if (value != null)
             {
                 hitData[EventValueParam] = value.ToString();
             }
+
             SendHitData(hitData);
         }
 
-        /// <summary>
-        /// Reports a window view.
-        /// </summary>
-        /// <param name="name">The name of the window. Must not be null.</param>
         public void ReportScreen(string name)
         {
+            if (!IsEnabled) return;
+
             Preconditions.CheckNotNull(name, nameof(name));
 
             var hitData = new Dictionary<string, string>(_baseHitData)
@@ -134,40 +122,46 @@ namespace AnyStatus.Infrastructure.GoogleAnalytics
                 { HitTypeParam, ScreenViewValue },
                 { ScreenNameParam, name },
             };
+
             SendHitData(hitData);
         }
 
-        /// <summary>
-        /// Reports that the session is starting.
-        /// </summary>
         public void ReportStartSession()
         {
-            var hitData = new Dictionary<string, string>(_baseHitData)
-            {
-                { HitTypeParam,EventTypeValue },
-                { SessionControlParam, SessionStartValue }
-            };
-            SendHitData(hitData);
-        }
+            if (!IsEnabled) return;
 
-        /// <summary>
-        /// Reports that the session is ending.
-        /// </summary>
-        public void ReportEndSession()
-        {
             var hitData = new Dictionary<string, string>(_baseHitData)
             {
                 { HitTypeParam, EventTypeValue },
-                { SessionControlParam, SessionEndValue }
+                { SessionControlParam, SessionStartValue },
+                { EventCategoryParam, "Session" },
+                { EventActionParam, "Start" },
+                { EventLabelParam, "Start Session" },
             };
+
             SendHitData(hitData);
         }
 
-        /// <summary>
-        /// Constructs the dictionary with the common parameters that all requests must
-        /// have.
-        /// </summary>
-        /// <returns>Dictionary with the parameters for the report request.</returns>
+        public void ReportEndSession()
+        {
+            if (!IsEnabled) return;
+
+            var hitData = new Dictionary<string, string>(_baseHitData)
+            {
+                { HitTypeParam, EventTypeValue },
+                { SessionControlParam, SessionEndValue },
+                { EventCategoryParam, "Session" },
+                { EventActionParam, "End" },
+                { EventLabelParam, "End Session" },
+            };
+
+            SendHitData(hitData);
+        }
+
+        #endregion
+
+        #region Helpers
+
         private Dictionary<string, string> MakeBaseHitData()
         {
             var result = new Dictionary<string, string>
@@ -176,37 +170,44 @@ namespace AnyStatus.Infrastructure.GoogleAnalytics
                 { PropertyIdParam, PropertyId },
                 { ClientIdParam, ClientId },
                 { AppNameParam, ApplicationName },
+                { AppIdParam, ApplicationId },
             };
+
             if (ApplicationVersion != null)
             {
                 result.Add(AppVersionParam, ApplicationVersion);
             }
+
             return result;
         }
 
-        /// <summary>
-        /// Sends the hit data to the server.
-        /// </summary>
-        /// <param name="hitData">The hit data to be sent.</param>
         private async void SendHitData(Dictionary<string, string> hitData)
         {
-            using (var client = new HttpClient())
-            using (var form = new FormUrlEncodedContent(hitData))
-            using (var response = await client.PostAsync(_serverUrl, form).ConfigureAwait(false))
+            if (!IsEnabled) return;
+
+            try
             {
-                DebugPrintAnalyticsOutput(response.Content.ReadAsStringAsync());
+                using (var client = new HttpClient())
+                using (var form = new FormUrlEncodedContent(hitData))
+                using (var response = await client.PostAsync(_serverUrl, form).ConfigureAwait(false))
+                {
+                    DebugPrintAnalyticsOutput(response.Content.ReadAsStringAsync());
+                }
+            }
+            catch
+            {
+                // Ignore
             }
         }
 
-        /// <summary>
-        /// Debugging utility that will print out to the output window the result of the hit request.
-        /// </summary>
-        /// <param name="resultTask">The task resulting from the request.</param>
         [Conditional("DEBUG")]
         private async void DebugPrintAnalyticsOutput(Task<string> resultTask)
         {
             var result = await resultTask.ConfigureAwait(false);
+
             Debug.WriteLine($"Output of analytics: {result}");
         }
+
+        #endregion
     }
 }
