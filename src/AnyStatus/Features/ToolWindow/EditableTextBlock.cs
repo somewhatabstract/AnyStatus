@@ -150,10 +150,7 @@ namespace AnyStatus.Views
 
             if (commit)
             {
-                if (textBoxBindingExpression.IsDirty && SaveCommand != null && SaveCommand.CanExecute(null))
-                {
-                    SaveCommand.Execute(null);
-                }
+                var isDirty = textBoxBindingExpression.IsDirty;
 
                 if (textBoxBindingExpression != null)
                 {
@@ -163,6 +160,11 @@ namespace AnyStatus.Views
                 if (textBlockBindingExpression != null)
                 {
                     textBlockBindingExpression.UpdateTarget();
+                }
+
+                if (isDirty && SaveCommand != null && SaveCommand.CanExecute(null))
+                {
+                    SaveCommand.Execute(null);
                 }
             }
 
