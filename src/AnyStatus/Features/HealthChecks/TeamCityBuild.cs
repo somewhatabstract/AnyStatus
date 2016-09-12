@@ -104,6 +104,11 @@ namespace AnyStatus.Models
                 {
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+                    if (item.Url.EndsWith("/"))
+                    {
+                        item.Url = item.Url.Remove(item.Url.Length - 1);
+                    }
+
                     var apiUrl = $"{item.Url}/{authType}/app/rest/builds?locator=running:any,buildType:(id:{item.BuildTypeId}),count:1&fields=build(status,running)";
 
                     var response = await client.GetAsync(apiUrl);
@@ -117,6 +122,11 @@ namespace AnyStatus.Models
                     return buildResponse.Build.First();
                 }
             }
+        }
+
+        private static void RemoveLastChar(TeamCityBuild item)
+        {
+            item.Url = item.Url.Remove(item.Url.Length - 1);
         }
 
         private void SetItemColor(TeamCityBuild item, TeamCityBuildDetails build)
