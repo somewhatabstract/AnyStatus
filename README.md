@@ -17,6 +17,8 @@ See the [changelog](CHANGELOG.md) for changes and roadmap.
 - Colored status indicators
 - Organize items in folders
 - Automatic and Manual status updates
+- Enable or disable items
+- Import and Export user settings
 - Informative log messages in output window
 - Monitoring
   - Basic
