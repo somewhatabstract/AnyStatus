@@ -3,9 +3,9 @@
 - [x] GitHub Issue status
 - [x] Batch File status
 - [x] PowerShell script status
+- [x] Import/Export user settings
 - [ ] Custom commands (for example, queue new build context menu item)
 - [ ] Improve Visual Studio theme support
-- [ ] Import/Export user settings
 - [ ] Synchronize user settings between Visual Studio instances
 - [ ] Replace AppSettings with WritableSettingsStore
 
