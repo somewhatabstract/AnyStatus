@@ -62,14 +62,21 @@ namespace AnyStatus.Features.Options
 
         private void ImportSettings()
         {
-            if (!string.IsNullOrEmpty(ImportSettingsFileName))
+            if (string.IsNullOrEmpty(ImportSettingsFileName))
+                return;
+
+            var result = MessageBox.Show("Are you sure?", "Import Settings", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
+
+            if (result == MessageBoxResult.Yes)
                 _userSettings.Import(ImportSettingsFileName);
         }
 
         private void ExportSettings()
         {
-            if (!string.IsNullOrEmpty(ExportSettingsFileName))
-                _userSettings.Export(ExportSettingsFileName);
+            if (string.IsNullOrEmpty(ExportSettingsFileName))
+                return;
+
+            _userSettings.Export(ExportSettingsFileName);
         }
 
         private void BrowseImportSettingsFile()
