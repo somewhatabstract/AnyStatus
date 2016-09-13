@@ -69,6 +69,8 @@ namespace AnyStatus.Features.Options
 
             if (result == MessageBoxResult.Yes)
                 _userSettings.Import(ImportSettingsFileName);
+
+            MessageBox.Show("Settings imported successfully", "Import Settings");
         }
 
         private void ExportSettings()
@@ -77,6 +79,8 @@ namespace AnyStatus.Features.Options
                 return;
 
             _userSettings.Export(ExportSettingsFileName);
+
+            MessageBox.Show("Settings exported successfully", "Export Settings");
         }
 
         private void BrowseImportSettingsFile()
