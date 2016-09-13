@@ -24,6 +24,8 @@ namespace AnyStatus
             _logger = logger;
             _jobFactory = jobFactory;
             _userSettings = userSettings;
+
+            _userSettings.SettingsReset += OnSettingsReset;
         }
 
         public void Initialize()
@@ -70,7 +72,7 @@ namespace AnyStatus
 
             if (item.IsSchedulable())
             {
-                ScheduleItem(item);
+                Schedule(item);
             }
 
             if (includeChildren && item.HasChildren())
@@ -80,7 +82,17 @@ namespace AnyStatus
                 }
         }
 
-        private void ScheduleItem(Item item)
+        private void RemoveAllSchedules()
+        {
+            foreach (var schedule in JobManager.AllSchedules)
+            {
+                _logger.Info($"Removing scheduled job: {schedule.Name}.");
+
+                JobManager.RemoveJob(schedule.Name);
+            }
+        }
+
+        private void Schedule(Item item)
         {
             var job = _jobFactory();
 
@@ -93,6 +105,20 @@ namespace AnyStatus
                         .AndEvery(item.Interval).Minutes());
 
             _logger.Info($"Item {item.Name} scheduled to run every {item.Interval} minutes.");
+        }
+
+        private void OnSettingsReset(object sender, EventArgs e)
+        {
+            try
+            {
+                RemoveAllSchedules();
+
+                Initialize();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "An error occurred while reseting job scheduler.");
+            }
         }
     }
 }

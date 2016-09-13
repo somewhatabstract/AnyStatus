@@ -14,7 +14,7 @@ namespace AnyStatus.VSPackage
     [ProvideToolWindow(typeof(ToolWindowHost))]
     [Guid(PackageGuids.guidToolWindowPackageString)]
     [ProvideOptionPage(typeof(Options), "AnyStatus", "General", 0, 0, true)]
-    //[ProvideOptionPage(typeof(ImportExport), "AnyStatus", "Import and Export Settings", 0, 0, true)]
+    [ProvideOptionPage(typeof(ImportExport), "AnyStatus", "Import and Export Settings", 0, 0, true)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
     public sealed class AnyStatusPackage : Package
     {
