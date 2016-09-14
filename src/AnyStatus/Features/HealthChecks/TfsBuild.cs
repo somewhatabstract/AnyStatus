@@ -111,7 +111,7 @@ namespace AnyStatus.Models
                     item.Brush = Brushes.Orange;
                     break;
 
-                case "canceled ":
+                case "canceled":
                     item.Brush = Brushes.Gray;
                     break;
 
