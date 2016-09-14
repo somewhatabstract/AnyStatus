@@ -11,5 +11,7 @@ namespace AnyStatus
         void Reschedule(Item item, bool includeChildren = false);
 
         void Execute(Item item);
+
+        void Remove(Item item);
     }
 }

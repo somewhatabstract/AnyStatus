@@ -278,6 +278,7 @@
 
             <TreeView.InputBindings>
                 <KeyBinding Key="F2" Command="{Binding RenameCommand}" CommandParameter="{Binding ElementName=TreeView, Path=SelectedItem}"/>
+                <KeyBinding Key="Delete" Command="{Binding DeleteCommand}" CommandParameter="{Binding ElementName=TreeView, Path=SelectedItem}"/>
             </TreeView.InputBindings>
 
             <TreeView.ItemContainerStyle>

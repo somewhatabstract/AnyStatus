@@ -14,16 +14,9 @@ namespace AnyStatus
 
         public JobScheduler(Func<ScheduledJob> jobFactory, IUserSettings userSettings, ILogger logger)
         {
-            if (userSettings == null)
-                throw new ArgumentNullException(nameof(userSettings));
-            if (logger == null)
-                throw new ArgumentNullException(nameof(logger));
-            if (jobFactory == null)
-                throw new ArgumentNullException(nameof(jobFactory));
-
-            _logger = logger;
-            _jobFactory = jobFactory;
-            _userSettings = userSettings;
+            _jobFactory = Preconditions.CheckNotNull(jobFactory, nameof(jobFactory));
+            _userSettings = Preconditions.CheckNotNull(userSettings, nameof(userSettings));
+            _logger = Preconditions.CheckNotNull(logger, nameof(logger));
 
             _userSettings.SettingsReset += OnSettingsReset;
         }
@@ -119,6 +112,11 @@ namespace AnyStatus
             {
                 _logger.Error(ex, "An error occurred while reseting job scheduler.");
             }
+        }
+
+        public void Remove(Item item)
+        {
+            JobManager.RemoveJob(item.Id.ToString());
         }
     }
 }

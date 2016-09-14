@@ -79,20 +79,21 @@ namespace AnyStatus.ViewModels
 
             DeleteCommand = new RelayCommand(p =>
             {
+                var selectedItem = p as Item;
+
+                if (selectedItem == null)
+                    return;
+
+                var result = MessageBox.Show("Are you sure?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
+
+                if (result != MessageBoxResult.Yes)
+                    return;
+
                 try
                 {
-                    var result = MessageBox.Show("Are you sure?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
-
-                    if (result != MessageBoxResult.Yes) return;
-
-                    var selectedItem = p as Item;
-
-                    if (selectedItem == null)
-                        return;
-
                     if (selectedItem is IScheduledItem)
                     {
-                        JobManager.RemoveJob(selectedItem.Id.ToString());
+                        _jobScheduler.Remove(selectedItem);
                     }
 
                     selectedItem.Delete();
@@ -141,10 +142,10 @@ namespace AnyStatus.ViewModels
             {
                 var item = p as Item;
 
-                if (item != null)
-                {
-                    item.IsEditing = true;
-                }
+                if (item == null)
+                    return;
+
+                item.IsEditing = true;
             });
 
             EnableItemCommand = new RelayCommand(p =>
