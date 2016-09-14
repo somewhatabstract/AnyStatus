@@ -87,7 +87,7 @@ namespace AnyStatus.ViewModels
 
             if (result == MessageBoxResult.Yes)
             {
-                _userSettings.RestoreDefault();
+                _userSettings.RestoreDefaultSettings();
 
                 Load();
             }

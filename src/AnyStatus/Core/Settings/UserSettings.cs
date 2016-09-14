@@ -69,7 +69,7 @@ namespace AnyStatus
             }
         }
 
-        public void RestoreDefault()
+        public void RestoreDefaultSettings()
         {
             _logger.Info("Reseting user settings.");
 
@@ -134,6 +134,7 @@ namespace AnyStatus
                     reader.Close();
             }
         }
+
         #endregion
 
         #region Helpers
@@ -148,7 +149,7 @@ namespace AnyStatus
 
                 if (RootItem == null)
                 {
-                    RestoreDefault();
+                    RestoreDefaultSettings();
                 }
 
                 Upgrade();
@@ -163,6 +164,7 @@ namespace AnyStatus
 
         private void LoadSettings()
         {
+            ClientId = Properties.Settings.Default.ClientId;
             RootItem = Properties.Settings.Default.RootItem;
             DebugMode = Properties.Settings.Default.DebugMode;
             ReportAnonymousUsage = Properties.Settings.Default.ReportAnonymousUsageData;
@@ -170,11 +172,11 @@ namespace AnyStatus
 
         private void Upgrade()
         {
-            if (string.IsNullOrEmpty(Properties.Settings.Default.ClientId))
+            if (string.IsNullOrEmpty(ClientId))
             {
                 _logger.Info("Upgrading user settings.");
 
-                ClientId = Properties.Settings.Default.ClientId = Guid.NewGuid().ToString();
+                ClientId = Guid.NewGuid().ToString();
 
                 Save();
             }

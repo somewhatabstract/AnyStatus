@@ -14,7 +14,7 @@ namespace AnyStatus.Interfaces
 
         void Save(bool reload = false);
 
-        void RestoreDefault();
+        void RestoreDefaultSettings();
 
         void Import(string filePath);
 
