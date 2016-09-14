@@ -87,7 +87,7 @@ namespace AnyStatus.Models
 
         private void SetItemColor(TfsBuild item, TfsBuildDetails buildDetails)
         {
-            if (buildDetails.Status == "inProgress")
+            if (buildDetails.Status == "notStarted" || buildDetails.Status == "inProgress")
             {
                 item.Brush = Brushes.DodgerBlue;
                 return;
