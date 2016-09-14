@@ -2,5 +2,9 @@
 {
     public class RootItem : Folder
     {
+        public RootItem()
+        {
+            Name = "Root Item";
+        }
     }
 }

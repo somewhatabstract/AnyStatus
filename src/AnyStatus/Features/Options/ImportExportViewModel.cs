@@ -65,12 +65,19 @@ namespace AnyStatus.Features.Options
             if (string.IsNullOrEmpty(ImportSettingsFileName))
                 return;
 
-            var result = MessageBox.Show("Are you sure?", "Import Settings", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
+            try
+            {
+                var result = MessageBox.Show("Are you sure?", "Import Settings", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
 
-            if (result == MessageBoxResult.Yes)
-                _userSettings.Import(ImportSettingsFileName);
+                if (result == MessageBoxResult.Yes)
+                    _userSettings.Import(ImportSettingsFileName);
 
-            MessageBox.Show("Settings imported successfully", "Import Settings");
+                MessageBox.Show("Settings imported successfully", "Import Settings");
+            }
+            catch
+            {
+                MessageBox.Show("An error occurred while importing settings.", "Import Settings", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void ExportSettings()
@@ -78,9 +85,16 @@ namespace AnyStatus.Features.Options
             if (string.IsNullOrEmpty(ExportSettingsFileName))
                 return;
 
-            _userSettings.Export(ExportSettingsFileName);
+            try
+            {
+                _userSettings.Export(ExportSettingsFileName);
 
-            MessageBox.Show("Settings exported successfully", "Export Settings");
+                MessageBox.Show("Settings exported successfully", "Export Settings");
+            }
+            catch
+            {
+                MessageBox.Show("An error occurred while exporting settings.", "Export Settings", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void BrowseImportSettingsFile()

@@ -71,14 +71,14 @@ namespace AnyStatus
 
         public void RestoreDefaultSettings()
         {
-            _logger.Info("Reseting user settings.");
+            _logger.Info("Restoring default settings.");
 
             try
             {
                 Properties.Settings.Default.Reset();
 
-                ClientId = Guid.NewGuid().ToString();
-                RootItem = new RootItem { Name = "Root Item" };
+                ClientId = CreateClientId();
+                RootItem = new RootItem();
                 DebugMode = false;
                 ReportAnonymousUsage = true;
 
@@ -88,7 +88,7 @@ namespace AnyStatus
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Failed to reset user settings.");
+                _logger.Error(ex, "Failed to restore default settings.");
             }
         }
 
@@ -101,6 +101,11 @@ namespace AnyStatus
                 var serializer = new XmlSerializer(GetType());
                 writer = new StreamWriter(filePath);
                 serializer.Serialize(writer, this);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Failed to export settings.");
+                throw;
             }
             finally
             {
@@ -115,8 +120,10 @@ namespace AnyStatus
 
             try
             {
-                var serializer = new XmlSerializer(GetType());
                 reader = new StreamReader(filePath);
+
+                var serializer = new XmlSerializer(GetType());
+
                 var userSettings = (UserSettings)serializer.Deserialize(reader);
 
                 RootItem = userSettings.RootItem;
@@ -127,6 +134,11 @@ namespace AnyStatus
                 Save();
 
                 SettingsReset?.Invoke(this, EventArgs.Empty);
+            }
+            catch(Exception ex)
+            {
+                _logger.Error(ex, "Failed to import settings.");
+                throw;
             }
             finally
             {
@@ -176,10 +188,15 @@ namespace AnyStatus
             {
                 _logger.Info("Upgrading user settings.");
 
-                ClientId = Guid.NewGuid().ToString();
+                ClientId = CreateClientId();
 
                 Save();
             }
+        }
+
+        private string CreateClientId()
+        {
+            return Guid.NewGuid().ToString();
         }
 
         #endregion
