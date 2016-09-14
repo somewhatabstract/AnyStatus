@@ -1,4 +1,5 @@
-﻿using AnyStatus.Interfaces;
+﻿using AnyStatus.Infrastructure;
+using AnyStatus.Interfaces;
 using AnyStatus.Models;
 using System;
 using System.Windows.Input;
@@ -18,16 +19,9 @@ namespace AnyStatus.Features.Edit
 
         public EditViewModel(IUserSettings userSettings, IJobScheduler jobScheduler, ILogger logger)
         {
-            if (logger == null)
-                throw new ArgumentNullException(nameof(logger));
-            if (userSettings == null)
-                throw new ArgumentNullException(nameof(userSettings));
-            if (jobScheduler == null)
-                throw new ArgumentNullException(nameof(jobScheduler));
-
-            _logger = logger;
-            _jobScheduler = jobScheduler;
-            _userSettings = userSettings;
+            _userSettings = Preconditions.CheckNotNull(userSettings, nameof(userSettings));
+            _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
+            _logger = Preconditions.CheckNotNull(logger, nameof(logger));
 
             Initialize();
         }

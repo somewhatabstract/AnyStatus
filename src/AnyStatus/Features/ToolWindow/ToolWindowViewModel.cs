@@ -21,27 +21,16 @@ namespace AnyStatus.ViewModels
         private readonly IUsageReporter _usageReporter;
 
         public ToolWindowViewModel(IJobScheduler jobScheduler,
-                                    IUserSettings userSettings,
-                                    IViewLocator viewLocator,
-                                    IUsageReporter usageReporter,
-                                    ILogger logger)
+                                   IUserSettings userSettings,
+                                   IViewLocator viewLocator,
+                                   IUsageReporter usageReporter,
+                                   ILogger logger)
         {
-            if (jobScheduler == null)
-                throw new ArgumentNullException(nameof(jobScheduler));
-            if (userSettings == null)
-                throw new ArgumentNullException(nameof(userSettings));
-            if (viewLocator == null)
-                throw new ArgumentNullException(nameof(viewLocator));
-            if (usageReporter == null)
-                throw new ArgumentNullException(nameof(usageReporter));
-            if (logger == null)
-                throw new ArgumentNullException(nameof(logger));
-
-            _jobScheduler = jobScheduler;
-            _userSettings = userSettings;
-            _viewLocator = viewLocator;
-            _usageReporter = usageReporter;
-            _logger = logger;
+            _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
+            _userSettings = Preconditions.CheckNotNull(userSettings, nameof(userSettings));
+            _viewLocator = Preconditions.CheckNotNull(viewLocator, nameof(viewLocator));
+            _usageReporter = Preconditions.CheckNotNull(usageReporter, nameof(usageReporter));
+            _logger = Preconditions.CheckNotNull(logger, nameof(logger));
 
             Initialize();
         }

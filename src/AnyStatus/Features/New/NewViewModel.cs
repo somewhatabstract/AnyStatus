@@ -30,18 +30,12 @@ namespace AnyStatus.ViewModels
             IEnumerable<Template> templates,
             ILogger logger)
         {
-            Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
-            Preconditions.CheckNotNull(userSettings, nameof(userSettings));
-            Preconditions.CheckNotNull(templates, nameof(templates));
-            Preconditions.CheckNotNull(logger, nameof(logger));
+            _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
+            _userSettings = Preconditions.CheckNotNull(userSettings, nameof(userSettings));
+            Templates = Preconditions.CheckNotNull(templates, nameof(templates));
+            _logger = Preconditions.CheckNotNull(logger, nameof(logger));
 
-            _logger = logger;
-            _jobScheduler = jobScheduler;
-            _userSettings = userSettings;
-            _usageReporter = usageReporter;
-
-            Templates = templates;
-            SelectedTemplate = templates?.FirstOrDefault();
+            SelectedTemplate = Templates?.FirstOrDefault();
 
             Initialize();
         }
