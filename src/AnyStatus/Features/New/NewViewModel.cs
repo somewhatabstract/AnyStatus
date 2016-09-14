@@ -32,8 +32,9 @@ namespace AnyStatus.ViewModels
         {
             _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
             _userSettings = Preconditions.CheckNotNull(userSettings, nameof(userSettings));
-            Templates = Preconditions.CheckNotNull(templates, nameof(templates));
+            _usageReporter = Preconditions.CheckNotNull(usageReporter, nameof(usageReporter));
             _logger = Preconditions.CheckNotNull(logger, nameof(logger));
+            Templates = Preconditions.CheckNotNull(templates, nameof(templates));
 
             SelectedTemplate = Templates?.FirstOrDefault();
 
