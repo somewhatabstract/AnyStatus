@@ -31,6 +31,7 @@ on the official Visual Studio extension gallery.
 - [x] Enable or disable debug mode in Options dialog
 - [x] Improved user settings management
 - [x] Simplified Add New Item and Properties windows
+- [x] Fixed TFS queued & canceled builds status color
 
 ## 0.6
 
