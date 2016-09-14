@@ -1,4 +1,5 @@
-﻿using AnyStatus.Interfaces;
+﻿using AnyStatus.Infrastructure;
+using AnyStatus.Interfaces;
 using AnyStatus.Models;
 using System;
 using System.Collections.Generic;
@@ -15,32 +16,32 @@ namespace AnyStatus.ViewModels
     public class NewViewModel : INotifyPropertyChanged
     {
         private Template _selectedTemplate;
-        private IUserSettings _userSettings;
-        private IJobScheduler _jobScheduler;
-        private ILogger _logger;
+        private readonly IUserSettings _userSettings;
+        private readonly IJobScheduler _jobScheduler;
+        private readonly IUsageReporter _usageReporter;
+        private readonly ILogger _logger;
 
         public event EventHandler CloseRequested;
 
-        public NewViewModel(IJobScheduler jobScheduler,
+        public NewViewModel(
+            IJobScheduler jobScheduler,
             IUserSettings userSettings,
+            IUsageReporter usageReporter,
             IEnumerable<Template> templates,
             ILogger logger)
         {
-            if (jobScheduler == null)
-                throw new ArgumentNullException(nameof(jobScheduler));
-            if (userSettings == null)
-                throw new ArgumentNullException(nameof(userSettings));
-            if (templates == null)
-                throw new ArgumentNullException(nameof(templates));
-            if (logger == null)
-                throw new ArgumentNullException(nameof(logger));
+            Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
+            Preconditions.CheckNotNull(userSettings, nameof(userSettings));
+            Preconditions.CheckNotNull(templates, nameof(templates));
+            Preconditions.CheckNotNull(logger, nameof(logger));
 
             _logger = logger;
             _jobScheduler = jobScheduler;
             _userSettings = userSettings;
+            _usageReporter = usageReporter;
 
             Templates = templates;
-            SelectedTemplate = Templates?.FirstOrDefault();
+            SelectedTemplate = templates?.FirstOrDefault();
 
             Initialize();
         }
@@ -95,6 +96,8 @@ namespace AnyStatus.ViewModels
             _userSettings.Save();
 
             _jobScheduler.Schedule(item);
+
+            _usageReporter.ReportEvent("Items", "Add", item.GetType().Name);
 
             CloseRequested?.Invoke(this, EventArgs.Empty);
         }

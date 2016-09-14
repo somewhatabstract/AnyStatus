@@ -183,8 +183,6 @@ namespace AnyStatus
 
         private async void SendHitData(Dictionary<string, string> hitData)
         {
-            if (!IsEnabled) return;
-
             try
             {
                 using (var client = new HttpClient())
