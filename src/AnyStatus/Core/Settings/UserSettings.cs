@@ -43,7 +43,7 @@ namespace AnyStatus
 
         public void Save(bool reload = false)
         {
-            _logger.Info("Saving user settings.");
+            _logger.Info("Saving settings.");
 
             try
             {
@@ -65,7 +65,7 @@ namespace AnyStatus
             }
             catch (AggregateException ex)
             {
-                _logger.Error(ex, "Failed to save user settings.");
+                _logger.Error(ex, "Failed to save settings.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace AnyStatus
 
         private void Initialize()
         {
-            _logger.Info("Initializing user settings.");
+            _logger.Info("Initializing...");
 
             try
             {
@@ -170,7 +170,7 @@ namespace AnyStatus
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Failed to initialize user settings.");
+                _logger.Error(ex, "Failed to initialize settings.");
             }
         }
 
@@ -186,7 +186,7 @@ namespace AnyStatus
         {
             if (string.IsNullOrEmpty(ClientId))
             {
-                _logger.Info("Upgrading user settings.");
+                _logger.Info("Upgrading settings.");
 
                 ClientId = CreateClientId();
 
