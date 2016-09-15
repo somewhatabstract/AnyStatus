@@ -312,7 +312,6 @@ namespace AnyStatus.Models
         #region INotifyPropertyChanged
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
