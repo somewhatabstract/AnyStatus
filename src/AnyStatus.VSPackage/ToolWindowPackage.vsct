@@ -50,7 +50,7 @@
         <Icon guid="ImageCatalogGuid" id="Refresh" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <Strings>
-          <ButtonText>Refresh</ButtonText>
+          <ButtonText>Refresh All</ButtonText>
           <CommandName>refreshToolbarCommandId</CommandName>
         </Strings>
       </Button>
