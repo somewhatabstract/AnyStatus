@@ -135,6 +135,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Features\Commands\BaseCommand.cs" />
+    <Compile Include="Features\Commands\CollapseAllCommand.cs" />
+    <Compile Include="Features\Commands\ExpandAllCommand.cs" />
+    <Compile Include="Features\Commands\IMenuCommand.cs" />
+    <Compile Include="Features\Commands\RefreshAllCommand.cs" />
+    <Compile Include="Features\Commands\OptionsCommand.cs" />
+    <Compile Include="Features\Commands\HelpCommand.cs" />
+    <Compile Include="Features\Commands\ToolWindowPackage.cs" />
     <Compile Include="Features\Edit\EditWindow.xaml.cs">
       <DependentUpon>EditWindow.xaml</DependentUpon>
     </Compile>

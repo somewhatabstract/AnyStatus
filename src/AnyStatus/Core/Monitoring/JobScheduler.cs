@@ -118,5 +118,13 @@ namespace AnyStatus
         {
             JobManager.RemoveJob(item.Id.ToString());
         }
+
+        public void ExecuteAll()
+        {
+            foreach (var schedule in JobManager.AllSchedules)
+            {
+                schedule.Execute();
+            }
+        }
     }
 }

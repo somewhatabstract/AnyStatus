@@ -15,24 +15,24 @@ namespace AnyStatus.VSPackage
 {
     internal class ContainerBuilder
     {
-        private readonly Package _package;
-
-        public ContainerBuilder(Package package)
-        {
-            if (package == null)
-                throw new ArgumentNullException(nameof(package));
-
-            _package = package;
-        }
-
-        internal TinyIoCContainer Build()
+        internal static TinyIoCContainer Build(Package package)
         {
             var container = TinyIoCContainer.Current;
 
-            //Core
-            container.Register<Package>(_package);
-            container.Register<IServiceProvider>(_package);
-            container.Register<ToolWindowCommand>().AsSingleton();
+            RegisterCore(container,package);
+            RegisterMenuCommands(container);
+            RegisterUI(container);
+            RegisterItems(container);
+            RegisterTemplates(container);
+            RegisterItemHandlers(container);
+
+            return container;
+        }
+
+        private static void RegisterCore(TinyIoCContainer container,Package package)
+        {
+            container.Register(package);
+            container.Register<IServiceProvider>(package);
             container.Register<IUserSettings, UserSettings>().AsSingleton();
             container.Register<ILogger, Logger>().AsSingleton();
             container.Register<IJobScheduler, JobScheduler>().AsSingleton();
@@ -48,8 +48,10 @@ namespace AnyStatus.VSPackage
 
                 return reporter;
             });
+        }
 
-            //User Interface
+        private static void RegisterUI(TinyIoCContainer container)
+        {
             container.Register<IViewLocator, ViewLocator>().AsSingleton();
 
             container.Register<ToolWindowControl>().AsSingleton();
@@ -63,18 +65,11 @@ namespace AnyStatus.VSPackage
 
             container.Register<OptionsDialogControl>().AsSingleton();
             container.Register<OptionsViewModel>().AsSingleton();
-
-            //Dynamic registration
-            ScanAndRegisterItems();
-            RegisterItemTemplates();
-            ScanAndRegisterItemHandlers();
-
-            return container;
         }
 
         #region Helpers
 
-        private static void ScanAndRegisterItemHandlers()
+        private static void RegisterItemHandlers(TinyIoCContainer container)
         {
             var baseHandler = typeof(IHandler<>);
 
@@ -82,13 +77,13 @@ namespace AnyStatus.VSPackage
 
             foreach (var handler in handlers)
             {
-                TinyIoCContainer.Current
+                container
                     .Register(handler.GetInterface(baseHandler.Name), handler)
                     .AsMultiInstance();
             }
         }
 
-        private static void ScanAndRegisterItems()
+        private static void RegisterItems(TinyIoCContainer container)
         {
             var items = Discovery.FindTypesOf(typeof(Item), typeof(Item).Assembly);
 
@@ -97,12 +92,19 @@ namespace AnyStatus.VSPackage
                     orderby item.Name
                     select item;
 
-            TinyIoCContainer.Current.RegisterMultiple(typeof(Item), items);
+            container.RegisterMultiple(typeof(Item), items);
         }
 
-        private static void RegisterItemTemplates()
+        private static void RegisterMenuCommands(TinyIoCContainer container)
         {
-            TinyIoCContainer.Current.Register<IEnumerable<Template>>((c, p) =>
+            var items = Discovery.FindTypesOf(typeof(IMenuCommand), typeof(IMenuCommand).Assembly);
+
+            container.RegisterMultiple(typeof(IMenuCommand), items);
+        }
+
+        private static void RegisterTemplates(TinyIoCContainer container)
+        {
+            container.Register<IEnumerable<Template>>((c, p) =>
             {
                 var items = c.ResolveAll<Item>();
 

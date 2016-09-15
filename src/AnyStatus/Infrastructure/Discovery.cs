@@ -24,7 +24,7 @@ namespace AnyStatus.Infrastructure
         public static IEnumerable<Type> FindTypesOf(Type baseType, Assembly assembly)
         {
             return from type in assembly.GetTypes()
-                   where type.BaseType == typeof(Item)
+                   where baseType.IsAssignableFrom(type) && !type.IsAbstract
                    select type;
         }
     }
