@@ -12,6 +12,8 @@ namespace AnyStatus.Interfaces
         bool ReportAnonymousUsage { get; set; }
         string ClientId { get; set; }
 
+        void Initialize();
+
         void Save(bool reload = false);
 
         void RestoreDefaultSettings();

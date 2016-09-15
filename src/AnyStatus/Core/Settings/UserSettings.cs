@@ -21,8 +21,6 @@ namespace AnyStatus
                 throw new ArgumentNullException(nameof(logger));
 
             _logger = logger;
-
-            Initialize();
         }
 
         #region Properties
@@ -40,6 +38,29 @@ namespace AnyStatus
         #endregion
 
         #region Methods
+
+        public void Initialize()
+        {
+            _logger.Info("Initializing settings.");
+
+            try
+            {
+                LoadSettings();
+
+                if (RootItem == null)
+                {
+                    RestoreDefaultSettings();
+                }
+
+                Upgrade();
+
+                SettingsReset += (s, e) => LoadSettings();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Failed to initialize settings.");
+            }
+        }
 
         public void Save(bool reload = false)
         {
@@ -150,29 +171,6 @@ namespace AnyStatus
         #endregion
 
         #region Helpers
-
-        private void Initialize()
-        {
-            _logger.Info("Initializing...");
-
-            try
-            {
-                LoadSettings();
-
-                if (RootItem == null)
-                {
-                    RestoreDefaultSettings();
-                }
-
-                Upgrade();
-
-                SettingsReset += (s, e) => LoadSettings();
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, "Failed to initialize settings.");
-            }
-        }
 
         private void LoadSettings()
         {

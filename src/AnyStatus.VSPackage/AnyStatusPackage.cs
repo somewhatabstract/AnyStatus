@@ -1,4 +1,5 @@
-﻿using AnyStatus.Views;
+﻿using AnyStatus.Interfaces;
+using AnyStatus.Views;
 using Microsoft.VisualStudio.Shell;
 using System;
 using System.Diagnostics;
@@ -25,8 +26,8 @@ namespace AnyStatus.VSPackage
             {
                 var container = new ContainerBuilder(this).Build();
 
+                container.Resolve<IUserSettings>().Initialize();
                 container.Resolve<ToolWindowCommand>().Initialize();
-
                 container.Resolve<IJobScheduler>().Initialize();
             }
             catch (Exception ex)
