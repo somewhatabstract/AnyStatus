@@ -70,7 +70,7 @@ namespace AnyStatus.Views
 
         #region Drag and Drop
 
-        private void TreeViewItem_MouseMove(object sender, MouseEventArgs e)
+        private static void TreeViewItem_MouseMove(object sender, MouseEventArgs e)
         {
             var treeViewItem = sender as TreeViewItem;
 

@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.ComponentModel.Design;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace AnyStatus.VSPackage
@@ -14,14 +15,21 @@ namespace AnyStatus.VSPackage
         public ToolWindowHost() : base(null)
         {
             Caption = "AnyStatus";
-
             ToolBar = new CommandID(PackageGuids.guidToolWindowPackageCmdSet, PackageIds.ToolbarId);
             ToolBarLocation = (int)VSTWT_LOCATION.VSTWT_TOP;
 
-            // This is the user control hosted by the tool window; Note that, even if this class implements IDisposable,
-            // we are not calling Dispose on this object. This is because ToolWindowPane calls Dispose on
-            // the object returned by the Content property.
-            Content = TinyIoCContainer.Current.Resolve<ToolWindowControl>();
+            try
+            {
+                // This is the user control hosted by the tool window; Note that, even if this class implements IDisposable,
+                // we are not calling Dispose on this object. This is because ToolWindowPane calls Dispose on
+                // the object returned by the Content property.
+                Content = TinyIoCContainer.Current.Resolve<ToolWindowControl>();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+
         }
     }
 }
