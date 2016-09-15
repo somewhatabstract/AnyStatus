@@ -109,34 +109,99 @@ namespace AnyStatus.Tests
 
             Assert.AreSame(parent.Items[index], item2);
         }
+
+        [TestMethod]
+        public void Collapse()
+        {
+            var item = new Item() { IsExpanded = true };
+
+            item.Collapse();
+
+            Assert.IsFalse(item.IsExpanded);
+        }
+
+        [TestMethod]
+        public void CollapseAll()
+        {
+            var item = new Item() { IsExpanded = true };
+            var child = new Item() { IsExpanded = true };
+            var grandchild = new Item() { IsExpanded = true };
+
+            item.Add(child);
+            child.Add(grandchild);
+
+            item.CollapseAll();
+
+            Assert.IsFalse(item.IsExpanded);
+            Assert.IsFalse(child.IsExpanded);
+            Assert.IsFalse(grandchild.IsExpanded);
+        }
+
+        [TestMethod]
+        public void Expand()
+        {
+            var item = new Item() { IsExpanded = false };
+
+            item.Expand();
+
+            Assert.IsTrue(item.IsExpanded);
+        }
+
+        [TestMethod]
+        public void ExpandAll()
+        {
+            var item = new Item() { IsExpanded = false };
+            var child = new Item() { IsExpanded = false };
+            var grandchild = new Item() { IsExpanded = false };
+
+            item.Add(child);
+            child.Add(grandchild);
+
+            item.ExpandAll();
+
+            Assert.IsTrue(item.IsExpanded);
+            Assert.IsTrue(child.IsExpanded);
+            Assert.IsTrue(grandchild.IsExpanded);
+        }
+
+        [TestMethod]
+        public void RestoreParentChildRelationship()
+        {
+            var parent = new Item();
+            var child = new Item();
+            var grandchild = new Item();
+
+            parent.Items = new ObservableCollection<Item>() { child };
+            child.Items = new ObservableCollection<Item>() { grandchild };
+
+            parent.RestoreParentChildRelationship();
+
+            Assert.AreEqual(parent, child.Parent);
+            Assert.AreEqual(child, grandchild.Parent);
+        }
+
+        [TestMethod]
+        public void IsSchedulable()
+        {
+            var item = new Ping() {
+                IsEnabled = true,
+                Id = Guid.NewGuid()
+            };
+
+            Assert.IsTrue(item.IsSchedulable());
+        }
+
+        [TestMethod]
+        public void HasChildren()
+        {
+            var item = new Item();
+            var child = new Item();
+
+            Assert.IsFalse(item.HasChildren());
+
+            item.Add(child);
+
+            Assert.IsTrue(item.HasChildren());
+        }
     }
 }
-
-//[Ignore]
-//[TestMethod]
-//public void ObjectDiscoveryTest()
-//{
-//    var baseHandlerType = typeof(IHandler<>);
-
-//    var handlerTypes =
-//            from assembly in new[] { typeof(Item).Assembly }
-//            from type in assembly.GetTypes()
-//            where !type.IsAbstract && !type.IsGenericTypeDefinition
-//            let handlerInterfaces =
-//                from iface in type.GetInterfaces()
-//                where iface.IsGenericType
-//                where iface.GetGenericTypeDefinition() == baseHandlerType
-//                select iface
-//            where handlerInterfaces.Any()
-//            select type;
-
-//    foreach (var handlerType in handlerTypes)
-//    {
-//        TinyIoCContainer.Current.Register(handlerType.GetInterface(baseHandlerType.Name), handlerType).AsMultiInstance();
-//    }
-
-//    var handler = TinyIoCContainer.Current.Resolve<IHandler<WindowsService>>();
-
-//    Assert.IsNotNull(handler);
-//    Assert.IsInstanceOfType(handler, typeof(WindowsServiceHandler));
-//}
