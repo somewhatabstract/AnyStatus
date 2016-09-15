@@ -40,7 +40,6 @@ namespace AnyStatus.VSPackage
             container.Register<IUsageReporter>((c, p) =>
             {
                 //todo: optimize startup
-
                 var userSettings = c.Resolve<IUserSettings>();
                 var clientId = userSettings.ClientId ?? Guid.NewGuid().ToString();
                 var reporter = new AnalyticsReporter("UA-83802855-1", "AnyStatus", "AnyStatus", clientId, "0.7");

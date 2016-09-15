@@ -1,4 +1,5 @@
-﻿using AnyStatus.Interfaces;
+﻿using AnyStatus.Infrastructure;
+using AnyStatus.Interfaces;
 using AnyStatus.Views;
 using FluentScheduler;
 using Microsoft.VisualStudio.Shell;
@@ -13,21 +14,12 @@ namespace AnyStatus.VSPackage
         private readonly ILogger _logger;
         private readonly Package _package;
         private readonly IUserSettings _userSettings;
-        private readonly IServiceProvider _serviceProvider;
 
         public ToolWindowCommand(Package package, ILogger logger, IUserSettings userSettings)
         {
-            if (package == null)
-                throw new ArgumentNullException(nameof(package));
-            if (logger == null)
-                throw new ArgumentNullException(nameof(logger));
-            if (userSettings == null)
-                throw new ArgumentNullException(nameof(userSettings));
-
-            _userSettings = userSettings;
-            _logger = logger;
-            _package = package;
-            _serviceProvider = package as IServiceProvider;
+            _logger = Preconditions.CheckNotNull(logger, nameof(logger));
+            _package = Preconditions.CheckNotNull(package, nameof(package));
+            _userSettings = Preconditions.CheckNotNull(userSettings, nameof(userSettings));
         }
 
         public void Initialize()
@@ -36,10 +28,12 @@ namespace AnyStatus.VSPackage
 
             AddCommands();
         }
-        
+
         private void AddCommands()
         {
-            var commandService = _serviceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
+            var serviceProvider = _package as IServiceProvider;
+
+            var commandService = serviceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
 
             if (commandService == null)
                 return;
