@@ -31,6 +31,13 @@
                 </StackPanel>
             </GroupBox>
 
+            <GroupBox Header="Import and Export Settings" Padding="5" Margin="5">
+                <StackPanel Orientation="Horizontal">
+                    <Button Command="{Binding ImportSettingsCommand}" Width="70" Margin="3">Import...</Button>
+                    <Button Command="{Binding ExportSettingsCommand}" Width="70" Margin="3">Export...</Button>
+                </StackPanel>
+            </GroupBox>
+           
         </StackPanel>
     </ScrollViewer>
 </UserControl>

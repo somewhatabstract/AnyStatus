@@ -1,5 +1,6 @@
-﻿using AnyStatus.Interfaces;
-using System;
+﻿using AnyStatus.Infrastructure;
+using AnyStatus.Interfaces;
+using Microsoft.Win32;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -17,17 +18,14 @@ namespace AnyStatus.ViewModels
 
         public OptionsViewModel(IUserSettings userSettings, ILogger logger)
         {
-            if (logger == null)
-                throw new ArgumentNullException(nameof(logger));
-            if (userSettings == null)
-                throw new ArgumentNullException(nameof(userSettings));
-
-            _logger = logger;
-            _userSettings = userSettings;
+            _logger = Preconditions.CheckNotNull(logger, nameof(logger));
+            _userSettings = Preconditions.CheckNotNull(userSettings, nameof(userSettings));
 
             ApplyCommand = new RelayCommand(p => Save());
             ActivateCommand = new RelayCommand(p => Load());
             RestoreDefaultSettingsCommand = new RelayCommand(p => RestoreDefaultSettings());
+            ImportSettingsCommand = new RelayCommand(p => ImportSettings());
+            ExportSettingsCommand = new RelayCommand(p => ExportSettings());
         }
 
         #region Commands
@@ -37,6 +35,10 @@ namespace AnyStatus.ViewModels
         public ICommand ActivateCommand { get; set; }
 
         public ICommand RestoreDefaultSettingsCommand { get; set; }
+
+        public ICommand ImportSettingsCommand { get; set; }
+
+        public ICommand ExportSettingsCommand { get; set; }
 
         #endregion
 
@@ -90,6 +92,52 @@ namespace AnyStatus.ViewModels
                 _userSettings.RestoreDefaultSettings();
 
                 Load();
+            }
+        }
+
+        private void ImportSettings()
+        {
+            var fileDialog = new OpenFileDialog();
+
+            fileDialog.Filter = "XML|*.xml";
+
+            var dialogResult = fileDialog.ShowDialog();
+
+            if (dialogResult == false || string.IsNullOrEmpty(fileDialog.FileName))
+                return;
+
+            try
+            {
+                _userSettings.Import(fileDialog.FileName);
+
+                MessageBox.Show("Settings imported successfully.", "Import Settings", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch
+            {
+                MessageBox.Show("An error occurred while importing settings.", "Import Settings", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void ExportSettings()
+        {
+            var fileDialog = new SaveFileDialog();
+
+            fileDialog.Filter = "XML|*.xml";
+
+            var dialogResult = fileDialog.ShowDialog();
+
+            if (dialogResult == false || string.IsNullOrEmpty(fileDialog.FileName))
+                return;
+
+            try
+            {
+                _userSettings.Export(fileDialog.FileName);
+
+                MessageBox.Show("Settings exported successfully.", "Export Settings", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch
+            {
+                MessageBox.Show("An error occurred while exporting settings.", "Export Settings", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

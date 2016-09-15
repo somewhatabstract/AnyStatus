@@ -1,5 +1,4 @@
 ﻿using AnyStatus.Features.Edit;
-using AnyStatus.Features.Options;
 using AnyStatus.Infrastructure;
 using AnyStatus.Interfaces;
 using AnyStatus.Models;
@@ -66,9 +65,6 @@ namespace AnyStatus.VSPackage
             container.Register<OptionsDialogControl>().AsSingleton();
             container.Register<OptionsViewModel>().AsSingleton();
 
-            container.Register<ImportExportViewModel>().AsSingleton();
-            container.Register<ImportExportControl>().AsSingleton();
-
             //Dynamic registration
             ScanAndRegisterItems();
             RegisterItemTemplates();
@@ -83,7 +79,7 @@ namespace AnyStatus.VSPackage
         {
             var baseHandler = typeof(IHandler<>);
 
-            var handlers = FindGenericTypesOf(baseHandler, typeof(IHandler<>).Assembly);
+            var handlers = Discovery.FindGenericTypesOf(baseHandler, typeof(IHandler<>).Assembly);
 
             foreach (var handler in handlers)
             {
@@ -95,7 +91,7 @@ namespace AnyStatus.VSPackage
 
         private static void ScanAndRegisterItems()
         {
-            var items = FindTypesOf(typeof(Item), typeof(Item).Assembly);
+            var items = Discovery.FindTypesOf(typeof(Item), typeof(Item).Assembly);
 
             items = from item in items
                     where item.IsBrowsable()
@@ -129,28 +125,6 @@ namespace AnyStatus.VSPackage
 
                 return templates;
             });
-        }
-
-        //todo: move these to another class
-
-        private static IEnumerable<Type> FindGenericTypesOf(Type baseType, Assembly assembly)
-        {
-            return from type in assembly.GetTypes()
-                   where !type.IsAbstract && !type.IsGenericTypeDefinition
-                   let handlerInterfaces =
-                       from iface in type.GetInterfaces()
-                       where iface.IsGenericType
-                       where iface.GetGenericTypeDefinition() == baseType
-                       select iface
-                   where handlerInterfaces.Any()
-                   select type;
-        }
-
-        private static IEnumerable<Type> FindTypesOf(Type baseType, Assembly assembly)
-        {
-            return from type in assembly.GetTypes()
-                   where type.BaseType == typeof(Item)
-                   select type;
         }
 
         #endregion

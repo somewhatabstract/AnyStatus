@@ -147,13 +147,7 @@
     <Compile Include="Features\HealthChecks\RootItem.cs" />
     <Compile Include="Features\HealthChecks\GitHubIssue.cs" />
     <Compile Include="Features\HealthChecks\PowerShellScript.cs" />
-    <Compile Include="Features\Options\ImportExport.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Features\Options\ImportExportControl.xaml.cs">
-      <DependentUpon>ImportExportControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Features\Options\ImportExportViewModel.cs" />
+    <Compile Include="Infrastructure\Discovery.cs" />
     <Compile Include="Infrastructure\Extensions.cs" />
     <Compile Include="Features\HealthChecks\TCP.cs" />
     <Compile Include="Features\HealthChecks\TeamCityBuild.cs" />
@@ -212,10 +206,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Features\New\NewWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Features\Options\ImportExportControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
