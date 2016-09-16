@@ -19,7 +19,7 @@ namespace AnyStatus.VSPackage
         {
             var container = TinyIoCContainer.Current;
 
-            RegisterCore(container,package);
+            RegisterCore(container, package);
             RegisterMenuCommands(container);
             RegisterUI(container);
             RegisterItems(container);
@@ -29,7 +29,7 @@ namespace AnyStatus.VSPackage
             return container;
         }
 
-        private static void RegisterCore(TinyIoCContainer container,Package package)
+        private static void RegisterCore(TinyIoCContainer container, Package package)
         {
             container.Register(package);
             container.Register<IServiceProvider>(package);
@@ -39,14 +39,7 @@ namespace AnyStatus.VSPackage
             container.Register<ScheduledJob>().AsMultiInstance();
             container.Register<IUsageReporter>((c, p) =>
             {
-                //todo: optimize startup
-                var userSettings = c.Resolve<IUserSettings>();
-                var clientId = userSettings.ClientId ?? Guid.NewGuid().ToString();
-                var reporter = new AnalyticsReporter("UA-83802855-1", "AnyStatus", "AnyStatus", clientId, "0.7");
-
-                reporter.IsEnabled = userSettings.ReportAnonymousUsage;
-
-                return reporter;
+                return new AnalyticsReporter("UA-83802855-1", "AnyStatus", "AnyStatus", null, "0.7");
             });
         }
 
@@ -85,7 +78,7 @@ namespace AnyStatus.VSPackage
 
         private static void RegisterItems(TinyIoCContainer container)
         {
-            var items = Discovery.FindTypesOf(typeof(Item), typeof(Item).Assembly);
+            var items = Discovery.FindTypesOf(typeof(Item), new[] { typeof(Item).Assembly });
 
             items = from item in items
                     where item.IsBrowsable()
@@ -97,7 +90,9 @@ namespace AnyStatus.VSPackage
 
         private static void RegisterMenuCommands(TinyIoCContainer container)
         {
-            var items = Discovery.FindTypesOf(typeof(IMenuCommand), typeof(IMenuCommand).Assembly);
+            var items = Discovery.FindTypesOf(typeof(IMenuCommand),
+                     new[] { typeof(IMenuCommand).Assembly,
+                             typeof(ContainerBuilder).Assembly });
 
             container.RegisterMultiple(typeof(IMenuCommand), items);
         }

@@ -1,16 +1,20 @@
 ﻿using AnyStatus.Models;
 using System;
+using System.ComponentModel;
 
 namespace AnyStatus.Interfaces
 {
-    public interface IUserSettings
+    public interface IUserSettings : INotifyPropertyChanged
     {
         event EventHandler SettingsReset;
 
-        Item RootItem { get; }
-        bool DebugMode { get; set; }
-        bool ReportAnonymousUsage { get; set; }
         string ClientId { get; set; }
+
+        Item RootItem { get; }
+
+        bool DebugMode { get; set; }
+
+        bool ReportAnonymousUsage { get; set; }
 
         void Initialize();
 

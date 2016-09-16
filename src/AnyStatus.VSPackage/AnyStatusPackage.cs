@@ -1,11 +1,9 @@
 ﻿using AnyStatus.Interfaces;
 using AnyStatus.Views;
 using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
@@ -25,22 +23,37 @@ namespace AnyStatus.VSPackage
         {
             base.Initialize();
 
+            ILogger logger = null;
+
             try
             {
                 var container = ContainerBuilder.Build(this);
+
                 var commands = container.ResolveAll<IMenuCommand>();
-                var userSettings = container.Resolve<IUserSettings>();
-                var jobScheduler = container.Resolve<IJobScheduler>();
-                var logger = container.Resolve<ILogger>();
 
                 AddCommands(commands);
-                userSettings.Initialize();
-                logger.IsEnabled = userSettings.DebugMode;
-                jobScheduler.Initialize();
+
+                System.Threading.Tasks.Task.Run(() => 
+                {
+                    var userSettings = container.Resolve<IUserSettings>();
+
+                    userSettings.Initialize();
+
+                    logger = container.Resolve<ILogger>();
+                    logger.IsEnabled = userSettings.DebugMode;
+                    logger.Info("Initializing...");
+                    logger.Info($"Client Id: {userSettings.ClientId}");
+
+                    var usageReporter = container.Resolve<IUsageReporter>();
+                    usageReporter.ClientId = userSettings.ClientId;
+                    usageReporter.IsEnabled = userSettings.ReportAnonymousUsage;
+
+                    container.Resolve<IJobScheduler>().Initialize();
+                });
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                logger?.Error(ex, "Initialization failed.");
             }
         }
 
@@ -48,33 +61,10 @@ namespace AnyStatus.VSPackage
         {
             var commandService = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
 
-            if (commandService == null)
-                return;
-
-            //view -> other windows 
-            var menuCommandID = new CommandID(PackageGuids.guidToolWindowPackageCmdSet, PackageIds.ToolWindowCommandId);
-            var menuItem = new MenuCommand(ShowToolWindow, menuCommandID);
-            commandService.AddCommand(menuItem);
-
-            //registered commands
             foreach (var command in commands)
             {
                 commandService.AddCommand(command.MenuCommand);
             }
-        }
-
-        private void ShowToolWindow(object sender, EventArgs e)
-        {
-            ToolWindowPane window = this.FindToolWindow(typeof(ToolWindowHost), 0, true);
-
-            if ((null == window) || (null == window.Frame))
-            {
-                throw new NotSupportedException("Cannot create tool window");
-            }
-
-            IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
-
-            Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.Show());
         }
     }
 }

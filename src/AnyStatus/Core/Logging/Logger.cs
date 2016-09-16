@@ -51,14 +51,13 @@ namespace AnyStatus.Infrastructure
 
         private void Log(string message)
         {
-            if (string.IsNullOrEmpty(message))
+            if (!IsEnabled || string.IsNullOrEmpty(message) || !EnsurePane())
                 return;
 
             try
             {
-                if (IsEnabled && EnsurePane())
-                    _pane.OutputStringThreadSafe(
-                        $"[{DateTime.Now}] {message}{Environment.NewLine}");
+                _pane.OutputStringThreadSafe(
+                    $"[{DateTime.Now.ToString("HH:mm:ss.fff")}] {message}{Environment.NewLine}");
             }
             catch (Exception ex)
             {

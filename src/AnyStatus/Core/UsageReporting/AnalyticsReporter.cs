@@ -18,7 +18,7 @@ namespace AnyStatus
     /// https://developers.google.com/analytics/devguides/collection/protocol/v1/
     /// </para>
     /// </summary>
-    public class AnalyticsReporter: IUsageReporter
+    public class AnalyticsReporter : IUsageReporter
     {
         #region Fields
 
@@ -51,22 +51,6 @@ namespace AnyStatus
 
         #endregion
 
-        #region Properties
-
-        public string ApplicationName { get; }
-
-        public string ApplicationVersion { get; }
-
-        public string ApplicationId { get; }
-
-        public string PropertyId { get; }
-
-        public string ClientId { get; }
-
-        public bool IsEnabled { get; set; }
-
-        #endregion
-
         public AnalyticsReporter(
             string propertyId,
             string appName,
@@ -85,6 +69,22 @@ namespace AnyStatus
             _serverUrl = debug ? DebugServerUrl : ProductionServerUrl;
             _baseHitData = MakeBaseHitData();
         }
+
+        #region Properties
+
+        public bool IsEnabled { get; set; }
+
+        public string ApplicationName { get; }
+
+        public string ApplicationVersion { get; }
+
+        public string ApplicationId { get; }
+
+        public string PropertyId { get; }
+
+        public string ClientId { get; set; }
+
+        #endregion
 
         #region Public Methods
 
@@ -192,9 +192,9 @@ namespace AnyStatus
                     DebugPrintAnalyticsOutput(response.Content.ReadAsStringAsync());
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                // Ignore
+                Debug.WriteLine(ex);
             }
         }
 

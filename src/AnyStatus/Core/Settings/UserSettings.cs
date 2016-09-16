@@ -2,14 +2,21 @@
 using AnyStatus.Interfaces;
 using AnyStatus.Models;
 using System;
+using System.ComponentModel;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 
 namespace AnyStatus
 {
     public class UserSettings : IUserSettings
     {
-        private ILogger _logger;
+        private readonly ILogger _logger;
+
+        private string _clientId;
+        private Item _rootItem;
+        private bool _debugMode;
+        private bool _reportAnonymousUsage;
 
         private UserSettings()
         {
@@ -17,23 +24,34 @@ namespace AnyStatus
 
         public UserSettings(ILogger logger)
         {
-            if (logger == null)
-                throw new ArgumentNullException(nameof(logger));
-
-            _logger = logger;
+            _logger = Preconditions.CheckNotNull(logger, nameof(logger));
         }
 
         #region Properties
 
-        public event EventHandler SettingsReset;
+        public Item RootItem
+        {
+            get { return _rootItem; }
+            set { _rootItem = value; OnPropertyChanged(); }
+        }
 
-        public Item RootItem { get; set; }
+        public bool DebugMode
+        {
+            get { return _debugMode; }
+            set { _debugMode = value; OnPropertyChanged(); }
+        }
 
-        public bool DebugMode { get; set; }
+        public bool ReportAnonymousUsage
+        {
+            get { return _reportAnonymousUsage; }
+            set { _reportAnonymousUsage = value; OnPropertyChanged(); }
+        }
 
-        public bool ReportAnonymousUsage { get; set; }
-
-        public string ClientId { get; set; }
+        public string ClientId
+        {
+            get { return _clientId; }
+            set { _clientId = value; OnPropertyChanged(); }
+        }
 
         #endregion
 
@@ -41,25 +59,28 @@ namespace AnyStatus
 
         public void Initialize()
         {
-            _logger.Info("Initializing settings.");
-
             try
             {
                 LoadSettings();
 
-                if (RootItem == null)
+                if (FirstTimeInstallation())
                 {
                     RestoreDefaultSettings();
                 }
-
-                Upgrade();
-
-                SettingsReset += (s, e) => LoadSettings();
+                else
+                {
+                    Upgrade();
+                }
             }
             catch (Exception ex)
             {
                 _logger.Error(ex, "Failed to initialize settings.");
             }
+        }
+
+        private bool FirstTimeInstallation()
+        {
+            return RootItem == null;
         }
 
         public void Save(bool reload = false)
@@ -92,8 +113,6 @@ namespace AnyStatus
 
         public void RestoreDefaultSettings()
         {
-            _logger.Info("Restoring default settings.");
-
             try
             {
                 Properties.Settings.Default.Reset();
@@ -147,16 +166,16 @@ namespace AnyStatus
 
                 var userSettings = (UserSettings)serializer.Deserialize(reader);
 
+                ClientId = userSettings.ClientId;
                 RootItem = userSettings.RootItem;
                 DebugMode = userSettings.DebugMode;
                 ReportAnonymousUsage = userSettings.ReportAnonymousUsage;
-                ClientId = userSettings.ClientId;
 
                 Save();
 
                 SettingsReset?.Invoke(this, EventArgs.Empty);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.Error(ex, "Failed to import settings.");
                 throw;
@@ -184,17 +203,27 @@ namespace AnyStatus
         {
             if (string.IsNullOrEmpty(ClientId))
             {
-                _logger.Info("Upgrading settings.");
-
                 ClientId = CreateClientId();
 
                 Save();
             }
         }
 
-        private string CreateClientId()
+        private static string CreateClientId()
         {
             return Guid.NewGuid().ToString();
+        }
+
+        #endregion
+
+        #region INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public event EventHandler SettingsReset;
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #endregion

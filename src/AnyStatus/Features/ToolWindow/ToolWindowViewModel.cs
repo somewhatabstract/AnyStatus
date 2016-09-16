@@ -45,13 +45,15 @@ namespace AnyStatus.ViewModels
 
         private void Initialize()
         {
+            _userSettings.PropertyChanged += (s, e) => OnPropertyChanged(e.PropertyName);
+
+            SetupCommands();
+
             _usageReporter.ReportScreen("ToolWindow");
+        }
 
-            _userSettings.SettingsReset += (s, e) =>
-            {
-                OnPropertyChanged("RootItem");
-            };
-
+        private void SetupCommands()
+        {
             AddFolderCommand = new RelayCommand(p =>
             {
                 try

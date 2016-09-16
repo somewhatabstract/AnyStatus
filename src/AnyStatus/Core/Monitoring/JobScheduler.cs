@@ -25,16 +25,11 @@ namespace AnyStatus
         {
             try
             {
-                _logger.Info("Initializing scheduler.");
-
-                if (_userSettings.RootItem != null)
-                {
-                    Schedule(_userSettings.RootItem, includeChildren: true);
-                }
+                Schedule(_userSettings.RootItem, includeChildren: true);
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Failed to initialize scheduler.");
+                _logger.Error(ex, "An error occurred while initializing the job scheduler.");
             }
         }
 
@@ -61,7 +56,7 @@ namespace AnyStatus
         public void Schedule(Item item, bool includeChildren = false)
         {
             if (item == null)
-                throw new InvalidOperationException();
+                return;
 
             if (item.IsSchedulable())
             {
@@ -75,12 +70,10 @@ namespace AnyStatus
                 }
         }
 
-        private void RemoveAllSchedules()
+        private void RemoveAll()
         {
             foreach (var schedule in JobManager.AllSchedules)
             {
-                _logger.Info($"Removing scheduled job: {schedule.Name}.");
-
                 JobManager.RemoveJob(schedule.Name);
             }
         }
@@ -104,13 +97,13 @@ namespace AnyStatus
         {
             try
             {
-                RemoveAllSchedules();
+                RemoveAll();
 
                 Initialize();
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "An error occurred while reseting job scheduler.");
+                _logger.Error(ex, "An error occurred while resetting the job scheduler.");
             }
         }
 
