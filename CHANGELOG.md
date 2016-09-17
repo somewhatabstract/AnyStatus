@@ -1,9 +1,5 @@
 # Roadmap
 
-- [x] GitHub Issue status
-- [x] Batch File status
-- [x] PowerShell script status
-- [x] Import/Export user settings
 - [ ] Custom commands (for example, queue new build context menu item)
 - [ ] Improve Visual Studio theme support
 - [ ] Synchronize user settings between Visual Studio instances
@@ -17,6 +13,12 @@ download in the
 
 These are the changes to each version that has been released
 on the official Visual Studio extension gallery.
+
+## 0.8
+
+- [ ] Faster startup
+- [ ] Import and Export settings
+- [ ] Toolbar commands refactoring
 
 ## 0.7
 
