@@ -214,10 +214,9 @@ namespace AnyStatus.Models
 
         public bool CanMoveUp()
         {
-            if (Parent == null || Parent.Items == null)
-                throw new InvalidOperationException();
-
-            return Parent.Items.IndexOf(this) > 0;
+            return Parent != null &&
+                   Parent.Items != null &&
+                   Parent.Items.IndexOf(this) > 0;
         }
 
         public void MoveDown()
@@ -232,10 +231,9 @@ namespace AnyStatus.Models
 
         public bool CanMoveDown()
         {
-            if (Parent == null || Parent.Items == null)
-                throw new InvalidOperationException();
-
-            return Parent.Items.IndexOf(this) + 1 < Parent.Items.Count();
+            return Parent != null && 
+                   Parent.Items != null &&
+                   Parent.Items.IndexOf(this) + 1 < Parent.Items.Count();
         }
 
         private void MoveTo(Folder folder)

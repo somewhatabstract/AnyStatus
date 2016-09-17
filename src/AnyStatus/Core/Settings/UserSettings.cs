@@ -166,6 +166,8 @@ namespace AnyStatus
 
                 var userSettings = (UserSettings)serializer.Deserialize(reader);
 
+                userSettings.RootItem?.RestoreParentChildRelationship();
+
                 ClientId = userSettings.ClientId;
                 RootItem = userSettings.RootItem;
                 DebugMode = userSettings.DebugMode;
