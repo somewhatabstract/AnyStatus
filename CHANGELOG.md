@@ -1,7 +1,7 @@
 # Roadmap
 
 - [ ] Custom commands (for example, queue new build context menu item)
-- [ ] Tooltips
+- [ ] Tooltip information
 - [ ] Improve Visual Studio theme support
 - [ ] Synchronize user settings between Visual Studio instances
 - [ ] Replace AppSettings with WritableSettingsStore
