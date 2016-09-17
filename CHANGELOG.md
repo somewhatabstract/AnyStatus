@@ -24,6 +24,7 @@ on the official Visual Studio extension gallery.
 - [x] Import and Export settings
 - [x] Toolbar commands refactoring
 - [x] Added Test button to new item dialog
+- [x] Press Delete to delete selected item9
 
 ## 0.7
 
@@ -32,7 +33,7 @@ on the official Visual Studio extension gallery.
 - [x] GitHub Issue status
 - [x] PowerShell Script status
 - [x] Batch File status
-- [x] F2 rename selected item
+- [x] Press F2 to rename selected item
 - [x] Expand/Collapse toolbar buttons
 - [x] Enable or disable Report Anonymous Usage in Options dialog
 - [x] Enable or disable debug mode in Options dialog
