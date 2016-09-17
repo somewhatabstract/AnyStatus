@@ -23,8 +23,8 @@ on the official Visual Studio extension gallery.
 - [x] Improved startup
 - [x] Import and Export settings
 - [x] Toolbar commands refactoring
-- [x] Added Test button to new item dialog
-- [x] Press Delete to delete selected item9
+- [x] Added a Test button to new item dialog
+- [x] Press Delete to delete selected item
 
 ## 0.7
 
