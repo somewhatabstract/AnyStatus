@@ -13,13 +13,15 @@ or get the [CI build](http://vsixgallery.com/#/extension/AnyStatus.VSPackage.6f2
 AnyStatus runs in the background and does not have a significant impact on the performance or startup of Visual Studio.
 Moreover, it loads only when the tool window is actived.
 
+See the [changelog](CHANGELOG.md) for changes and **roadmap**.
+
 ## Features 
 
 - Colored status indicators
 - Organize items in folders
 - Automatic and Manual status updates
 - Enable or disable items
-- Import and Export user settings
+- Import and Export settings
 - Informative log messages in output window
 - Monitors
   - Basic
@@ -27,7 +29,7 @@ Moreover, it loads only when the tool window is actived.
     - TCP/IP
     - HTTP
     - Windows Service
-  - Script
+  - Scripts
     - Batch File
     - PowerShell Script
   - Continuous Integration
@@ -40,8 +42,6 @@ Moreover, it loads only when the tool window is actived.
     - GitHub Issue
 
 If you're interested in other types of status or health checks, please create a new issue on [GitHub](https://github.com/AlonAm/AnyStatus/issues).
-
-See the [changelog](CHANGELOG.md) for changes and **roadmap**.
 
 ### Screenshots
 
