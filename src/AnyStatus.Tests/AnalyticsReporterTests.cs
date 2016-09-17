@@ -11,7 +11,7 @@ namespace AnyStatus.Tests
         [TestMethod]
         public void ReportScreen()
         {
-            var reporter = new AnalyticsReporter("UA-83802855-1", "AnyStatus", "AnyStatus", Guid.NewGuid().ToString(), "0.7");
+            var reporter = new AnalyticsReporter("UA-83802855-1", "AnyStatus", "AnyStatus", Guid.NewGuid().ToString(), "0.7", false);
 
             reporter.ReportStartSession();
 

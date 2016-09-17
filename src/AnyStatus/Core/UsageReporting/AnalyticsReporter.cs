@@ -51,13 +51,7 @@ namespace AnyStatus
 
         #endregion
 
-        public AnalyticsReporter(
-            string propertyId,
-            string appName,
-            string appId,
-            string clientId = null,
-            string appVersion = null,
-            bool debug = false)
+        public AnalyticsReporter(string propertyId, string appName, string appId, string clientId, string appVersion, bool debug)
         {
             PropertyId = Preconditions.CheckNotNull(propertyId, nameof(propertyId));
             ApplicationName = Preconditions.CheckNotNull(appName, nameof(appName));

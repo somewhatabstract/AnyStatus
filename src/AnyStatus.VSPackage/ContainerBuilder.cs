@@ -32,15 +32,13 @@ namespace AnyStatus.VSPackage
         private static void RegisterCore(TinyIoCContainer container, Package package)
         {
             container.Register(package);
+            container.Register<AnyStatusApp>().AsSingleton();
             container.Register<IServiceProvider>(package);
             container.Register<IUserSettings, UserSettings>().AsSingleton();
             container.Register<ILogger, Logger>().AsSingleton();
             container.Register<IJobScheduler, JobScheduler>().AsSingleton();
             container.Register<ScheduledJob>().AsMultiInstance();
-            container.Register<IUsageReporter>((c, p) =>
-            {
-                return new AnalyticsReporter("UA-83802855-1", "AnyStatus", "AnyStatus", null, "0.7");
-            });
+            container.Register<IUsageReporter>((c, p) => new AnalyticsReporter("UA-83802855-1", "AnyStatus", "AnyStatus", null, "0.7", false));
         }
 
         private static void RegisterUI(TinyIoCContainer container)
@@ -59,8 +57,6 @@ namespace AnyStatus.VSPackage
             container.Register<OptionsDialogControl>().AsSingleton();
             container.Register<OptionsViewModel>().AsSingleton();
         }
-
-        #region Helpers
 
         private static void RegisterItemHandlers(TinyIoCContainer container)
         {
@@ -122,7 +118,5 @@ namespace AnyStatus.VSPackage
                 return templates;
             });
         }
-
-        #endregion
     }
 }
