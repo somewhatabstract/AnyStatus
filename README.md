@@ -21,7 +21,7 @@ Moreover, it loads only when the tool window is actived.
 - Enable or disable items
 - Import and Export user settings
 - Informative log messages in output window
-- Monitoring
+- Monitors
   - Basic
     - Ping
     - TCP/IP
@@ -29,13 +29,15 @@ Moreover, it loads only when the tool window is actived.
     - Windows Service
   - Script
     - Batch File
-    - PowerShell
+    - PowerShell Script
   - Continuous Integration
     - Team Foundation Server
     - Team Foundation Services (Visual Studio Online)
     - Jenkins
     - TeamCity
     - AppVeyor
+  - Other
+    - GitHub Issue
 
 If you're interested in other types of status or health checks, please create a new issue on [GitHub](https://github.com/AlonAm/AnyStatus/issues).
 
