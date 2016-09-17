@@ -73,8 +73,6 @@ namespace AnyStatus.Models
         [DebuggerStepThrough]
         public void Handle(TfsBuild item)
         {
-            Validate(item);
-
             if (item.BuildDefinitionId <= 0)
             {
                 item.BuildDefinitionId = GetBuildDefinitionIdAsync(item).Result;
@@ -183,14 +181,6 @@ namespace AnyStatus.Models
 
                     return buildDetailsResponse.Value.First();
                 }
-            }
-        }
-
-        private void Validate(TfsBuild item)
-        {
-            if (item == null || item.Url == null)
-            {
-                throw new InvalidOperationException("Invalid item.");
             }
         }
 

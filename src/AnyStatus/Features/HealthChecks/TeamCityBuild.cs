@@ -66,8 +66,6 @@ namespace AnyStatus.Models
         [DebuggerStepThrough]
         public void Handle(TeamCityBuild item)
         {
-            Validate(item);
-
             var build = GetBuildDetailsAsync(item).Result;
 
             SetItemColor(item, build);
@@ -160,14 +158,6 @@ namespace AnyStatus.Models
 
                 default:
                     break;
-            }
-        }
-
-        private static void Validate(TeamCityBuild item)
-        {
-            if (item == null || string.IsNullOrEmpty(item.Url) || string.IsNullOrEmpty(item.BuildTypeId))
-            {
-                throw new InvalidOperationException("Invalid item.");
             }
         }
 

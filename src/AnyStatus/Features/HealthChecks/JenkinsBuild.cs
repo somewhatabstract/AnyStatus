@@ -44,8 +44,6 @@ namespace AnyStatus.Models
         [DebuggerStepThrough]
         public void Handle(JenkinsBuild item)
         {
-            Validate(item);//todo: move to handler validation decorator
-
             var build = GetBuildDetailsAsync(item).Result;
 
             SetItemColor(item, build);
@@ -87,14 +85,6 @@ namespace AnyStatus.Models
 
                     return buildDetails;
                 }
-            }
-        }
-
-        private static void Validate(JenkinsBuild item)
-        {
-            if (item == null || string.IsNullOrEmpty(item.Url))
-            {
-                throw new InvalidOperationException("Invalid item.");
             }
         }
 
