@@ -1,9 +1,11 @@
 # Roadmap
 
 - [ ] Custom commands (for example, queue new build context menu item)
+- [ ] Tooltips
 - [ ] Improve Visual Studio theme support
 - [ ] Synchronize user settings between Visual Studio instances
 - [ ] Replace AppSettings with WritableSettingsStore
+- [ ] Replace TinyIoc with MEF
 
 Features that have a checkmark are complete and available for
 download in the
@@ -16,7 +18,7 @@ on the official Visual Studio extension gallery.
 
 ## 0.8
 
-- [ ] Faster startup
+- [ ] Improved startup
 - [ ] Import and Export settings
 - [ ] Toolbar commands refactoring
 
