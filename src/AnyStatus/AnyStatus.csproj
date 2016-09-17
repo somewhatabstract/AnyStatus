@@ -152,6 +152,7 @@
     <Compile Include="Features\HealthChecks\Editors\PasswordEditor.cs" />
     <Compile Include="Features\HealthChecks\BatchFile.cs" />
     <Compile Include="Core\Monitoring\IScheduledItem.cs" />
+    <Compile Include="Features\HealthChecks\ItemState.cs" />
     <Compile Include="Features\HealthChecks\RootItem.cs" />
     <Compile Include="Features\HealthChecks\GitHubIssue.cs" />
     <Compile Include="Features\HealthChecks\PowerShellScript.cs" />

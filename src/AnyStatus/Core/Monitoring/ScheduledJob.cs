@@ -1,6 +1,7 @@
 ﻿using AnyStatus.Models;
 using FluentScheduler;
 using System;
+using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace AnyStatus.Infrastructure
@@ -26,21 +27,41 @@ namespace AnyStatus.Infrastructure
 
             try
             {
-                _logger.Info($"Updating {Item.Name}.");
+                if (Item.IsValid())
+                {
+                    _logger.Info($"Updating: {Item.Name}.");
 
-                var handlerType = typeof(IHandler<>);
-                var genericHandlerType = handlerType.MakeGenericType(Item.GetType());
-                var handler = TinyIoCContainer.Current.Resolve(genericHandlerType);
+                    var handlerType = typeof(IHandler<>);
+                    var genericHandlerType = handlerType.MakeGenericType(Item.GetType());
+                    var handler = TinyIoCContainer.Current.Resolve(genericHandlerType);
 
-                genericHandlerType.GetMethod("Handle").Invoke(handler, new[] { Item });
+                    genericHandlerType.GetMethod("Handle").Invoke(handler, new[] { Item });
+
+                    Item.State = ItemState.Ok;
+                }
+                else
+                {
+                    Item.State = ItemState.Invalid;
+                }
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, $"Failed to update {Item.Name}.");
+                _logger.Error(ex, $"Failed to update: {Item.Name}.");
 
                 if (Item != null)
+                {
+                    Item.State = ItemState.Faulted;
                     Item.Brush = Brushes.Silver;
+                }
             }
+        }
+
+        public async Task ExecuteAsync()
+        {
+            await Task.Run(() =>
+            {
+                Execute();
+            });
         }
     }
 }

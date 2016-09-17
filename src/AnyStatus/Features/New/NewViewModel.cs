@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -20,6 +21,7 @@ namespace AnyStatus.ViewModels
         private readonly IJobScheduler _jobScheduler;
         private readonly IUsageReporter _usageReporter;
         private readonly ILogger _logger;
+        private bool _canTest = true;
 
         public event EventHandler CloseRequested;
 
@@ -43,62 +45,102 @@ namespace AnyStatus.ViewModels
 
         private void Initialize()
         {
-            AddCommand = new RelayCommand(p =>
-            {
-                try
-                {
-                    AddNewItem(p as Item);
-                }
-                catch (Exception ex)
-                {
-                    _logger.Error(ex, "Failed to add new item.");
-                }
-            });
+            AddCommand = new RelayCommand(p => AddNewItem(p as Item));
 
-            CancelCommand = new RelayCommand(p =>
-            {
-                CloseRequested?.Invoke(this, EventArgs.Empty);
-            });
+            TestCommand = new RelayCommand(p => Test(p as Item), p => CanTest);
+
+            CancelCommand = new RelayCommand(p => CloseRequested?.Invoke(this, EventArgs.Empty));
         }
 
         private void AddNewItem(Item item)
         {
+            try
+            {
+                EnsureItemIsValid(item);
+
+                if (Parent != null) Parent.Add(item);
+                else _userSettings.RootItem.Add(item);
+
+                _userSettings.Save();
+
+                _jobScheduler.Schedule(item);
+
+                _usageReporter.ReportEvent("Items", "Add", item.GetType().Name);
+
+                CloseRequested?.Invoke(this, EventArgs.Empty);
+            }
+            catch (ValidationException)
+            {
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Failed to add new item.");
+            }
+        }
+
+        private void EnsureItemIsValid(Item item)
+        {
             if (item == null)
                 throw new InvalidOperationException("Item cannot be null.");
 
-            var context = new ValidationContext(item, serviceProvider: null, items: null);
-            var results = new List<ValidationResult>();
+            List<ValidationResult> validationResults = null;
 
-            if (!Validator.TryValidateObject(item, context, results))
+            item.Validate(out validationResults);
+
+            if (validationResults.Any())
             {
-                ShowValidationErrorsDialog(results);
-                return;
+                ShowValidationErrorsDialog(validationResults);
+
+                throw new ValidationException();
             }
+        }
 
-            if (item.Id == Guid.Empty)
-                item.Id = Guid.NewGuid();
-
-            if (Parent != null)
+        private async void Test(Item item)
+        {
+            try
             {
-                Parent.Add(item);
-                Parent.IsExpanded = true;
+                CanTest = false;
+
+                EnsureItemIsValid(item);
+
+                var job = new ScheduledJob(_logger) { Item = item };
+
+                await job.ExecuteAsync();
+
+                switch (item.State)
+                {
+                    case ItemState.None:
+                        break;
+                    case ItemState.Ok:
+                        MessageBox.Show("Ok", "Test", MessageBoxButton.OK, MessageBoxImage.Information);
+                        break;
+                    case ItemState.Faulted:
+                        MessageBox.Show("Test failed. See output window for more information.", "Test", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        break;
+                    case ItemState.Invalid:
+                        break;
+                    default:
+                        break;
+                }
             }
-            else
+            catch (ValidationException)
             {
-                _userSettings.RootItem.Add(item);
             }
-
-            _userSettings.Save();
-
-            _jobScheduler.Schedule(item);
-
-            _usageReporter.ReportEvent("Items", "Add", item.GetType().Name);
-
-            CloseRequested?.Invoke(this, EventArgs.Empty);
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Test failed.");
+            }
+            finally
+            {
+                CanTest = true;
+            }
         }
 
         private static void ShowValidationErrorsDialog(IEnumerable<ValidationResult> validationResults)
         {
+            if (validationResults == null || !validationResults.Any())
+                return;
+
             var sb = new StringBuilder();
 
             foreach (var result in validationResults)
@@ -126,9 +168,17 @@ namespace AnyStatus.ViewModels
 
         public Item Parent { get; set; }
 
+        public bool CanTest
+        {
+            get { return _canTest; }
+            set { _canTest = value; OnPropertyChanged(); }
+        }
+
         #region Commands
 
         public ICommand AddCommand { get; set; }
+
+        public ICommand TestCommand { get; set; }
 
         public ICommand CancelCommand { get; set; }
 

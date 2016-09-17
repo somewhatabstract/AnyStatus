@@ -1,7 +1,10 @@
 ﻿using AnyStatus.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.ComponentModel.DataAnnotations;
 
 namespace AnyStatus.Tests
 {
@@ -183,7 +186,8 @@ namespace AnyStatus.Tests
         [TestMethod]
         public void IsSchedulable()
         {
-            var item = new Ping() {
+            var item = new Ping()
+            {
                 IsEnabled = true,
                 Id = Guid.NewGuid()
             };
@@ -202,6 +206,42 @@ namespace AnyStatus.Tests
             item.Add(child);
 
             Assert.IsTrue(item.HasChildren());
+        }
+
+        [TestMethod]
+        public void IsValid()
+        {
+            var item = new Item() { Name = "Valid Item" };
+
+            Assert.IsTrue(item.IsValid());
+
+            item.Name = string.Empty;
+
+            Assert.IsFalse(item.IsValid());
+        }
+
+        [TestMethod]
+        public void Validate_Success()
+        {
+            var item = new Item() { Name = "Valid Item" };
+
+            List<ValidationResult> results;
+
+            Assert.IsTrue(item.Validate(out results));
+            Assert.IsNotNull(results);
+            Assert.IsFalse(results.Any());
+        }
+
+        [TestMethod]
+        public void Validate_Invalid()
+        {
+            var item = new Item();
+
+            List<ValidationResult> results;
+
+            Assert.IsFalse(item.Validate(out results));
+            Assert.IsNotNull(results);
+            Assert.IsTrue(results.Any());
         }
     }
 }

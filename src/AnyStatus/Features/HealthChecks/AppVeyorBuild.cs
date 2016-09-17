@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Net.Http;
@@ -38,8 +37,6 @@ namespace AnyStatus.Models
         [DebuggerStepThrough]
         public void Handle(AppVeyorBuild item)
         {
-            Validate(item);
-
             var build = GetBuildDetailsAsync(item).Result;
 
             SetItemColor(item, build);
@@ -83,20 +80,14 @@ namespace AnyStatus.Models
                 response.EnsureSuccessStatusCode();
 
                 var content = await response.Content.ReadAsStringAsync();
-                
+
                 var buildResponse = new JavaScriptSerializer().Deserialize<AppVeyorBuildResponse>(content);
 
                 return buildResponse.Build;
             }
         }
 
-        private static void Validate(AppVeyorBuild item)
-        {
-            if (item == null || string.IsNullOrEmpty(item.ApiToken))
-            {
-                throw new InvalidOperationException("Invalid item.");
-            }
-        }
+        #region Contracts
 
         public class AppVeyorBuildResponse
         {
@@ -107,5 +98,7 @@ namespace AnyStatus.Models
         {
             public string Status { get; set; }
         }
+
+        #endregion
     }
 }

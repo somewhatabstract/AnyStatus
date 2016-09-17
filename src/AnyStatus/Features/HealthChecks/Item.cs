@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -43,6 +44,7 @@ namespace AnyStatus.Models
 
         [NonSerialized]
         private Brush _brush;
+        private ItemState _state;
 
         #endregion
 
@@ -110,6 +112,14 @@ namespace AnyStatus.Models
             set { _isExpanded = value; OnPropertyChanged(); }
         }
 
+        [XmlIgnore]
+        [Browsable(false)]
+        public ItemState State
+        {
+            get { return _state; }
+            set { _state = value; OnPropertyChanged(); }
+        }
+
         [Browsable(false)]
         [DisplayName("Enabled")]
         public bool IsEnabled
@@ -143,9 +153,12 @@ namespace AnyStatus.Models
             if (item == null || Items == null)
                 throw new InvalidOperationException();
 
+            item.Id = Guid.NewGuid();
             item.Parent = this;
 
             Items.Add(item);
+
+            IsExpanded = true;
         }
 
         public void Collapse()
@@ -231,7 +244,7 @@ namespace AnyStatus.Models
 
         public bool CanMoveDown()
         {
-            return Parent != null && 
+            return Parent != null &&
                    Parent.Items != null &&
                    Parent.Items.IndexOf(this) + 1 < Parent.Items.Count();
         }
@@ -303,6 +316,22 @@ namespace AnyStatus.Models
         public bool HasChildren()
         {
             return Items != null && Items.Any();
+        }
+
+        public bool IsValid()
+        {
+            var context = new ValidationContext(this, serviceProvider: null, items: null);
+
+            return Validator.TryValidateObject(this, context, null);
+        }
+
+        public bool Validate(out List<ValidationResult> results)
+        {
+            results = new List<ValidationResult>();
+
+            var context = new ValidationContext(this, serviceProvider: null, items: null);
+
+            return Validator.TryValidateObject(this, context, results);
         }
 
         #endregion

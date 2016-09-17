@@ -72,10 +72,10 @@
             </xctk:PropertyGrid>
         </StackPanel>
 
-        <StackPanel Grid.Column="2" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Command="{Binding AddCommand}" CommandParameter="{Binding SelectedTemplate.Item}" Width="70" Margin="5">Add</Button>
-            <Button Command="{Binding CancelCommand}" Width="70" Margin="5">Cancel</Button>
-        </StackPanel>
-
+        <DockPanel Grid.Column="2" Grid.Row="1">
+            <Button DockPanel.Dock="Right" Command="{Binding CancelCommand}" Width="70" Margin="5">Cancel</Button>
+            <Button DockPanel.Dock="Right" Command="{Binding AddCommand}" CommandParameter="{Binding SelectedTemplate.Item}" Width="70" Margin="5">Add</Button>
+            <Button DockPanel.Dock="Left" HorizontalAlignment="Left" Command="{Binding TestCommand}" CommandParameter="{Binding SelectedTemplate.Item}" Width="70" Margin="5">Test</Button>
+        </DockPanel>
     </Grid>
 </vsp:DialogWindow>
