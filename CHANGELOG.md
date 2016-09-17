@@ -18,9 +18,12 @@ on the official Visual Studio extension gallery.
 
 ## 0.8
 
-- [ ] Improved startup
-- [ ] Import and Export settings
-- [ ] Toolbar commands refactoring
+**2016-09-17**
+
+- [x] Improved startup
+- [x] Import and Export settings
+- [x] Toolbar commands refactoring
+- [x] Added Test button to new item dialog
 
 ## 0.7
 
