@@ -12,7 +12,7 @@ or get the [CI build](http://vsixgallery.com/#/extension/AnyStatus.VSPackage.6f2
 
 AnyStatus can monitor HTTP servers, send Ping requests, check TCP ports, monitor GitHub Issues, monitor build servers like Team Foundation Server, jenkins, AppVeyor and much more.
 
-AnyStatus runs in the background and does not have a significant impact on the performance or startup of Visual Studio.
+It runs in the background and does not have a significant impact on the performance or startup of Visual Studio.
 Moreover, it loads only when the tool window is actived.
 
 See the [changelog](CHANGELOG.md) for changes and **roadmap**.
