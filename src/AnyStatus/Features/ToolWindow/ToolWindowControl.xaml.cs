@@ -1,4 +1,5 @@
-﻿using AnyStatus.Models;
+﻿using AnyStatus.Infrastructure;
+using AnyStatus.Models;
 using AnyStatus.ViewModels;
 using System;
 using System.Diagnostics;
@@ -18,10 +19,7 @@ namespace AnyStatus.Views
 
         public ToolWindowControl(ToolWindowViewModel viewModel)
         {
-            if (viewModel == null)
-                throw new ArgumentNullException(nameof(viewModel));
-
-            DataContext = _viewModel = viewModel;
+            DataContext = _viewModel = Preconditions.CheckNotNull(viewModel, nameof(viewModel));
 
             InitializeComponent();
         }
@@ -84,24 +82,18 @@ namespace AnyStatus.Views
 
         private void TreeViewItem_DragOver(object sender, DragEventArgs e)
         {
-            e.Effects = DragDropEffects.None;
-
             try
             {
-                if (!e.Data.GetDataPresent(typeof(Item)))
-                    return;
-
                 var source = GetSource(e);
                 var target = GetTarget(sender);
 
-                if (target != null && source != null && source.CanMoveTo(target))
-                {
-                    e.Effects = DragDropEffects.Move;
-                }
+                e.Effects = source != null && target != null && source.CanMoveTo(target) ?
+                     DragDropEffects.Move :
+                     DragDropEffects.None;
             }
-            catch (Exception ex)
+            catch
             {
-                Debug.WriteLine(ex);
+                e.Effects = DragDropEffects.None;
             }
             finally
             {
@@ -113,21 +105,17 @@ namespace AnyStatus.Views
         {
             try
             {
-                if (!e.Data.GetDataPresent(typeof(Item)))
-                    return;
-
                 var source = GetSource(e);
                 var target = GetTarget(sender);
 
-                if (target == null || source == null || !source.CanMoveTo(target))
+                if (source == null || target == null || source.CanMoveTo(target) == false)
                     return;
 
                 source.MoveTo(target);
 
                 target.IsExpanded = true;
 
-                if (_viewModel.SaveCommand.CanExecute(null))
-                    _viewModel.SaveCommand.Execute(null);
+                Save();
             }
             catch (Exception ex)
             {
@@ -140,25 +128,28 @@ namespace AnyStatus.Views
             }
         }
 
+        private void Save()
+        {
+            if (_viewModel.SaveCommand.CanExecute(null))
+                _viewModel.SaveCommand.Execute(null);
+        }
+
         private static Item GetSource(DragEventArgs e)
         {
-            return (Item)e.Data.GetData(typeof(Item));
+            if (e.Data.GetDataPresent(typeof(Item)))
+                return (Item)e.Data.GetData(typeof(Item));
+
+            return null;
         }
 
         private Item GetTarget(object sender)
         {
-            Item target = null;
-
-            if (sender is TreeViewItem)
+            if (sender is TreeViewItem && ((TreeViewItem)sender).DataContext is Item)
             {
-                target = ((TreeViewItem)sender).DataContext as Item;
-            }
-            else if (sender is TreeView)
-            {
-                target = _viewModel?.RootItem;
+                return (Item)((TreeViewItem)sender).DataContext;
             }
 
-            return target;
+            return _viewModel?.RootItem;
         }
 
         #endregion
