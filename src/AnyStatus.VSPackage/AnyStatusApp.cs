@@ -45,6 +45,8 @@ namespace AnyStatus.VSPackage
                 AddCommands(_commands);
 
                 await Task.Run(() => Initialize());
+
+                _usageReporter.ReportStartSession();
             }
             catch (Exception ex)
             {
@@ -57,8 +59,6 @@ namespace AnyStatus.VSPackage
             _userSettings.Initialize();
 
             _logger.IsEnabled = _userSettings.DebugMode;
-
-            _logger.Info($"Client Id: {_userSettings.ClientId}");
 
             _usageReporter.ClientId = _userSettings.ClientId;
 

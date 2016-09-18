@@ -18,18 +18,15 @@ namespace AnyStatus.ViewModels
         private readonly IUserSettings _userSettings;
         private readonly IViewLocator _viewLocator;
         private readonly IJobScheduler _jobScheduler;
-        private readonly IUsageReporter _usageReporter;
 
         public ToolWindowViewModel(IJobScheduler jobScheduler,
                                    IUserSettings userSettings,
                                    IViewLocator viewLocator,
-                                   IUsageReporter usageReporter,
                                    ILogger logger)
         {
             _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
             _userSettings = Preconditions.CheckNotNull(userSettings, nameof(userSettings));
             _viewLocator = Preconditions.CheckNotNull(viewLocator, nameof(viewLocator));
-            _usageReporter = Preconditions.CheckNotNull(usageReporter, nameof(usageReporter));
             _logger = Preconditions.CheckNotNull(logger, nameof(logger));
 
             Initialize();
@@ -47,13 +44,6 @@ namespace AnyStatus.ViewModels
         {
             _userSettings.PropertyChanged += (s, e) => OnPropertyChanged(e.PropertyName);
 
-            SetupCommands();
-
-            _usageReporter.ReportScreen("ToolWindow");
-        }
-
-        private void SetupCommands()
-        {
             AddFolderCommand = new RelayCommand(p =>
             {
                 try
