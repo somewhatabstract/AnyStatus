@@ -9,10 +9,11 @@ namespace AnyStatus.VSPackage
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly IEnumerable<IMenuCommand> _commands;
+
         public CommandRegistry(IServiceProvider serviceProvider, IEnumerable<IMenuCommand> commands)
         {
-            _serviceProvider = serviceProvider;
             _commands = commands;
+            _serviceProvider = serviceProvider;
         }
 
         public void RegisterCommands()
