@@ -9,7 +9,7 @@ namespace AnyStatus.Infrastructure
     {
         public static IEnumerable<Type> FindGenericTypesOf(Type baseType, Assembly assembly)
         {
-            return from  type in assembly.GetTypes()
+            return from type in assembly.GetTypes()
                    where type.IsAbstract == false &&
                          type.IsGenericTypeDefinition == false
 
@@ -29,7 +29,8 @@ namespace AnyStatus.Infrastructure
             return from assembly in assemblies
                    from type in assembly.GetTypes()
 
-                   where type.IsAbstract == false &&
+                   where type != baseType &&
+                         type.IsAbstract == false &&
                          baseType.IsAssignableFrom(type)
 
                    select type;

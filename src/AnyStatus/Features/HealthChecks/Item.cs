@@ -35,16 +35,15 @@ namespace AnyStatus.Models
         private string _name;
         private Item _parent;
         private int _interval;
-        private ObservableCollection<Item> _items;
-
         private bool _isExpanded;
         private bool _isEnabled;
         private bool _isEditing;
         private bool _isSelected;
+        private ItemState _state;
+        private ObservableCollection<Item> _items;
 
         [NonSerialized]
         private Brush _brush;
-        private ItemState _state;
 
         #endregion
 
