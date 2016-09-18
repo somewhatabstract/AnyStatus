@@ -26,6 +26,7 @@ on the official Visual Studio extension gallery.
 - [x] Toolbar commands refactoring
 - [x] Added a Test button to new item dialog
 - [x] Press Delete to delete selected item
+- [x] Fixed a critical bug that prevented first time users to save settings
 
 ## 0.7
 
