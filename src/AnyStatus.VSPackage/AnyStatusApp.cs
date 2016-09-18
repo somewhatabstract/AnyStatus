@@ -4,6 +4,8 @@ using Microsoft.VisualStudio.Shell;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Configuration;
+using System.Diagnostics;
 using Task = System.Threading.Tasks.Task;
 
 namespace AnyStatus.VSPackage
@@ -18,8 +20,8 @@ namespace AnyStatus.VSPackage
         IEnumerable<IMenuCommand> _commands;
 
         public AnyStatusApp(ILogger logger,
-                            IUserSettings userSettings, 
-                            IUsageReporter usageReporter, 
+                            IUserSettings userSettings,
+                            IUsageReporter usageReporter,
                             IJobScheduler jobScheduler,
                             IEnumerable<IMenuCommand> commands,
                             IServiceProvider serviceProvider)
@@ -37,6 +39,8 @@ namespace AnyStatus.VSPackage
             try
             {
                 _logger.Info("Initializing...");
+
+                LogConfigurationFilePath();
 
                 AddCommands(_commands);
 
@@ -71,6 +75,14 @@ namespace AnyStatus.VSPackage
             {
                 commandService.AddCommand(command.MenuCommand);
             }
+        }
+
+        [Conditional("DEBUG")]
+        private void LogConfigurationFilePath()
+        {
+            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
+
+            _logger.Info("Configuration File Path: " + config.FilePath);
         }
     }
 }

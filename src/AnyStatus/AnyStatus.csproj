@@ -156,6 +156,7 @@
     <Compile Include="Features\HealthChecks\RootItem.cs" />
     <Compile Include="Features\HealthChecks\GitHubIssue.cs" />
     <Compile Include="Features\HealthChecks\PowerShellScript.cs" />
+    <Compile Include="Features\HealthChecks\TfsWorkItem.cs" />
     <Compile Include="Infrastructure\Discovery.cs" />
     <Compile Include="Infrastructure\Extensions.cs" />
     <Compile Include="Features\HealthChecks\TCP.cs" />
@@ -228,6 +229,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Key.snk" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

@@ -80,7 +80,7 @@ namespace AnyStatus
 
         private bool FirstTimeInstallation()
         {
-            return RootItem == null;
+            return Properties.Settings.Default.FirstTimeInstallation;
         }
 
         public void Save(bool reload = false)
@@ -119,8 +119,8 @@ namespace AnyStatus
 
                 ClientId = CreateClientId();
                 RootItem = new RootItem();
-                DebugMode = false;
-                ReportAnonymousUsage = true;
+
+                Properties.Settings.Default.FirstTimeInstallation = false;
 
                 Save();
 
