@@ -1,16 +1,19 @@
 ﻿# AnyStatus Visual Studio Extension
 
 [![Build status](https://ci.appveyor.com/api/projects/status/bqr0m4e08nfkb6g2?svg=true)](https://ci.appveyor.com/project/AlonAmsalem/anystatus)
-[![Release](https://img.shields.io/badge/release-v0.7-blue.svg)](https://visualstudiogallery.msdn.microsoft.com/d2262fef-aeca-45dd-9c8c-87c290ee4eb0)
+[![Release](https://img.shields.io/badge/release-v0.8-blue.svg)](https://visualstudiogallery.msdn.microsoft.com/d2262fef-aeca-45dd-9c8c-87c290ee4eb0)
 
 Download this extension from the [VS Gallery](https://visualstudiogallery.msdn.microsoft.com/d2262fef-aeca-45dd-9c8c-87c290ee4eb0)
 or get the [CI build](http://vsixgallery.com/#/extension/AnyStatus.VSPackage.6f25620d-ff50-42d1-89da-709a45cebe10/).
 
 ---------------------------------------
 
-**AnyStatus** is a free and open source Visual Studio Extension that adds monitoring capabilities to Visual Studio for resources and applications you run on your development or other environments. AnyStatus runs in the background and does not have a significant impact on the performance or startup of Visual Studio.
+**AnyStatus** is a lightweight **Visual Studio Extension** that helps developers maintain a healthy development environment and quickly diagnose environmental issues by providing tools to monitor resources and applications on-premise or in the cloud.
 
-See the [changelog](CHANGELOG.md) for changes and roadmap.
+With AnyStatus you can monitor HTTP servers, send Ping requests, check TCP ports, monitor GitHub Issues, monitor build status on Team Foundation Server, Jenkins, AppVeyor, TeamCity and much more, all from within Visual Studio.
+
+AnyStatus runs in the background and does not have a significant impact on the performance or startup of Visual Studio.
+Moreover, it loads only when the tool window is actived.
 
 ## Features 
 
@@ -18,25 +21,29 @@ See the [changelog](CHANGELOG.md) for changes and roadmap.
 - Organize items in folders
 - Automatic and Manual status updates
 - Enable or disable items
-- Import and Export user settings
+- Import and Export settings
 - Informative log messages in output window
-- Monitoring
+- Monitors
   - Basic
     - Ping
     - TCP/IP
     - HTTP
     - Windows Service
-  - Script
+  - Scripts
     - Batch File
-    - PowerShell
+    - PowerShell Script
   - Continuous Integration
     - Team Foundation Server
     - Team Foundation Services (Visual Studio Online)
     - Jenkins
     - TeamCity
     - AppVeyor
+  - Other
+    - GitHub Issue
 
 If you're interested in other types of status or health checks, please create a new issue on [GitHub](https://github.com/AlonAm/AnyStatus/issues).
+
+See the [changelog](CHANGELOG.md) for changes and **roadmap**.
 
 ### Screenshots
 

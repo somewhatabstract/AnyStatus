@@ -1,7 +1,7 @@
 # Roadmap
 
 - [ ] Custom commands (for example, queue new build context menu item)
-- [ ] Tooltips
+- [ ] Tooltip information
 - [ ] Improve Visual Studio theme support
 - [ ] Synchronize user settings between Visual Studio instances
 - [ ] Replace AppSettings with WritableSettingsStore
@@ -18,9 +18,13 @@ on the official Visual Studio extension gallery.
 
 ## 0.8
 
-- [ ] Improved startup
-- [ ] Import and Export settings
-- [ ] Toolbar commands refactoring
+**2016-09-17**
+
+- [x] Improved startup
+- [x] Import and Export settings
+- [x] Toolbar commands refactoring
+- [x] Added a Test button to new item dialog
+- [x] Press Delete to delete selected item
 
 ## 0.7
 
@@ -29,7 +33,7 @@ on the official Visual Studio extension gallery.
 - [x] GitHub Issue status
 - [x] PowerShell Script status
 - [x] Batch File status
-- [x] F2 rename selected item
+- [x] Press F2 to rename selected item
 - [x] Expand/Collapse toolbar buttons
 - [x] Enable or disable Report Anonymous Usage in Options dialog
 - [x] Enable or disable debug mode in Options dialog
