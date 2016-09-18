@@ -1,5 +1,6 @@
 # Roadmap
 
+- [x] Fixed a critical bug in settings initialization
 - [ ] Custom commands (for example, queue new build context menu item)
 - [ ] Tooltip information
 - [ ] Improve Visual Studio theme support
@@ -26,6 +27,7 @@ on the official Visual Studio extension gallery.
 - [x] Toolbar commands refactoring
 - [x] Added a Test button to new item dialog
 - [x] Press Delete to delete selected item
+- [x] Fixed a critical bug in settings initialization
 
 ## 0.7
 
