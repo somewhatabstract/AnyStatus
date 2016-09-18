@@ -16,8 +16,6 @@ All from within Visual Studio.
 AnyStatus runs in the background and does not have a significant impact on the performance or startup of Visual Studio.
 Moreover, it loads only when the tool window is actived.
 
-See the [changelog](CHANGELOG.md) for changes and **roadmap**.
-
 ## Features 
 
 - Colored status indicators
@@ -45,6 +43,8 @@ See the [changelog](CHANGELOG.md) for changes and **roadmap**.
     - GitHub Issue
 
 If you're interested in other types of status or health checks, please create a new issue on [GitHub](https://github.com/AlonAm/AnyStatus/issues).
+
+See the [changelog](CHANGELOG.md) for changes and **roadmap**.
 
 ### Screenshots
 
