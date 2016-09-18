@@ -1,4 +1,5 @@
-﻿using AnyStatus.Views;
+﻿using AnyStatus.Infrastructure;
+using AnyStatus.Views;
 using Microsoft.VisualStudio.Shell;
 using System;
 using System.Diagnostics;
@@ -17,20 +18,35 @@ namespace AnyStatus.VSPackage
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
     public sealed class AnyStatusPackage : Package
     {
+        private TinyIoCContainer _container;
+
         protected override async void Initialize()
         {
             base.Initialize();
 
             try
             {
-                var container = ContainerBuilder.Build(this);
+                _container = ContainerBuilder.Build(this);
 
-                await container.Resolve<AnyStatusApp>().InitializeAsync();
+                await _container.Resolve<AnyStatusApp>().InitializeAsync();
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
             }
+        }
+
+        protected override int QueryClose(out bool canClose)
+        {
+            try
+            {
+                _container.Resolve<IUsageReporter>().ReportEndSession();
+            }
+            catch
+            {
+            }
+
+            return base.QueryClose(out canClose);
         }
     }
 }

@@ -51,16 +51,15 @@ namespace AnyStatus
 
         #endregion
 
-        public AnalyticsReporter(string propertyId, string appName, string appId, string clientId, string appVersion, bool debug)
+        public AnalyticsReporter()
         {
-            PropertyId = Preconditions.CheckNotNull(propertyId, nameof(propertyId));
-            ApplicationName = Preconditions.CheckNotNull(appName, nameof(appName));
-            ApplicationId = Preconditions.CheckNotNull(appId, nameof(appId));
-            ClientId = clientId ?? Guid.NewGuid().ToString();
-            ApplicationVersion = appVersion;
+            PropertyId = "UA-83802855-1";
+            ApplicationId = "AnyStatus";
+            ApplicationName = "AnyStatus";
+            ApplicationVersion = "0.8";
 
-            _debug = debug;
-            _serverUrl = debug ? DebugServerUrl : ProductionServerUrl;
+            _debug = false;
+            _serverUrl = ProductionServerUrl;
             _baseHitData = MakeBaseHitData();
         }
 
@@ -91,6 +90,7 @@ namespace AnyStatus
 
             var hitData = new Dictionary<string, string>(_baseHitData)
             {
+                { ClientIdParam, ClientId },
                 { HitTypeParam, EventTypeValue },
                 { EventCategoryParam, category },
                 { EventActionParam, action },
@@ -102,7 +102,7 @@ namespace AnyStatus
                 hitData[EventValueParam] = value.ToString();
             }
 
-            SendHitData(hitData);
+            SendHitDataAsync(hitData);
         }
 
         public void ReportScreen(string name)
@@ -113,11 +113,12 @@ namespace AnyStatus
 
             var hitData = new Dictionary<string, string>(_baseHitData)
             {
+                { ClientIdParam, ClientId },
                 { HitTypeParam, ScreenViewValue },
                 { ScreenNameParam, name },
             };
 
-            SendHitData(hitData);
+            SendHitDataAsync(hitData);
         }
 
         public void ReportStartSession()
@@ -126,6 +127,7 @@ namespace AnyStatus
 
             var hitData = new Dictionary<string, string>(_baseHitData)
             {
+                { ClientIdParam, ClientId },
                 { HitTypeParam, EventTypeValue },
                 { SessionControlParam, SessionStartValue },
                 { EventCategoryParam, "Session" },
@@ -133,7 +135,7 @@ namespace AnyStatus
                 { EventLabelParam, "Start Session" },
             };
 
-            SendHitData(hitData);
+            SendHitDataAsync(hitData);
         }
 
         public void ReportEndSession()
@@ -142,6 +144,7 @@ namespace AnyStatus
 
             var hitData = new Dictionary<string, string>(_baseHitData)
             {
+                { ClientIdParam, ClientId },
                 { HitTypeParam, EventTypeValue },
                 { SessionControlParam, SessionEndValue },
                 { EventCategoryParam, "Session" },
@@ -162,29 +165,35 @@ namespace AnyStatus
             {
                 { VersionParam, VersionValue },
                 { PropertyIdParam, PropertyId },
-                { ClientIdParam, ClientId },
                 { AppNameParam, ApplicationName },
                 { AppIdParam, ApplicationId },
+                { AppVersionParam, ApplicationVersion },
             };
-
-            if (ApplicationVersion != null)
-            {
-                result.Add(AppVersionParam, ApplicationVersion);
-            }
 
             return result;
         }
 
-        private async void SendHitData(Dictionary<string, string> hitData)
+        private async void SendHitDataAsync(Dictionary<string, string> hitData)
         {
             try
             {
                 using (var client = new HttpClient())
                 using (var form = new FormUrlEncodedContent(hitData))
-                using (var response = await client.PostAsync(_serverUrl, form).ConfigureAwait(false))
-                {
-                    DebugPrintAnalyticsOutput(response.Content.ReadAsStringAsync());
-                }
+                    await client.PostAsync(_serverUrl, form).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+        }
+
+        private void SendHitData(Dictionary<string, string> hitData)
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                using (var form = new FormUrlEncodedContent(hitData))
+                    client.PostAsync(_serverUrl, form).Wait();
             }
             catch (Exception ex)
             {
