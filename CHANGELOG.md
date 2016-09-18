@@ -6,6 +6,7 @@
 - [ ] Synchronize user settings between Visual Studio instances
 - [ ] Replace AppSettings with WritableSettingsStore
 - [ ] Replace TinyIoc with MEF
+- [ ] TFS Work Item status
 
 Features that have a checkmark are complete and available for
 download in the
