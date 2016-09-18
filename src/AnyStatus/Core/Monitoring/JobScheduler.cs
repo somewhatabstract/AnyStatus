@@ -21,7 +21,7 @@ namespace AnyStatus
             _userSettings.SettingsReset += OnSettingsReset;
         }
 
-        public void Initialize()
+        public void Start()
         {
             try
             {
@@ -99,7 +99,7 @@ namespace AnyStatus
             {
                 RemoveAll();
 
-                Initialize();
+                Start();
             }
             catch (Exception ex)
             {

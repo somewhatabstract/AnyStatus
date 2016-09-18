@@ -4,7 +4,7 @@ namespace AnyStatus
 {
     public interface IJobScheduler
     {
-        void Initialize();
+        void Start();
 
         void Schedule(Item item, bool includeChildren = false);
 

@@ -1,37 +1,35 @@
 ﻿using AnyStatus.Infrastructure;
 using AnyStatus.Interfaces;
-using Microsoft.VisualStudio.Shell;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Configuration;
 using System.Diagnostics;
-using Task = System.Threading.Tasks.Task;
+using System.Threading.Tasks;
 
-namespace AnyStatus.VSPackage
+namespace AnyStatus
 {
+    //todo: use state machine
+
     public class AnyStatusApp
     {
-        ILogger _logger;
-        IUserSettings _userSettings;
-        IUsageReporter _usageReporter;
-        IJobScheduler _jobScheduler;
-        IServiceProvider _serviceProvider;
-        IEnumerable<IMenuCommand> _commands;
+        private bool _started;
+        private bool _initialized;
+        private readonly ILogger _logger;
+        private readonly IUserSettings _userSettings;
+        private readonly IUsageReporter _usageReporter;
+        private readonly IJobScheduler _jobScheduler;
+        private readonly ICommandRegistry _commandRegistry;
 
         public AnyStatusApp(ILogger logger,
                             IUserSettings userSettings,
                             IUsageReporter usageReporter,
                             IJobScheduler jobScheduler,
-                            IEnumerable<IMenuCommand> commands,
-                            IServiceProvider serviceProvider)
+                            ICommandRegistry commandRegistry)
         {
             _logger = Preconditions.CheckNotNull(logger, nameof(logger));
             _userSettings = Preconditions.CheckNotNull(userSettings, nameof(userSettings));
             _usageReporter = Preconditions.CheckNotNull(usageReporter, nameof(usageReporter));
             _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
-            _commands = Preconditions.CheckNotNull(commands, nameof(commands));
-            _serviceProvider = Preconditions.CheckNotNull(serviceProvider, nameof(serviceProvider));
+            _commandRegistry = Preconditions.CheckNotNull(commandRegistry, nameof(commandRegistry));
         }
 
         public async Task InitializeAsync()
@@ -42,11 +40,9 @@ namespace AnyStatus.VSPackage
 
                 LogConfigurationFilePath();
 
-                AddCommands(_commands);
+                _commandRegistry.RegisterCommands();
 
-                await Task.Run(() => Initialize());
-
-                _usageReporter.ReportStartSession();
+                await Task.Run(() => Initialize()).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -64,17 +60,37 @@ namespace AnyStatus.VSPackage
 
             _usageReporter.IsEnabled = _userSettings.ReportAnonymousUsage;
 
-            _jobScheduler.Initialize();
+            _initialized = true;
         }
 
-        private void AddCommands(IEnumerable<IMenuCommand> commands)
+        public void Start()
         {
-            var commandService = _serviceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
+            if (_initialized)
+                try
+                {
+                    _jobScheduler.Start();
 
-            foreach (var command in commands)
-            {
-                commandService.AddCommand(command.MenuCommand);
-            }
+                    _usageReporter.ReportStartSession();
+
+                    _started = true;
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error(ex, "AnyStatus failed to start.");
+                }
+        }
+
+        public void Stop()
+        {
+            if (_started)
+                try
+                {
+                    _usageReporter.ReportEndSession();
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error(ex, "AnyStatus failed to stop.");
+                }
         }
 
         [Conditional("DEBUG")]
