@@ -8,7 +8,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -50,6 +49,8 @@ namespace AnyStatus.ViewModels
             TestCommand = new RelayCommand(p => Test(p as Item), p => CanTest);
 
             CancelCommand = new RelayCommand(p => CloseRequested?.Invoke(this, EventArgs.Empty));
+
+            _usageReporter.ReportScreen("Add New Item");
         }
 
         private void AddNewItem(Item item)

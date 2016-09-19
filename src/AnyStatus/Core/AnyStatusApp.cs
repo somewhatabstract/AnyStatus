@@ -72,6 +72,8 @@ namespace AnyStatus
 
                     _usageReporter.ReportStartSession();
 
+                    _usageReporter.ReportScreen("Tool Window");
+
                     _started = true;
                 }
                 catch (Exception ex)

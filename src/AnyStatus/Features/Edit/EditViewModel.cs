@@ -14,13 +14,15 @@ namespace AnyStatus.Features.Edit
         private readonly ILogger _logger;
         private readonly IUserSettings _userSettings;
         private readonly IJobScheduler _jobScheduler;
+        private readonly IUsageReporter _usageReporter;
 
         public event EventHandler CloseRequested;
 
-        public EditViewModel(IUserSettings userSettings, IJobScheduler jobScheduler, ILogger logger)
+        public EditViewModel(IUserSettings userSettings, IJobScheduler jobScheduler, ILogger logger, IUsageReporter usageReporter)
         {
             _userSettings = Preconditions.CheckNotNull(userSettings, nameof(userSettings));
             _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
+            _usageReporter = Preconditions.CheckNotNull(usageReporter, nameof(usageReporter));
             _logger = Preconditions.CheckNotNull(logger, nameof(logger));
 
             Initialize();
@@ -54,6 +56,8 @@ namespace AnyStatus.Features.Edit
             {
                 CloseRequested?.Invoke(this, EventArgs.Empty);
             });
+
+            _usageReporter.ReportScreen("Edit Item");
         }
 
         public Item Item
