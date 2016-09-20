@@ -29,7 +29,6 @@ namespace AnyStatus.VSPackage
             {
                 Debug.WriteLine(ex);
             }
-
         }
     }
 }

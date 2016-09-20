@@ -29,7 +29,7 @@ namespace AnyStatus.VSPackage
 
                 _app = container.Resolve<AnyStatusApp>();
 
-                await _app.InitializeAsync();
+                await _app.InitializeAsync().ConfigureAwait(false);
 
                 _app.Start();
             }
@@ -38,10 +38,10 @@ namespace AnyStatus.VSPackage
                 Debug.WriteLine(ex);
             }
         }
-        
+
         protected override int QueryClose(out bool canClose)
         {
-            _app.Stop();
+            _app?.Stop();
 
             return base.QueryClose(out canClose);
         }

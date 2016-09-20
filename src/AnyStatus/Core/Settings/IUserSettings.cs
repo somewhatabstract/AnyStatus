@@ -1,6 +1,7 @@
 ﻿using AnyStatus.Models;
 using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace AnyStatus.Interfaces
 {
@@ -15,6 +16,8 @@ namespace AnyStatus.Interfaces
         bool DebugMode { get; set; }
 
         bool ReportAnonymousUsage { get; set; }
+
+        Task InitializeAsync();
 
         void Initialize();
 

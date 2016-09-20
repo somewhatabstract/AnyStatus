@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace AnyStatus
@@ -56,6 +57,11 @@ namespace AnyStatus
         #endregion
 
         #region Methods
+
+        public async Task InitializeAsync()
+        {
+            await Task.Run(() => Initialize()).ConfigureAwait(false);
+        }
 
         public void Initialize()
         {

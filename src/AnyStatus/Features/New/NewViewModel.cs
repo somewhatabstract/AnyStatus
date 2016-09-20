@@ -49,8 +49,6 @@ namespace AnyStatus.ViewModels
             TestCommand = new RelayCommand(p => Test(p as Item), p => CanTest);
 
             CancelCommand = new RelayCommand(p => CloseRequested?.Invoke(this, EventArgs.Empty));
-
-            _usageReporter.ReportScreen("Add New Item");
         }
 
         private void AddNewItem(Item item)

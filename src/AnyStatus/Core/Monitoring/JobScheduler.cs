@@ -23,14 +23,12 @@ namespace AnyStatus
 
         public void Start()
         {
-            try
-            {
-                Schedule(_userSettings.RootItem, includeChildren: true);
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, "An error occurred while initializing the job scheduler.");
-            }
+            Schedule(_userSettings.RootItem, includeChildren: true);
+        }
+
+        public void Stop()
+        {
+            JobManager.Stop();
         }
 
         public void Reschedule(Item item, bool includeChildren = false)

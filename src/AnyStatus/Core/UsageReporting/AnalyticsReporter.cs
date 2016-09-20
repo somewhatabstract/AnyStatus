@@ -21,6 +21,7 @@ namespace AnyStatus
     public class AnalyticsReporter : IUsageReporter
     {
         #region Fields
+        private static TimeSpan Timeout = TimeSpan.FromSeconds(3);
 
         private const string ProductionServerUrl = "https://www.google-analytics.com/collect";
         private const string DebugServerUrl = "https://www.google-analytics.com/debug/collect";
@@ -193,7 +194,10 @@ namespace AnyStatus
             {
                 using (var client = new HttpClient())
                 using (var form = new FormUrlEncodedContent(hitData))
+                {
+                    client.Timeout = Timeout;
                     client.PostAsync(_serverUrl, form).Wait();
+                }
             }
             catch (Exception ex)
             {

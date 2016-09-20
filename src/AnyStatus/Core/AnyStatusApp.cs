@@ -1,18 +1,12 @@
 ﻿using AnyStatus.Infrastructure;
 using AnyStatus.Interfaces;
 using System;
-using System.Configuration;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace AnyStatus
 {
-    //todo: use state machine
-
     public class AnyStatusApp
     {
-        private bool _started;
-        private bool _initialized;
         private readonly ILogger _logger;
         private readonly IUserSettings _userSettings;
         private readonly IUsageReporter _usageReporter;
@@ -38,69 +32,48 @@ namespace AnyStatus
             {
                 _logger.Info("Initializing...");
 
-                LogConfigurationFilePath();
-
                 _commandRegistry.RegisterCommands();
 
-                await Task.Run(() => Initialize()).ConfigureAwait(false);
+                await _userSettings.InitializeAsync().ConfigureAwait(false);
+
+                _logger.IsEnabled = _userSettings.DebugMode;
+
+                _usageReporter.ClientId = _userSettings.ClientId;
+
+                _usageReporter.IsEnabled = _userSettings.ReportAnonymousUsage;
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Initialization failed.");
+                _logger.Error(ex, "AnyStatus failed to initialize.");
             }
-        }
-
-        private void Initialize()
-        {
-            _userSettings.Initialize();
-
-            _logger.IsEnabled = _userSettings.DebugMode;
-
-            _usageReporter.ClientId = _userSettings.ClientId;
-
-            _usageReporter.IsEnabled = _userSettings.ReportAnonymousUsage;
-
-            _initialized = true;
         }
 
         public void Start()
         {
-            if (_initialized)
-                try
-                {
-                    _jobScheduler.Start();
+            try
+            {
+                _jobScheduler.Start();
 
-                    _usageReporter.ReportStartSession();
-
-                    _usageReporter.ReportScreen("Tool Window");
-
-                    _started = true;
-                }
-                catch (Exception ex)
-                {
-                    _logger.Error(ex, "AnyStatus failed to start.");
-                }
+                _usageReporter.ReportStartSession();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "AnyStatus failed to start.");
+            }
         }
 
         public void Stop()
         {
-            if (_started)
-                try
-                {
-                    _usageReporter.ReportEndSession();
-                }
-                catch (Exception ex)
-                {
-                    _logger.Error(ex, "AnyStatus failed to stop.");
-                }
-        }
+            try
+            {
+                _jobScheduler.Stop();
 
-        [Conditional("DEBUG")]
-        private void LogConfigurationFilePath()
-        {
-            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
-
-            _logger.Info("Configuration File Path: " + config.FilePath);
+                _usageReporter.ReportEndSession();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "AnyStatus failed to stop.");
+            }
         }
     }
 }

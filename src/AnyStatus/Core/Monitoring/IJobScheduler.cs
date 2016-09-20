@@ -15,5 +15,6 @@ namespace AnyStatus
         void Remove(Item item);
          
         void ExecuteAll();
+        void Stop();
     }
 }
