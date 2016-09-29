@@ -12,10 +12,7 @@ namespace AnyStatus.Infrastructure
 
         public ScheduledJob(ILogger logger)
         {
-            if (logger == null)
-                throw new ArgumentNullException(nameof(logger));
-
-            _logger = logger;
+            _logger = Preconditions.CheckNotNull(logger, nameof(logger));
         }
 
         public Item Item { get; set; }
@@ -48,11 +45,9 @@ namespace AnyStatus.Infrastructure
             {
                 _logger.Error(ex, $"Failed to update: {Item.Name}.");
 
-                if (Item != null)
-                {
-                    Item.State = ItemState.Faulted;
-                    Item.Brush = Brushes.Silver;
-                }
+                Item.State = ItemState.Faulted;
+
+                Item.Brush = Brushes.Silver;
             }
         }
 
