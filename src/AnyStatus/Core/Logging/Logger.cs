@@ -27,7 +27,7 @@ namespace AnyStatus.Infrastructure
 
         public void Error(Exception exception, string message)
         {
-            Log($"{message}\r\nException: {exception.Message}\r\nInner Exception: {exception.InnerException?.Message}");
+            Log($"{message}\r\nException: {exception}");
         }
 
         private bool EnsurePane()
