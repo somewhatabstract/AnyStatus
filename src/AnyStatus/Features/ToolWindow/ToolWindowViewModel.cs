@@ -214,7 +214,7 @@ namespace AnyStatus.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error(ex, "Failed to refresh item.");
+                    _logger.Error(ex, "Failed to refresh item");
                 }
             });
 
@@ -234,7 +234,7 @@ namespace AnyStatus.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    _logger.Info("Failed to move item up. Exception: " + ex.ToString());
+                    _logger.Error(ex, "Failed to move item up");
                 }
             },
             p =>
@@ -260,7 +260,7 @@ namespace AnyStatus.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    _logger.Info("Failed to move item down. Exception: " + ex.ToString());
+                    _logger.Error(ex, "Failed to move item down");
                 }
             },
             p =>

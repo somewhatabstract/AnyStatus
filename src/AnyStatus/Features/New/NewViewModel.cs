@@ -73,7 +73,7 @@ namespace AnyStatus.ViewModels
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Failed to add new item.");
+                _logger.Error(ex, "Failed to add new item");
             }
         }
 
@@ -127,7 +127,7 @@ namespace AnyStatus.ViewModels
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Test failed.");
+                _logger.Error(ex, "Test failed");
             }
             finally
             {

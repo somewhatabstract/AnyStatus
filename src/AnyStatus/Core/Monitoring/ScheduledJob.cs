@@ -41,9 +41,13 @@ namespace AnyStatus.Infrastructure
                     Item.State = ItemState.Invalid;
                 }
             }
+            catch (InvalidOperationException ex)
+            {
+                _logger.Error(ex);
+            }
             catch (Exception ex)
             {
-                _logger.Error(ex, $"Failed to update: {Item.Name}.");
+                _logger.Error(ex, $"Failed to update {Item.Name}");
 
                 Item.State = ItemState.Faulted;
 

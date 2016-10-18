@@ -44,7 +44,7 @@ namespace AnyStatus
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "An error occurred while initializing AnyStatus.");
+                _logger.Error(ex, "An error occurred while initializing AnyStatus");
             }
         }
 
@@ -58,7 +58,7 @@ namespace AnyStatus
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "An error occurred while starting AnyStatus.");
+                _logger.Error(ex, "An error occurred while starting AnyStatus");
             }
         }
 
@@ -72,7 +72,7 @@ namespace AnyStatus
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "An error occurred while stopping AnyStatus.");
+                _logger.Error(ex, "An error occurred while stopping AnyStatus");
             }
         }
     }

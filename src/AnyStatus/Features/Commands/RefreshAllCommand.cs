@@ -22,7 +22,7 @@ namespace AnyStatus
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Failed to refresh all items.");
+                _logger.Error(ex, "Failed to refresh all items");
             }
         }
     }

@@ -101,7 +101,7 @@ namespace AnyStatus
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "An error occurred while resetting the job scheduler.");
+                _logger.Error(ex, "An error occurred while resetting the job scheduler");
             }
         }
 

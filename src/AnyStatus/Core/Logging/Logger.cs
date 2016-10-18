@@ -25,9 +25,14 @@ namespace AnyStatus.Infrastructure
             Log(message);
         }
 
+        public void Error(Exception exception)
+        {
+            Log(exception.ToString());
+        }
+
         public void Error(Exception exception, string message)
         {
-            Log($"{message}\r\nException: {exception}");
+            Log($"{message}. Exception:\r\n{exception}");
         }
 
         private bool EnsurePane()

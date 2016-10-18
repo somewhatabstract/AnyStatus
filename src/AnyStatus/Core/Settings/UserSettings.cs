@@ -80,7 +80,7 @@ namespace AnyStatus
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Failed to initialize settings.");
+                _logger.Error(ex, "Failed to initialize settings");
             }
         }
 
@@ -113,7 +113,7 @@ namespace AnyStatus
             }
             catch (AggregateException ex)
             {
-                _logger.Error(ex, "Failed to save settings.");
+                _logger.Error(ex, "Failed to save settings");
             }
         }
 
@@ -134,7 +134,7 @@ namespace AnyStatus
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Failed to restore default settings.");
+                _logger.Error(ex, "Failed to restore default settings");
             }
         }
 
@@ -150,7 +150,7 @@ namespace AnyStatus
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Failed to export settings.");
+                _logger.Error(ex, "Failed to export settings");
                 throw;
             }
             finally
@@ -185,7 +185,7 @@ namespace AnyStatus
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Failed to import settings.");
+                _logger.Error(ex, "Failed to import settings");
                 throw;
             }
             finally
