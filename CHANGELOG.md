@@ -28,6 +28,7 @@ on the official Visual Studio extension gallery.
 - [x] Added a Test button to new item dialog
 - [x] Press Delete to delete selected item
 - [x] Fixed a critical bug in settings initialization
+- [x] Detailed exception log messages
 
 ## 0.7
 
