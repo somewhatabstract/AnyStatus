@@ -44,11 +44,18 @@ namespace AnyStatus.Models
                     handler.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
                 }
 
-                using (var client = new HttpClient(handler))
+                try
                 {
-                    var response = client.GetAsync(item.Url).Result;
+                    using (var client = new HttpClient(handler))
+                    {
+                        var response = client.GetAsync(item.Url).Result;
 
-                    item.Brush = response.StatusCode == item.HttpStatusCode ? Brushes.Green : Brushes.Red;
+                        item.Brush = response.StatusCode == item.HttpStatusCode ? Brushes.Green : Brushes.Red;
+                    }
+                }
+                catch (HttpRequestException)
+                {
+                    item.Brush = Brushes.Red;
                 }
             }
         }
