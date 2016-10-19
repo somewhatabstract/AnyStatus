@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Net;
@@ -53,9 +54,15 @@ namespace AnyStatus.Models
                         item.Brush = response.StatusCode == item.HttpStatusCode ? Brushes.Green : Brushes.Red;
                     }
                 }
-                catch (HttpRequestException)
+                catch (AggregateException ae)
                 {
-                    item.Brush = Brushes.Red;
+                    ae.Handle(ex =>
+                    {
+                        if (ex is HttpRequestException)
+                            item.Brush = Brushes.Red;
+
+                        return ex is HttpRequestException;
+                    });
                 }
             }
         }
