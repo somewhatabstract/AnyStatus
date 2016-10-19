@@ -29,6 +29,7 @@ on the official Visual Studio extension gallery.
 - [x] Press Delete to delete selected item
 - [x] Fixed a critical bug in settings initialization
 - [x] Detailed exception log messages
+- [x] HTTP Status: treat HttpRequestException as error
 
 ## 0.7
 
