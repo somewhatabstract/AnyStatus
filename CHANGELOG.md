@@ -1,6 +1,9 @@
 # Roadmap
 
-- [x] Fixed a critical bug in settings initialization
+- [ ] Duplicate item
+- [ ] Refresh all items within group
+- [ ] Enable/Disable all items within a group
+- [ ] Customize status colors (colorblind support)
 - [ ] Custom commands (for example, queue new build context menu item)
 - [ ] Tooltip information
 - [ ] Improve Visual Studio theme support
@@ -18,6 +21,12 @@ download in the
 These are the changes to each version that has been released
 on the official Visual Studio extension gallery.
 
+##0.9
+
+**2016-11-03**
+
+
+
 ## 0.8
 
 **2016-09-17**
@@ -30,6 +39,7 @@ on the official Visual Studio extension gallery.
 - [x] Fixed a critical bug in settings initialization
 - [x] Detailed exception log messages
 - [x] HTTP Status: treat HttpRequestException as error
+- [x] Fixed a critical bug in settings initialization
 
 ## 0.7
 
