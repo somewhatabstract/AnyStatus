@@ -317,6 +317,20 @@ namespace AnyStatus.Models
             return Items != null && Items.Any();
         }
 
+        public bool HasChildrenOfType(Type type)
+        {
+            if (Items == null) return false;
+
+            foreach (var item in Items)
+            {
+                if (item.GetType().Equals(type)) return true;
+                
+                else if (item.HasChildrenOfType(type)) return true;
+            }
+
+            return false;
+        }
+
         public bool IsValid()
         {
             var context = new ValidationContext(this, serviceProvider: null, items: null);

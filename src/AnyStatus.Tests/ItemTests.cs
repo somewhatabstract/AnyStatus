@@ -209,6 +209,19 @@ namespace AnyStatus.Tests
         }
 
         [TestMethod]
+        public void HasChildrenOfType()
+        {
+            var item1 = new Item();
+            var item2 = new Item();
+            var item3 = new AppVeyorBuild();
+
+            item1.Add(item2);
+            item2.Add(item3);
+
+            Assert.IsTrue(item1.HasChildrenOfType(typeof(AppVeyorBuild)));
+        }
+
+        [TestMethod]
         public void IsValid()
         {
             var item = new Item() { Name = "Valid Item" };

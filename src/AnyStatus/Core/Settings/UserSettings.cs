@@ -209,11 +209,37 @@ namespace AnyStatus
 
         private void Upgrade()
         {
-            if (string.IsNullOrEmpty(ClientId))
+            if (RootItem.HasChildrenOfType(typeof(AppVeyorBuild)))
             {
-                ClientId = CreateClientId();
 
-                Save();
+
+                UpgradeAppVeyorItems(RootItem);
+            }
+        }
+
+        private void UpgradeAppVeyorItems(Item item)
+        {
+            if (item is AppVeyorBuild)
+            {
+                var appVeyorItem = item as AppVeyorBuild;
+
+                if (string.IsNullOrEmpty(appVeyorItem.ProjectName) == false)
+                {
+                    _logger.Info("Upgrading AppVeyor item: " + appVeyorItem.Name);
+
+                    appVeyorItem.ProjectSlug = appVeyorItem.ProjectName;
+
+                    appVeyorItem.ProjectName = string.Empty;
+
+                    Save();
+                }
+            }
+            else if (item.HasChildren())
+            {
+                foreach (var childItem in item.Items)
+                {
+                    UpgradeAppVeyorItems(childItem);
+                }
             }
         }
 

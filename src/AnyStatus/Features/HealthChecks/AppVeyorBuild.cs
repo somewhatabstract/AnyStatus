@@ -19,11 +19,14 @@ namespace AnyStatus.Models
         [Description("The AppVeyor account name")]
         public string AccountName { get; set; }
 
+        [Browsable(false)]
+        public string ProjectName { get; set; } //Obsolete. Remove in future versions.
+
         [Required]
         [Category("AppVeyor")]
-        [DisplayName("Project Name")]
-        [Description("The AppVeyor project name")]
-        public string ProjectName { get; set; }
+        [DisplayName("Project Slug")]
+        [Description("The project slug is the last part of the AppVeyor project URL. For example: https://ci.appveyor.com/project/AccountName/Project-Slug")]
+        public string ProjectSlug { get; set; }
 
         [Required]
         [Category("AppVeyor")]
@@ -73,7 +76,7 @@ namespace AnyStatus.Models
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", item.ApiToken);
 
-                var apiUrl = $"{host}/{item.AccountName}/{item.ProjectName}";
+                var apiUrl = $"{host}/{item.AccountName}/{item.ProjectSlug}";
 
                 var response = await client.GetAsync(apiUrl);
 
