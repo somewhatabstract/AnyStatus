@@ -57,7 +57,7 @@ namespace AnyStatus
             PropertyId = "UA-83802855-1";
             ApplicationId = "AnyStatus";
             ApplicationName = "AnyStatus";
-            ApplicationVersion = "0.8";
+            ApplicationVersion = "0.9";
 
             _debug = false;
             _serverUrl = ProductionServerUrl;
