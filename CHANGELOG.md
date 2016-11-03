@@ -25,7 +25,7 @@ on the official Visual Studio extension gallery.
 
 **2016-11-03**
 
-
+Coming soon...
 
 ## 0.8
 
