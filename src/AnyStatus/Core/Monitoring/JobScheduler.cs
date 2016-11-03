@@ -40,14 +40,21 @@ namespace AnyStatus
 
         public void Execute(Item item)
         {
-            if (item == null)
-                return;
+            if (item == null) return;
 
             if (item is IScheduledItem)
             {
                 var schedule = JobManager.GetSchedule(item.Id.ToString());
 
                 if (schedule != null) schedule.Execute();
+            }
+
+            if (item.HasChildren())
+            {
+                foreach (var child in item.Items)
+                {
+                    Execute(child);
+                }
             }
         }
 

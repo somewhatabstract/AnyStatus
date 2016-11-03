@@ -35,18 +35,31 @@
 
             <TreeView.ContextMenu>
                 <ContextMenu>
+                    
+                    <MenuItem Header=" Refresh" 
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.RefreshItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                                          CommandParameter="{Binding RootItem}">
+                        <MenuItem.Icon>
+                            <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Refresh}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <Separator />
+                    
                     <MenuItem Header=" New Item..." 
                               Command="{Binding Path=PlacementTarget.Tag.DataContext.AddItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
                         <MenuItem.Icon>
                             <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.NewItem}" />
                         </MenuItem.Icon>
                     </MenuItem>
+                    
                     <MenuItem Header=" New Folder" 
                               Command="{Binding Path=PlacementTarget.Tag.DataContext.AddFolderCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
                         <MenuItem.Icon>
                             <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.AddFolder}" />
                         </MenuItem.Icon>
                     </MenuItem>
+                    
                 </ContextMenu>
             </TreeView.ContextMenu>
 
@@ -61,6 +74,16 @@
                                 Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
                         <StackPanel.ContextMenu>
                             <ContextMenu>
+
+                                <MenuItem Header=" Refresh" 
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.RefreshItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                                          CommandParameter="{Binding}">
+                                    <MenuItem.Icon>
+                                        <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Refresh}" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+
+                                <Separator />
 
                                 <MenuItem Header=" New Item..." 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.AddItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
