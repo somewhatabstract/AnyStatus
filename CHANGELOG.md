@@ -1,7 +1,7 @@
 # Roadmap
 
 - [ ] Duplicate item
-- [ ] Refresh all items within group
+- [x] Refresh all items within group
 - [ ] Enable/Disable all items within a group
 - [ ] Customize status colors (colorblind support)
 - [ ] Custom commands (for example, queue new build context menu item)
@@ -25,7 +25,7 @@ on the official Visual Studio extension gallery.
 
 **2016-11-03**
 
-Coming soon...
+- [x] Added a Refresh button to folders
 
 ## 0.8
 
