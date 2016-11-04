@@ -201,6 +201,33 @@ namespace AnyStatus.Models
             }
         }
 
+        public Item Duplicate()
+        {
+            var item = (Item)Clone();
+
+            item.Name = GetNextName();
+
+            Parent.Add(item);
+
+            item.MoveAfter(this);
+
+            return item;
+        }
+
+        /// <summary>
+        /// Generates a new name when duplicating
+        /// </summary>
+        private string GetNextName()
+        {
+            int i = 1;
+            var name = string.Empty;
+
+            do name = $"{Name} #{i++}";
+            while (Parent.Items.Any(item => item.Name == name));
+
+            return name;
+        }
+
         public void RestoreParentChildRelationship()
         {
             if (Items == null)
@@ -298,6 +325,13 @@ namespace AnyStatus.Models
             }
         }
 
+        private void MoveAfter(Item target)
+        {
+            var targetIndex = Parent.Items.IndexOf(target);
+            Parent.Items.Remove(this);
+            Parent.Items.Insert(targetIndex + 1, this);
+        }
+
         public void ReplaceWith(Item item)
         {
             var index = Parent.Items.IndexOf(this);
@@ -324,7 +358,7 @@ namespace AnyStatus.Models
             foreach (var item in Items)
             {
                 if (item.GetType().Equals(type)) return true;
-                
+
                 else if (item.HasChildrenOfType(type)) return true;
             }
 

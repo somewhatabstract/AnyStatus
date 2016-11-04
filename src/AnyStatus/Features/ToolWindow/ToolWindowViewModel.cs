@@ -98,6 +98,28 @@ namespace AnyStatus.ViewModels
                 }
             });
 
+            DuplicateCommand = new RelayCommand(p =>
+            {
+                //todo: remove duplication with new item modal
+
+                var selectedItem = p as Item;
+
+                if (selectedItem == null) return;
+
+                try
+                {
+                    var item = selectedItem.Duplicate();
+
+                    _userSettings.Save();
+
+                    _jobScheduler.Schedule(item);
+                }
+                catch (Exception ex)
+                {
+                    _logger.Info("Failed to duplicate item. Exception: " + ex.ToString());
+                }
+            });
+
             AddItemCommand = new RelayCommand(p =>
             {
                 try
@@ -278,6 +300,7 @@ namespace AnyStatus.ViewModels
         public ICommand RenameCommand { get; set; }
         public ICommand AddItemCommand { get; set; }
         public ICommand EditItemCommand { get; set; }
+        public ICommand DuplicateCommand { get; set; }
         public ICommand RefreshItemCommand { get; set; }
         public ICommand EnableItemCommand { get; set; }
         public ICommand DisableItemCommand { get; set; }
