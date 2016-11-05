@@ -52,6 +52,7 @@ namespace AnyStatus.Models
             _logger = logger;
         }
 
+        [DebuggerStepThrough]
         public void Handle(PowerShellScript item)
         {
             if (!File.Exists(item.FileName))

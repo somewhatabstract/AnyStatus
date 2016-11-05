@@ -38,6 +38,7 @@ namespace AnyStatus.Models
 
     public class BatchFileHandler : IHandler<BatchFile>
     {
+        [DebuggerStepThrough]
         public void Handle(BatchFile item)
         {
             if (!File.Exists(item.FileName))
