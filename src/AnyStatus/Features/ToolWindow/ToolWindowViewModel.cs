@@ -198,15 +198,12 @@ namespace AnyStatus.ViewModels
                 {
                     var item = p as Item;
 
-                    if (item == null)
-                        return;
+                    if (item == null) return;
 
                     if (item is IScheduledItem)
                         JobManager.RemoveJob(item.Id.ToString());
 
                     item.IsEnabled = false;
-
-                    item.Brush = Brushes.Silver;
 
                     _userSettings.Save();
                 }

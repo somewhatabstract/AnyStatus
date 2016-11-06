@@ -2,7 +2,6 @@
 using FluentScheduler;
 using System;
 using System.Threading.Tasks;
-using System.Windows.Media;
 
 namespace AnyStatus.Infrastructure
 {
@@ -26,32 +25,24 @@ namespace AnyStatus.Infrastructure
             {
                 if (Item.IsValid())
                 {
-                    _logger.Info($"Updating: {Item.Name}.");
+                    _logger.Info($"Updating \"{Item.Name}\".");
 
                     var handlerType = typeof(IHandler<>);
                     var genericHandlerType = handlerType.MakeGenericType(Item.GetType());
                     var handler = TinyIoCContainer.Current.Resolve(genericHandlerType);
 
                     genericHandlerType.GetMethod("Handle").Invoke(handler, new[] { Item });
-
-                    Item.State = ItemState.Ok;
                 }
                 else
                 {
                     Item.State = ItemState.Invalid;
                 }
             }
-            catch (InvalidOperationException ex)
-            {
-                _logger.Error(ex);
-            }
             catch (Exception ex)
             {
-                _logger.Error(ex, $"Failed to update {Item.Name}");
+                _logger.Error(ex, $"Failed to update \"{Item.Name}\".");
 
-                Item.State = ItemState.Faulted;
-
-                Item.Brush = Brushes.Silver;
+                Item.State = ItemState.Error;
             }
         }
 

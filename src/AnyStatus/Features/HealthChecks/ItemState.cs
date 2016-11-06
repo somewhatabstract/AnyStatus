@@ -3,8 +3,16 @@
     public enum ItemState
     {
         None,
+        Unknown,
+        Disabled,
+        Canceled,
         Ok,
-        Faulted,
-        Invalid
+        Open,
+        Closed,
+        PartiallySucceeded,
+        Failed,
+        Invalid,
+        Error,
+        InProgress,
     }
 }

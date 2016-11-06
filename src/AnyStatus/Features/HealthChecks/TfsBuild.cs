@@ -9,7 +9,6 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
-using System.Windows.Media;
 using System.Xml.Serialization;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
@@ -80,40 +79,31 @@ namespace AnyStatus.Models
 
             var buildDetails = GetBuildDetailsAsync(item).Result;
 
-            SetItemColor(item, buildDetails);
-        }
-
-        private void SetItemColor(TfsBuild item, TfsBuildDetails buildDetails)
-        {
             if (buildDetails.Status == "notStarted" || buildDetails.Status == "inProgress")
             {
-                item.Brush = Brushes.DodgerBlue;
+                item.State = ItemState.InProgress;
                 return;
             }
 
             switch (buildDetails.Result)
             {
                 case "notStarted":
-                    item.Brush = Brushes.DodgerBlue;
+                    item.State = ItemState.InProgress;
                     break;
-
                 case "succeeded":
-                    item.Brush = Brushes.Green;
+                    item.State = ItemState.Ok;
                     break;
-
                 case "failed":
-                    item.Brush = Brushes.Red;
+                    item.State = ItemState.Failed;
                     break;
-
                 case "partiallySucceeded":
-                    item.Brush = Brushes.Orange;
+                    item.State = ItemState.PartiallySucceeded;
                     break;
-
                 case "canceled":
-                    item.Brush = Brushes.Gray;
+                    item.State = ItemState.Canceled;
                     break;
-
                 default:
+                    item.State = ItemState.Unknown;
                     break;
             }
         }

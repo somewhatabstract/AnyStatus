@@ -52,8 +52,7 @@ namespace AnyStatus.Models
             IsEnabled = true;
             IsExpanded = true;
             Interval = 5;
-            Brush = Brushes.Silver;
-            Items = new ObservableCollection<Item>();
+            Items = new ObservableCollection<Item>(); //todo: set for root and folder items only.
         }
 
         #region Properties
@@ -97,14 +96,6 @@ namespace AnyStatus.Models
 
         [XmlIgnore]
         [Browsable(false)]
-        public Brush Brush
-        {
-            get { return _brush; }
-            set { _brush = value; OnPropertyChanged(); }
-        }
-
-        [XmlIgnore]
-        [Browsable(false)]
         public bool IsExpanded
         {
             get { return _isExpanded; }
@@ -124,7 +115,12 @@ namespace AnyStatus.Models
         public bool IsEnabled
         {
             get { return _isEnabled; }
-            set { _isEnabled = value; OnPropertyChanged(); }
+            set
+            {
+                _isEnabled = value;
+                if (!_isEnabled) State = ItemState.Disabled;
+                OnPropertyChanged();
+            }
         }
 
         [XmlIgnore]
@@ -214,9 +210,6 @@ namespace AnyStatus.Models
             return item;
         }
 
-        /// <summary>
-        /// Generates a new name when duplicating
-        /// </summary>
         private string GetNextName()
         {
             int i = 1;

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
@@ -9,7 +8,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
-using System.Windows.Media;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace AnyStatus.Models
@@ -68,7 +66,33 @@ namespace AnyStatus.Models
         {
             var build = GetBuildDetailsAsync(item).Result;
 
-            SetItemColor(item, build);
+            if (build.Running)
+            {
+                item.State = ItemState.InProgress;
+                return;
+            }
+
+            //if (build.CancelledInfo)
+            //{
+            //    item.Brush = Brushes.Gray;
+            //    item.State = ItemState.Canceled;
+            //    return;
+            //}
+
+            switch (build.Status)
+            {
+                case "SUCCESS":
+                    item.State = ItemState.Ok;
+                    break;
+                case "FAILURE":
+                case "ERROR":
+                    item.State = ItemState.Failed;
+                    break;
+                case "UNKNOWN":
+                default:
+                    item.State = ItemState.Unknown;
+                    break;
+            }
         }
 
         private async Task<TeamCityBuildDetails> GetBuildDetailsAsync(TeamCityBuild item)
@@ -125,40 +149,6 @@ namespace AnyStatus.Models
         private static void RemoveLastChar(TeamCityBuild item)
         {
             item.Url = item.Url.Remove(item.Url.Length - 1);
-        }
-
-        private void SetItemColor(TeamCityBuild item, TeamCityBuildDetails build)
-        {
-            if (build.Running)
-            {
-                item.Brush = Brushes.DodgerBlue;
-                return;
-            }
-
-            //if (build.CancelledInfo)
-            //{
-            //    item.Brush = Brushes.Gray;
-            //    return;
-            //}
-
-            switch (build.Status)
-            {
-                case "SUCCESS":
-                    item.Brush = Brushes.Green;
-                    break;
-
-                case "FAILURE":
-                case "ERROR":
-                    item.Brush = Brushes.Red;
-                    break;
-
-                case "UNKNOWN":
-                    item.Brush = Brushes.Gray;
-                    break;
-
-                default:
-                    break;
-            }
         }
 
         #region Contracts

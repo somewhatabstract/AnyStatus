@@ -65,6 +65,8 @@
 
             <TreeView.Resources>
 
+                <local:StateToBrushConverter x:Key="StateToBrushConverter" />
+                
                 <!--Folder-->
                 <HierarchicalDataTemplate DataType="{x:Type models:Folder}" ItemsSource="{Binding Items}">
                     <StackPanel Height="30" 
@@ -140,7 +142,7 @@
                             </ContextMenu>
                         </StackPanel.ContextMenu>
 
-                        <Rectangle Width="5" Margin="0,0,5,0" />
+                        <Rectangle Width="5" Fill="{Binding State, Converter={StaticResource StateToBrushConverter}}" Margin="0,0,5,0" />
 
                         <views:EditableTextBlock Text="{Binding Name}" 
                                                  FontWeight="Bold"
@@ -285,7 +287,7 @@
                             </ContextMenu>
                         </StackPanel.ContextMenu>
 
-                        <Rectangle Width="5" Fill="{Binding Brush}" Margin="0,0,5,0" />
+                        <Rectangle Width="5" Fill="{Binding State, Converter={StaticResource StateToBrushConverter}}" Margin="0,0,5,0" />
 
                         <views:EditableTextBlock Text="{Binding Name}"
                                                  VerticalAlignment="Center"

@@ -36,19 +36,17 @@ namespace AnyStatus.Models
         {
             var state = GetGitHubIssueStateAsync(item).Result;
 
-            item.Brush = ConvertStateToBrush(state);
-        }
-
-        private static Brush ConvertStateToBrush(GitHubIssueState state)
-        {
             switch (state)
             {
                 case GitHubIssueState.Open:
-                    return Brushes.Green;
+                    item.State = ItemState.Open;
+                    break;
                 case GitHubIssueState.Closed:
-                    return Brushes.Red;
+                    item.State = ItemState.Closed;
+                    break;
                 default:
-                    throw new NotSupportedException();
+                    item.State = ItemState.Unknown;
+                    break;
             }
         }
 

@@ -7,7 +7,6 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
-using System.Windows.Media;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace AnyStatus.Models
@@ -46,7 +45,30 @@ namespace AnyStatus.Models
         {
             var build = GetBuildDetailsAsync(item).Result;
 
-            SetItemColor(item, build);
+            if (build.Building)
+            {
+                item.State = ItemState.InProgress;
+                return;
+            }
+
+            switch (build.Result)
+            {
+                case "SUCCESS":
+                    item.State = ItemState.Ok;
+                    break;
+                case "ABORTED":
+                    item.State = ItemState.Canceled;
+                    break;
+                case "FAILURE":
+                    item.State = ItemState.Failed;
+                    break;
+                case "UNSTABLE":
+                    item.State = ItemState.PartiallySucceeded;
+                    break;
+                default:
+                    item.State = ItemState.Unknown;
+                    break;
+            }
         }
 
         private async Task<JenkinsBuildDetails> GetBuildDetailsAsync(JenkinsBuild item)
@@ -62,11 +84,7 @@ namespace AnyStatus.Models
 
                 using (var client = new HttpClient(handler))
                 {
-                    if (!string.IsNullOrEmpty(item.UserName) && !string.IsNullOrEmpty(item.ApiToken))
-                    {
-                        client.DefaultRequestHeaders.Authorization = 
-                            new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", item.UserName, item.ApiToken))));
-                    }
+                    ConfigureHttpClientAuthorization(item, client);
 
                     var apiUrl = $"{item.Url}/lastBuild/api/json?tree=result,building";
 
@@ -79,44 +97,22 @@ namespace AnyStatus.Models
                     var buildDetails = new JavaScriptSerializer().Deserialize<JenkinsBuildDetails>(content);
 
                     if (buildDetails == null)
-                    {
                         throw new Exception("Invalid Jenkins Build response.");
-                    }
 
                     return buildDetails;
                 }
             }
         }
 
-        private static void SetItemColor(JenkinsBuild item, JenkinsBuildDetails build)
+        private static void ConfigureHttpClientAuthorization(JenkinsBuild item, HttpClient client)
         {
-            if (build.Building)
-            {
-                item.Brush = Brushes.DodgerBlue;
+            if (string.IsNullOrEmpty(item.UserName) || string.IsNullOrEmpty(item.ApiToken))
                 return;
-            }
 
-            switch (build.Result)
-            {
-                case "SUCCESS":
-                    item.Brush = Brushes.Green;
-                    break;
-
-                case "ABORTED":
-                    item.Brush = Brushes.Gray;
-                    break;
-
-                case "FAILURE":
-                    item.Brush = Brushes.Red;
-                    break;
-
-                case "UNSTABLE":
-                    item.Brush = Brushes.Orange;
-                    break;
-
-                default:
-                    break;
-            }
+            client.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue(
+                    "Basic", Convert.ToBase64String(
+                        Encoding.ASCII.GetBytes(string.Format("{0}:{1}", item.UserName, item.ApiToken))));
         }
     }
 

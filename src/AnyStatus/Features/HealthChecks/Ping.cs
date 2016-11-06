@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Net.NetworkInformation;
-using System.Windows.Media;
 
 namespace AnyStatus.Models
 {
@@ -25,7 +24,7 @@ namespace AnyStatus.Models
             {
                 var reply = ping.Send(item.Host);
 
-                item.Brush = reply.Status == IPStatus.Success ? Brushes.Green : Brushes.Red;
+                item.State = (reply.Status == IPStatus.Success) ? ItemState.Ok : ItemState.Failed;
             }
         }
     }

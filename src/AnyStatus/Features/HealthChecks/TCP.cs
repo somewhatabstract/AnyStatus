@@ -1,8 +1,7 @@
 ﻿using System.ComponentModel;
-using System.Net.Sockets;
-using System.Windows.Media;
-using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 using System.ComponentModel.DataAnnotations;
+using System.Net.Sockets;
+using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace AnyStatus.Models
 {
@@ -33,11 +32,11 @@ namespace AnyStatus.Models
                 {
                     socket.Connect(item.Host, item.Port);
 
-                    item.Brush = Brushes.Green;
+                    item.State = ItemState.Ok;
                 }
                 catch (SocketException)
                 {
-                    item.Brush = Brushes.Red;
+                    item.State = ItemState.Failed;
                 }
             }
         }

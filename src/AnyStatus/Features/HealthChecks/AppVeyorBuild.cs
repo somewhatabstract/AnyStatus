@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
-using System.Windows.Media;
 
 namespace AnyStatus.Models
 {
@@ -42,27 +41,20 @@ namespace AnyStatus.Models
         {
             var build = GetBuildDetailsAsync(item).Result;
 
-            SetItemColor(item, build);
-        }
-
-        private void SetItemColor(AppVeyorBuild item, AppVeyorBuildDetails build)
-        {
             switch (build.Status)
             {
                 case "success":
-                    item.Brush = Brushes.Green;
+                    item.State = ItemState.Ok;
                     break;
-
                 case "failure":
-                    item.Brush = Brushes.Red;
+                    item.State = ItemState.Failed;
                     break;
-
                 case "queued":
                 case "running":
-                    item.Brush = Brushes.DodgerBlue;
+                    item.State = ItemState.InProgress;
                     break;
-
                 default:
+                    item.State = ItemState.Unknown;
                     break;
             }
         }

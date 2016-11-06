@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.ServiceProcess;
-using System.Windows.Media;
 
 namespace AnyStatus.Models
 {
@@ -30,13 +30,14 @@ namespace AnyStatus.Models
 
     public class WindowsServiceHandler : IHandler<WindowsService>
     {
+        [DebuggerStepThrough]
         public void Handle(WindowsService item)
         {
             var sc = string.IsNullOrEmpty(item.MachineName) ? 
                 new ServiceController(item.ServiceName) : 
                 new ServiceController(item.ServiceName, item.MachineName);
 
-            item.Brush = sc.Status == item.Status ? Brushes.Green : Brushes.Red;
+            item.State = (sc.Status == item.Status) ? ItemState.Ok : ItemState.Failed;
 
             sc.Dispose();
         }

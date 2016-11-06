@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.IO;
-using System.Windows.Media;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace AnyStatus.Models
@@ -80,7 +79,7 @@ namespace AnyStatus.Models
 
             _logger.Info(output);
 
-            item.Brush = process.ExitCode == 0 ? Brushes.Green : Brushes.Red;
+            item.State = (process.ExitCode == 0) ? ItemState.Ok : ItemState.Failed;
         }
     }
 }

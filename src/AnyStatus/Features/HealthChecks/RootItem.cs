@@ -1,10 +1,6 @@
 ﻿namespace AnyStatus.Models
 {
-    public class RootItem : Folder
+    public class RootItem : Item
     {
-        public RootItem()
-        {
-            Name = "Root Item";
-        }
     }
 }

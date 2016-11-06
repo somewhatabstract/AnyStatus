@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
-using System.Windows.Media;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace AnyStatus.Models
@@ -51,7 +50,7 @@ namespace AnyStatus.Models
                     {
                         var response = client.GetAsync(item.Url).Result;
 
-                        item.Brush = response.StatusCode == item.HttpStatusCode ? Brushes.Green : Brushes.Red;
+                        item.State = response.StatusCode == item.HttpStatusCode ? ItemState.Ok : ItemState.Failed;
                     }
                 }
                 catch (AggregateException ae)
@@ -59,7 +58,7 @@ namespace AnyStatus.Models
                     ae.Handle(ex =>
                     {
                         if (ex is HttpRequestException)
-                            item.Brush = Brushes.Red;
+                            item.State = ItemState.Failed;
 
                         return ex is HttpRequestException;
                     });

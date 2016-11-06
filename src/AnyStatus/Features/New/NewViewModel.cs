@@ -113,7 +113,7 @@ namespace AnyStatus.ViewModels
                     case ItemState.Ok:
                         MessageBox.Show("Ok", "Test", MessageBoxButton.OK, MessageBoxImage.Information);
                         break;
-                    case ItemState.Faulted:
+                    case ItemState.Failed:
                         MessageBox.Show("Test failed. See output window for more information.", "Test", MessageBoxButton.OK, MessageBoxImage.Warning);
                         break;
                     case ItemState.Invalid:
