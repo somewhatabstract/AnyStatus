@@ -18,6 +18,8 @@ namespace AnyStatus
                 default:
                 case ItemState.None:
                 case ItemState.Unknown:
+                    return Brushes.Transparent;
+
                 case ItemState.Disabled:
                     return Brushes.Silver;
 

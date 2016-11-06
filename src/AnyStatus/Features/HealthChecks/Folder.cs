@@ -30,6 +30,8 @@ namespace AnyStatus.Models
                 {
                     item.PropertyChanged += Item_PropertyChanged;
                 }
+
+                AggregateState();
             }
         }
 
@@ -41,6 +43,8 @@ namespace AnyStatus.Models
                 {
                     item.PropertyChanged -= Item_PropertyChanged;
                 }
+
+                AggregateState();
             }
         }
 
@@ -48,8 +52,13 @@ namespace AnyStatus.Models
         {
             if (e.PropertyName.Equals(nameof(State)) && Items.Any())
             {
-                State = Items.Select(item => item.State).Aggregate((a, b) => a > b ? a : b);
+                AggregateState();
             }
+        }
+
+        private void AggregateState()
+        {
+            State = Items.Select(item => item.State).Aggregate((a, b) => a > b ? a : b);
         }
     }
 }
