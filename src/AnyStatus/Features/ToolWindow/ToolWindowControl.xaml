@@ -258,6 +258,7 @@
                                 <Separator/>
 
                                 <MenuItem Header=" Delete" 
+                                          InputGestureText="Del"
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.DeleteCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}">
                                     <MenuItem.Icon>
