@@ -196,35 +196,38 @@ namespace AnyStatus.Tests
         }
 
         [TestMethod]
-        public void HasChildren()
+        public void ContainsElements()
         {
             var item = new Item();
             var child = new Item();
 
-            Assert.IsFalse(item.HasChildren());
+            Assert.IsFalse(item.ContainsElements());
 
             item.Add(child);
 
-            Assert.IsTrue(item.HasChildren());
+            Assert.IsTrue(item.ContainsElements());
         }
 
         [TestMethod]
-        public void HasChildrenOfType()
+        public void ContainsElementsByType()
         {
+            var folder = new Folder();
             var item1 = new Item();
-            var item2 = new Item();
-            var item3 = new AppVeyorBuild();
+            var item2 = new AppVeyorBuild();
+
+            folder.Add(item1);
+
+            Assert.IsFalse(folder.ContainsElements(typeof(AppVeyorBuild)));
 
             item1.Add(item2);
-            item2.Add(item3);
 
-            Assert.IsTrue(item1.HasChildrenOfType(typeof(AppVeyorBuild)));
+            Assert.IsTrue(folder.ContainsElements(typeof(AppVeyorBuild)));
         }
 
         [TestMethod]
         public void IsValid()
         {
-            var item = new Item() { Name = "Valid Item" };
+            var item = new Item { Name = "Valid Item" };
 
             Assert.IsTrue(item.IsValid());
 
@@ -255,6 +258,78 @@ namespace AnyStatus.Tests
             Assert.IsFalse(item.Validate(out results));
             Assert.IsNotNull(results);
             Assert.IsTrue(results.Any());
+        }
+
+        [TestMethod]
+        public void WhenEnabled_StateIsNone()
+        {
+            var item = new Item { State = ItemState.Unknown };
+
+            item.IsEnabled = true;
+
+            Assert.AreEqual(ItemState.None, item.State);
+        }
+
+        [TestMethod]
+        public void WhenDisabled_StateIsDisabled()
+        {
+            var item = new Item { State = ItemState.None };
+
+            item.IsEnabled = false;
+
+            Assert.AreEqual(ItemState.Disabled, item.State);
+        }
+
+        [TestMethod]
+        public void Duplicate_CreatesNewItem()
+        {
+            var folder = new Folder();
+            var item = new Item();
+
+            folder.Add(item);
+
+            var clone = item.Duplicate();
+
+            Assert.AreNotSame(item, clone);
+        }
+
+        [TestMethod]
+        public void Duplicate_AddsNewItemToParent()
+        {
+            var folder = new Folder();
+            var item = new Item();
+
+            folder.Add(item);
+
+            var clone = item.Duplicate();
+
+            item.Parent.Items.Contains(clone);
+        }
+
+        [TestMethod]
+        public void Duplicate_GeneratesNewName()
+        {
+            var folder = new Folder();
+            var item = new Item { Name = "Name" };
+
+            folder.Add(item);
+
+            var clone1 = item.Duplicate();
+
+            Assert.AreEqual("Name #1", clone1.Name);
+
+            var clone2 = item.Duplicate();
+
+            Assert.AreEqual("Name #2", clone2.Name);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void Duplicate_ItemMustHaveParent()
+        {
+            var item = new Item();
+
+            item.Duplicate();
         }
     }
 }

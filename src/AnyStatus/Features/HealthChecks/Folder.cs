@@ -24,41 +24,42 @@ namespace AnyStatus.Models
 
         private void Subscribe(NotifyCollectionChangedEventArgs e)
         {
-            if (e.NewItems != null)
-            {
-                foreach (INotifyPropertyChanged item in e.NewItems)
-                {
-                    item.PropertyChanged += Item_PropertyChanged;
-                }
+            if (e.NewItems == null) return;
 
-                AggregateState();
+            foreach (INotifyPropertyChanged item in e.NewItems)
+            {
+                item.PropertyChanged += Item_PropertyChanged;
             }
+
+            CalculateState();
         }
 
         private void Unsubscribe(NotifyCollectionChangedEventArgs e)
         {
-            if (e.OldItems != null)
-            {
-                foreach (INotifyPropertyChanged item in e.OldItems)
-                {
-                    item.PropertyChanged -= Item_PropertyChanged;
-                }
+            if (e.OldItems == null) return;
 
-                AggregateState();
+            foreach (INotifyPropertyChanged item in e.OldItems)
+            {
+                item.PropertyChanged -= Item_PropertyChanged;
             }
+
+            CalculateState();
         }
 
         private void Item_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName.Equals(nameof(State)) && Items.Any())
+            if (e.PropertyName.Equals(nameof(State)))
             {
-                AggregateState();
+                CalculateState();
             }
         }
 
-        private void AggregateState()
+        public void CalculateState()
         {
-            State = Items.Select(item => item.State).Aggregate((a, b) => a > b ? a : b);
+            if (Items != null && Items.Any())
+            {
+                State = Items.Aggregate((a, b) => a.State > b.State ? a : b).State;
+            }
         }
     }
 }
