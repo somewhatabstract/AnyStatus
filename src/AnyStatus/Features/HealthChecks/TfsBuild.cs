@@ -81,14 +81,14 @@ namespace AnyStatus.Models
 
             if (buildDetails.Status == "notStarted" || buildDetails.Status == "inProgress")
             {
-                item.State = ItemState.InProgress;
+                item.State = ItemState.Running;
                 return;
             }
 
             switch (buildDetails.Result)
             {
                 case "notStarted":
-                    item.State = ItemState.InProgress;
+                    item.State = ItemState.Running;
                     break;
                 case "succeeded":
                     item.State = ItemState.Ok;

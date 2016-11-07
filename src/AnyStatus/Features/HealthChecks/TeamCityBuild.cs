@@ -68,7 +68,7 @@ namespace AnyStatus.Models
 
             if (build.Running)
             {
-                item.State = ItemState.InProgress;
+                item.State = ItemState.Running;
                 return;
             }
 

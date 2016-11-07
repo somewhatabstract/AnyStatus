@@ -13,6 +13,6 @@
         Failed,
         Invalid,
         Error,
-        InProgress,
+        Running,
     }
 }

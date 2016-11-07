@@ -159,6 +159,7 @@
     <Compile Include="Features\HealthChecks\GitHubIssue.cs" />
     <Compile Include="Features\HealthChecks\PowerShellScript.cs" />
     <Compile Include="Features\HealthChecks\TfsWorkItem.cs" />
+    <Compile Include="Features\ToolWindow\TooltipConverter.cs" />
     <Compile Include="Features\ToolWindow\StateToBrushConverter.cs" />
     <Compile Include="Infrastructure\Discovery.cs" />
     <Compile Include="Infrastructure\Extensions.cs" />

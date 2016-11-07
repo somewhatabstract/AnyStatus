@@ -51,7 +51,7 @@ namespace AnyStatus.Models
                     break;
                 case "queued":
                 case "running":
-                    item.State = ItemState.InProgress;
+                    item.State = ItemState.Running;
                     break;
                 default:
                     item.State = ItemState.Unknown;

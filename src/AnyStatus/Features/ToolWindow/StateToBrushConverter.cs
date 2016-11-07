@@ -45,7 +45,7 @@ namespace AnyStatus
                 case ItemState.Error:
                     return Brushes.DarkRed;
 
-                case ItemState.InProgress:
+                case ItemState.Running:
                     return Brushes.DodgerBlue;
             }
         }

@@ -66,6 +66,7 @@
             <TreeView.Resources>
 
                 <local:StateToBrushConverter x:Key="StateToBrushConverter" />
+                <local:TooltipConverter x:Key="TooltipConverter" />
                 
                 <!--Folder-->
                 <HierarchicalDataTemplate DataType="{x:Type models:Folder}" ItemsSource="{Binding Items}">
@@ -159,7 +160,13 @@
                                 MinWidth="160"
                                 Height="30"
                                 Background="Transparent"
+                                
                                 Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
+                        
+                        <StackPanel.ToolTip>
+                            <TextBlock Text="{Binding Converter={StaticResource TooltipConverter}}" />
+                        </StackPanel.ToolTip>
+                        
                         <StackPanel.ContextMenu>
                             <ContextMenu>
 

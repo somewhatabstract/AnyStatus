@@ -103,9 +103,9 @@ namespace AnyStatus.Tests
 
             item1.State = ItemState.Ok;
             item2.State = ItemState.Failed;
-            item3.State = ItemState.InProgress;
+            item3.State = ItemState.Running;
 
-            Assert.AreEqual(ItemState.InProgress, folder.State);
+            Assert.AreEqual(ItemState.Running, folder.State);
         }
     }
 }
