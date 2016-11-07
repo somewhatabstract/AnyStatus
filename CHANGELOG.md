@@ -1,8 +1,9 @@
 # Roadmap
 
-- [x] Duplicate item
+- [x] Add colored status indicators to Folders
+- [x] Duplicate/Clone items
 - [x] Refresh all items within group
-- [ ] Enable/Disable all items within a group
+- [ ] Enable or disable all items within a group
 - [ ] Customize status colors (colorblind support)
 - [ ] Custom commands (for example, queue new build context menu item)
 - [ ] Tooltip information
@@ -25,7 +26,8 @@ on the official Visual Studio extension gallery.
 
 **2016-11-03**
 
-- [x] Duplicate item
+- [x] Added colored status indicators to Folders
+- [x] Duplicate items
 - [x] Added a Refresh button to folders
 
 ## 0.8
