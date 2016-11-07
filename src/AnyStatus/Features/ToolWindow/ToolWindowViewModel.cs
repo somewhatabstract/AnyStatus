@@ -2,12 +2,9 @@
 using AnyStatus.Infrastructure;
 using AnyStatus.Interfaces;
 using AnyStatus.Models;
-using FluentScheduler;
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using System.Windows;
 using System.Windows.Input;
 
 namespace AnyStatus.ViewModels
@@ -51,9 +48,9 @@ namespace AnyStatus.ViewModels
             {
                 try
                 {
-                    var selectedItem = p as Item ?? _userSettings.RootItem;
+                    var item = p as Item ?? _userSettings.RootItem;
 
-                    if (selectedItem == null) return;
+                    if (item == null) return;
 
                     var folder = new Folder
                     {
@@ -61,65 +58,38 @@ namespace AnyStatus.ViewModels
                         IsEditing = true
                     };
 
-                    selectedItem.Add(folder);
-                    selectedItem.IsExpanded = true;
+                    item.Add(folder);
+                    item.IsExpanded = true;
 
                     _userSettings.Save();
                 }
                 catch (Exception ex)
                 {
-                    _logger.Info("Failed to add a new folder. Exception: " + ex.ToString());
+                    _logger.Error(ex, "Failed to add a new folder.");
                 }
             });
 
-            DeleteCommand = new RelayCommand(p =>
-            {
-                var selectedItem = p as Item;
-
-                if (selectedItem == null)
-                    return;
-
-                var result = MessageBox.Show("Are you sure?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
-
-                if (result != MessageBoxResult.Yes)
-                    return;
-
-                try
-                {
-                    if (selectedItem is IScheduledItem)
-                    {
-                        _jobScheduler.Remove(selectedItem);
-                    }
-
-                    selectedItem.Delete();
-
-                    _userSettings.Save();
-                }
-                catch (Exception ex)
-                {
-                    _logger.Info("Failed to delete item. Exception: " + ex.ToString());
-                }
-            });
+            DeleteCommand = new DeleteCommand(_jobScheduler, _userSettings, _logger);
 
             DuplicateCommand = new RelayCommand(p =>
             {
                 //todo: remove duplication with new item modal
 
-                var selectedItem = p as Item;
+                var item = p as Item;
 
-                if (selectedItem == null) return;
+                if (item == null) return;
 
                 try
                 {
-                    var item = selectedItem.Duplicate();
+                    var clone = item.Duplicate();
+
+                    _jobScheduler.Schedule(clone);
 
                     _userSettings.Save();
-
-                    _jobScheduler.Schedule(item);
                 }
                 catch (Exception ex)
                 {
-                    _logger.Info("Failed to duplicate item. Exception: " + ex.ToString());
+                    _logger.Error(ex, "Failed to duplicate item.");
                 }
             });
 
@@ -169,17 +139,7 @@ namespace AnyStatus.ViewModels
 
             DisableItemCommand = new DisableCommand(_userSettings, _logger);
 
-            SaveCommand = new RelayCommand(p =>
-            {
-                try
-                {
-                    _userSettings.Save();
-                }
-                catch (Exception ex)
-                {
-                    _logger.Info("Failed to save. Exception: " + ex.ToString());
-                }
-            });
+            SaveCommand = new RelayCommand(p => { _userSettings.Save(); });
 
             RefreshItemCommand = new RelayCommand(p =>
             {

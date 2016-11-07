@@ -113,7 +113,7 @@ namespace AnyStatus
             }
             catch (AggregateException ex)
             {
-                _logger.Error(ex, "Failed to save settings");
+                _logger.Error(ex, "An error occurred while saving user settings.");
             }
         }
 
