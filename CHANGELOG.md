@@ -1,5 +1,6 @@
 # Roadmap
 
+- [x] Add colored status indicators to Folders
 - [x] Duplicate item
 - [x] Refresh all items within group
 - [ ] Enable/Disable all items within a group
@@ -25,6 +26,7 @@ on the official Visual Studio extension gallery.
 
 **2016-11-03**
 
+- [x] Added colored status indicators to Folders
 - [x] Duplicate item
 - [x] Added a Refresh button to folders
 
