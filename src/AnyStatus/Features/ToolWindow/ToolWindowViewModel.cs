@@ -1,4 +1,5 @@
-﻿using AnyStatus.Infrastructure;
+﻿using AnyStatus.Features.ToolWindow.Commands;
+using AnyStatus.Infrastructure;
 using AnyStatus.Interfaces;
 using AnyStatus.Models;
 using FluentScheduler;
@@ -8,7 +9,6 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace AnyStatus.ViewModels
 {
@@ -37,7 +37,10 @@ namespace AnyStatus.ViewModels
         /// </summary>
         public Item RootItem
         {
-            get { return _userSettings.RootItem; }
+            get
+            {
+                return _userSettings.RootItem;
+            }
         }
 
         private void Initialize()
@@ -162,56 +165,9 @@ namespace AnyStatus.ViewModels
                 item.IsEditing = true;
             });
 
-            EnableItemCommand = new RelayCommand(p =>
-            {
-                try
-                {
-                    var item = p as Item;
+            EnableItemCommand = new EnableCommand(_userSettings, _logger);
 
-                    if (item == null)
-                        return;
-
-                    if (item is IScheduledItem)
-                    {
-                        JobManager.RemoveJob(item.Id.ToString());
-
-                        var job = TinyIoCContainer.Current.Resolve<ScheduledJob>();
-                        job.Item = item;
-
-                        JobManager.AddJob(job, s =>
-                            s.WithName(item.Id.ToString()).ToRunNow().AndEvery(item.Interval).Minutes());
-                    }
-
-                    item.IsEnabled = true;
-
-                    _userSettings.Save();
-                }
-                catch (Exception ex)
-                {
-                    _logger.Info("Failed to enable an item. Exception: " + ex.ToString());
-                }
-            });
-
-            DisableItemCommand = new RelayCommand(p =>
-            {
-                try
-                {
-                    var item = p as Item;
-
-                    if (item == null) return;
-
-                    if (item is IScheduledItem)
-                        JobManager.RemoveJob(item.Id.ToString());
-
-                    item.IsEnabled = false;
-
-                    _userSettings.Save();
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex);
-                }
-            });
+            DisableItemCommand = new DisableCommand(_userSettings, _logger);
 
             SaveCommand = new RelayCommand(p =>
             {
@@ -227,9 +183,13 @@ namespace AnyStatus.ViewModels
 
             RefreshItemCommand = new RelayCommand(p =>
             {
+                var item = p as Item;
+
+                if (item == null) return;
+
                 try
                 {
-                    _jobScheduler.Execute(p as Item);
+                    _jobScheduler.Execute(item);
                 }
                 catch (Exception ex)
                 {

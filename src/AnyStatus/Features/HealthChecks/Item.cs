@@ -123,6 +123,12 @@ namespace AnyStatus.Models
             }
         }
 
+        [Browsable(false)]
+        public bool IsDisabled
+        {
+            get { return !_isEnabled; }
+        }
+
         [XmlIgnore]
         [Browsable(false)]
         public bool IsEditing

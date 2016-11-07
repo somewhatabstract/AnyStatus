@@ -106,22 +106,22 @@
 
                                 <Separator/>
 
-                                <MenuItem Header=" Move Up"
-                                          CommandParameter="{Binding}"
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.MoveUpCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
+                                <MenuItem Header=" Enable" 
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.EnableItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                                          CommandParameter="{Binding}">
                                     <MenuItem.Icon>
-                                        <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.MoveUp}" />
+                                        <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Play}" />
                                     </MenuItem.Icon>
                                 </MenuItem>
 
-                                <MenuItem Header=" Move Down"
-                                          CommandParameter="{Binding}"
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.MoveDownCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
+                                <MenuItem Header=" Disable" 
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.DisableItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                                          CommandParameter="{Binding}">
                                     <MenuItem.Icon>
-                                        <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.MoveDown}" />
+                                        <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Stop}" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-
+                                
                                 <Separator/>
 
                                 <MenuItem Header=" Delete" 
@@ -139,7 +139,25 @@
                                         <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Rename}" />
                                     </MenuItem.Icon>
                                 </MenuItem>
+                                
+                                <Separator/>
 
+                                <MenuItem Header=" Move Up"
+                                          CommandParameter="{Binding}"
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.MoveUpCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
+                                    <MenuItem.Icon>
+                                        <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.MoveUp}" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+
+                                <MenuItem Header=" Move Down"
+                                          CommandParameter="{Binding}"
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.MoveDownCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
+                                    <MenuItem.Icon>
+                                        <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.MoveDown}" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                
                             </ContextMenu>
                         </StackPanel.ContextMenu>
 
@@ -200,24 +218,6 @@
                                         </Style>
                                     </Separator.Style>
                                 </Separator>
-
-                                <MenuItem Header=" Move Up"
-                                          CommandParameter="{Binding}"
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.MoveUpCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
-                                    <MenuItem.Icon>
-                                        <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.MoveUp}" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-
-                                <MenuItem Header=" Move Down"
-                                          CommandParameter="{Binding}"
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.MoveDownCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
-                                    <MenuItem.Icon>
-                                        <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.MoveDown}" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-
-                                <Separator/>
 
                                 <MenuItem Header=" Enable" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.EnableItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
@@ -281,9 +281,27 @@
                                         <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.CopyItem}" />
                                     </MenuItem.Icon>
                                 </MenuItem>
+                                
+                                <Separator/>
+                                
+                                <MenuItem Header=" Move Up"
+                                          CommandParameter="{Binding}"
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.MoveUpCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
+                                    <MenuItem.Icon>
+                                        <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.MoveUp}" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+
+                                <MenuItem Header=" Move Down"
+                                          CommandParameter="{Binding}"
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.MoveDownCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
+                                    <MenuItem.Icon>
+                                        <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.MoveDown}" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
 
                                 <Separator/>
-
+                                
                                 <MenuItem Header=" Properties" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.EditItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}">
