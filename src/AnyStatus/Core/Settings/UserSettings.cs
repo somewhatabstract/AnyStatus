@@ -209,7 +209,7 @@ namespace AnyStatus
 
         private void Upgrade()
         {
-            if (RootItem.HasChildrenOfType(typeof(AppVeyorBuild)))
+            if (RootItem.ContainsElements(typeof(AppVeyorBuild)))
             {
 
 
@@ -234,7 +234,7 @@ namespace AnyStatus
                     Save();
                 }
             }
-            else if (item.HasChildren())
+            else if (item.ContainsElements())
             {
                 foreach (var childItem in item.Items)
                 {

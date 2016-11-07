@@ -118,7 +118,7 @@ namespace AnyStatus.Models
             set
             {
                 _isEnabled = value;
-                if (!_isEnabled) State = ItemState.Disabled;
+                State = _isEnabled ? ItemState.None : ItemState.Disabled;
                 OnPropertyChanged();
             }
         }
@@ -199,6 +199,9 @@ namespace AnyStatus.Models
 
         public Item Duplicate()
         {
+            if (Parent == null)
+                throw new InvalidOperationException("Item must have a Parent");
+
             var item = (Item)Clone();
 
             item.Name = GetNextName();
@@ -212,6 +215,9 @@ namespace AnyStatus.Models
 
         private string GetNextName()
         {
+            if (Parent == null)
+                throw new InvalidOperationException("Item must have a Parent");
+
             int i = 1;
             var name = string.Empty;
 
@@ -339,20 +345,20 @@ namespace AnyStatus.Models
                    this.Id != Guid.Empty;
         }
 
-        public bool HasChildren()
+        public bool ContainsElements()
         {
             return Items != null && Items.Any();
         }
 
-        public bool HasChildrenOfType(Type type)
+        public bool ContainsElements(Type type)
         {
-            if (Items == null) return false;
+            if (!ContainsElements()) return false;
 
             foreach (var item in Items)
             {
                 if (item.GetType().Equals(type)) return true;
 
-                else if (item.HasChildrenOfType(type)) return true;
+                else if (item.ContainsElements(type)) return true;
             }
 
             return false;

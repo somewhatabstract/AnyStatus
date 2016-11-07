@@ -49,7 +49,7 @@ namespace AnyStatus
                 if (schedule != null) schedule.Execute();
             }
 
-            if (item.HasChildren())
+            if (item.ContainsElements())
             {
                 foreach (var child in item.Items)
                 {
@@ -68,7 +68,7 @@ namespace AnyStatus
                 Schedule(item);
             }
 
-            if (includeChildren && item.HasChildren())
+            if (includeChildren && item.ContainsElements())
                 foreach (var child in item.Items)
                 {
                     Schedule(child, includeChildren);
