@@ -70,5 +70,29 @@ namespace AnyStatus.Properties {
                 this["FirstTimeInstallation"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowStatusIcons {
+            get {
+                return ((bool)(this["ShowStatusIcons"]));
+            }
+            set {
+                this["ShowStatusIcons"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowStatusColors {
+            get {
+                return ((bool)(this["ShowStatusColors"]));
+            }
+            set {
+                this["ShowStatusColors"] = value;
+            }
+        }
     }
 }

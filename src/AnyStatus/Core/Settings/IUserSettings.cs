@@ -17,6 +17,10 @@ namespace AnyStatus.Interfaces
 
         bool ReportAnonymousUsage { get; set; }
 
+        bool ShowStatusIcons { get; set; }
+
+        bool ShowStatusColors { get; set; }
+
         Task InitializeAsync();
 
         void Initialize();

@@ -40,6 +40,22 @@ namespace AnyStatus.ViewModels
             }
         }
 
+        public bool ShowStatusIcons
+        {
+            get
+            {
+                return _userSettings.ShowStatusIcons;
+            }
+        }
+
+        public bool ShowStatusColors
+        {
+            get
+            {
+                return _userSettings.ShowStatusColors;
+            }
+        }
+
         private void Initialize()
         {
             _userSettings.PropertyChanged += (s, e) => OnPropertyChanged(e.PropertyName);

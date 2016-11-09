@@ -12,6 +12,8 @@ namespace AnyStatus.ViewModels
     {
         private bool _debugMode;
         private bool _reportAnonymousUsage;
+        private bool _showStatusIcons;
+        private bool _showStatusColors;
 
         private ILogger _logger;
         private IUserSettings _userSettings;
@@ -64,6 +66,26 @@ namespace AnyStatus.ViewModels
             }
         }
 
+        public bool ShowStatusIcons
+        {
+            get { return _showStatusIcons; }
+            set
+            {
+                _showStatusIcons = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool ShowStatusColors
+        {
+            get { return _showStatusColors; }
+            set
+            {
+                _showStatusColors = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         #region Helpers
@@ -74,6 +96,9 @@ namespace AnyStatus.ViewModels
 
             _userSettings.DebugMode = DebugMode;
             _userSettings.ReportAnonymousUsage = ReportAnonymousUsage;
+            _userSettings.ShowStatusIcons = ShowStatusIcons;
+            _userSettings.ShowStatusColors = ShowStatusColors;
+
             _userSettings.Save();
         }
 
@@ -81,6 +106,8 @@ namespace AnyStatus.ViewModels
         {
             DebugMode = _userSettings.DebugMode;
             ReportAnonymousUsage = _userSettings.ReportAnonymousUsage;
+            ShowStatusIcons = _userSettings.ShowStatusIcons;
+            ShowStatusColors = _userSettings.ShowStatusColors;
         }
 
         private void RestoreDefaultSettings()

@@ -18,6 +18,8 @@ namespace AnyStatus
         private Item _rootItem;
         private bool _debugMode;
         private bool _reportAnonymousUsage;
+        private bool _showStatusIcons;
+        private bool _showStatusColors;
 
         private UserSettings()
         {
@@ -52,6 +54,18 @@ namespace AnyStatus
         {
             get { return _clientId; }
             set { _clientId = value; OnPropertyChanged(); }
+        }
+
+        public bool ShowStatusIcons
+        {
+            get { return _showStatusIcons; }
+            set { _showStatusIcons = value; OnPropertyChanged(); }
+        }
+
+        public bool ShowStatusColors
+        {
+            get { return _showStatusColors; }
+            set { _showStatusColors = value; OnPropertyChanged(); }
         }
 
         #endregion
@@ -100,6 +114,8 @@ namespace AnyStatus
                     Properties.Settings.Default.RootItem = RootItem;
                     Properties.Settings.Default.ClientId = ClientId;
                     Properties.Settings.Default.DebugMode = DebugMode;
+                    Properties.Settings.Default.ShowStatusIcons = ShowStatusIcons;
+                    Properties.Settings.Default.ShowStatusColors = ShowStatusColors;
                     Properties.Settings.Default.ReportAnonymousUsageData = ReportAnonymousUsage;
 
                     Properties.Settings.Default.Save();
@@ -177,6 +193,8 @@ namespace AnyStatus
                 ClientId = userSettings.ClientId;
                 RootItem = userSettings.RootItem;
                 DebugMode = userSettings.DebugMode;
+                ShowStatusIcons = userSettings.ShowStatusIcons;
+                ShowStatusColors = userSettings.ShowStatusColors;
                 ReportAnonymousUsage = userSettings.ReportAnonymousUsage;
 
                 Save();
@@ -204,6 +222,8 @@ namespace AnyStatus
             ClientId = Properties.Settings.Default.ClientId;
             RootItem = Properties.Settings.Default.RootItem;
             DebugMode = Properties.Settings.Default.DebugMode;
+            ShowStatusIcons = Properties.Settings.Default.ShowStatusIcons;
+            ShowStatusColors = Properties.Settings.Default.ShowStatusColors;
             ReportAnonymousUsage = Properties.Settings.Default.ReportAnonymousUsageData;
         }
 
@@ -211,8 +231,6 @@ namespace AnyStatus
         {
             if (RootItem.ContainsElements(typeof(AppVeyorBuild)))
             {
-
-
                 UpgradeAppVeyorItems(RootItem);
             }
         }

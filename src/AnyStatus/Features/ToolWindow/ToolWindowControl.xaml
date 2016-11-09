@@ -68,7 +68,6 @@
                 <local:StateToBrushConverter x:Key="StateToBrushConverter" />
                 <local:TooltipConverter x:Key="TooltipConverter" />
                 <local:StateToImageConverter x:Key="StateToImageConverter" />
-                <!--<local:StateToMonikerConverter x:Key="StateToMonikerConverter" />-->
 
                 <!--Folder-->
                 <HierarchicalDataTemplate DataType="{x:Type models:Folder}" ItemsSource="{Binding Items}">
@@ -164,15 +163,37 @@
                             </ContextMenu>
                         </StackPanel.ContextMenu>
 
-                        <Rectangle Width="5" Fill="{Binding State, Converter={StaticResource StateToBrushConverter}}" Margin="0,0,5,0" />
+                        <Rectangle Width="5" Fill="{Binding State, Converter={StaticResource StateToBrushConverter}}">
+                            <Rectangle.Style>
+                                <Style TargetType="{x:Type Rectangle}">
+                                    <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding DataContext.ShowStatusColors, ElementName=ToolWindow}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"></Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Rectangle.Style>
+                        </Rectangle>
 
                         <imaging:CrispImage Height="16" 
                                             Width="16" 
-                                            Margin="0,0,5,0"
-                                            Source="{Binding State, Converter={StaticResource StateToImageConverter}}"/>
+                                            Margin="5,0,0,0"
+                                            Source="{Binding State, Converter={StaticResource StateToImageConverter}}">
+                            <imaging:CrispImage.Style>
+                                <Style TargetType="{x:Type imaging:CrispImage}">
+                                    <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding DataContext.ShowStatusIcons, ElementName=ToolWindow}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"></Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </imaging:CrispImage.Style>
+                        </imaging:CrispImage>
 
                         <views:EditableTextBlock Text="{Binding Name}" 
-                                                 Margin="0,0,5,0"
+                                                 Margin="5,0,5,0"
                                                  FontWeight="Bold"
                                                  VerticalAlignment="Center"
                                                  HorizontalAlignment="Stretch"
@@ -321,15 +342,38 @@
                             </ContextMenu>
                         </StackPanel.ContextMenu>
 
-                        <Rectangle Width="5" Fill="{Binding State, Converter={StaticResource StateToBrushConverter}}" Margin="0,0,5,0" />
+                        <Rectangle Width="5" Fill="{Binding State, Converter={StaticResource StateToBrushConverter}}">
+                            <Rectangle.Style>
+                                <Style TargetType="{x:Type Rectangle}">
+                                    <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding DataContext.ShowStatusColors, ElementName=ToolWindow}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"></Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Rectangle.Style>
+                        </Rectangle>
 
                         <imaging:CrispImage Height="16" 
                                             Width="16" 
-                                            Margin="0,0,5,0"
-                                            Source="{Binding State, Converter={StaticResource StateToImageConverter}}"/>
+                                            Margin="5,0,0,0"
+                                            Source="{Binding State, Converter={StaticResource StateToImageConverter}}">
+                            <imaging:CrispImage.Style>
+                                <Style TargetType="{x:Type imaging:CrispImage}">
+                                    <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding DataContext.ShowStatusIcons, ElementName=ToolWindow}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"></Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </imaging:CrispImage.Style>
+                        </imaging:CrispImage>
+
 
                         <views:EditableTextBlock Text="{Binding Name}"
-                                                 Margin="0,0,5,0"
+                                                 Margin="5,0,5,0"
                                                  VerticalAlignment="Center"
                                                  HorizontalAlignment="Stretch"
                                                  IsEditing="{Binding IsEditing}" 
