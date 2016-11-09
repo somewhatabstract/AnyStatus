@@ -1,17 +1,12 @@
 # Roadmap
 
-- [x] Add colored status indicators to Folders
-- [x] Duplicate/Clone items
-- [x] Refresh all items within group
-- [ ] Enable or disable all items within a group
-- [ ] Customize status colors (colorblind support)
+- [ ] TFS Work Item status
+- [ ] Status colors customization
 - [ ] Custom commands (for example, queue new build context menu item)
-- [ ] Tooltip information
 - [ ] Improve Visual Studio theme support
 - [ ] Synchronize user settings between Visual Studio instances
-- [ ] Replace AppSettings with WritableSettingsStore
+- [ ] Replace AppSettings with WritableSettingsStore (?)
 - [ ] Replace TinyIoc with MEF
-- [ ] TFS Work Item status
 
 Features that have a checkmark are complete and available for
 download in the
@@ -26,9 +21,12 @@ on the official Visual Studio extension gallery.
 
 **2016-11-03**
 
-- [x] Added colored status indicators to Folders
+- [x] Added status icons (show/hide colored or icon status indicators in settings)
+- [x] Added aggregated status indicators to Folders
+- [x] Added tooltips that describes the status and type of the monitors.
 - [x] Duplicate items
-- [x] Added a Refresh button to folders
+- [x] Added Refresh button to folders
+- [x] Enable or disable items within a group
 
 ## 0.8
 
