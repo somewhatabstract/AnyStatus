@@ -1,9 +1,7 @@
-﻿using AnyStatus.Infrastructure;
-using AnyStatus.Interfaces;
-using System;
+﻿using System;
 using System.Windows.Input;
 
-namespace AnyStatus.Features.Edit
+namespace AnyStatus
 {
     public class EditViewModel
     {

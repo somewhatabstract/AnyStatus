@@ -1,7 +1,4 @@
-﻿using AnyStatus.Features.Edit;
-using AnyStatus.Views;
-
-namespace AnyStatus
+﻿namespace AnyStatus
 {
     public interface IViewLocator
     {

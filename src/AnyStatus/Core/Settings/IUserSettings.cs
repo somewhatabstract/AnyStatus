@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Threading.Tasks;
 
-namespace AnyStatus.Interfaces
+namespace AnyStatus
 {
     public interface IUserSettings : INotifyPropertyChanged
     {

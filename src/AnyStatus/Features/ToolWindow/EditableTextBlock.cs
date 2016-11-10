@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace AnyStatus.Views
+namespace AnyStatus
 {
     /// <summary>
     /// Provides an editable text block.

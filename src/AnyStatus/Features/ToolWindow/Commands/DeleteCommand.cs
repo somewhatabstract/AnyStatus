@@ -1,9 +1,8 @@
-﻿using AnyStatus.Interfaces;
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Input;
 
-namespace AnyStatus.Features.ToolWindow.Commands
+namespace AnyStatus
 {
     public class DeleteCommand : ICommand
     {

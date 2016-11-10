@@ -94,7 +94,7 @@
 using System.Runtime.Serialization;
 #endif
 
-namespace AnyStatus.Infrastructure
+namespace AnyStatus
 {
     using System;
     using System.Collections.Generic;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 
-namespace AnyStatus.Infrastructure
+namespace AnyStatus
 {
     public static class Retry
     {

@@ -1,12 +1,9 @@
-﻿using AnyStatus.Features.ToolWindow.Commands;
-using AnyStatus.Infrastructure;
-using AnyStatus.Interfaces;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
-namespace AnyStatus.ViewModels
+namespace AnyStatus
 {
     public class ToolWindowViewModel : INotifyPropertyChanged
     {

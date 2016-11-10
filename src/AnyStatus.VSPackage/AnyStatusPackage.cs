@@ -1,5 +1,4 @@
-﻿using AnyStatus.Views;
-using Microsoft.VisualStudio.Shell;
+﻿using Microsoft.VisualStudio.Shell;
 using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;

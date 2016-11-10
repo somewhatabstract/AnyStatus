@@ -1,10 +1,8 @@
-﻿using AnyStatus.Infrastructure;
-using AnyStatus.Interfaces;
-using FluentScheduler;
+﻿using FluentScheduler;
 using System;
 using System.Windows.Input;
 
-namespace AnyStatus.Features.ToolWindow.Commands
+namespace AnyStatus
 {
     public class EnableCommand : ICommand
     {

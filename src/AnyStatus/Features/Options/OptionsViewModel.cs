@@ -1,12 +1,10 @@
-﻿using AnyStatus.Infrastructure;
-using AnyStatus.Interfaces;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 
-namespace AnyStatus.ViewModels
+namespace AnyStatus
 {
     public class OptionsViewModel : INotifyPropertyChanged
     {

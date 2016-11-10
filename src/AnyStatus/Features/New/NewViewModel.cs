@@ -1,6 +1,4 @@
-﻿using AnyStatus.Infrastructure;
-using AnyStatus.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -10,7 +8,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Input;
 
-namespace AnyStatus.ViewModels
+namespace AnyStatus
 {
     public class NewViewModel : INotifyPropertyChanged
     {

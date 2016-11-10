@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AnyStatus.Infrastructure
+namespace AnyStatus
 {
     /// <summary>
     /// Preconditions for checking method arguments, state etc.

@@ -1,11 +1,9 @@
-﻿using AnyStatus.Infrastructure;
-using AnyStatus.ViewModels;
-using Microsoft.VisualStudio.Shell;
+﻿using Microsoft.VisualStudio.Shell;
 using System;
 using System.ComponentModel;
 using System.Windows;
 
-namespace AnyStatus.Views
+namespace AnyStatus
 {
     public class Options : UIElementDialogPage
     {

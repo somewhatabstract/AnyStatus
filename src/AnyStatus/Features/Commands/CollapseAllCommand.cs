@@ -1,5 +1,4 @@
-﻿using AnyStatus.Interfaces;
-using System;
+﻿using System;
 
 namespace AnyStatus
 {

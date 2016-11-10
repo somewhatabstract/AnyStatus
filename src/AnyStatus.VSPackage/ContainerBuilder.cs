@@ -1,9 +1,4 @@
-﻿using AnyStatus.Features.Edit;
-using AnyStatus.Infrastructure;
-using AnyStatus.Interfaces;
-using AnyStatus.ViewModels;
-using AnyStatus.Views;
-using Microsoft.VisualStudio.Shell;
+﻿using Microsoft.VisualStudio.Shell;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

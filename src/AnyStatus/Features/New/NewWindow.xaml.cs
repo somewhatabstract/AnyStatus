@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.PlatformUI;
-using System.Windows;
 
-namespace AnyStatus.Views
+namespace AnyStatus
 {
     /// <summary>
     /// Interaction logic for NewStatusDialog.xaml

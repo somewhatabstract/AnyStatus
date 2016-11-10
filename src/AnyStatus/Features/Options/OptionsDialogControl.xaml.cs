@@ -1,9 +1,8 @@
-﻿using AnyStatus.ViewModels;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 
-namespace AnyStatus.Views
+namespace AnyStatus
 {
     /// <summary>
     /// Interaction logic for OptionsDialogControl.xaml

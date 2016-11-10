@@ -1,6 +1,4 @@
-﻿using AnyStatus.Infrastructure;
-using AnyStatus.Interfaces;
-using FluentScheduler;
+﻿using FluentScheduler;
 using System;
 
 namespace AnyStatus

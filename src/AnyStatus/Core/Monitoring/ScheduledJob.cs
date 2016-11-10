@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace AnyStatus.Infrastructure
+namespace AnyStatus
 {
     public class ScheduledJob : IJob
     {

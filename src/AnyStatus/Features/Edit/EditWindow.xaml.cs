@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.PlatformUI;
 
-namespace AnyStatus.Features.Edit
+namespace AnyStatus
 {
     /// <summary>
     /// Interaction logic for EditItemWindow.xaml

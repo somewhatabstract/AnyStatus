@@ -1,13 +1,11 @@
-﻿using AnyStatus.Infrastructure;
-using AnyStatus.ViewModels;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace AnyStatus.Views
+namespace AnyStatus
 {
     /// <summary>
     /// Interaction logic for ToolWindowControl.xaml

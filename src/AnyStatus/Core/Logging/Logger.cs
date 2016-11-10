@@ -2,7 +2,7 @@
 using System;
 using System.Diagnostics;
 
-namespace AnyStatus.Infrastructure
+namespace AnyStatus
 {
     public class Logger : ILogger
     {
