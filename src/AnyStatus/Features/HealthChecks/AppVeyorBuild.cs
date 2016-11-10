@@ -44,17 +44,17 @@ namespace AnyStatus.Models
             switch (build.Status)
             {
                 case "success":
-                    item.State = ItemState.Ok;
+                    item.State = State.Ok;
                     break;
                 case "failure":
-                    item.State = ItemState.Failed;
+                    item.State = State.Failed;
                     break;
                 case "queued":
                 case "running":
-                    item.State = ItemState.Running;
+                    item.State = State.Running;
                     break;
                 default:
-                    item.State = ItemState.Unknown;
+                    item.State = State.Unknown;
                     break;
             }
         }

@@ -24,7 +24,7 @@ namespace AnyStatus.Models
             {
                 var reply = ping.Send(item.Host);
 
-                item.State = (reply.Status == IPStatus.Success) ? ItemState.Ok : ItemState.Failed;
+                item.State = (reply.Status == IPStatus.Success) ? State.Ok : State.Failed;
             }
         }
     }

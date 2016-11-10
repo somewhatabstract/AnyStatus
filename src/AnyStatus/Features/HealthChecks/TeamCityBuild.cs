@@ -68,29 +68,29 @@ namespace AnyStatus.Models
 
             if (build.Running)
             {
-                item.State = ItemState.Running;
+                item.State = State.Running;
                 return;
             }
 
             //if (build.CancelledInfo)
             //{
             //    item.Brush = Brushes.Gray;
-            //    item.State = ItemState.Canceled;
+            //    item.State = State.Canceled;
             //    return;
             //}
 
             switch (build.Status)
             {
                 case "SUCCESS":
-                    item.State = ItemState.Ok;
+                    item.State = State.Ok;
                     break;
                 case "FAILURE":
                 case "ERROR":
-                    item.State = ItemState.Failed;
+                    item.State = State.Failed;
                     break;
                 case "UNKNOWN":
                 default:
-                    item.State = ItemState.Unknown;
+                    item.State = State.Unknown;
                     break;
             }
         }

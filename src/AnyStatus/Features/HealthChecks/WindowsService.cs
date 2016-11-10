@@ -37,7 +37,7 @@ namespace AnyStatus.Models
                 new ServiceController(item.ServiceName) : 
                 new ServiceController(item.ServiceName, item.MachineName);
 
-            item.State = (sc.Status == item.Status) ? ItemState.Ok : ItemState.Failed;
+            item.State = (sc.Status == item.Status) ? State.Ok : State.Failed;
 
             sc.Dispose();
         }

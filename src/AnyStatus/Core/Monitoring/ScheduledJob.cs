@@ -35,14 +35,14 @@ namespace AnyStatus.Infrastructure
                 }
                 else
                 {
-                    Item.State = ItemState.Invalid;
+                    Item.State = State.Invalid;
                 }
             }
             catch (Exception ex)
             {
                 _logger.Error(ex, $"Failed to update \"{Item.Name}\".");
 
-                Item.State = ItemState.Error;
+                Item.State = State.Error;
             }
         }
 

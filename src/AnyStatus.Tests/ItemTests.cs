@@ -263,21 +263,21 @@ namespace AnyStatus.Tests
         [TestMethod]
         public void WhenEnabled_StateIsNone()
         {
-            var item = new Item { State = ItemState.Unknown };
+            var item = new Item { State = State.Unknown };
 
             item.IsEnabled = true;
 
-            Assert.AreEqual(ItemState.None, item.State);
+            Assert.AreEqual(State.None, item.State);
         }
 
         [TestMethod]
         public void WhenDisabled_StateIsDisabled()
         {
-            var item = new Item { State = ItemState.None };
+            var item = new Item { State = State.None };
 
             item.IsEnabled = false;
 
-            Assert.AreEqual(ItemState.Disabled, item.State);
+            Assert.AreEqual(State.Disabled, item.State);
         }
 
         [TestMethod]

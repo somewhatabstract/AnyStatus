@@ -9,44 +9,44 @@ namespace AnyStatus
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is ItemState))
+            if (!(value is State))
                 return null;
 
-            var state = (ItemState)value;
+            var state = (State)value;
 
             var image = GetImageName(state);
 
             return new BitmapImage(new Uri("pack://application:,,,/AnyStatus;component/Resources/Icons/" + image));
         }
 
-        private static string GetImageName(ItemState state)
+        private static string GetImageName(State state)
         {
             switch (state)
             {
                 default:
-                case ItemState.None:
+                case State.None:
                     return "Blank.png";
-                case ItemState.Unknown:
+                case State.Unknown:
                     return "StatusHelp_gray_16x.png";
-                case ItemState.Disabled:
+                case State.Disabled:
                     return "StatusPause_grey_16x.png";
-                case ItemState.Canceled:
+                case State.Canceled:
                     return "StatusStop_grey_16x.png";
-                case ItemState.Ok:
+                case State.Ok:
                     return "StatusOK_grey_16x.png";
-                case ItemState.Open:
+                case State.Open:
                     return "StatusInformation_grey_16x.png";
-                case ItemState.Closed:
+                case State.Closed:
                     return "StatusOK_grey_16x.png";
-                case ItemState.PartiallySucceeded:
+                case State.PartiallySucceeded:
                     return "StatusInvalid_grey_16x";
-                case ItemState.Failed:
+                case State.Failed:
                     return "StatusCriticalError_grey_16x.png";
-                case ItemState.Invalid:
+                case State.Invalid:
                     return "StatusWarning_grey_16x.png";
-                case ItemState.Error:
+                case State.Error:
                     return "StatusWarning_grey_16x.png";
-                case ItemState.Running:
+                case State.Running:
                     return "StatusRun_grey_16x.png";
             }
         }

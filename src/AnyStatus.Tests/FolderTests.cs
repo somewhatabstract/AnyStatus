@@ -11,21 +11,21 @@ namespace AnyStatus.Tests
         {
             var folder = new Folder();
 
-            var item1 = new Item { State = ItemState.Ok };
-            var item2 = new Item { State = ItemState.Ok };
-            var item3 = new Item { State = ItemState.Ok };
+            var item1 = new Item { State = State.Ok };
+            var item2 = new Item { State = State.Ok };
+            var item3 = new Item { State = State.Ok };
 
             folder.Add(item1);
             folder.Add(item2);
             folder.Add(item3);
 
-            Assert.AreEqual(ItemState.Ok, folder.State);
+            Assert.AreEqual(State.Ok, folder.State);
 
-            var item4 = new Item { State = ItemState.Failed };
+            var item4 = new Item { State = State.Failed };
 
             folder.Add(item4);
 
-            Assert.AreEqual(ItemState.Failed, folder.State);
+            Assert.AreEqual(State.Failed, folder.State);
         }
 
         [TestMethod]
@@ -33,19 +33,19 @@ namespace AnyStatus.Tests
         {
             var folder = new Folder();
 
-            var item1 = new Item { State = ItemState.Ok };
-            var item2 = new Item { State = ItemState.Ok };
-            var item3 = new Item { State = ItemState.Failed };
+            var item1 = new Item { State = State.Ok };
+            var item2 = new Item { State = State.Ok };
+            var item3 = new Item { State = State.Failed };
 
             folder.Add(item1);
             folder.Add(item2);
             folder.Add(item3);
 
-            Assert.AreEqual(ItemState.Failed, folder.State);
+            Assert.AreEqual(State.Failed, folder.State);
 
             item3.Delete();
 
-            Assert.AreEqual(ItemState.Ok, folder.State);
+            Assert.AreEqual(State.Ok, folder.State);
         }
 
         [TestMethod]
@@ -61,11 +61,11 @@ namespace AnyStatus.Tests
             folder.Add(item2);
             folder.Add(item3);
 
-            item1.State = ItemState.Ok;
-            item2.State = ItemState.Ok;
-            item3.State = ItemState.Ok;
+            item1.State = State.Ok;
+            item2.State = State.Ok;
+            item3.State = State.Ok;
 
-            Assert.AreEqual(ItemState.Ok, folder.State);
+            Assert.AreEqual(State.Ok, folder.State);
         }
 
         [TestMethod]
@@ -81,11 +81,11 @@ namespace AnyStatus.Tests
             folder.Add(item2);
             folder.Add(item3);
 
-            item1.State = ItemState.Ok;
-            item2.State = ItemState.Failed;
-            item3.State = ItemState.Ok;
+            item1.State = State.Ok;
+            item2.State = State.Failed;
+            item3.State = State.Ok;
 
-            Assert.AreEqual(ItemState.Failed, folder.State);
+            Assert.AreEqual(State.Failed, folder.State);
         }
 
         [TestMethod]
@@ -101,11 +101,11 @@ namespace AnyStatus.Tests
             folder.Add(item2);
             folder.Add(item3);
 
-            item1.State = ItemState.Ok;
-            item2.State = ItemState.Failed;
-            item3.State = ItemState.Running;
+            item1.State = State.Ok;
+            item2.State = State.Failed;
+            item3.State = State.Running;
 
-            Assert.AreEqual(ItemState.Running, folder.State);
+            Assert.AreEqual(State.Running, folder.State);
         }
     }
 }

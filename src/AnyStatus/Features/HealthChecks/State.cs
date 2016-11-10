@@ -1,6 +1,6 @@
 ﻿namespace AnyStatus
 {
-    public enum ItemState
+    public enum State
     {
         None,
         Unknown,

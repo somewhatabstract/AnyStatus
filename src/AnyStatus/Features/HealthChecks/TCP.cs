@@ -32,11 +32,11 @@ namespace AnyStatus.Models
                 {
                     socket.Connect(item.Host, item.Port);
 
-                    item.State = ItemState.Ok;
+                    item.State = State.Ok;
                 }
                 catch (SocketException)
                 {
-                    item.State = ItemState.Failed;
+                    item.State = State.Failed;
                 }
             }
         }

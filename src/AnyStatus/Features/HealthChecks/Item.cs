@@ -39,7 +39,7 @@ namespace AnyStatus.Models
         private bool _isEnabled;
         private bool _isEditing;
         private bool _isSelected;
-        private ItemState _state;
+        private State _state;
         private ObservableCollection<Item> _items;
 
         [NonSerialized]
@@ -104,7 +104,7 @@ namespace AnyStatus.Models
 
         [XmlIgnore]
         [Browsable(false)]
-        public ItemState State
+        public State State
         {
             get { return _state; }
             set { _state = value; OnPropertyChanged(); }
@@ -118,7 +118,7 @@ namespace AnyStatus.Models
             set
             {
                 _isEnabled = value;
-                State = _isEnabled ? ItemState.None : ItemState.Disabled;
+                State = _isEnabled ? State.None : State.Disabled;
                 OnPropertyChanged();
             }
         }

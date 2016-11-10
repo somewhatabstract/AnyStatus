@@ -79,7 +79,7 @@ namespace AnyStatus.Models
 
             _logger.Info(output);
 
-            item.State = (process.ExitCode == 0) ? ItemState.Ok : ItemState.Failed;
+            item.State = (process.ExitCode == 0) ? State.Ok : State.Failed;
         }
     }
 }

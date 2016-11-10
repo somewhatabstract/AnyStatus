@@ -81,29 +81,29 @@ namespace AnyStatus.Models
 
             if (buildDetails.Status == "notStarted" || buildDetails.Status == "inProgress")
             {
-                item.State = ItemState.Running;
+                item.State = State.Running;
                 return;
             }
 
             switch (buildDetails.Result)
             {
                 case "notStarted":
-                    item.State = ItemState.Running;
+                    item.State = State.Running;
                     break;
                 case "succeeded":
-                    item.State = ItemState.Ok;
+                    item.State = State.Ok;
                     break;
                 case "failed":
-                    item.State = ItemState.Failed;
+                    item.State = State.Failed;
                     break;
                 case "partiallySucceeded":
-                    item.State = ItemState.PartiallySucceeded;
+                    item.State = State.PartiallySucceeded;
                     break;
                 case "canceled":
-                    item.State = ItemState.Canceled;
+                    item.State = State.Canceled;
                     break;
                 default:
-                    item.State = ItemState.Unknown;
+                    item.State = State.Unknown;
                     break;
             }
         }

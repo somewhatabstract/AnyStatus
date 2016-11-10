@@ -9,43 +9,43 @@ namespace AnyStatus
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var state = (ItemState)value;
+            var state = (State)value;
             
             switch (state)
             {
                 //Brushes List: https://i-msdn.sec.s-msft.com/dynimg/IC24340.jpeg
 
                 default:
-                case ItemState.None:
-                case ItemState.Unknown:
-                case ItemState.Disabled:
+                case State.None:
+                case State.Unknown:
+                case State.Disabled:
                     return Brushes.Silver;
 
-                case ItemState.Canceled:
+                case State.Canceled:
                     return Brushes.Gray;
 
-                case ItemState.Ok:
+                case State.Ok:
                     return Brushes.Green;
 
-                case ItemState.Open:
+                case State.Open:
                     return Brushes.Green;
 
-                case ItemState.Closed:
+                case State.Closed:
                     return Brushes.Red;
 
-                case ItemState.PartiallySucceeded:
+                case State.PartiallySucceeded:
                     return Brushes.Orange;
 
-                case ItemState.Failed:
+                case State.Failed:
                     return Brushes.Red;
 
-                case ItemState.Invalid:
+                case State.Invalid:
                     return Brushes.OrangeRed;
 
-                case ItemState.Error:
+                case State.Error:
                     return Brushes.DarkRed;
 
-                case ItemState.Running:
+                case State.Running:
                     return Brushes.DodgerBlue;
             }
         }

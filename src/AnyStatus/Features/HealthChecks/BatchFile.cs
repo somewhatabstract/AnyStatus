@@ -56,7 +56,7 @@ namespace AnyStatus.Models
 
             process.WaitForExit(item.Timeout * 60 * 1000);
 
-            item.State = (process.ExitCode == 0) ? ItemState.Ok : ItemState.Failed;
+            item.State = (process.ExitCode == 0) ? State.Ok : State.Failed;
         }
     }
 }

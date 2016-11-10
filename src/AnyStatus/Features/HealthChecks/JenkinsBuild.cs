@@ -47,26 +47,26 @@ namespace AnyStatus.Models
 
             if (build.Building)
             {
-                item.State = ItemState.Running;
+                item.State = State.Running;
                 return;
             }
 
             switch (build.Result)
             {
                 case "SUCCESS":
-                    item.State = ItemState.Ok;
+                    item.State = State.Ok;
                     break;
                 case "ABORTED":
-                    item.State = ItemState.Canceled;
+                    item.State = State.Canceled;
                     break;
                 case "FAILURE":
-                    item.State = ItemState.Failed;
+                    item.State = State.Failed;
                     break;
                 case "UNSTABLE":
-                    item.State = ItemState.PartiallySucceeded;
+                    item.State = State.PartiallySucceeded;
                     break;
                 default:
-                    item.State = ItemState.Unknown;
+                    item.State = State.Unknown;
                     break;
             }
         }

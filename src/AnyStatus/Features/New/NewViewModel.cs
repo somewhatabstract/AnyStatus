@@ -108,15 +108,15 @@ namespace AnyStatus.ViewModels
 
                 switch (item.State)
                 {
-                    case ItemState.None:
+                    case State.None:
                         break;
-                    case ItemState.Ok:
+                    case State.Ok:
                         MessageBox.Show("Ok", "Test", MessageBoxButton.OK, MessageBoxImage.Information);
                         break;
-                    case ItemState.Failed:
+                    case State.Failed:
                         MessageBox.Show("Test failed. See output window for more information.", "Test", MessageBoxButton.OK, MessageBoxImage.Warning);
                         break;
-                    case ItemState.Invalid:
+                    case State.Invalid:
                         break;
                     default:
                         break;

@@ -9,47 +9,47 @@ namespace AnyStatus
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var state = (ItemState)value;
+            var state = (State)value;
             
             switch (state)
             {
                 //Monikers List: http://glyphlist.azurewebsites.net/knownmonikers/
 
                 default:
-                case ItemState.None:
+                case State.None:
                     return KnownMonikers.Blank;
 
-                case ItemState.Unknown:
+                case State.Unknown:
                     return KnownMonikers.StatusHelp;
 
-                case ItemState.Disabled:
+                case State.Disabled:
                     return KnownMonikers.StatusPaused;
 
-                case ItemState.Canceled:
+                case State.Canceled:
                     return KnownMonikers.StatusStoppedOutline;
 
-                case ItemState.Ok:
+                case State.Ok:
                     return KnownMonikers.StatusOKNoColor;
 
-                case ItemState.Open:
+                case State.Open:
                     return KnownMonikers.StatusInformationOutline;
 
-                case ItemState.Closed:
+                case State.Closed:
                     return KnownMonikers.StatusInvalidOutline;
 
-                case ItemState.PartiallySucceeded:
+                case State.PartiallySucceeded:
                     return KnownMonikers.StatusWarningNoColor;
 
-                case ItemState.Failed:
+                case State.Failed:
                     return KnownMonikers.StatusErrorNoColor;
 
-                case ItemState.Invalid:
+                case State.Invalid:
                     return KnownMonikers.StatusInformationNoColor;
 
-                case ItemState.Error:
+                case State.Error:
                     return KnownMonikers.StatusWarningNoColor;
 
-                case ItemState.Running:
+                case State.Running:
                     return KnownMonikers.StatusRunningNoColor;
             }
         }

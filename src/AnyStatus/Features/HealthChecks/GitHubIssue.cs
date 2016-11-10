@@ -39,13 +39,13 @@ namespace AnyStatus.Models
             switch (state)
             {
                 case GitHubIssueState.Open:
-                    item.State = ItemState.Open;
+                    item.State = State.Open;
                     break;
                 case GitHubIssueState.Closed:
-                    item.State = ItemState.Closed;
+                    item.State = State.Closed;
                     break;
                 default:
-                    item.State = ItemState.Unknown;
+                    item.State = State.Unknown;
                     break;
             }
         }

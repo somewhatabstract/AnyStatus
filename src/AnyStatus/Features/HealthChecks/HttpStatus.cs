@@ -50,7 +50,7 @@ namespace AnyStatus.Models
                     {
                         var response = client.GetAsync(item.Url).Result;
 
-                        item.State = response.StatusCode == item.HttpStatusCode ? ItemState.Ok : ItemState.Failed;
+                        item.State = response.StatusCode == item.HttpStatusCode ? State.Ok : State.Failed;
                     }
                 }
                 catch (AggregateException ae)
@@ -58,7 +58,7 @@ namespace AnyStatus.Models
                     ae.Handle(ex =>
                     {
                         if (ex is HttpRequestException)
-                            item.State = ItemState.Failed;
+                            item.State = State.Failed;
 
                         return ex is HttpRequestException;
                     });
