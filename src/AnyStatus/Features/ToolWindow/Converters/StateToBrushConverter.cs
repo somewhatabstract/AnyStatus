@@ -3,50 +3,28 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
+//todo: cache brushes
+
 namespace AnyStatus
 {
     public class StateToBrushConverter : IValueConverter
     {
+        private readonly BrushConverter _brushConverter = new BrushConverter();
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var state = (State)value;
-            
-            switch (state)
+            var state = value as State;
+
+            if (state == null) return null;
+
+            try
             {
-                //Brushes List: https://i-msdn.sec.s-msft.com/dynimg/IC24340.jpeg
+                return _brushConverter.ConvertFromString(state.Color);
 
-                default:
-                case State.None:
-                case State.Unknown:
-                case State.Disabled:
-                    return Brushes.Silver;
-
-                case State.Canceled:
-                    return Brushes.Gray;
-
-                case State.Ok:
-                    return Brushes.Green;
-
-                case State.Open:
-                    return Brushes.Green;
-
-                case State.Closed:
-                    return Brushes.Red;
-
-                case State.PartiallySucceeded:
-                    return Brushes.Orange;
-
-                case State.Failed:
-                    return Brushes.Red;
-
-                case State.Invalid:
-                    return Brushes.OrangeRed;
-
-                case State.Error:
-                    return Brushes.DarkRed;
-
-                case State.Running:
-                    return Brushes.DodgerBlue;
+            }
+            catch (NotSupportedException)
+            {
+                return Brushes.Transparent;
             }
         }
 

@@ -103,21 +103,21 @@ namespace AnyStatus
 
                 await job.ExecuteAsync();
 
-                switch (item.State)
-                {
-                    case State.None:
-                        break;
-                    case State.Ok:
-                        MessageBox.Show("Ok", "Test", MessageBoxButton.OK, MessageBoxImage.Information);
-                        break;
-                    case State.Failed:
-                        MessageBox.Show("Test failed. See output window for more information.", "Test", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        break;
-                    case State.Invalid:
-                        break;
-                    default:
-                        break;
-                }
+                //switch (item.State)
+                //{
+                //    case State.None:
+                //        break;
+                //    case State.Ok:
+                //        MessageBox.Show("Ok", "Test", MessageBoxButton.OK, MessageBoxImage.Information);
+                //        break;
+                //    case State.Failed:
+                //        MessageBox.Show("Test failed. See output window for more information.", "Test", MessageBoxButton.OK, MessageBoxImage.Warning);
+                //        break;
+                //    case State.Invalid:
+                //        break;
+                //    default:
+                //        break;
+                //}
             }
             catch (ValidationException)
             {

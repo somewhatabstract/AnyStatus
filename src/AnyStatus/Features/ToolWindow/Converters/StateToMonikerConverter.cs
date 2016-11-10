@@ -10,48 +10,50 @@ namespace AnyStatus
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var state = (State)value;
-            
-            switch (state)
-            {
-                //Monikers List: http://glyphlist.azurewebsites.net/knownmonikers/
 
-                default:
-                case State.None:
-                    return KnownMonikers.Blank;
+            return KnownMonikers.Blank;
 
-                case State.Unknown:
-                    return KnownMonikers.StatusHelp;
+            //switch (state)
+            //{
+            //    //Monikers List: http://glyphlist.azurewebsites.net/knownmonikers/
 
-                case State.Disabled:
-                    return KnownMonikers.StatusPaused;
+            //    default:
+            //    case State.None:
+            //        return KnownMonikers.Blank;
 
-                case State.Canceled:
-                    return KnownMonikers.StatusStoppedOutline;
+            //    case State.Unknown:
+            //        return KnownMonikers.StatusHelp;
 
-                case State.Ok:
-                    return KnownMonikers.StatusOKNoColor;
+            //    case State.Disabled:
+            //        return KnownMonikers.StatusPaused;
 
-                case State.Open:
-                    return KnownMonikers.StatusInformationOutline;
+            //    case State.Canceled:
+            //        return KnownMonikers.StatusStoppedOutline;
 
-                case State.Closed:
-                    return KnownMonikers.StatusInvalidOutline;
+            //    case State.Ok:
+            //        return KnownMonikers.StatusOKNoColor;
 
-                case State.PartiallySucceeded:
-                    return KnownMonikers.StatusWarningNoColor;
+            //    case State.Open:
+            //        return KnownMonikers.StatusInformationOutline;
 
-                case State.Failed:
-                    return KnownMonikers.StatusErrorNoColor;
+            //    case State.Closed:
+            //        return KnownMonikers.StatusInvalidOutline;
 
-                case State.Invalid:
-                    return KnownMonikers.StatusInformationNoColor;
+            //    case State.PartiallySucceeded:
+            //        return KnownMonikers.StatusWarningNoColor;
 
-                case State.Error:
-                    return KnownMonikers.StatusWarningNoColor;
+            //    case State.Failed:
+            //        return KnownMonikers.StatusErrorNoColor;
 
-                case State.Running:
-                    return KnownMonikers.StatusRunningNoColor;
-            }
+            //    case State.Invalid:
+            //        return KnownMonikers.StatusInformationNoColor;
+
+            //    case State.Error:
+            //        return KnownMonikers.StatusWarningNoColor;
+
+            //    case State.Running:
+            //        return KnownMonikers.StatusRunningNoColor;
+            //}
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

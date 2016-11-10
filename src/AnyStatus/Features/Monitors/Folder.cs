@@ -1,4 +1,5 @@
-﻿using System.Collections.Specialized;
+﻿using System.Collections;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 
@@ -17,33 +18,33 @@ namespace AnyStatus
 
         private void Items_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            Unsubscribe(e);
+            Unsubscribe(e.OldItems);
 
-            Subscribe(e);
+            Subscribe(e.NewItems);
+
+            CalculateState();
         }
 
-        private void Subscribe(NotifyCollectionChangedEventArgs e)
+        private void Subscribe(IList items)
         {
-            if (e.NewItems == null) return;
-
-            foreach (INotifyPropertyChanged item in e.NewItems)
+            if (items == null)
+                return;
+            
+            foreach (INotifyPropertyChanged item in items)
             {
                 item.PropertyChanged += Item_PropertyChanged;
             }
-
-            CalculateState();
         }
 
-        private void Unsubscribe(NotifyCollectionChangedEventArgs e)
+        private void Unsubscribe(IList items)
         {
-            if (e.OldItems == null) return;
+            if (items == null)
+                return;
 
-            foreach (INotifyPropertyChanged item in e.OldItems)
+            foreach (INotifyPropertyChanged item in items)
             {
                 item.PropertyChanged -= Item_PropertyChanged;
             }
-
-            CalculateState();
         }
 
         private void Item_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -58,7 +59,7 @@ namespace AnyStatus
         {
             if (Items != null && Items.Any())
             {
-                State = Items.Aggregate((a, b) => a.State > b.State ? a : b).State;
+                State = Items.Aggregate((a, b) => a.State.Priority > b.State.Priority ? a : b).State;
             }
         }
     }
