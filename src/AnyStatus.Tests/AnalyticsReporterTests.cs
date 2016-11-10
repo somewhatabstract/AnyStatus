@@ -3,11 +3,10 @@ using System.Threading;
 
 namespace AnyStatus.Tests
 {
-    [TestClass]
+    //[TestClass]
     public class AnalyticsReporterTests
     {
-        [Ignore]
-        [TestMethod]
+        //[TestMethod]
         public void ReportScreen()
         {
             var reporter = new AnalyticsReporter();
