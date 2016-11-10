@@ -20,7 +20,6 @@ namespace AnyStatus
             try
             {
                 return _brushConverter.ConvertFromString(state.Color);
-
             }
             catch (NotSupportedException)
             {
