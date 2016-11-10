@@ -161,7 +161,6 @@
     <Compile Include="Features\Monitors\RootItem.cs" />
     <Compile Include="Features\Monitors\GitHubIssue.cs" />
     <Compile Include="Features\Monitors\PowerShellScript.cs" />
-    <Compile Include="Features\Monitors\StateConfiguration.cs" />
     <Compile Include="Features\Monitors\TfsWorkItem.cs" />
     <Compile Include="Features\ToolWindow\Commands\DeleteCommand.cs" />
     <Compile Include="Features\ToolWindow\Commands\DisableCommand.cs" />
@@ -170,7 +169,6 @@
     <Compile Include="Features\ToolWindow\Converters\StateToMonikerConverter.cs" />
     <Compile Include="Features\ToolWindow\Converters\TooltipConverter.cs" />
     <Compile Include="Features\ToolWindow\Converters\StateToBrushConverter.cs" />
-    <Compile Include="Features\Monitors\StateMetadata.cs" />
     <Compile Include="Infrastructure\Discovery.cs" />
     <Compile Include="Infrastructure\Enumeration.cs" />
     <Compile Include="Infrastructure\Extensions.cs" />
