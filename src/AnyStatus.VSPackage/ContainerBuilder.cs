@@ -1,7 +1,6 @@
 ﻿using AnyStatus.Features.Edit;
 using AnyStatus.Infrastructure;
 using AnyStatus.Interfaces;
-using AnyStatus.Models;
 using AnyStatus.ViewModels;
 using AnyStatus.Views;
 using Microsoft.VisualStudio.Shell;

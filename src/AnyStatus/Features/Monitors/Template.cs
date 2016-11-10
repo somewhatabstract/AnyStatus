@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AnyStatus.Models
+namespace AnyStatus
 {
     public class Template
     {

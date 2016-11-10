@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 
-namespace AnyStatus.Models
+namespace AnyStatus
 {
     [Browsable(false)]
     public class Folder : Item

@@ -1,5 +1,4 @@
-﻿using AnyStatus.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AnyStatus.Tests
 {

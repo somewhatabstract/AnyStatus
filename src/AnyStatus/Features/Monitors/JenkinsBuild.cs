@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
-namespace AnyStatus.Models
+namespace AnyStatus
 {
     [DisplayName("Jenkins Build")]
     public class JenkinsBuild : Item, IScheduledItem

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.ServiceProcess;
 
-namespace AnyStatus.Models
+namespace AnyStatus
 {
     [DisplayName("Windows Service")]
     [Description("")]

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
-namespace AnyStatus.Models
+namespace AnyStatus
 {
     [CategoryOrder("TeamCity", 10)]
     [DisplayName("TeamCity Build")]

@@ -1,4 +1,4 @@
-﻿namespace AnyStatus.Models
+﻿namespace AnyStatus
 {
     public class RootItem : Item
     {

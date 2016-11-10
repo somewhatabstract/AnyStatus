@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace AnyStatus.Models
+namespace AnyStatus
 {
     [Browsable(false)]
     [DisplayName("TFS 15 Work Item")]

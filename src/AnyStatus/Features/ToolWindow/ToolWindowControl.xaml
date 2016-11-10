@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AnyStatus"
              xmlns:views="clr-namespace:AnyStatus.Views"
-             xmlns:models="clr-namespace:AnyStatus.Models"
              xmlns:vm="clr-namespace:AnyStatus.ViewModels"
              xmlns:vsp="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.14.0"
              xmlns:imaging="clr-namespace:Microsoft.VisualStudio.Imaging;assembly=Microsoft.VisualStudio.Imaging"
@@ -70,7 +69,7 @@
                 <local:StateToImageConverter x:Key="StateToImageConverter" />
 
                 <!--Folder-->
-                <HierarchicalDataTemplate DataType="{x:Type models:Folder}" ItemsSource="{Binding Items}">
+                <HierarchicalDataTemplate DataType="{x:Type local:Folder}" ItemsSource="{Binding Items}">
                     <StackPanel Height="30" 
                                 MinWidth="160"
                                 Orientation="Horizontal"
@@ -205,7 +204,7 @@
                 </HierarchicalDataTemplate>
 
                 <!--Item-->
-                <DataTemplate DataType="{x:Type models:Item}">
+                <DataTemplate DataType="{x:Type local:Item}">
                     <StackPanel Orientation="Horizontal"
                                 MinWidth="160"
                                 Height="30"

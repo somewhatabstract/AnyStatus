@@ -6,7 +6,7 @@ using System.Net;
 using System.Net.Http;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
-namespace AnyStatus.Models
+namespace AnyStatus
 {
     [DisplayName("HTTP Status")]
     [Description("")]

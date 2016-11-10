@@ -6,7 +6,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 
-namespace AnyStatus.Models
+namespace AnyStatus
 {
     [DisplayName("AppVeyor Build")]
     [Description("")]

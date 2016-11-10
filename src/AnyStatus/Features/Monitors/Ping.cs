@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Net.NetworkInformation;
 
-namespace AnyStatus.Models
+namespace AnyStatus
 {
     [DisplayName("Ping")]
     [Description("")]

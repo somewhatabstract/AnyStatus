@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Windows.Media;
 
-namespace AnyStatus.Models
+namespace AnyStatus
 {
     [DisplayName("GitHub Issue")]
     [Description("")]

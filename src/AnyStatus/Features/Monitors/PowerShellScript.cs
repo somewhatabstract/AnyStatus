@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
-namespace AnyStatus.Models
+namespace AnyStatus
 {
     [DisplayName("PowerShell Script")]
     [Description("Execute a PowerShell script")]

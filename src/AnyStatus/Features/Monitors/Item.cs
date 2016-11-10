@@ -10,7 +10,7 @@ using System.Windows.Media;
 using System.Xml.Serialization;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
-namespace AnyStatus.Models
+namespace AnyStatus
 {
     [Serializable]
     [CategoryOrder("General", 1)]

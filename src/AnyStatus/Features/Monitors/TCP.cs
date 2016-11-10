@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Net.Sockets;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
-namespace AnyStatus.Models
+namespace AnyStatus
 {
     [DisplayName("TCP")]
     [Description("")]

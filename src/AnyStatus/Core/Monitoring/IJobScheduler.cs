@@ -1,6 +1,4 @@
-﻿using AnyStatus.Models;
-
-namespace AnyStatus
+﻿namespace AnyStatus
 {
     public interface IJobScheduler
     {

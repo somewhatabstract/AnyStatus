@@ -1,5 +1,4 @@
 ﻿using AnyStatus.Interfaces;
-using AnyStatus.Models;
 using FluentScheduler;
 using System;
 using System.Windows.Input;

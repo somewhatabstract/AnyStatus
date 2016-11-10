@@ -1,6 +1,4 @@
-﻿using AnyStatus.Models;
-
-namespace AnyStatus.Properties
+﻿namespace AnyStatus.Properties
 {
     /// <summary>
     /// Extends Properties.Settings.Default
