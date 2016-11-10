@@ -126,7 +126,8 @@
 
                                 <Separator/>
 
-                                <MenuItem Header=" Delete" 
+                                <MenuItem Header=" Delete"
+                                          InputGestureText="Del"
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.DeleteCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}">
                                     <MenuItem.Icon>
@@ -134,7 +135,8 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
 
-                                <MenuItem Header=" Rename" 
+                                <MenuItem Header=" Rename"
+                                          InputGestureText="F2"
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.RenameCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}">
                                     <MenuItem.Icon>
@@ -295,7 +297,8 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
 
-                                <MenuItem Header=" Rename" 
+                                <MenuItem Header=" Rename"
+                                          InputGestureText="F2"
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.RenameCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}">
                                     <MenuItem.Icon>

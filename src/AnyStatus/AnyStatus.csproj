@@ -167,7 +167,7 @@
     <Compile Include="Features\ToolWindow\Commands\EnableCommand.cs" />
     <Compile Include="Features\ToolWindow\Converters\StateToImageConverter.cs" />
     <Compile Include="Features\ToolWindow\Converters\StateToMonikerConverter.cs" />
-    <Compile Include="Features\ToolWindow\TooltipConverter.cs" />
+    <Compile Include="Features\ToolWindow\Converters\TooltipConverter.cs" />
     <Compile Include="Features\ToolWindow\Converters\StateToBrushConverter.cs" />
     <Compile Include="Infrastructure\Discovery.cs" />
     <Compile Include="Infrastructure\Extensions.cs" />
