@@ -5,6 +5,8 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
+//todo: separate SettingsStore from UserSettings
+
 namespace AnyStatus
 {
     public class UserSettings : IUserSettings
@@ -17,6 +19,7 @@ namespace AnyStatus
         private bool _reportAnonymousUsage;
         private bool _showStatusIcons;
         private bool _showStatusColors;
+        private Theme _theme;
 
         private UserSettings()
         {
@@ -65,6 +68,12 @@ namespace AnyStatus
             set { _showStatusColors = value; OnPropertyChanged(); }
         }
 
+        public Theme Theme
+        {
+            get { return _theme; }
+            set { _theme = value; OnPropertyChanged(); }
+        }
+
         #endregion
 
         #region Methods
@@ -88,6 +97,8 @@ namespace AnyStatus
                 {
                     Upgrade();
                 }
+
+                State.SetMetadata(Theme.Metadata);
             }
             catch (Exception ex)
             {
@@ -108,6 +119,7 @@ namespace AnyStatus
             {
                 Retry.Do(() =>
                 {
+                    Properties.Settings.Default.Theme = Theme;
                     Properties.Settings.Default.RootItem = RootItem;
                     Properties.Settings.Default.ClientId = ClientId;
                     Properties.Settings.Default.DebugMode = DebugMode;
@@ -138,6 +150,7 @@ namespace AnyStatus
 
                 ClientId = CreateClientId();
                 RootItem = new RootItem();
+                Theme = Theme.Default.Clone();
 
                 Properties.Settings.Default.FirstTimeInstallation = false;
 
@@ -194,6 +207,12 @@ namespace AnyStatus
                 ShowStatusColors = userSettings.ShowStatusColors;
                 ReportAnonymousUsage = userSettings.ReportAnonymousUsage;
 
+                //todo: is this needed?
+                if (userSettings.Theme != null)
+                {
+                    Theme = userSettings.Theme;
+                }
+
                 Save();
 
                 SettingsReset?.Invoke(this, EventArgs.Empty);
@@ -216,6 +235,7 @@ namespace AnyStatus
 
         private void LoadSettings()
         {
+            Theme = Properties.Settings.Default.Theme;
             ClientId = Properties.Settings.Default.ClientId;
             RootItem = Properties.Settings.Default.RootItem;
             DebugMode = Properties.Settings.Default.DebugMode;
@@ -226,10 +246,23 @@ namespace AnyStatus
 
         private void Upgrade()
         {
+            var isDirty = false;
+
             if (RootItem.ContainsElements(typeof(AppVeyorBuild)))
             {
                 UpgradeAppVeyorItems(RootItem);
+
+                isDirty = true;
             }
+
+            if (Theme == null)
+            {
+                Theme = Theme.Default.Clone();
+
+                isDirty = true;
+            }
+
+            if (isDirty) Save();
         }
 
         private void UpgradeAppVeyorItems(Item item)
@@ -245,8 +278,6 @@ namespace AnyStatus
                     appVeyorItem.ProjectSlug = appVeyorItem.ProjectName;
 
                     appVeyorItem.ProjectName = string.Empty;
-
-                    Save();
                 }
             }
             else if (item.ContainsElements())

@@ -7,9 +7,9 @@ namespace AnyStatus
     /// <summary>
     /// Interaction logic for OptionsDialogControl.xaml
     /// </summary>
-    public partial class OptionsDialogControl : UserControl
+    public partial class UserInterfaceOptionsView : UserControl
     {
-        public OptionsDialogControl(OptionsViewModel viewModel)
+        public UserInterfaceOptionsView(UserInterfaceOptionsViewModel viewModel)
         {
             InitializeComponent();
 

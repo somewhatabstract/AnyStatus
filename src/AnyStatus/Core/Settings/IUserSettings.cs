@@ -20,6 +20,8 @@ namespace AnyStatus
 
         bool ShowStatusColors { get; set; }
 
+        Theme Theme { get; set; }
+
         Task InitializeAsync();
 
         void Initialize();

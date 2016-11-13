@@ -161,10 +161,21 @@
     <Compile Include="Features\Monitors\RootItem.cs" />
     <Compile Include="Features\Monitors\GitHubIssue.cs" />
     <Compile Include="Features\Monitors\PowerShellScript.cs" />
+    <Compile Include="Features\Monitors\StateMetadata.cs" />
     <Compile Include="Features\Monitors\TfsWorkItem.cs" />
+    <Compile Include="Core\Settings\Theme.cs" />
+    <Compile Include="Features\Options\UserInterface\UserInterfaceOptions.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Features\Options\UserInterface\UserInterfaceOptionsView.xaml.cs">
+      <DependentUpon>UserInterfaceOptionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Options\UserInterface\UserInterfaceOptionsViewModel.cs" />
     <Compile Include="Features\ToolWindow\Commands\DeleteCommand.cs" />
     <Compile Include="Features\ToolWindow\Commands\DisableCommand.cs" />
     <Compile Include="Features\ToolWindow\Commands\EnableCommand.cs" />
+    <Compile Include="Features\ToolWindow\Converters\HexToBrushConverter.cs" />
+    <Compile Include="Features\ToolWindow\Converters\HexToColorConverter.cs" />
     <Compile Include="Features\ToolWindow\Converters\StateToImageConverter.cs" />
     <Compile Include="Features\ToolWindow\Converters\StateToMonikerConverter.cs" />
     <Compile Include="Features\ToolWindow\Converters\TooltipConverter.cs" />
@@ -180,6 +191,9 @@
     <Compile Include="Features\ToolWindow\EditableTextBlock.cs" />
     <Compile Include="Core\UsageReporting\AnalyticsReporter.cs" />
     <Compile Include="Core\UsageReporting\IUsageReporter.cs" />
+    <Compile Include="Infrastructure\NotConverter.cs" />
+    <Compile Include="Infrastructure\NotifyPropertyChanged.cs" />
+    <Compile Include="Infrastructure\ObjectCopier.cs" />
     <Compile Include="Infrastructure\Preconditions.cs" />
     <Compile Include="Core\Monitoring\IJobScheduler.cs" />
     <Compile Include="Core\Monitoring\JobScheduler.cs" />
@@ -209,15 +223,15 @@
     <Compile Include="Core\Settings\UserSettings.cs" />
     <Compile Include="Core\IViewLocator.cs" />
     <Compile Include="Features\New\NewViewModel.cs" />
-    <Compile Include="Features\Options\OptionsViewModel.cs" />
+    <Compile Include="Features\Options\General\GeneralOptionsViewModel.cs" />
     <Compile Include="Features\ToolWindow\ToolWindowViewModel.cs" />
     <Compile Include="Features\New\NewWindow.xaml.cs">
       <DependentUpon>NewWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Features\Options\OptionsDialogControl.xaml.cs">
-      <DependentUpon>OptionsDialogControl.xaml</DependentUpon>
+    <Compile Include="Features\Options\General\GeneralOptionsView.xaml.cs">
+      <DependentUpon>GeneralOptionsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Features\Options\Options.cs">
+    <Compile Include="Features\Options\General\GeneralOptions.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Features\ToolWindow\ToolWindowControl.xaml.cs">
@@ -233,9 +247,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Features\Options\OptionsDialogControl.xaml">
+    <Page Include="Features\Options\General\GeneralOptionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Features\Options\UserInterface\UserInterfaceOptionsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Features\ToolWindow\ToolWindowControl.xaml">
       <SubType>Designer</SubType>

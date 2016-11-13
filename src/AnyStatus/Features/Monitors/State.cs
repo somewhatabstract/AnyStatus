@@ -1,7 +1,14 @@
-﻿namespace AnyStatus
+﻿using System;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
+
+namespace AnyStatus
 {
-    public class State : Enumeration<State, int>
+    public class State : Enumeration<State, int>, INotifyPropertyChanged
     {
+        private StateMetadata _stateMetadata;
+
         public static readonly State None = new State(0, 0, "None", "Silver", "Blank.png");
         public static readonly State Unknown = new State(1, 1, "Unknown", "Silver", "StatusHelp_gray_16x.png");
         public static readonly State Disabled = new State(2, 2, "Disabled", "Silver", "StatusPause_grey_16x.png");
@@ -15,17 +22,75 @@
         public static readonly State Error = new State(10, 10, "Error", "DarkRed", "StatusWarning_grey_16x.png");
         public static readonly State Running = new State(11, 11, "Running", "DodgerBlue", "StatusRun_grey_16x.png");
 
-        public int Priority { get; private set; }
-
-        public string Color { get; private set; }
-
-        public string IconName { get; private set; }
-
-        private State(int value, int priority, string displayName, string color, string iconName) : base(value, displayName)
+        private State(int value, int priority, string displayName, string color, string icon) :
+            base(value)
         {
-            Priority = priority;
-            Color = color;
-            IconName = iconName;
+            Metadata = new StateMetadata(value, priority, displayName, color, icon);
         }
+
+        public StateMetadata Metadata
+        {
+            get { return _stateMetadata; }
+            private set { _stateMetadata = value; OnPropertyChanged(); }
+        }
+
+        public static void SetMetadata(StateMetadata[] metadataArray)
+        {
+            if (metadataArray == null)
+                return;
+
+            var states = GetAll().ToDictionary(k => k.Value, v => v);
+
+            foreach (var metadata in metadataArray)
+            {
+                if (states.ContainsKey(metadata.Value))
+                {
+                    states[metadata.Value].Metadata = metadata;
+                }
+            }
+        }
+
+        public static StateMetadata[] GetMetadata()
+        {
+            return GetAll().Select(state => state.Metadata).ToArray();
+        }
+
+        #region IXmlSerializable
+
+        //public void ReadXml(XmlReader reader)
+        //{
+        //    reader.MoveToContent();
+        //    reader.ReadStartElement();
+
+        //    var value = reader.ReadElementContentAsInt();
+
+        //    var state = FromValue(value);
+
+        //    Priority = state.Priority = reader.ReadElementContentAsInt();
+        //    Color = state.Color = reader.ReadElementContentAsString();
+        //    Icon = state.Icon = reader.ReadElementContentAsString();
+        //}
+
+        //public void WriteXml(XmlWriter writer)
+        //{
+        //    writer.WriteElementString("Value", Value.ToString());
+        //    writer.WriteElementString("Priority", Priority.ToString());
+        //    writer.WriteElementString("Color", Color);
+        //    writer.WriteElementString("Icon", Icon);
+        //}
+
+        #endregion
+
+        #region INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public event EventHandler SettingsReset;
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        #endregion
     }
 }

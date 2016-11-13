@@ -49,8 +49,11 @@ namespace AnyStatus.VSPackage
             container.Register<EditWindow>().AsMultiInstance();
             container.Register<EditViewModel>().AsMultiInstance();
 
-            container.Register<OptionsDialogControl>().AsSingleton();
-            container.Register<OptionsViewModel>().AsSingleton();
+            container.Register<GeneralOptionsView>().AsSingleton();
+            container.Register<GeneralOptionsViewModel>().AsSingleton();
+
+            container.Register<UserInterfaceOptionsView>().AsSingleton();
+            container.Register<UserInterfaceOptionsViewModel>().AsSingleton();
         }
 
         private static void RegisterItemHandlers(TinyIoCContainer container)

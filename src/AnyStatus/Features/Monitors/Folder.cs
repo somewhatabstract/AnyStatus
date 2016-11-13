@@ -59,7 +59,7 @@ namespace AnyStatus
         {
             if (Items != null && Items.Any())
             {
-                State = Items.Aggregate((a, b) => a.State.Priority > b.State.Priority ? a : b).State;
+                State = Items.Aggregate((a, b) => a.State.Metadata.Priority > b.State.Metadata.Priority ? a : b).State;
             }
         }
     }

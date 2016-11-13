@@ -15,7 +15,7 @@ namespace AnyStatus
 
             if (state == null) return null;
 
-            return new BitmapImage(new Uri("pack://application:,,,/AnyStatus;component/Resources/Icons/" + state.IconName));
+            return new BitmapImage(new Uri("pack://application:,,,/AnyStatus;component/Resources/Icons/" + state.Metadata.Icon));
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

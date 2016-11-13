@@ -3,23 +3,22 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
-//todo: cache brushes
-
 namespace AnyStatus
 {
-    public class StateToBrushConverter : IValueConverter
+    public class HexToBrushConverter : IValueConverter
     {
         private readonly BrushConverter _brushConverter = new BrushConverter();
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var state = value as State;
+            var hex = value as string;
 
-            if (state == null) return null;
+            if (string.IsNullOrEmpty(hex))
+                return Brushes.Transparent;
 
             try
             {
-                return _brushConverter.ConvertFromString(state.Metadata.Color);
+                return _brushConverter.ConvertFromString(hex);
             }
             catch (NotSupportedException)
             {

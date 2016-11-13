@@ -50,6 +50,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <Choose>
@@ -71,6 +72,7 @@
     <Compile Include="ItemTests.cs" />
     <Compile Include="AnalyticsReporterTests.cs" />
     <Compile Include="FolderTests.cs" />
+    <Compile Include="StateTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AnyStatus\AnyStatus.csproj">

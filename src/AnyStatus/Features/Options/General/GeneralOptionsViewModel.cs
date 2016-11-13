@@ -6,17 +6,15 @@ using System.Windows.Input;
 
 namespace AnyStatus
 {
-    public class OptionsViewModel : INotifyPropertyChanged
+    public class GeneralOptionsViewModel : INotifyPropertyChanged
     {
         private bool _debugMode;
         private bool _reportAnonymousUsage;
-        private bool _showStatusIcons;
-        private bool _showStatusColors;
 
         private ILogger _logger;
         private IUserSettings _userSettings;
 
-        public OptionsViewModel(IUserSettings userSettings, ILogger logger)
+        public GeneralOptionsViewModel(IUserSettings userSettings, ILogger logger)
         {
             _logger = Preconditions.CheckNotNull(logger, nameof(logger));
             _userSettings = Preconditions.CheckNotNull(userSettings, nameof(userSettings));
@@ -31,13 +29,9 @@ namespace AnyStatus
         #region Commands
 
         public ICommand ApplyCommand { get; set; }
-
         public ICommand ActivateCommand { get; set; }
-
         public ICommand RestoreDefaultSettingsCommand { get; set; }
-
         public ICommand ImportSettingsCommand { get; set; }
-
         public ICommand ExportSettingsCommand { get; set; }
 
         #endregion
@@ -64,38 +58,16 @@ namespace AnyStatus
             }
         }
 
-        public bool ShowStatusIcons
-        {
-            get { return _showStatusIcons; }
-            set
-            {
-                _showStatusIcons = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool ShowStatusColors
-        {
-            get { return _showStatusColors; }
-            set
-            {
-                _showStatusColors = value;
-                OnPropertyChanged();
-            }
-        }
-
         #endregion
 
         #region Helpers
 
         private void Save()
         {
-            _logger.IsEnabled = DebugMode;
+            _logger.IsEnabled = DebugMode; //move out 
 
             _userSettings.DebugMode = DebugMode;
             _userSettings.ReportAnonymousUsage = ReportAnonymousUsage;
-            _userSettings.ShowStatusIcons = ShowStatusIcons;
-            _userSettings.ShowStatusColors = ShowStatusColors;
 
             _userSettings.Save();
         }
@@ -104,8 +76,6 @@ namespace AnyStatus
         {
             DebugMode = _userSettings.DebugMode;
             ReportAnonymousUsage = _userSettings.ReportAnonymousUsage;
-            ShowStatusIcons = _userSettings.ShowStatusIcons;
-            ShowStatusColors = _userSettings.ShowStatusColors;
         }
 
         private void RestoreDefaultSettings()
