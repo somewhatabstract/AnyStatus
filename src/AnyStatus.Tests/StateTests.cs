@@ -8,6 +8,7 @@ namespace AnyStatus.Tests
     [TestClass]
     public class StateTests
     {
+        [Ignore]
         [TestMethod]
         public void Serialization()
         {
@@ -36,6 +37,7 @@ namespace AnyStatus.Tests
             Assert.AreEqual(expected, xml);
         }
 
+        [Ignore]
         [TestMethod]
         public void Deserialize()
         {
