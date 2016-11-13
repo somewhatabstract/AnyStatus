@@ -207,9 +207,11 @@ namespace AnyStatus
                 ShowStatusColors = userSettings.ShowStatusColors;
                 ReportAnonymousUsage = userSettings.ReportAnonymousUsage;
 
-                Theme = userSettings.Theme ?? Theme.Default;
-
-                State.SetMetadata(Theme.Metadata);
+                if (userSettings.Theme != null)
+                {
+                    Theme = userSettings.Theme;
+                    State.SetMetadata(Theme.Metadata);
+                }
 
                 Save();
 
