@@ -8,12 +8,12 @@ namespace AnyStatus
     public class ToolWindowViewModel : INotifyPropertyChanged
     {
         private readonly ILogger _logger;
-        private readonly IUserSettings _userSettings;
+        private readonly ISettingsStore _userSettings;
         private readonly IViewLocator _viewLocator;
         private readonly IJobScheduler _jobScheduler;
 
         public ToolWindowViewModel(IJobScheduler jobScheduler,
-                                   IUserSettings userSettings,
+                                   ISettingsStore userSettings,
                                    IViewLocator viewLocator,
                                    ILogger logger)
         {
@@ -32,7 +32,7 @@ namespace AnyStatus
         {
             get
             {
-                return _userSettings.RootItem;
+                return _userSettings.Settings.RootItem;
             }
         }
 
@@ -40,7 +40,7 @@ namespace AnyStatus
         {
             get
             {
-                return _userSettings.ShowStatusIcons;
+                return _userSettings.Settings.ShowStatusIcons;
             }
         }
 
@@ -48,19 +48,19 @@ namespace AnyStatus
         {
             get
             {
-                return _userSettings.ShowStatusColors;
+                return _userSettings.Settings.ShowStatusColors;
             }
         }
 
         private void Initialize()
         {
-            _userSettings.PropertyChanged += (s, e) => OnPropertyChanged(e.PropertyName);
+            _userSettings.Settings.PropertyChanged += (s, e) => OnPropertyChanged(e.PropertyName);
 
             AddFolderCommand = new RelayCommand(p =>
             {
                 try
                 {
-                    var item = p as Item ?? _userSettings.RootItem;
+                    var item = p as Item ?? _userSettings.Settings.RootItem;
 
                     if (item == null) return;
 
@@ -73,7 +73,7 @@ namespace AnyStatus
                     item.Add(folder);
                     item.IsExpanded = true;
 
-                    _userSettings.Save();
+                    _userSettings.TrySave();
                 }
                 catch (Exception ex)
                 {
@@ -97,7 +97,7 @@ namespace AnyStatus
 
                     _jobScheduler.Schedule(clone);
 
-                    _userSettings.Save();
+                    _userSettings.TrySave();
                 }
                 catch (Exception ex)
                 {
@@ -151,7 +151,7 @@ namespace AnyStatus
 
             DisableItemCommand = new DisableCommand(_userSettings, _logger);
 
-            SaveCommand = new RelayCommand(p => { _userSettings.Save(); });
+            SaveCommand = new RelayCommand(p => { _userSettings.TrySave(); });
 
             RefreshItemCommand = new RelayCommand(p =>
             {
@@ -181,7 +181,7 @@ namespace AnyStatus
 
                     item.MoveUp();
 
-                    _userSettings.Save();
+                    _userSettings.TrySave();
                 }
                 catch (Exception ex)
                 {
@@ -207,7 +207,7 @@ namespace AnyStatus
 
                     item.MoveDown();
 
-                    _userSettings.Save();
+                    _userSettings.TrySave();
                 }
                 catch (Exception ex)
                 {

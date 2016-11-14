@@ -1,4 +1,6 @@
-﻿namespace AnyStatus.Properties
+﻿using System.Xml.Serialization;
+
+namespace AnyStatus.Properties
 {
     /// <summary>
     /// Extends Properties.Settings.Default
@@ -35,6 +37,21 @@
             set
             {
                 this[nameof(Theme)] = value;
+            }
+        }
+
+        [XmlElement(ElementName = "Settings")]
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public AppSettings AppSettings
+        {
+            get
+            {
+                return this[nameof(AppSettings)] as AppSettings;
+            }
+            set
+            {
+                this[nameof(AppSettings)] = value;
             }
         }
     }

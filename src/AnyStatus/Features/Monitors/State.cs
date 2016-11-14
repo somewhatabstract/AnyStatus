@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
@@ -84,7 +83,6 @@ namespace AnyStatus
         #region INotifyPropertyChanged
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public event EventHandler SettingsReset;
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

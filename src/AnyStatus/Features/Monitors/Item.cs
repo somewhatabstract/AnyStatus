@@ -39,11 +39,10 @@ namespace AnyStatus
         private bool _isEnabled;
         private bool _isEditing;
         private bool _isSelected;
-        private State _state;
         private ObservableCollection<Item> _items;
 
         [NonSerialized]
-        private Brush _brush;
+        private State _state;
 
         #endregion
 

@@ -3,7 +3,7 @@
 namespace AnyStatus
 {
     [Serializable]
-    public class StateMetadata : NotifyPropertyChanged,ICloneable
+    public class StateMetadata : NotifyPropertyChanged
     {
         private string _color;
 
@@ -34,9 +34,9 @@ namespace AnyStatus
 
         public string Icon { get; set; }
 
-        public object Clone()
+        public StateMetadata Clone()
         {
-            return MemberwiseClone();
+            return (StateMetadata)MemberwiseClone();
         }
     }
 }

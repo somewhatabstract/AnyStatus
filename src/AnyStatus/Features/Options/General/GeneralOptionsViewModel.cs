@@ -12,9 +12,9 @@ namespace AnyStatus
         private bool _reportAnonymousUsage;
 
         private ILogger _logger;
-        private IUserSettings _userSettings;
+        private ISettingsStore _userSettings;
 
-        public GeneralOptionsViewModel(IUserSettings userSettings, ILogger logger)
+        public GeneralOptionsViewModel(ISettingsStore userSettings, ILogger logger)
         {
             _logger = Preconditions.CheckNotNull(logger, nameof(logger));
             _userSettings = Preconditions.CheckNotNull(userSettings, nameof(userSettings));
@@ -66,16 +66,16 @@ namespace AnyStatus
         {
             _logger.IsEnabled = DebugMode; //move out 
 
-            _userSettings.DebugMode = DebugMode;
-            _userSettings.ReportAnonymousUsage = ReportAnonymousUsage;
+            _userSettings.Settings.DebugMode = DebugMode;
+            _userSettings.Settings.ReportAnonymousUsage = ReportAnonymousUsage;
 
-            _userSettings.Save();
+            _userSettings.TrySave();
         }
 
         private void Load()
         {
-            DebugMode = _userSettings.DebugMode;
-            ReportAnonymousUsage = _userSettings.ReportAnonymousUsage;
+            DebugMode = _userSettings.Settings.DebugMode;
+            ReportAnonymousUsage = _userSettings.Settings.ReportAnonymousUsage;
         }
 
         private void RestoreDefaultSettings()
@@ -84,7 +84,7 @@ namespace AnyStatus
 
             if (result == MessageBoxResult.Yes)
             {
-                _userSettings.RestoreDefaultSettings();
+                _userSettings.TryRestoreDefaultSettings();
 
                 Load();
             }
@@ -101,13 +101,11 @@ namespace AnyStatus
             if (dialogResult == false || string.IsNullOrEmpty(fileDialog.FileName))
                 return;
 
-            try
+            if (_userSettings.TryImport(fileDialog.FileName))
             {
-                _userSettings.Import(fileDialog.FileName);
-
                 MessageBox.Show("Settings imported successfully.", "Import Settings", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            catch
+            else
             {
                 MessageBox.Show("An error occurred while importing settings.", "Import Settings", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -124,13 +122,11 @@ namespace AnyStatus
             if (dialogResult == false || string.IsNullOrEmpty(fileDialog.FileName))
                 return;
 
-            try
+            if (_userSettings.TryExport(fileDialog.FileName))
             {
-                _userSettings.Export(fileDialog.FileName);
-
                 MessageBox.Show("Settings exported successfully.", "Export Settings", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            catch
+            else
             {
                 MessageBox.Show("An error occurred while exporting settings.", "Export Settings", MessageBoxButton.OK, MessageBoxImage.Error);
             }

@@ -11,12 +11,12 @@ namespace AnyStatus
         private bool _showStatusColors;
 
         private ILogger _logger;
-        private IUserSettings _userSettings;
+        private ISettingsStore _settingsStore;
 
-        public UserInterfaceOptionsViewModel(IUserSettings userSettings, ILogger logger)
+        public UserInterfaceOptionsViewModel(ISettingsStore settingsStore, ILogger logger)
         {
             _logger = Preconditions.CheckNotNull(logger, nameof(logger));
-            _userSettings = Preconditions.CheckNotNull(userSettings, nameof(userSettings));
+            _settingsStore = Preconditions.CheckNotNull(settingsStore, nameof(settingsStore));
 
             ApplyCommand = new RelayCommand(p => Save());
             ActivateCommand = new RelayCommand(p => Load());
@@ -68,10 +68,10 @@ namespace AnyStatus
 
         private void Save()
         {
-            _userSettings.ShowStatusIcons = ShowStatusIcons;
-            _userSettings.ShowStatusColors = ShowStatusColors;
-            _userSettings.Theme = Theme;
-            _userSettings.Save();
+            _settingsStore.Settings.ShowStatusIcons = ShowStatusIcons;
+            _settingsStore.Settings.ShowStatusColors = ShowStatusColors;
+            _settingsStore.Settings.Theme = Theme;
+            _settingsStore.TrySave();
 
             State.SetMetadata(Theme.Metadata);
         }
@@ -80,9 +80,9 @@ namespace AnyStatus
         {
             try
             {
-                Theme = _userSettings.Theme.Clone();
-                ShowStatusIcons = _userSettings.ShowStatusIcons;
-                ShowStatusColors = _userSettings.ShowStatusColors;
+                Theme = _settingsStore.Settings.Theme.Clone();
+                ShowStatusIcons = _settingsStore.Settings.ShowStatusIcons;
+                ShowStatusColors = _settingsStore.Settings.ShowStatusColors;
             }
             catch (System.Exception ex)
             {

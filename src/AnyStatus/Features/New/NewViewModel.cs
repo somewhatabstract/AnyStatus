@@ -13,7 +13,7 @@ namespace AnyStatus
     public class NewViewModel : INotifyPropertyChanged
     {
         private Template _selectedTemplate;
-        private readonly IUserSettings _userSettings;
+        private readonly ISettingsStore _settingsStore;
         private readonly IJobScheduler _jobScheduler;
         private readonly IUsageReporter _usageReporter;
         private readonly ILogger _logger;
@@ -23,13 +23,13 @@ namespace AnyStatus
 
         public NewViewModel(
             IJobScheduler jobScheduler,
-            IUserSettings userSettings,
+            ISettingsStore settingsStore,
             IUsageReporter usageReporter,
             IEnumerable<Template> templates,
             ILogger logger)
         {
             _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
-            _userSettings = Preconditions.CheckNotNull(userSettings, nameof(userSettings));
+            _settingsStore = Preconditions.CheckNotNull(settingsStore, nameof(settingsStore));
             _usageReporter = Preconditions.CheckNotNull(usageReporter, nameof(usageReporter));
             _logger = Preconditions.CheckNotNull(logger, nameof(logger));
             Templates = Preconditions.CheckNotNull(templates, nameof(templates));
@@ -55,9 +55,9 @@ namespace AnyStatus
                 EnsureItemIsValid(item);
 
                 if (Parent != null) Parent.Add(item);
-                else _userSettings.RootItem.Add(item);
+                else _settingsStore.Settings.RootItem.Add(item);
 
-                _userSettings.Save();
+                _settingsStore.TrySave();
 
                 _jobScheduler.Schedule(item);
 
@@ -102,22 +102,6 @@ namespace AnyStatus
                 var job = new ScheduledJob(_logger) { Item = item };
 
                 await job.ExecuteAsync();
-
-                //switch (item.State)
-                //{
-                //    case State.None:
-                //        break;
-                //    case State.Ok:
-                //        MessageBox.Show("Ok", "Test", MessageBoxButton.OK, MessageBoxImage.Information);
-                //        break;
-                //    case State.Failed:
-                //        MessageBox.Show("Test failed. See output window for more information.", "Test", MessageBoxButton.OK, MessageBoxImage.Warning);
-                //        break;
-                //    case State.Invalid:
-                //        break;
-                //    default:
-                //        break;
-                //}
             }
             catch (ValidationException)
             {

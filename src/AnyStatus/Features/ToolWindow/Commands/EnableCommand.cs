@@ -8,14 +8,16 @@ namespace AnyStatus
     {
         private bool _saveChanges;
         private readonly ILogger _logger;
-        private readonly IUserSettings _userSettings;
+        private readonly ISettingsStore _settingsStore;
 
+#pragma warning disable 67
         public event EventHandler CanExecuteChanged;
+#pragma warning disable 67
 
-        public EnableCommand(IUserSettings userSettings, ILogger logger)
+        public EnableCommand(ISettingsStore settingsStore, ILogger logger)
         {
-            _logger = logger;
-            _userSettings = userSettings;
+            _logger = Preconditions.CheckNotNull(logger, nameof(logger));
+            _settingsStore = Preconditions.CheckNotNull(settingsStore, nameof(settingsStore));
         }
 
         public bool CanExecute(object parameter)
@@ -73,7 +75,7 @@ namespace AnyStatus
         {
             if (_saveChanges)
             {
-                _userSettings.Save();
+                _settingsStore.TrySave();
                 _saveChanges = false;
             }
         }

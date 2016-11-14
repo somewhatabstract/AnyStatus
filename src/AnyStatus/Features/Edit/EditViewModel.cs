@@ -9,14 +9,14 @@ namespace AnyStatus
         private Item _sourceItem;
 
         private readonly ILogger _logger;
-        private readonly IUserSettings _userSettings;
+        private readonly ISettingsStore _settingsStore;
         private readonly IJobScheduler _jobScheduler;
 
         public event EventHandler CloseRequested;
 
-        public EditViewModel(IUserSettings userSettings, IJobScheduler jobScheduler, ILogger logger)
+        public EditViewModel(ISettingsStore userSettings, IJobScheduler jobScheduler, ILogger logger)
         {
-            _userSettings = Preconditions.CheckNotNull(userSettings, nameof(userSettings));
+            _settingsStore = Preconditions.CheckNotNull(userSettings, nameof(userSettings));
             _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
             _logger = Preconditions.CheckNotNull(logger, nameof(logger));
 
@@ -33,7 +33,7 @@ namespace AnyStatus
 
                     _sourceItem.ReplaceWith(_item);
 
-                    _userSettings.Save();
+                    _settingsStore.TrySave();
 
                     _jobScheduler.Reschedule(_item);
                 }

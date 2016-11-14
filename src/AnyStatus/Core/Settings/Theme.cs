@@ -29,10 +29,11 @@ namespace AnyStatus
 
         public Theme Clone()
         {
-            return new Theme
-            {
-                Metadata = Metadata.Select(k => (StateMetadata)k.Clone()).ToArray()
-            };
+            var theme = (Theme)MemberwiseClone();
+
+            theme.Metadata = Metadata.Select(k => k.Clone()).ToArray();
+
+            return theme;
         }
     }
 }
