@@ -144,6 +144,7 @@
     <Compile Include="Core\Settings\ISettings.cs" />
     <Compile Include="Core\Settings\ISettingsStore.cs" />
     <Compile Include="Core\Settings\SettingsStore.cs" />
+    <Compile Include="Features\New\AddNewItemCommand.cs" />
     <Compile Include="Features\ToolWindow\ToolbarCommands\BaseCommand.cs" />
     <Compile Include="Features\ToolWindow\ToolbarCommands\CollapseAllCommand.cs" />
     <Compile Include="Features\ToolWindow\ToolbarCommands\ExpandAllCommand.cs" />
