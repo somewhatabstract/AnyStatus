@@ -16,41 +16,40 @@ namespace AnyStatus
 
         public EditViewModel(ISettingsStore userSettings, IJobScheduler jobScheduler, ILogger logger)
         {
+            _logger = Preconditions.CheckNotNull(logger, nameof(logger));
             _settingsStore = Preconditions.CheckNotNull(userSettings, nameof(userSettings));
             _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
-            _logger = Preconditions.CheckNotNull(logger, nameof(logger));
 
             Initialize();
         }
 
         private void Initialize()
         {
-            SaveCommand = new RelayCommand(p =>
+            SaveCommand = new RelayCommand(p => Save());
+
+            CancelCommand = new RelayCommand(p => CloseRequested?.Invoke(this, EventArgs.Empty));
+        }
+
+        private void Save()
+        {
+            try
             {
-                try
-                {
-                    //todo: add validation
+                //todo: validate item
 
-                    _sourceItem.ReplaceWith(_item);
+                _sourceItem.ReplaceWith(_item);
 
-                    _settingsStore.TrySave();
+                _settingsStore.TrySave();
 
-                    _jobScheduler.Reschedule(_item);
-                }
-                catch (Exception ex)
-                {
-                    _logger.Info("Failed to save changes. Exception:" + ex.ToString());
-                }
-                finally
-                {
-                    CloseRequested?.Invoke(this, EventArgs.Empty);
-                }
-            });
-
-            CancelCommand = new RelayCommand(p =>
+                _jobScheduler.Reschedule(_item);
+            }
+            catch (Exception ex)
+            {
+                _logger.Info("Failed to save changes. Exception:" + ex.ToString());
+            }
+            finally
             {
                 CloseRequested?.Invoke(this, EventArgs.Empty);
-            });
+            }
         }
 
         public Item Item
