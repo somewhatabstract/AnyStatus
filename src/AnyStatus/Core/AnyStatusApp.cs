@@ -32,18 +32,23 @@ namespace AnyStatus
 
                 _commandRegistry.RegisterCommands();
 
-                await _settingsStore.TryInitializeAsync().ConfigureAwait(false);
+                await LoadSettings().ConfigureAwait(false);
 
-                _logger.IsEnabled = _settingsStore.Settings.DebugMode;
-
-                _usageReporter.ClientId = _settingsStore.Settings.ClientId;
-
-                _usageReporter.IsEnabled = _settingsStore.Settings.ReportAnonymousUsage;
+                Upgrade();
             }
             catch (Exception ex)
             {
                 _logger.Error(ex, "An error occurred while initializing AnyStatus");
             }
+        }
+
+        private async Task LoadSettings()
+        {
+            await _settingsStore.TryInitializeAsync().ConfigureAwait(false);
+
+            _logger.IsEnabled = _settingsStore.Settings.DebugMode;
+            _usageReporter.IsEnabled = _settingsStore.Settings.ReportAnonymousUsage;
+            _usageReporter.ClientId = _settingsStore.Settings.ClientId;
         }
 
         public void Start()
@@ -72,6 +77,27 @@ namespace AnyStatus
             {
                 _logger.Error(ex, "An error occurred while stopping AnyStatus");
             }
+        }
+
+        private void Upgrade()
+        {
+            if (Properties.Settings.Default.RootItem == null)
+            {
+                return;
+            }
+
+            _settingsStore.Settings.RootItem = Properties.Settings.Default.RootItem;
+            _settingsStore.Settings.ClientId = Properties.Settings.Default.ClientId;
+            _settingsStore.Settings.DebugMode = Properties.Settings.Default.DebugMode;
+            _settingsStore.Settings.ReportAnonymousUsage = Properties.Settings.Default.ReportAnonymousUsageData;
+            _settingsStore.Settings.ShowStatusColors = Properties.Settings.Default.ShowStatusColors;
+            _settingsStore.Settings.ShowStatusIcons = Properties.Settings.Default.ShowStatusIcons;
+
+            Properties.Settings.Default.Reset();
+            Properties.Settings.Default.Save();
+            Properties.Settings.Default.Reload();
+            
+            _settingsStore.TrySave();
         }
     }
 }

@@ -28,10 +28,7 @@ namespace AnyStatus.VSPackage
             container.Register(package);
             container.Register<AnyStatusApp>().AsSingleton();
             container.Register<IServiceProvider>(package);
-
             container.Register<ISettingsStore, SettingsStore>().AsSingleton();
-            container.Register<IUserSettings, UserSettings>().AsSingleton(); //Legacy
-
             container.Register<ILogger, Logger>().AsSingleton();
             container.Register<IJobScheduler, JobScheduler>().AsSingleton();
             container.Register<ScheduledJob>().AsMultiInstance();

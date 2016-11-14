@@ -7,7 +7,6 @@ namespace AnyStatus.Properties
     /// </summary>
     public partial class Settings
     {
-
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         public Item RootItem
@@ -26,21 +25,7 @@ namespace AnyStatus.Properties
             }
         }
 
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public Theme Theme
-        {
-            get
-            {
-                return this[nameof(Theme)] as Theme;
-            }
-            set
-            {
-                this[nameof(Theme)] = value;
-            }
-        }
-
-        [XmlElement(ElementName = "Settings")]
+        [XmlElement(ElementName = "Settings")]//todo: fix name
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         public AppSettings AppSettings
