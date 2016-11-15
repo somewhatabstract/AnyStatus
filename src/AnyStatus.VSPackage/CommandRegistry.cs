@@ -12,8 +12,8 @@ namespace AnyStatus.VSPackage
 
         public CommandRegistry(IServiceProvider serviceProvider, IEnumerable<IMenuCommand> commands)
         {
-            _commands = commands;
-            _serviceProvider = serviceProvider;
+            _commands = Preconditions.CheckNotNull(commands, nameof(commands));
+            _serviceProvider = Preconditions.CheckNotNull(serviceProvider, nameof(serviceProvider)); ;
         }
 
         public void RegisterCommands()
