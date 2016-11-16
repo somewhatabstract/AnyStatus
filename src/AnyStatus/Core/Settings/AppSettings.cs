@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace AnyStatus
 {
@@ -111,9 +112,19 @@ namespace AnyStatus
         {
             var rootItem = RootItem as RootItem;
 
-            if (rootItem != null)
+            if (rootItem == null)
+                return;
+
+            rootItem.RestoreParentChildRelationship();
+
+            //if (rootItem.Items == null)
+            //    return;
+
+            //rootItem.CalculateState();
+
+            foreach (Folder folder in rootItem.Items.Where(k => k is Folder))
             {
-                rootItem.Initialize();
+                folder.CalculateState();
             }
         }
 

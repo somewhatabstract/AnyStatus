@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,6 +17,8 @@ namespace AnyStatus
         public SettingsStore(ILogger logger)
         {
             _logger = Preconditions.CheckNotNull(logger, nameof(logger));
+
+            PropertyChanged += OnPropertyChanged;
         }
 
         public AppSettings Settings
@@ -153,10 +156,6 @@ namespace AnyStatus
         private void Load()
         {
             Settings = Properties.Settings.Default.AppSettings;
-
-            Settings.Initialize();
-
-            State.SetMetadata(Settings.Theme?.Metadata);
         }
 
         private void Save()
@@ -164,6 +163,16 @@ namespace AnyStatus
             Properties.Settings.Default.AppSettings = Settings;
 
             Properties.Settings.Default.Save();
+        }
+
+        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(Settings) && Settings != null)
+            {
+                Settings.Initialize();
+
+                State.SetMetadata(Settings.Theme?.Metadata);
+            }
         }
 
         private void Import(string filePath)
@@ -179,10 +188,6 @@ namespace AnyStatus
                 var settings = (AppSettings)serializer.Deserialize(reader);
 
                 Settings = settings;
-
-                Settings.Initialize();
-
-                State.SetMetadata(Settings.Theme?.Metadata);
 
                 Save();
 
@@ -236,19 +241,20 @@ namespace AnyStatus
             try
             {
                 if (Properties.Settings.Default.RootItem == null)
-                {
                     return;
-                }
 
                 _logger.Info("Upgrading settings...");
 
-                Settings = AppSettings.Default();
-                Settings.RootItem = Properties.Settings.Default.RootItem;
-                Settings.ClientId = Properties.Settings.Default.ClientId;
-                Settings.DebugMode = Properties.Settings.Default.DebugMode;
-                Settings.ReportAnonymousUsage = Properties.Settings.Default.ReportAnonymousUsageData;
-                Settings.ShowStatusColors = Properties.Settings.Default.ShowStatusColors;
-                Settings.ShowStatusIcons = Properties.Settings.Default.ShowStatusIcons;
+                var settings = AppSettings.Default();
+                
+                settings.ClientId = Properties.Settings.Default.ClientId;
+                settings.RootItem = Properties.Settings.Default.RootItem;
+                settings.DebugMode = Properties.Settings.Default.DebugMode;
+                settings.ShowStatusIcons = Properties.Settings.Default.ShowStatusIcons;
+                settings.ShowStatusColors = Properties.Settings.Default.ShowStatusColors;
+                settings.ReportAnonymousUsage = Properties.Settings.Default.ReportAnonymousUsageData;
+
+                Settings = settings;
 
                 Properties.Settings.Default.Reset();
 
