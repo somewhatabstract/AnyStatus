@@ -19,7 +19,7 @@
     </UserControl.Resources>
     <Grid>
         <TreeView Name="TreeView"
-                  ItemsSource="{Binding RootItem.Items}" 
+                  ItemsSource="{Binding Settings.RootItem.Items}" 
                   Background="Transparent" 
                   BorderThickness="0" 
                   FocusVisualStyle="{x:Null}"
@@ -35,7 +35,7 @@
 
                     <MenuItem Header=" Refresh" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.RefreshItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding RootItem}">
+                                          CommandParameter="{Binding Settings.RootItem}">
                         <MenuItem.Icon>
                             <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Refresh}" />
                         </MenuItem.Icon>
@@ -72,7 +72,7 @@
                         <Style TargetType="{x:Type Rectangle}">
                             <Setter Property="Visibility" Value="Collapsed"></Setter>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding DataContext.ShowStatusColors, ElementName=ToolWindow}" Value="True">
+                                <DataTrigger Binding="{Binding DataContext.Settings.ShowStatusColors, ElementName=ToolWindow}" Value="True">
                                     <Setter Property="Visibility" Value="Visible"></Setter>
                                 </DataTrigger>
                             </Style.Triggers>
@@ -186,7 +186,7 @@
                                 <Style TargetType="{x:Type imaging:CrispImage}">
                                     <Setter Property="Visibility" Value="Collapsed"></Setter>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding DataContext.ShowStatusIcons, ElementName=ToolWindow}" Value="True">
+                                        <DataTrigger Binding="{Binding DataContext.Settings.ShowStatusIcons, ElementName=ToolWindow}" Value="True">
                                             <Setter Property="Visibility" Value="Visible"></Setter>
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -355,7 +355,7 @@
                                 <Style TargetType="{x:Type imaging:CrispImage}">
                                     <Setter Property="Visibility" Value="Collapsed"></Setter>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding DataContext.ShowStatusIcons, ElementName=ToolWindow}" Value="True">
+                                        <DataTrigger Binding="{Binding DataContext.Settings.ShowStatusIcons, ElementName=ToolWindow}" Value="True">
                                             <Setter Property="Visibility" Value="Visible"></Setter>
                                         </DataTrigger>
                                     </Style.Triggers>

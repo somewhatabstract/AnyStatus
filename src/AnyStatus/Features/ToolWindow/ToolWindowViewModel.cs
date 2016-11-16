@@ -8,59 +8,40 @@ namespace AnyStatus
     public class ToolWindowViewModel : INotifyPropertyChanged
     {
         private readonly ILogger _logger;
-        private readonly ISettingsStore _userSettings;
+        private readonly ISettingsStore _settingsStore;
         private readonly IViewLocator _viewLocator;
         private readonly IJobScheduler _jobScheduler;
 
         public ToolWindowViewModel(IJobScheduler jobScheduler,
-                                   ISettingsStore userSettings,
+                                   ISettingsStore settingsStore,
                                    IViewLocator viewLocator,
                                    ILogger logger)
         {
             _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
-            _userSettings = Preconditions.CheckNotNull(userSettings, nameof(userSettings));
+            _settingsStore = Preconditions.CheckNotNull(settingsStore, nameof(settingsStore));
             _viewLocator = Preconditions.CheckNotNull(viewLocator, nameof(viewLocator));
             _logger = Preconditions.CheckNotNull(logger, nameof(logger));
 
             Initialize();
         }
 
-        /// <summary>
-        /// The tree-view root item.
-        /// </summary>
-        public Item RootItem
+        public AppSettings Settings
         {
             get
             {
-                return _userSettings.Settings.RootItem;
-            }
-        }
-
-        public bool ShowStatusIcons
-        {
-            get
-            {
-                return _userSettings.Settings.ShowStatusIcons;
-            }
-        }
-
-        public bool ShowStatusColors
-        {
-            get
-            {
-                return _userSettings.Settings.ShowStatusColors;
+                return _settingsStore.Settings;
             }
         }
 
         private void Initialize()
         {
-            _userSettings.Settings.PropertyChanged += (s, e) => OnPropertyChanged(e.PropertyName);
+            _settingsStore.PropertyChanged += (s, e) => OnPropertyChanged(e.PropertyName);
 
             AddFolderCommand = new RelayCommand(p =>
             {
                 try
                 {
-                    var item = p as Item ?? _userSettings.Settings.RootItem;
+                    var item = p as Item ?? _settingsStore.Settings.RootItem;
 
                     if (item == null) return;
 
@@ -73,7 +54,7 @@ namespace AnyStatus
                     item.Add(folder);
                     item.IsExpanded = true;
 
-                    _userSettings.TrySave();
+                    _settingsStore.TrySave();
                 }
                 catch (Exception ex)
                 {
@@ -81,7 +62,7 @@ namespace AnyStatus
                 }
             });
 
-            DeleteCommand = new DeleteCommand(_jobScheduler, _userSettings, _logger);
+            DeleteCommand = new DeleteCommand(_jobScheduler, _settingsStore, _logger);
 
             DuplicateCommand = new RelayCommand(p =>
             {
@@ -97,7 +78,7 @@ namespace AnyStatus
 
                     _jobScheduler.Schedule(clone);
 
-                    _userSettings.TrySave();
+                    _settingsStore.TrySave();
                 }
                 catch (Exception ex)
                 {
@@ -147,11 +128,11 @@ namespace AnyStatus
                 item.IsEditing = true;
             });
 
-            EnableItemCommand = new EnableCommand(_userSettings, _logger);
+            EnableItemCommand = new EnableCommand(_settingsStore, _logger);
 
-            DisableItemCommand = new DisableCommand(_userSettings, _logger);
+            DisableItemCommand = new DisableCommand(_settingsStore, _logger);
 
-            SaveCommand = new RelayCommand(p => { _userSettings.TrySave(); });
+            SaveCommand = new RelayCommand(p => { _settingsStore.TrySave(); });
 
             RefreshItemCommand = new RelayCommand(p =>
             {
@@ -181,7 +162,7 @@ namespace AnyStatus
 
                     item.MoveUp();
 
-                    _userSettings.TrySave();
+                    _settingsStore.TrySave();
                 }
                 catch (Exception ex)
                 {
@@ -207,7 +188,7 @@ namespace AnyStatus
 
                     item.MoveDown();
 
-                    _userSettings.TrySave();
+                    _settingsStore.TrySave();
                 }
                 catch (Exception ex)
                 {

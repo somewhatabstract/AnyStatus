@@ -111,7 +111,7 @@ namespace AnyStatus.Tests
         [TestMethod]
         public void AppSettings_Create()
         {
-            var settings = AppSettings.Create();
+            var settings = AppSettings.Default();
 
             Assert.IsNotNull(settings.ClientId);
             Assert.IsNotNull(settings.RootItem);

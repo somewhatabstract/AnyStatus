@@ -20,7 +20,11 @@ namespace AnyStatus
         public AppSettings Settings
         {
             get { return _settings; }
-            private set { _settings = value; OnPropertyChanged(); }
+            private set
+            {
+                _settings = value;
+                OnPropertyChanged();
+            }
         }
 
         #region ISettingsStore
@@ -135,6 +139,8 @@ namespace AnyStatus
 
         private void Initialize()
         {
+            Upgrade();
+
             Load();
 
             if (Settings == null)
@@ -143,7 +149,6 @@ namespace AnyStatus
             }
             else
             {
-                Upgrade();
 
                 State.SetMetadata(Settings.Theme?.Metadata);
             }
@@ -219,7 +224,7 @@ namespace AnyStatus
         {
             Properties.Settings.Default.Reset();
 
-            Settings = AppSettings.Create();
+            Settings = AppSettings.Default();
 
             Save();
 
@@ -228,6 +233,31 @@ namespace AnyStatus
 
         private void Upgrade()
         {
+            try
+            {
+                if (Properties.Settings.Default.RootItem == null)
+                {
+                    return;
+                }
+
+                _logger.Info("Upgrading settings...");
+
+                Settings = AppSettings.Default();
+                Settings.RootItem = Properties.Settings.Default.RootItem;
+                Settings.ClientId = Properties.Settings.Default.ClientId;
+                Settings.DebugMode = Properties.Settings.Default.DebugMode;
+                Settings.ReportAnonymousUsage = Properties.Settings.Default.ReportAnonymousUsageData;
+                Settings.ShowStatusColors = Properties.Settings.Default.ShowStatusColors;
+                Settings.ShowStatusIcons = Properties.Settings.Default.ShowStatusIcons;
+
+                Properties.Settings.Default.Reset();
+
+                TrySave();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Failed to upgrade settings.");
+            }
         }
 
         #endregion

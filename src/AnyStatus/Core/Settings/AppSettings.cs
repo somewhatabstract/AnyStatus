@@ -107,7 +107,7 @@ namespace AnyStatus
 
         #endregion
 
-        public static AppSettings Create()
+        public static AppSettings Default()
         {
             return new AppSettings
             {

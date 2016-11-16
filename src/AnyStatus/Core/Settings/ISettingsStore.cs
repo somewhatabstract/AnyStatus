@@ -1,9 +1,10 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 
 namespace AnyStatus
 {
-    public interface ISettingsStore
+    public interface ISettingsStore : INotifyPropertyChanged
     {
         event EventHandler SettingsReset;
 

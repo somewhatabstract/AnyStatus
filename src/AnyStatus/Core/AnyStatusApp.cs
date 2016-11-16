@@ -33,8 +33,6 @@ namespace AnyStatus
                 _commandRegistry.RegisterCommands();
 
                 await LoadSettings().ConfigureAwait(false);
-
-                Upgrade();
             }
             catch (Exception ex)
             {
@@ -77,27 +75,6 @@ namespace AnyStatus
             {
                 _logger.Error(ex, "An error occurred while stopping AnyStatus");
             }
-        }
-
-        private void Upgrade()
-        {
-            if (Properties.Settings.Default.RootItem == null)
-            {
-                return;
-            }
-
-            _settingsStore.Settings.RootItem = Properties.Settings.Default.RootItem;
-            _settingsStore.Settings.ClientId = Properties.Settings.Default.ClientId;
-            _settingsStore.Settings.DebugMode = Properties.Settings.Default.DebugMode;
-            _settingsStore.Settings.ReportAnonymousUsage = Properties.Settings.Default.ReportAnonymousUsageData;
-            _settingsStore.Settings.ShowStatusColors = Properties.Settings.Default.ShowStatusColors;
-            _settingsStore.Settings.ShowStatusIcons = Properties.Settings.Default.ShowStatusIcons;
-
-            Properties.Settings.Default.Reset();
-            Properties.Settings.Default.Save();
-            Properties.Settings.Default.Reload();
-            
-            _settingsStore.TrySave();
         }
     }
 }
