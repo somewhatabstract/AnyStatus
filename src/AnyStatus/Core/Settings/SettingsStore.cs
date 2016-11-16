@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
@@ -147,16 +148,15 @@ namespace AnyStatus
             {
                 RestoreDefaultSettings();
             }
-            else
-            {
-
-                State.SetMetadata(Settings.Theme?.Metadata);
-            }
         }
 
         private void Load()
         {
             Settings = Properties.Settings.Default.AppSettings;
+
+            Settings.Initialize();
+
+            State.SetMetadata(Settings.Theme?.Metadata);
         }
 
         private void Save()
@@ -178,9 +178,9 @@ namespace AnyStatus
 
                 var settings = (AppSettings)serializer.Deserialize(reader);
 
-                settings.RootItem?.RestoreParentChildRelationship();
-
                 Settings = settings;
+
+                Settings.Initialize();
 
                 State.SetMetadata(Settings.Theme?.Metadata);
 

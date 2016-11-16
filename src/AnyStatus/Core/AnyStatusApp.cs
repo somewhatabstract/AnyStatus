@@ -18,9 +18,9 @@ namespace AnyStatus
                             ICommandRegistry commandRegistry)
         {
             _logger = Preconditions.CheckNotNull(logger, nameof(logger));
+            _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
             _settingsStore = Preconditions.CheckNotNull(settingsStore, nameof(settingsStore));
             _usageReporter = Preconditions.CheckNotNull(usageReporter, nameof(usageReporter));
-            _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
             _commandRegistry = Preconditions.CheckNotNull(commandRegistry, nameof(commandRegistry));
         }
 
@@ -38,15 +38,6 @@ namespace AnyStatus
             {
                 _logger.Error(ex, "An error occurred while initializing AnyStatus");
             }
-        }
-
-        private async Task LoadSettings()
-        {
-            await _settingsStore.TryInitializeAsync().ConfigureAwait(false);
-
-            _logger.IsEnabled = _settingsStore.Settings.DebugMode;
-            _usageReporter.IsEnabled = _settingsStore.Settings.ReportAnonymousUsage;
-            _usageReporter.ClientId = _settingsStore.Settings.ClientId;
         }
 
         public void Start()
@@ -75,6 +66,15 @@ namespace AnyStatus
             {
                 _logger.Error(ex, "An error occurred while stopping AnyStatus");
             }
+        }
+
+        private async Task LoadSettings()
+        {
+            await _settingsStore.TryInitializeAsync().ConfigureAwait(false);
+
+            _logger.IsEnabled = _settingsStore.Settings.DebugMode;
+            _usageReporter.ClientId = _settingsStore.Settings.ClientId;
+            _usageReporter.IsEnabled = _settingsStore.Settings.ReportAnonymousUsage;
         }
     }
 }

@@ -107,6 +107,16 @@ namespace AnyStatus
 
         #endregion
 
+        public void Initialize()
+        {
+            var rootItem = RootItem as RootItem;
+
+            if (rootItem != null)
+            {
+                rootItem.Initialize();
+            }
+        }
+
         public static AppSettings Default()
         {
             return new AppSettings

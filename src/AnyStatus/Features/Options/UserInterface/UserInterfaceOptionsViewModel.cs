@@ -73,7 +73,7 @@ namespace AnyStatus
             _settingsStore.Settings.Theme = Theme;
             _settingsStore.TrySave();
 
-            State.SetMetadata(Theme.Metadata);
+            State.SetMetadata(Theme.Metadata); // ?
         }
 
         private void Load()

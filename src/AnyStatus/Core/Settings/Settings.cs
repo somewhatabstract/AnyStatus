@@ -13,11 +13,7 @@ namespace AnyStatus.Properties
         {
             get
             {
-                var rootItem = this[nameof(RootItem)] as Item;
-
-                rootItem?.RestoreParentChildRelationship();
-
-                return rootItem;
+                return this[nameof(RootItem)] as Item;
             }
             set
             {

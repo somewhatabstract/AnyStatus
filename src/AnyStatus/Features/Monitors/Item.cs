@@ -235,7 +235,7 @@ namespace AnyStatus
         public void RestoreParentChildRelationship()
         {
             if (Items == null)
-                throw new InvalidOperationException();
+                return;
 
             foreach (var item in Items)
             {
