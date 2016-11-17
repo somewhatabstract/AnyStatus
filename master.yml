@@ -1,0 +1,27 @@
+version: 0.10.{build}
+
+skip_commits:
+  files:
+    - art/*
+    - '**/*.md'
+  
+branches:
+  only:
+  - master
+
+configuration: Release
+
+platform: Any CPU
+
+install:
+  - ps: (new-object Net.WebClient).DownloadString("https://raw.github.com/madskristensen/ExtensionScripts/master/AppVeyor/vsix.ps1") | iex
+
+before_build:
+  - cmd: nuget restore src\AnyStatus.sln
+  - ps: Vsix-IncrementVsixVersion | Vsix-UpdateBuildVersion
+
+build_script:
+  - msbuild src\AnyStatus.sln /p:configuration=Release /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m
+
+after_test:
+  - ps: Vsix-PushArtifacts | Vsix-PublishToGallery
