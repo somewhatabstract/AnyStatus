@@ -19,7 +19,7 @@ namespace AnyStatus
         {
             try
             {
-                _package.ShowOptionPage(typeof(Options));
+                _package.ShowOptionPage(typeof(GeneralOptions));
             }
             catch (Exception ex)
             {

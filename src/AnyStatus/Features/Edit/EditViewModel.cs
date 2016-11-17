@@ -9,48 +9,47 @@ namespace AnyStatus
         private Item _sourceItem;
 
         private readonly ILogger _logger;
-        private readonly IUserSettings _userSettings;
+        private readonly ISettingsStore _settingsStore;
         private readonly IJobScheduler _jobScheduler;
 
         public event EventHandler CloseRequested;
 
-        public EditViewModel(IUserSettings userSettings, IJobScheduler jobScheduler, ILogger logger)
+        public EditViewModel(ISettingsStore userSettings, IJobScheduler jobScheduler, ILogger logger)
         {
-            _userSettings = Preconditions.CheckNotNull(userSettings, nameof(userSettings));
-            _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
             _logger = Preconditions.CheckNotNull(logger, nameof(logger));
+            _settingsStore = Preconditions.CheckNotNull(userSettings, nameof(userSettings));
+            _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
 
             Initialize();
         }
 
         private void Initialize()
         {
-            SaveCommand = new RelayCommand(p =>
+            SaveCommand = new RelayCommand(p => Save());
+
+            CancelCommand = new RelayCommand(p => CloseRequested?.Invoke(this, EventArgs.Empty));
+        }
+
+        private void Save()
+        {
+            try
             {
-                try
-                {
-                    //todo: add validation
+                //todo: validate item
 
-                    _sourceItem.ReplaceWith(_item);
+                _sourceItem.ReplaceWith(_item);
 
-                    _userSettings.Save();
+                _settingsStore.TrySave();
 
-                    _jobScheduler.Reschedule(_item);
-                }
-                catch (Exception ex)
-                {
-                    _logger.Info("Failed to save changes. Exception:" + ex.ToString());
-                }
-                finally
-                {
-                    CloseRequested?.Invoke(this, EventArgs.Empty);
-                }
-            });
-
-            CancelCommand = new RelayCommand(p =>
+                _jobScheduler.Reschedule(_item);
+            }
+            catch (Exception ex)
+            {
+                _logger.Info("Failed to save changes. Exception:" + ex.ToString());
+            }
+            finally
             {
                 CloseRequested?.Invoke(this, EventArgs.Empty);
-            });
+            }
         }
 
         public Item Item

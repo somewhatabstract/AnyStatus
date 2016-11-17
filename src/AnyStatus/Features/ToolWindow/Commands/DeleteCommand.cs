@@ -7,16 +7,18 @@ namespace AnyStatus
     public class DeleteCommand : ICommand
     {
         private readonly ILogger _logger;
-        private readonly IUserSettings _userSettings;
+        private readonly ISettingsStore _settingsStore;
         private readonly IJobScheduler _jobScheduler;
 
+#pragma warning disable 67
         public event EventHandler CanExecuteChanged;
+#pragma warning disable 67
 
-        public DeleteCommand(IJobScheduler jobScheduler, IUserSettings userSettings, ILogger logger)
+        public DeleteCommand(IJobScheduler jobScheduler, ISettingsStore settingsStore, ILogger logger)
         {
-            _logger = logger;
-            _userSettings = userSettings;
-            _jobScheduler = jobScheduler;
+            _logger = Preconditions.CheckNotNull(logger, nameof(logger)); ;
+            _settingsStore = Preconditions.CheckNotNull(settingsStore, nameof(settingsStore)); ;
+            _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler)); ;
         }
 
         public bool CanExecute(object parameter)
@@ -42,7 +44,7 @@ namespace AnyStatus
 
                 item.Delete();
 
-                _userSettings.Save();
+                _settingsStore.TrySave();
             }
             catch (Exception ex)
             {

@@ -6,21 +6,21 @@ namespace AnyStatus
     public class JobScheduler : IJobScheduler
     {
         private readonly ILogger _logger;
-        private IUserSettings _userSettings;
+        private ISettingsStore _settingsStore;
         private readonly Func<ScheduledJob> _jobFactory;
 
-        public JobScheduler(Func<ScheduledJob> jobFactory, IUserSettings userSettings, ILogger logger)
+        public JobScheduler(Func<ScheduledJob> jobFactory, ISettingsStore settingsStore, ILogger logger)
         {
             _jobFactory = Preconditions.CheckNotNull(jobFactory, nameof(jobFactory));
-            _userSettings = Preconditions.CheckNotNull(userSettings, nameof(userSettings));
+            _settingsStore = Preconditions.CheckNotNull(settingsStore, nameof(settingsStore));
             _logger = Preconditions.CheckNotNull(logger, nameof(logger));
 
-            _userSettings.SettingsReset += OnSettingsReset;
+            _settingsStore.SettingsReset += OnSettingsReset;
         }
 
         public void Start()
         {
-            Schedule(_userSettings.RootItem, includeChildren: true);
+            Schedule(_settingsStore.Settings.RootItem, includeChildren: true);
         }
 
         public void Stop()
@@ -30,6 +30,8 @@ namespace AnyStatus
 
         public void Reschedule(Item item, bool includeChildren = false)
         {
+            //todo: remove includeChildren
+
             JobManager.RemoveJob(item.Id.ToString());
 
             Schedule(item, includeChildren);
@@ -72,6 +74,19 @@ namespace AnyStatus
                 }
         }
 
+        public void Remove(Item item)
+        {
+            JobManager.RemoveJob(item.Id.ToString());
+        }
+
+        public void ExecuteAll()
+        {
+            foreach (var schedule in JobManager.AllSchedules)
+            {
+                schedule.Execute();
+            }
+        }
+
         private void RemoveAll()
         {
             foreach (var schedule in JobManager.AllSchedules)
@@ -105,20 +120,7 @@ namespace AnyStatus
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "An error occurred while resetting the job scheduler");
-            }
-        }
-
-        public void Remove(Item item)
-        {
-            JobManager.RemoveJob(item.Id.ToString());
-        }
-
-        public void ExecuteAll()
-        {
-            foreach (var schedule in JobManager.AllSchedules)
-            {
-                schedule.Execute();
+                _logger.Error(ex, "An error occurred while restarting job scheduler.");
             }
         }
     }

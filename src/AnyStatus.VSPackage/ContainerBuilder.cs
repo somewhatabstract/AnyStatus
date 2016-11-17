@@ -28,7 +28,7 @@ namespace AnyStatus.VSPackage
             container.Register(package);
             container.Register<AnyStatusApp>().AsSingleton();
             container.Register<IServiceProvider>(package);
-            container.Register<IUserSettings, UserSettings>().AsSingleton();
+            container.Register<ISettingsStore, SettingsStore>().AsSingleton();
             container.Register<ILogger, Logger>().AsSingleton();
             container.Register<IJobScheduler, JobScheduler>().AsSingleton();
             container.Register<ScheduledJob>().AsMultiInstance();
@@ -49,8 +49,11 @@ namespace AnyStatus.VSPackage
             container.Register<EditWindow>().AsMultiInstance();
             container.Register<EditViewModel>().AsMultiInstance();
 
-            container.Register<OptionsDialogControl>().AsSingleton();
-            container.Register<OptionsViewModel>().AsSingleton();
+            container.Register<GeneralOptionsView>().AsSingleton();
+            container.Register<GeneralOptionsViewModel>().AsSingleton();
+
+            container.Register<UserInterfaceOptionsView>().AsSingleton();
+            container.Register<UserInterfaceOptionsViewModel>().AsSingleton();
         }
 
         private static void RegisterItemHandlers(TinyIoCContainer container)

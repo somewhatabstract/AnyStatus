@@ -19,7 +19,7 @@
     </UserControl.Resources>
     <Grid>
         <TreeView Name="TreeView"
-                  ItemsSource="{Binding RootItem.Items}" 
+                  ItemsSource="{Binding Settings.RootItem.Items}" 
                   Background="Transparent" 
                   BorderThickness="0" 
                   FocusVisualStyle="{x:Null}"
@@ -35,7 +35,7 @@
 
                     <MenuItem Header=" Refresh" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.RefreshItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding RootItem}">
+                                          CommandParameter="{Binding Settings.RootItem}">
                         <MenuItem.Icon>
                             <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Refresh}" />
                         </MenuItem.Icon>
@@ -65,7 +65,21 @@
                 <local:StateToBrushConverter x:Key="StateToBrushConverter" />
                 <local:TooltipConverter x:Key="TooltipConverter" />
                 <local:StateToImageConverter x:Key="StateToImageConverter" />
+                <local:HexToBrushConverter x:Key="HexToBrushConverter"/>
 
+                <Rectangle x:Key="ColoredStatusIndicator" x:Shared="False" Width="5" Fill="{Binding State.Metadata.Color, Converter={StaticResource HexToBrushConverter}}">
+                    <Rectangle.Style>
+                        <Style TargetType="{x:Type Rectangle}">
+                            <Setter Property="Visibility" Value="Collapsed"></Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding DataContext.Settings.ShowStatusColors, ElementName=ToolWindow}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Rectangle.Style>
+                </Rectangle>
+                
                 <!--Folder-->
                 <HierarchicalDataTemplate DataType="{x:Type local:Folder}" ItemsSource="{Binding Items}">
                     <StackPanel Height="30" 
@@ -162,19 +176,8 @@
                             </ContextMenu>
                         </StackPanel.ContextMenu>
 
-                        <Rectangle Width="5" Fill="{Binding State, Converter={StaticResource StateToBrushConverter}}">
-                            <Rectangle.Style>
-                                <Style TargetType="{x:Type Rectangle}">
-                                    <Setter Property="Visibility" Value="Collapsed"></Setter>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding DataContext.ShowStatusColors, ElementName=ToolWindow}" Value="True">
-                                            <Setter Property="Visibility" Value="Visible"></Setter>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Rectangle.Style>
-                        </Rectangle>
-
+                        <ContentControl Content="{StaticResource ColoredStatusIndicator}"/>
+                        
                         <imaging:CrispImage Height="16" 
                                             Width="16" 
                                             Margin="5,0,0,0"
@@ -183,7 +186,7 @@
                                 <Style TargetType="{x:Type imaging:CrispImage}">
                                     <Setter Property="Visibility" Value="Collapsed"></Setter>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding DataContext.ShowStatusIcons, ElementName=ToolWindow}" Value="True">
+                                        <DataTrigger Binding="{Binding DataContext.Settings.ShowStatusIcons, ElementName=ToolWindow}" Value="True">
                                             <Setter Property="Visibility" Value="Visible"></Setter>
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -342,19 +345,8 @@
                             </ContextMenu>
                         </StackPanel.ContextMenu>
 
-                        <Rectangle Width="5" Fill="{Binding State, Converter={StaticResource StateToBrushConverter}}">
-                            <Rectangle.Style>
-                                <Style TargetType="{x:Type Rectangle}">
-                                    <Setter Property="Visibility" Value="Collapsed"></Setter>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding DataContext.ShowStatusColors, ElementName=ToolWindow}" Value="True">
-                                            <Setter Property="Visibility" Value="Visible"></Setter>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Rectangle.Style>
-                        </Rectangle>
-
+                        <ContentControl Content="{StaticResource ColoredStatusIndicator}"/>
+                                                
                         <imaging:CrispImage Height="16" 
                                             Width="16" 
                                             Margin="5,0,0,0"
@@ -363,7 +355,7 @@
                                 <Style TargetType="{x:Type imaging:CrispImage}">
                                     <Setter Property="Visibility" Value="Collapsed"></Setter>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding DataContext.ShowStatusIcons, ElementName=ToolWindow}" Value="True">
+                                        <DataTrigger Binding="{Binding DataContext.Settings.ShowStatusIcons, ElementName=ToolWindow}" Value="True">
                                             <Setter Property="Visibility" Value="Visible"></Setter>
                                         </DataTrigger>
                                     </Style.Triggers>

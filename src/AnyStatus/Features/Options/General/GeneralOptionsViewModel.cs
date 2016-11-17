@@ -6,17 +6,15 @@ using System.Windows.Input;
 
 namespace AnyStatus
 {
-    public class OptionsViewModel : INotifyPropertyChanged
+    public class GeneralOptionsViewModel : INotifyPropertyChanged
     {
         private bool _debugMode;
         private bool _reportAnonymousUsage;
-        private bool _showStatusIcons;
-        private bool _showStatusColors;
 
         private ILogger _logger;
-        private IUserSettings _userSettings;
+        private ISettingsStore _userSettings;
 
-        public OptionsViewModel(IUserSettings userSettings, ILogger logger)
+        public GeneralOptionsViewModel(ISettingsStore userSettings, ILogger logger)
         {
             _logger = Preconditions.CheckNotNull(logger, nameof(logger));
             _userSettings = Preconditions.CheckNotNull(userSettings, nameof(userSettings));
@@ -31,13 +29,9 @@ namespace AnyStatus
         #region Commands
 
         public ICommand ApplyCommand { get; set; }
-
         public ICommand ActivateCommand { get; set; }
-
         public ICommand RestoreDefaultSettingsCommand { get; set; }
-
         public ICommand ImportSettingsCommand { get; set; }
-
         public ICommand ExportSettingsCommand { get; set; }
 
         #endregion
@@ -64,48 +58,24 @@ namespace AnyStatus
             }
         }
 
-        public bool ShowStatusIcons
-        {
-            get { return _showStatusIcons; }
-            set
-            {
-                _showStatusIcons = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool ShowStatusColors
-        {
-            get { return _showStatusColors; }
-            set
-            {
-                _showStatusColors = value;
-                OnPropertyChanged();
-            }
-        }
-
         #endregion
 
         #region Helpers
 
         private void Save()
         {
-            _logger.IsEnabled = DebugMode;
+            _logger.IsEnabled = DebugMode; //move out 
 
-            _userSettings.DebugMode = DebugMode;
-            _userSettings.ReportAnonymousUsage = ReportAnonymousUsage;
-            _userSettings.ShowStatusIcons = ShowStatusIcons;
-            _userSettings.ShowStatusColors = ShowStatusColors;
+            _userSettings.Settings.DebugMode = DebugMode;
+            _userSettings.Settings.ReportAnonymousUsage = ReportAnonymousUsage;
 
-            _userSettings.Save();
+            _userSettings.TrySave();
         }
 
         private void Load()
         {
-            DebugMode = _userSettings.DebugMode;
-            ReportAnonymousUsage = _userSettings.ReportAnonymousUsage;
-            ShowStatusIcons = _userSettings.ShowStatusIcons;
-            ShowStatusColors = _userSettings.ShowStatusColors;
+            DebugMode = _userSettings.Settings.DebugMode;
+            ReportAnonymousUsage = _userSettings.Settings.ReportAnonymousUsage;
         }
 
         private void RestoreDefaultSettings()
@@ -114,7 +84,7 @@ namespace AnyStatus
 
             if (result == MessageBoxResult.Yes)
             {
-                _userSettings.RestoreDefaultSettings();
+                _userSettings.TryRestoreDefaultSettings();
 
                 Load();
             }
@@ -131,13 +101,11 @@ namespace AnyStatus
             if (dialogResult == false || string.IsNullOrEmpty(fileDialog.FileName))
                 return;
 
-            try
+            if (_userSettings.TryImport(fileDialog.FileName))
             {
-                _userSettings.Import(fileDialog.FileName);
-
                 MessageBox.Show("Settings imported successfully.", "Import Settings", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            catch
+            else
             {
                 MessageBox.Show("An error occurred while importing settings.", "Import Settings", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -154,13 +122,11 @@ namespace AnyStatus
             if (dialogResult == false || string.IsNullOrEmpty(fileDialog.FileName))
                 return;
 
-            try
+            if (_userSettings.TryExport(fileDialog.FileName))
             {
-                _userSettings.Export(fileDialog.FileName);
-
                 MessageBox.Show("Settings exported successfully.", "Export Settings", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            catch
+            else
             {
                 MessageBox.Show("An error occurred while exporting settings.", "Export Settings", MessageBoxButton.OK, MessageBoxImage.Error);
             }

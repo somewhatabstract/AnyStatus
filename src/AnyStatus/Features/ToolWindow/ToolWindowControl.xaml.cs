@@ -146,7 +146,7 @@ namespace AnyStatus
                 return (Item)((TreeViewItem)sender).DataContext;
             }
 
-            return _viewModel?.RootItem;
+            return _viewModel?.Settings?.RootItem;
         }
 
         #endregion

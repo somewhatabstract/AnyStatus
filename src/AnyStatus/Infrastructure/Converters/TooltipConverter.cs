@@ -15,7 +15,7 @@ namespace AnyStatus
 
             var item = (Item)value;
 
-            return $"Status:  {item.State.ToString()}\r\nType: {GetDisplayName(item)}";
+            return $"Status:  {item.State.Metadata.DisplayName}\r\nType: {GetDisplayName(item)}";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -6,21 +6,21 @@ namespace AnyStatus
     public class AnyStatusApp
     {
         private readonly ILogger _logger;
-        private readonly IUserSettings _userSettings;
+        private readonly ISettingsStore _settingsStore;
         private readonly IUsageReporter _usageReporter;
         private readonly IJobScheduler _jobScheduler;
         private readonly ICommandRegistry _commandRegistry;
 
         public AnyStatusApp(ILogger logger,
-                            IUserSettings userSettings,
+                            ISettingsStore settingsStore,
                             IUsageReporter usageReporter,
                             IJobScheduler jobScheduler,
                             ICommandRegistry commandRegistry)
         {
             _logger = Preconditions.CheckNotNull(logger, nameof(logger));
-            _userSettings = Preconditions.CheckNotNull(userSettings, nameof(userSettings));
-            _usageReporter = Preconditions.CheckNotNull(usageReporter, nameof(usageReporter));
             _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
+            _settingsStore = Preconditions.CheckNotNull(settingsStore, nameof(settingsStore));
+            _usageReporter = Preconditions.CheckNotNull(usageReporter, nameof(usageReporter));
             _commandRegistry = Preconditions.CheckNotNull(commandRegistry, nameof(commandRegistry));
         }
 
@@ -32,13 +32,7 @@ namespace AnyStatus
 
                 _commandRegistry.RegisterCommands();
 
-                await _userSettings.InitializeAsync().ConfigureAwait(false);
-
-                _logger.IsEnabled = _userSettings.DebugMode;
-
-                _usageReporter.ClientId = _userSettings.ClientId;
-
-                _usageReporter.IsEnabled = _userSettings.ReportAnonymousUsage;
+                await LoadSettings().ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -72,6 +66,15 @@ namespace AnyStatus
             {
                 _logger.Error(ex, "An error occurred while stopping AnyStatus");
             }
+        }
+
+        private async Task LoadSettings()
+        {
+            await _settingsStore.TryInitializeAsync().ConfigureAwait(false);
+
+            _logger.IsEnabled = _settingsStore.Settings.DebugMode;
+            _usageReporter.ClientId = _settingsStore.Settings.ClientId;
+            _usageReporter.IsEnabled = _settingsStore.Settings.ReportAnonymousUsage;
         }
     }
 }

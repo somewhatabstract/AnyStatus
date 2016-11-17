@@ -39,11 +39,10 @@ namespace AnyStatus
         private bool _isEnabled;
         private bool _isEditing;
         private bool _isSelected;
-        private State _state;
         private ObservableCollection<Item> _items;
 
         [NonSerialized]
-        private Brush _brush;
+        private State _state;
 
         #endregion
 
@@ -236,7 +235,7 @@ namespace AnyStatus
         public void RestoreParentChildRelationship()
         {
             if (Items == null)
-                throw new InvalidOperationException();
+                return;
 
             foreach (var item in Items)
             {
@@ -386,22 +385,6 @@ namespace AnyStatus
             return Validator.TryValidateObject(this, context, results);
         }
 
-        #endregion
-
-        #region INotifyPropertyChanged
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public IEnumerable GetErrors(string propertyName)
-        {
-            throw new NotImplementedException();
-        }
-
         public bool IsParentOf(Item child)
         {
             if (this == child)
@@ -426,7 +409,21 @@ namespace AnyStatus
             return !IsParentOf(item);
         }
 
+        #endregion
 
+        #region INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public IEnumerable GetErrors(string propertyName)
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion
 

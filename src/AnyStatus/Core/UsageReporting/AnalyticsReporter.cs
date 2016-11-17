@@ -45,7 +45,6 @@ namespace AnyStatus
         private const string SessionEndValue = "end";
         private const string ScreenViewValue = "screenview";
 
-        private readonly bool _debug;
         private readonly string _serverUrl;
         private readonly Dictionary<string, string> _baseHitData;
 
@@ -58,7 +57,6 @@ namespace AnyStatus
             ApplicationName = "AnyStatus";
             ApplicationVersion = "0.9";
 
-            _debug = false;
             _serverUrl = ProductionServerUrl;
             _baseHitData = MakeBaseHitData();
         }

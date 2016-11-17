@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Xml.Serialization;
 
 namespace AnyStatus
 {
@@ -12,7 +11,7 @@ namespace AnyStatus
         where TEnumeration : Enumeration<TEnumeration>
     {
         protected Enumeration(int value, string displayName)
-            : base(value, displayName)
+            : base(value)
         {
         }
 
@@ -27,21 +26,15 @@ namespace AnyStatus
         }
     }
 
-    [Serializable]
-    [DebuggerDisplay("{DisplayName} - {Value}")]
     public abstract class Enumeration<TEnumeration, TValue> : IComparable<TEnumeration>, IEquatable<TEnumeration>
         where TEnumeration : Enumeration<TEnumeration, TValue>
         where TValue : IComparable
     {
         private static readonly Lazy<TEnumeration[]> Enumerations = new Lazy<TEnumeration[]>(GetEnumerations);
 
-        [XmlElement(Order = 1)]
-        readonly string _displayName;
-
-        [XmlElement(Order = 0)]
         readonly TValue _value;
 
-        protected Enumeration(TValue value, string displayName)
+        protected Enumeration(TValue value)
         {
             if (value == null)
             {
@@ -49,17 +42,11 @@ namespace AnyStatus
             }
 
             _value = value;
-            _displayName = displayName;
         }
 
         public TValue Value
         {
             get { return _value; }
-        }
-
-        public string DisplayName
-        {
-            get { return _displayName; }
         }
 
         public int CompareTo(TEnumeration other)
@@ -69,7 +56,7 @@ namespace AnyStatus
 
         public override sealed string ToString()
         {
-            return DisplayName;
+            return Value.ToString();
         }
 
         public static TEnumeration[] GetAll()
@@ -118,11 +105,6 @@ namespace AnyStatus
             return Parse(value, "value", item => item.Value.Equals(value));
         }
 
-        public static TEnumeration Parse(string displayName)
-        {
-            return Parse(displayName, "display name", item => item.DisplayName == displayName);
-        }
-
         static bool TryParse(Func<TEnumeration, bool> predicate, out TEnumeration result)
         {
             result = GetAll().FirstOrDefault(predicate);
@@ -145,11 +127,6 @@ namespace AnyStatus
         public static bool TryParse(TValue value, out TEnumeration result)
         {
             return TryParse(e => e.ValueEquals(value), out result);
-        }
-
-        public static bool TryParse(string displayName, out TEnumeration result)
-        {
-            return TryParse(e => e.DisplayName == displayName, out result);
         }
 
         protected virtual bool ValueEquals(TValue value)

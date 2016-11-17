@@ -140,14 +140,19 @@
   <ItemGroup>
     <Compile Include="Core\AnyStatusApp.cs" />
     <Compile Include="Core\ICommandRegistry.cs" />
-    <Compile Include="Features\Commands\BaseCommand.cs" />
-    <Compile Include="Features\Commands\CollapseAllCommand.cs" />
-    <Compile Include="Features\Commands\ExpandAllCommand.cs" />
-    <Compile Include="Features\Commands\IMenuCommand.cs" />
-    <Compile Include="Features\Commands\RefreshAllCommand.cs" />
-    <Compile Include="Features\Commands\OptionsCommand.cs" />
-    <Compile Include="Features\Commands\HelpCommand.cs" />
-    <Compile Include="Features\Commands\ToolWindowPackage.cs" />
+    <Compile Include="Core\Settings\AppSettings.cs" />
+    <Compile Include="Core\Settings\ISettings.cs" />
+    <Compile Include="Core\Settings\ISettingsStore.cs" />
+    <Compile Include="Core\Settings\SettingsStore.cs" />
+    <Compile Include="Features\New\AddNewItemCommand.cs" />
+    <Compile Include="Features\ToolWindow\ToolbarCommands\BaseCommand.cs" />
+    <Compile Include="Features\ToolWindow\ToolbarCommands\CollapseAllCommand.cs" />
+    <Compile Include="Features\ToolWindow\ToolbarCommands\ExpandAllCommand.cs" />
+    <Compile Include="Features\ToolWindow\ToolbarCommands\IMenuCommand.cs" />
+    <Compile Include="Features\ToolWindow\ToolbarCommands\RefreshAllCommand.cs" />
+    <Compile Include="Features\ToolWindow\ToolbarCommands\OptionsCommand.cs" />
+    <Compile Include="Features\ToolWindow\ToolbarCommands\HelpCommand.cs" />
+    <Compile Include="Features\ToolWindow\ToolbarCommands\ToolWindowPackage.cs" />
     <Compile Include="Features\Edit\EditWindow.xaml.cs">
       <DependentUpon>EditWindow.xaml</DependentUpon>
     </Compile>
@@ -157,18 +162,30 @@
     <Compile Include="Features\Monitors\Editors\PasswordEditor.cs" />
     <Compile Include="Features\Monitors\BatchFile.cs" />
     <Compile Include="Core\Monitoring\IScheduledItem.cs" />
+    <Compile Include="Features\Monitors\Dummy.cs" />
     <Compile Include="Features\Monitors\State.cs" />
     <Compile Include="Features\Monitors\RootItem.cs" />
     <Compile Include="Features\Monitors\GitHubIssue.cs" />
     <Compile Include="Features\Monitors\PowerShellScript.cs" />
+    <Compile Include="Features\Monitors\StateMetadata.cs" />
     <Compile Include="Features\Monitors\TfsWorkItem.cs" />
+    <Compile Include="Core\Settings\Theme.cs" />
+    <Compile Include="Features\Options\UserInterface\UserInterfaceOptions.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Features\Options\UserInterface\UserInterfaceOptionsView.xaml.cs">
+      <DependentUpon>UserInterfaceOptionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Options\UserInterface\UserInterfaceOptionsViewModel.cs" />
     <Compile Include="Features\ToolWindow\Commands\DeleteCommand.cs" />
     <Compile Include="Features\ToolWindow\Commands\DisableCommand.cs" />
     <Compile Include="Features\ToolWindow\Commands\EnableCommand.cs" />
-    <Compile Include="Features\ToolWindow\Converters\StateToImageConverter.cs" />
-    <Compile Include="Features\ToolWindow\Converters\StateToMonikerConverter.cs" />
-    <Compile Include="Features\ToolWindow\Converters\TooltipConverter.cs" />
-    <Compile Include="Features\ToolWindow\Converters\StateToBrushConverter.cs" />
+    <Compile Include="Infrastructure\Converters\HexToBrushConverter.cs" />
+    <Compile Include="Infrastructure\Converters\HexToColorConverter.cs" />
+    <Compile Include="Infrastructure\Converters\StateToImageConverter.cs" />
+    <Compile Include="Infrastructure\Converters\StateToMonikerConverter.cs" />
+    <Compile Include="Infrastructure\Converters\TooltipConverter.cs" />
+    <Compile Include="Infrastructure\Converters\StateToBrushConverter.cs" />
     <Compile Include="Infrastructure\Discovery.cs" />
     <Compile Include="Infrastructure\Enumeration.cs" />
     <Compile Include="Infrastructure\Extensions.cs" />
@@ -177,18 +194,20 @@
     <Compile Include="Features\Monitors\TfsBuild.cs" />
     <Compile Include="Features\Monitors\WindowsService.cs" />
     <Compile Include="Features\Monitors\TravisCIBuild.cs" />
-    <Compile Include="Features\ToolWindow\EditableTextBlock.cs" />
+    <Compile Include="Infrastructure\EditableTextBlock.cs" />
     <Compile Include="Core\UsageReporting\AnalyticsReporter.cs" />
     <Compile Include="Core\UsageReporting\IUsageReporter.cs" />
+    <Compile Include="Infrastructure\NotConverter.cs" />
+    <Compile Include="Infrastructure\NotifyPropertyChanged.cs" />
     <Compile Include="Infrastructure\Preconditions.cs" />
     <Compile Include="Core\Monitoring\IJobScheduler.cs" />
     <Compile Include="Core\Monitoring\JobScheduler.cs" />
     <Compile Include="Core\Monitoring\ScheduledJob.cs" />
     <Compile Include="Core\Logging\Logger.cs" />
     <Compile Include="Infrastructure\Retry.cs" />
-    <Compile Include="Core\ViewLocator.cs" />
+    <Compile Include="Core\ViewLocator\ViewLocator.cs" />
     <Compile Include="Core\Logging\ILogger.cs" />
-    <Compile Include="Core\Settings\IUserSettings.cs" />
+    <Compile Include="Core\Settings\Legacy\IUserSettings.cs" />
     <Compile Include="Features\Monitors\Folder.cs" />
     <Compile Include="Core\Monitoring\IHandler.cs" />
     <Compile Include="Features\Monitors\HttpStatus.cs" />
@@ -196,7 +215,6 @@
     <Compile Include="Features\Monitors\JenkinsBuild.cs" />
     <Compile Include="Features\Monitors\Ping.cs" />
     <Compile Include="Features\Monitors\Template.cs" />
-    <Compile Include="Infrastructure\SerializableDictionary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -206,18 +224,18 @@
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="Core\Settings\Settings.cs" />
     <Compile Include="Infrastructure\TinyIoc.cs" />
-    <Compile Include="Core\Settings\UserSettings.cs" />
-    <Compile Include="Core\IViewLocator.cs" />
+    <Compile Include="Core\Settings\Legacy\UserSettings.cs" />
+    <Compile Include="Core\ViewLocator\IViewLocator.cs" />
     <Compile Include="Features\New\NewViewModel.cs" />
-    <Compile Include="Features\Options\OptionsViewModel.cs" />
+    <Compile Include="Features\Options\General\GeneralOptionsViewModel.cs" />
     <Compile Include="Features\ToolWindow\ToolWindowViewModel.cs" />
     <Compile Include="Features\New\NewWindow.xaml.cs">
       <DependentUpon>NewWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Features\Options\OptionsDialogControl.xaml.cs">
-      <DependentUpon>OptionsDialogControl.xaml</DependentUpon>
+    <Compile Include="Features\Options\General\GeneralOptionsView.xaml.cs">
+      <DependentUpon>GeneralOptionsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Features\Options\Options.cs">
+    <Compile Include="Features\Options\General\GeneralOptions.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Features\ToolWindow\ToolWindowControl.xaml.cs">
@@ -233,9 +251,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Features\Options\OptionsDialogControl.xaml">
+    <Page Include="Features\Options\General\GeneralOptionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Features\Options\UserInterface\UserInterfaceOptionsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Features\ToolWindow\ToolWindowControl.xaml">
       <SubType>Designer</SubType>
@@ -269,6 +291,7 @@
   <ItemGroup>
     <Resource Include="Resources\Icons\Blank.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
