@@ -171,7 +171,8 @@ namespace AnyStatus
             {
                 Settings.Initialize();
 
-                State.SetMetadata(Settings.Theme?.Metadata);
+                if (Settings.Theme != null)
+                    State.SetMetadata(Settings.Theme.Metadata);
             }
         }
 
@@ -246,7 +247,7 @@ namespace AnyStatus
                 _logger.Info("Upgrading settings...");
 
                 var settings = AppSettings.Default();
-                
+
                 settings.ClientId = Properties.Settings.Default.ClientId;
                 settings.RootItem = Properties.Settings.Default.RootItem;
                 settings.DebugMode = Properties.Settings.Default.DebugMode;

@@ -117,11 +117,6 @@ namespace AnyStatus
 
             rootItem.RestoreParentChildRelationship();
 
-            //if (rootItem.Items == null)
-            //    return;
-
-            //rootItem.CalculateState();
-
             foreach (Folder folder in rootItem.Items.Where(k => k is Folder))
             {
                 folder.CalculateState();
