@@ -207,7 +207,6 @@
     <Compile Include="Infrastructure\Retry.cs" />
     <Compile Include="Core\ViewLocator\ViewLocator.cs" />
     <Compile Include="Core\Logging\ILogger.cs" />
-    <Compile Include="Core\Settings\Legacy\IUserSettings.cs" />
     <Compile Include="Features\Monitors\Folder.cs" />
     <Compile Include="Core\Monitoring\IHandler.cs" />
     <Compile Include="Features\Monitors\HttpStatus.cs" />
@@ -224,7 +223,6 @@
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="Core\Settings\Settings.cs" />
     <Compile Include="Infrastructure\TinyIoc.cs" />
-    <Compile Include="Core\Settings\Legacy\UserSettings.cs" />
     <Compile Include="Core\ViewLocator\IViewLocator.cs" />
     <Compile Include="Features\New\NewViewModel.cs" />
     <Compile Include="Features\Options\General\GeneralOptionsViewModel.cs" />
