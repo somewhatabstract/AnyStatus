@@ -117,10 +117,10 @@ namespace AnyStatus
 
             rootItem.RestoreParentChildRelationship();
 
-            foreach (Folder folder in rootItem.Items.Where(k => k is Folder))
-            {
-                folder.CalculateState();
-            }
+            //foreach (Folder folder in rootItem.Items.Where(k => k is Folder))
+            //{
+            //    folder.CalculateState();
+            //}
         }
 
         public static AppSettings Default()

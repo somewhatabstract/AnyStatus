@@ -260,11 +260,9 @@ namespace AnyStatus.Tests
         }
 
         [TestMethod]
-        public void WhenEnabled_StateIsNone()
+        public void DefaultStateIsNone()
         {
-            var item = new Item { State = State.Unknown };
-
-            item.IsEnabled = true;
+            var item = new Item();
 
             Assert.AreEqual(State.None, item.State);
         }

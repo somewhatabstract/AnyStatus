@@ -50,6 +50,7 @@ namespace AnyStatus
             IsEnabled = true;
             IsExpanded = true;
             Interval = 5;
+            State = State.None;
             Items = new ObservableCollection<Item>(); //todo: set for root and folder items only.
         }
 
@@ -116,8 +117,11 @@ namespace AnyStatus
             set
             {
                 _isEnabled = value;
-                State = _isEnabled ? State.None : State.Disabled;
+
                 OnPropertyChanged();
+
+                if (_isEnabled == false)
+                    State = State.Disabled; //todo: this is an issue since Item does not control its own state.
             }
         }
 

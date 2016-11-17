@@ -10,7 +10,7 @@ namespace AnyStatus
     {
         public Folder()
         {
-            Items.CollectionChanged += Items_CollectionChanged;
+            Items.CollectionChanged += Items_CollectionChanged; //todo: What happens when Items is changed?
         }
 
         [Browsable(false)]
@@ -22,14 +22,14 @@ namespace AnyStatus
 
             Subscribe(e.NewItems);
 
-            CalculateState();
+            AggregateState();
         }
 
         private void Subscribe(IList items)
         {
             if (items == null)
                 return;
-            
+
             foreach (INotifyPropertyChanged item in items)
             {
                 item.PropertyChanged += Item_PropertyChanged;
@@ -51,11 +51,11 @@ namespace AnyStatus
         {
             if (e.PropertyName.Equals(nameof(State)))
             {
-                CalculateState();
+                AggregateState();
             }
         }
 
-        public void CalculateState()
+        public void AggregateState()
         {
             if (Items != null && Items.Any())
             {

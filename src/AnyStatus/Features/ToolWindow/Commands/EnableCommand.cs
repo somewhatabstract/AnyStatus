@@ -56,6 +56,8 @@ namespace AnyStatus
 
                 item.IsEnabled = true;
 
+                item.State = State.None;
+
                 _saveChanges = true;
             }
         }
