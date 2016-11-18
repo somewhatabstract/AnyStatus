@@ -180,6 +180,8 @@ namespace AnyStatus
         {
             TextReader reader = null;
 
+            //todo: ask what to import. items, theme...
+
             try
             {
                 reader = new StreamReader(filePath);
@@ -188,12 +190,12 @@ namespace AnyStatus
 
                 var settings = (AppSettings)serializer.Deserialize(reader);
 
-                Settings = settings;
-
-                if (Settings.Theme == null)
+                if (settings.Theme == null)
                 {
-                    Settings.Theme = Theme.Default.Clone();
+                    settings.Theme = Settings.Theme ?? Theme.Default.Clone();
                 }
+
+                Settings = settings;
 
                 Save();
 
