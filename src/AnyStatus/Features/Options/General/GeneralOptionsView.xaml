@@ -31,10 +31,10 @@
                 </StackPanel>
             </GroupBox>
 
-            <GroupBox Header="Restore Default Settings" Padding="5" Margin="5">
+            <GroupBox Header="Restore Defaults" Padding="5" Margin="5">
                 <StackPanel HorizontalAlignment="Left">
                     <TextBlock Margin="3">Note: This deletes all user-entered information</TextBlock>
-                    <Button HorizontalAlignment="Left" Width="150" Command="{Binding RestoreDefaultSettingsCommand}" Margin="3">Restore Default Settings</Button>
+                    <Button HorizontalAlignment="Left" Width="110" Command="{Binding RestoreDefaultSettingsCommand}" Margin="3">Restore Defaults</Button>
                 </StackPanel>
             </GroupBox>
 
