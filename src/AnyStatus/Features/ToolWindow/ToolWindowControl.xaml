@@ -14,9 +14,16 @@
              d:DesignWidth="300"
              d:DataContext="{d:DesignInstance Type=local:ToolWindowViewModel}"
              x:Name="ToolWindow">
+
     <UserControl.Resources>
-        <utilities:BrushToColorConverter x:Key="BrushToColorConverter"/>
+        <ResourceDictionary>
+            <utilities:BrushToColorConverter x:Key="BrushToColorConverter"/>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/AnyStatus;component/Resources/Icons.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
+
     <Grid>
         <TreeView Name="TreeView"
                   ItemsSource="{Binding Settings.RootItem.Items}" 
@@ -66,6 +73,7 @@
                 <local:TooltipConverter x:Key="TooltipConverter" />
                 <local:StateToImageConverter x:Key="StateToImageConverter" />
                 <local:HexToBrushConverter x:Key="HexToBrushConverter"/>
+                <local:IconConverter x:Key="IconConverter"/>
 
                 <Rectangle x:Key="ColoredStatusIndicator" x:Shared="False" Width="5" Fill="{Binding State.Metadata.Color, Converter={StaticResource HexToBrushConverter}}">
                     <Rectangle.Style>
@@ -73,6 +81,22 @@
                             <Setter Property="Visibility" Value="Collapsed"></Setter>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding DataContext.Settings.ShowStatusColors, ElementName=ToolWindow}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Rectangle.Style>
+                </Rectangle>
+
+                <Rectangle x:Key="IconStatusIndicator" x:Shared="False" Width="16" Height="16" Margin="5,0,0,0" Fill="{DynamicResource {x:Static vsp:EnvironmentColors.ToolWindowButtonActiveGlyphBrushKey}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill" Visual="{Binding State.Metadata.Icon, Converter={StaticResource IconConverter}}" />
+                    </Rectangle.OpacityMask>
+                    <Rectangle.Style>
+                        <Style TargetType="{x:Type Rectangle}">
+                            <Setter Property="Visibility" Value="Collapsed"></Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding DataContext.Settings.ShowStatusIcons, ElementName=ToolWindow}" Value="True">
                                     <Setter Property="Visibility" Value="Visible"></Setter>
                                 </DataTrigger>
                             </Style.Triggers>
@@ -87,7 +111,7 @@
                                 Orientation="Horizontal"
                                 Background="Transparent"
                                 Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
-                        
+
                         <StackPanel.ContextMenu>
                             <ContextMenu>
 
@@ -178,21 +202,7 @@
 
                         <ContentControl Content="{StaticResource ColoredStatusIndicator}"/>
                         
-                        <imaging:CrispImage Height="16" 
-                                            Width="16" 
-                                            Margin="5,0,0,0"
-                                            Source="{Binding State, Converter={StaticResource StateToImageConverter}}">
-                            <imaging:CrispImage.Style>
-                                <Style TargetType="{x:Type imaging:CrispImage}">
-                                    <Setter Property="Visibility" Value="Collapsed"></Setter>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding DataContext.Settings.ShowStatusIcons, ElementName=ToolWindow}" Value="True">
-                                            <Setter Property="Visibility" Value="Visible"></Setter>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </imaging:CrispImage.Style>
-                        </imaging:CrispImage>
+                        <ContentControl Content="{StaticResource IconStatusIndicator}"/>
 
                         <local:EditableTextBlock Text="{Binding Name}" 
                                                  Margin="5,0,5,0"
@@ -346,23 +356,8 @@
                         </StackPanel.ContextMenu>
 
                         <ContentControl Content="{StaticResource ColoredStatusIndicator}"/>
-                                                
-                        <imaging:CrispImage Height="16" 
-                                            Width="16" 
-                                            Margin="5,0,0,0"
-                                            Source="{Binding State, Converter={StaticResource StateToImageConverter}}">
-                            <imaging:CrispImage.Style>
-                                <Style TargetType="{x:Type imaging:CrispImage}">
-                                    <Setter Property="Visibility" Value="Collapsed"></Setter>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding DataContext.Settings.ShowStatusIcons, ElementName=ToolWindow}" Value="True">
-                                            <Setter Property="Visibility" Value="Visible"></Setter>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </imaging:CrispImage.Style>
-                        </imaging:CrispImage>
 
+                        <ContentControl Content="{StaticResource IconStatusIndicator}"/>
 
                         <local:EditableTextBlock Text="{Binding Name}"
                                                  Margin="5,0,5,0"

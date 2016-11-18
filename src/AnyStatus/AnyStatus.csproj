@@ -158,16 +158,16 @@
     </Compile>
     <Compile Include="Features\Edit\EditViewModel.cs" />
     <Compile Include="Features\Monitors\AppVeyorBuild.cs" />
-    <Compile Include="Features\Monitors\Editors\FileEditor.cs" />
-    <Compile Include="Features\Monitors\Editors\PasswordEditor.cs" />
+    <Compile Include="Infrastructure\Editors\FileEditor.cs" />
+    <Compile Include="Infrastructure\Editors\PasswordEditor.cs" />
     <Compile Include="Features\Monitors\BatchFile.cs" />
     <Compile Include="Core\Monitoring\IScheduledItem.cs" />
     <Compile Include="Features\Monitors\Dummy.cs" />
-    <Compile Include="Features\Monitors\State.cs" />
-    <Compile Include="Features\Monitors\RootItem.cs" />
+    <Compile Include="Core\Monitoring\State.cs" />
+    <Compile Include="Core\Monitoring\RootItem.cs" />
     <Compile Include="Features\Monitors\GitHubIssue.cs" />
     <Compile Include="Features\Monitors\PowerShellScript.cs" />
-    <Compile Include="Features\Monitors\StateMetadata.cs" />
+    <Compile Include="Core\Monitoring\StateMetadata.cs" />
     <Compile Include="Features\Monitors\TfsWorkItem.cs" />
     <Compile Include="Core\Settings\Theme.cs" />
     <Compile Include="Features\Options\UserInterface\UserInterfaceOptions.cs">
@@ -182,6 +182,7 @@
     <Compile Include="Features\ToolWindow\Commands\EnableCommand.cs" />
     <Compile Include="Infrastructure\Converters\HexToBrushConverter.cs" />
     <Compile Include="Infrastructure\Converters\HexToColorConverter.cs" />
+    <Compile Include="Infrastructure\Converters\IconConverter.cs" />
     <Compile Include="Infrastructure\Converters\StateToImageConverter.cs" />
     <Compile Include="Infrastructure\Converters\StateToMonikerConverter.cs" />
     <Compile Include="Infrastructure\Converters\TooltipConverter.cs" />
@@ -194,10 +195,10 @@
     <Compile Include="Features\Monitors\TfsBuild.cs" />
     <Compile Include="Features\Monitors\WindowsService.cs" />
     <Compile Include="Features\Monitors\TravisCIBuild.cs" />
-    <Compile Include="Infrastructure\EditableTextBlock.cs" />
+    <Compile Include="Infrastructure\Controls\EditableTextBlock.cs" />
     <Compile Include="Core\UsageReporting\AnalyticsReporter.cs" />
     <Compile Include="Core\UsageReporting\IUsageReporter.cs" />
-    <Compile Include="Infrastructure\NotConverter.cs" />
+    <Compile Include="Infrastructure\Converters\NotConverter.cs" />
     <Compile Include="Infrastructure\NotifyPropertyChanged.cs" />
     <Compile Include="Infrastructure\Preconditions.cs" />
     <Compile Include="Core\Monitoring\IJobScheduler.cs" />
@@ -207,10 +208,10 @@
     <Compile Include="Infrastructure\Retry.cs" />
     <Compile Include="Core\ViewLocator\ViewLocator.cs" />
     <Compile Include="Core\Logging\ILogger.cs" />
-    <Compile Include="Features\Monitors\Folder.cs" />
+    <Compile Include="Core\Monitoring\Folder.cs" />
     <Compile Include="Core\Monitoring\IHandler.cs" />
     <Compile Include="Features\Monitors\HttpStatus.cs" />
-    <Compile Include="Features\Monitors\Item.cs" />
+    <Compile Include="Core\Monitoring\Item.cs" />
     <Compile Include="Features\Monitors\JenkinsBuild.cs" />
     <Compile Include="Features\Monitors\Ping.cs" />
     <Compile Include="Features\Monitors\Template.cs" />
@@ -261,6 +262,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Resource Include="Resources\Icons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -270,24 +275,6 @@
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Icons\StatusAlert_grey_16x.png" />
-    <Resource Include="Resources\Icons\StatusBlocked_grey_16x.png" />
-    <Resource Include="Resources\Icons\StatusCriticalError_grey_16x.png" />
-    <Resource Include="Resources\Icons\StatusHelp_gray_16x.png" />
-    <Resource Include="Resources\Icons\StatusInformation_grey_16x.png" />
-    <Resource Include="Resources\Icons\StatusInvalid_grey_16x.png" />
-    <Resource Include="Resources\Icons\StatusNo_grey_16x.png" />
-    <Resource Include="Resources\Icons\StatusOK_grey_16x.png" />
-    <Resource Include="Resources\Icons\StatusPause_grey_16x.png" />
-    <Resource Include="Resources\Icons\StatusReady_grey_16x.png" />
-    <Resource Include="Resources\Icons\StatusRun_grey_16x.png" />
-    <Resource Include="Resources\Icons\StatusStop_grey_16x.png" />
-    <Resource Include="Resources\Icons\StatusWarning_grey_16x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Icons\Blank.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

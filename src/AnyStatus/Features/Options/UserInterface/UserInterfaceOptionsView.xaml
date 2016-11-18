@@ -9,7 +9,12 @@
              x:Name="UiOptionsView"
              d:DesignHeight="500" d:DesignWidth="500">
     <UserControl.Resources>
-        <local:HexToColorConverter x:Key="HexToColorConverter"/>
+        <ResourceDictionary>
+            <local:HexToColorConverter x:Key="HexToColorConverter"/>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/AnyStatus;component/Resources/Icons.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
     <ScrollViewer>
         <StackPanel>
@@ -35,7 +40,7 @@
 
                     <ItemsControl ItemsSource="{Binding Theme.Metadata}">
                         <ItemsControl.Resources>
-                            <local:NotConverter x:Key="NotConverter" />
+                            <local:IconConverter x:Key="IconConverter"/>
                         </ItemsControl.Resources>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -43,9 +48,18 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="130" />
                                         <ColumnDefinition Width="100" />
+                                        <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
+                                    <!-- Name -->
                                     <TextBlock Grid.Column="0" Margin="3" Text="{Binding DisplayName}" />
+                                    <!-- Color -->
                                     <xctk:ColorPicker Grid.Column="1" Margin="3" SelectedColor="{Binding Color, Converter={StaticResource HexToColorConverter}}" />
+                                    <!-- Icon -->
+                                    <Rectangle Grid.Column="2" Width="16" Height="16" Margin="5,0,0,0" Fill="Black">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Fill" Visual="{Binding Icon, Converter={StaticResource IconConverter}}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
