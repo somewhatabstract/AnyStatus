@@ -167,13 +167,27 @@ namespace AnyStatus
 
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(Settings) && Settings != null)
+            switch (e.PropertyName)
             {
-                Settings.Initialize();
-
-                if (Settings.Theme != null)
-                    State.SetMetadata(Settings.Theme.Metadata);
+                case nameof(Settings):
+                    OnSettingsChanged();
+                    break;
+                default:
+                    break;
             }
+        }
+
+        private void OnSettingsChanged()
+        {
+            if (Settings == null)
+                return;
+
+            if (Settings.RootItem != null)
+                Settings.RootItem.RestoreParentChildRelationship();
+
+            //load theme
+            if (Settings.Theme?.Metadata != null)
+                State.SetMetadata(Settings.Theme.Metadata);
         }
 
         private void Import(string filePath)

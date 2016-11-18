@@ -210,7 +210,7 @@
     <Compile Include="Core\Logging\ILogger.cs" />
     <Compile Include="Core\Monitoring\Folder.cs" />
     <Compile Include="Core\Monitoring\IHandler.cs" />
-    <Compile Include="Features\Monitors\HttpStatus.cs" />
+    <Compile Include="Features\Monitors\Http.cs" />
     <Compile Include="Core\Monitoring\Item.cs" />
     <Compile Include="Features\Monitors\JenkinsBuild.cs" />
     <Compile Include="Features\Monitors\Ping.cs" />

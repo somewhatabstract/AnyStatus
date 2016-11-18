@@ -8,7 +8,7 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace AnyStatus
 {
-    [DisplayName("HTTP Status")]
+    [DisplayName("HTTP")]
     [Description("")]
     public class HttpStatus : Item, IScheduledItem
     {
@@ -18,12 +18,13 @@ namespace AnyStatus
         }
 
         [Required]
-        [Category("HTTP Status")]
+        [Category("HTTP")]
         [PropertyOrder(10)]
+        [DisplayName("URL")]
         public string Url { get; set; }
 
         [PropertyOrder(20)]
-        [Category("HTTP Status")]
+        [Category("HTTP")]
         [DisplayName("HTTP Status Code")]
         public HttpStatusCode HttpStatusCode { get; set; }
 
@@ -40,9 +41,7 @@ namespace AnyStatus
             using (var handler = new WebRequestHandler())
             {
                 if (item.IgnoreSslErrors)
-                {
                     handler.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
-                }
 
                 try
                 {

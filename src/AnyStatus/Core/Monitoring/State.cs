@@ -23,11 +23,7 @@ namespace AnyStatus
 
         private State(int value) : base(value)
         {
-        }
-        private State(int value, int priority, string displayName, string color, string icon) :
-            base(value)
-        {
-            Metadata = new StateMetadata(value, priority, displayName, color, icon);
+            Metadata = new StateMetadata() { Value = value };
         }
 
         public StateMetadata Metadata
@@ -47,7 +43,7 @@ namespace AnyStatus
             {
                 if (states.ContainsKey(metadata.Value))
                 {
-                    states[metadata.Value].Metadata.Color = metadata.Color;
+                    states[metadata.Value].Metadata = metadata;
                 }
             }
         }
@@ -56,32 +52,6 @@ namespace AnyStatus
         {
             return GetAll().Select(state => state.Metadata).ToArray();
         }
-
-        #region IXmlSerializable
-
-        //public void ReadXml(XmlReader reader)
-        //{
-        //    reader.MoveToContent();
-        //    reader.ReadStartElement();
-
-        //    var value = reader.ReadElementContentAsInt();
-
-        //    var state = FromValue(value);
-
-        //    Priority = state.Priority = reader.ReadElementContentAsInt();
-        //    Color = state.Color = reader.ReadElementContentAsString();
-        //    Icon = state.Icon = reader.ReadElementContentAsString();
-        //}
-
-        //public void WriteXml(XmlWriter writer)
-        //{
-        //    writer.WriteElementString("Value", Value.ToString());
-        //    writer.WriteElementString("Priority", Priority.ToString());
-        //    writer.WriteElementString("Color", Color);
-        //    writer.WriteElementString("Icon", Icon);
-        //}
-
-        #endregion
 
         #region INotifyPropertyChanged
 

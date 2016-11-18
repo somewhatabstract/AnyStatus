@@ -107,16 +107,6 @@ namespace AnyStatus
 
         #endregion
 
-        public void Initialize()
-        {
-            var rootItem = RootItem as RootItem;
-
-            if (rootItem == null)
-                return;
-
-            rootItem.RestoreParentChildRelationship();
-        }
-
         public static AppSettings Create()
         {
             return new AppSettings
