@@ -19,7 +19,7 @@ namespace AnyStatus
         public static readonly State Failed = new State(8, 8, "Failed", "Red", "FailedIcon");
         public static readonly State Invalid = new State(9, 9, "Invalid", "DarkRed", "WarningIcon");
         public static readonly State Error = new State(10, 10, "Error", "DarkRed", "WarningIcon");
-        public static readonly State Running = new State(11, 11, "Running", "DodgerBlue", "RunningIcon");
+        public static readonly State Running = new State(11, 11, "Running", "DodgerBlue", "RunIcon");
 
         private State(int value, int priority, string displayName, string color, string icon) :
             base(value)

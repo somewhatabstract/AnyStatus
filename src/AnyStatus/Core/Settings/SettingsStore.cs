@@ -190,6 +190,11 @@ namespace AnyStatus
 
                 Settings = settings;
 
+                if (Settings.Theme == null)
+                {
+                    Settings.Theme = Theme.Default.Clone();
+                }
+
                 Save();
 
                 SettingsReset?.Invoke(this, EventArgs.Empty);
@@ -230,7 +235,7 @@ namespace AnyStatus
         {
             Properties.Settings.Default.Reset();
 
-            Settings = AppSettings.Default();
+            Settings = AppSettings.Create();
 
             Save();
 
@@ -246,7 +251,7 @@ namespace AnyStatus
 
                 _logger.Info("Upgrading settings...");
 
-                var settings = AppSettings.Default();
+                var settings = AppSettings.Create();
 
                 settings.ClientId = Properties.Settings.Default.ClientId;
                 settings.RootItem = Properties.Settings.Default.RootItem;

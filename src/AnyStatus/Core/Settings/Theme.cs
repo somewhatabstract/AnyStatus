@@ -10,18 +10,18 @@ namespace AnyStatus
         {
             Metadata = new[]
                     {
-                        new StateMetadata(0, 0, "None", "Silver", "Blank.png"),
-                        new StateMetadata(1, 1, "Unknown", "Silver", "StatusHelp_gray_16x.png"),
-                        new StateMetadata(2, 2, "Disabled", "Silver", "StatusPause_grey_16x.png"),
-                        new StateMetadata(3, 3, "Canceled", "Gray", "StatusStop_grey_16x.png"),
-                        new StateMetadata(4, 4, "Ok", "Green", "StatusOK_grey_16x.png"),
-                        new StateMetadata(5, 5, "Open", "Green", "StatusInformation_grey_16x.png"),
-                        new StateMetadata(6, 6, "Closed", "Red", "StatusOK_grey_16x.png"),
-                        new StateMetadata(7, 7, "Partially Succeeded", "Orange", "StatusInvalid_grey_16x"),
-                        new StateMetadata(8, 8, "Failed", "Red", "StatusCriticalError_grey_16x.png"),
-                        new StateMetadata(9, 9, "Invalid", "DarkRed", "StatusWarning_grey_16x.png"),
-                        new StateMetadata(10, 10, "Error", "DarkRed", "StatusWarning_grey_16x.png"),
-                        new StateMetadata(11, 11, "Running", "DodgerBlue", "StatusRun_grey_16x.png")
+                        new StateMetadata(0, 0, "None", "Silver", string.Empty),
+                        new StateMetadata(1, 1, "Unknown", "Silver", "HelpIcon"),
+                        new StateMetadata(2, 2, "Disabled", "Silver", "PauseIcon"),
+                        new StateMetadata(3, 3, "Canceled", "Gray", "StopIcon"),
+                        new StateMetadata(4, 4, "Ok", "Green", "OkIcon"),
+                        new StateMetadata(5, 5, "Open", "Green", "InfoIcon"),
+                        new StateMetadata(6, 6, "Closed", "Red", "OkIcon"),
+                        new StateMetadata(7, 7, "Partially Succeeded", "Orange", "PartiallySucceededIcon"),
+                        new StateMetadata(8, 8, "Failed", "Red", "FailedIcon"),
+                        new StateMetadata(9, 9, "Invalid", "DarkRed", "WarningIcon"),
+                        new StateMetadata(10, 10, "Error", "DarkRed", "WarningIcon"),
+                        new StateMetadata(11, 11, "Running", "DodgerBlue", "RunIcon")
                     }
         };
 

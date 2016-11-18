@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Serialization;
 
 namespace AnyStatus
 {
@@ -24,6 +25,7 @@ namespace AnyStatus
 
         public int Priority { get; set; }
 
+        //[XmlIgnore]
         public string DisplayName { get; set; }
 
         public string Color
@@ -32,6 +34,7 @@ namespace AnyStatus
             set { _color = value; OnPropertyChanged(); }
         }
 
+        //[XmlIgnore]
         public string Icon { get; set; }
 
         public StateMetadata Clone()

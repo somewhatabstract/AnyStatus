@@ -20,6 +20,7 @@ namespace AnyStatus
 
             ApplyCommand = new RelayCommand(p => Save());
             ActivateCommand = new RelayCommand(p => Load());
+            ResetColorThemeCommand = new RelayCommand(p => Theme = Theme.Default.Clone());
         }
 
         #region Commands
@@ -27,6 +28,8 @@ namespace AnyStatus
         public ICommand ApplyCommand { get; set; }
 
         public ICommand ActivateCommand { get; set; }
+
+        public ICommand ResetColorThemeCommand { get; set; }
 
         #endregion
 

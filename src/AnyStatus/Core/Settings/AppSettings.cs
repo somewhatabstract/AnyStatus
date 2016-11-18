@@ -117,7 +117,7 @@ namespace AnyStatus
             rootItem.RestoreParentChildRelationship();
         }
 
-        public static AppSettings Default()
+        public static AppSettings Create()
         {
             return new AppSettings
             {

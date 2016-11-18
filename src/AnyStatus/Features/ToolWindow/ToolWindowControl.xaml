@@ -88,7 +88,8 @@
                     </Rectangle.Style>
                 </Rectangle>
 
-                <Rectangle x:Key="IconStatusIndicator" x:Shared="False" Width="16" Height="16" Margin="5,0,0,0" Fill="{DynamicResource {x:Static vsp:EnvironmentColors.ToolWindowButtonActiveGlyphBrushKey}}">
+                <!-- Icon Status Indicator-->
+                <Rectangle x:Key="IconStatusIndicator" x:Shared="False" Width="16" Height="16" Margin="5,0,0,0" Fill="{DynamicResource {x:Static vsp:EnvironmentColors.ToolWindowButtonHoverActiveGlyphBrushKey}}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Fill" Visual="{Binding State.Metadata.Icon, Converter={StaticResource IconConverter}}" />
                     </Rectangle.OpacityMask>

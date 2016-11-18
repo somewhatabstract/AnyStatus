@@ -33,9 +33,11 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="130" />
                             <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Margin="3" FontWeight="Bold" Text="Status" />
                         <TextBlock Grid.Column="1" Margin="3" FontWeight="Bold" Text="Color" />
+                        <TextBlock Grid.Column="2" HorizontalAlignment="Center" Margin="3" FontWeight="Bold" Text="Icon" />
                     </Grid>
 
                     <ItemsControl ItemsSource="{Binding Theme.Metadata}">
@@ -48,14 +50,14 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="130" />
                                         <ColumnDefinition Width="100" />
-                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="100" />
                                     </Grid.ColumnDefinitions>
                                     <!-- Name -->
                                     <TextBlock Grid.Column="0" Margin="3" Text="{Binding DisplayName}" />
                                     <!-- Color -->
                                     <xctk:ColorPicker Grid.Column="1" Margin="3" SelectedColor="{Binding Color, Converter={StaticResource HexToColorConverter}}" />
                                     <!-- Icon -->
-                                    <Rectangle Grid.Column="2" Width="16" Height="16" Margin="5,0,0,0" Fill="Black">
+                                    <Rectangle Grid.Column="2" Width="16" Height="16" Margin="3" Fill="Black">
                                         <Rectangle.OpacityMask>
                                             <VisualBrush Stretch="Fill" Visual="{Binding Icon, Converter={StaticResource IconConverter}}" />
                                         </Rectangle.OpacityMask>
@@ -64,6 +66,9 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
+                    
+                    <Button HorizontalAlignment="Left" Width="70" Margin="3" Content="Reset" Command="{Binding ResetColorThemeCommand}" />
+                    
                 </StackPanel>
             </GroupBox>
 
