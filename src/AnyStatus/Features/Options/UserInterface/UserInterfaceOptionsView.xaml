@@ -66,8 +66,8 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                    
-                    <Button HorizontalAlignment="Left" Width="70" Margin="3" Content="Reset" Command="{Binding ResetColorThemeCommand}" />
+
+                    <Button HorizontalAlignment="Left" Width="105" Margin="0,20,3,3" Content="Restore Defaults" Command="{Binding ResetColorThemeCommand}" />
                     
                 </StackPanel>
             </GroupBox>

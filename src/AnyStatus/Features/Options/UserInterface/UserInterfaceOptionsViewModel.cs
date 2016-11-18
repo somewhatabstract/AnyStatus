@@ -73,17 +73,18 @@ namespace AnyStatus
         {
             _settingsStore.Settings.ShowStatusIcons = ShowStatusIcons;
             _settingsStore.Settings.ShowStatusColors = ShowStatusColors;
-            _settingsStore.Settings.Theme = Theme;
+            _settingsStore.Settings.CustomTheme = Theme;
             _settingsStore.TrySave();
 
-            State.SetMetadata(Theme.Metadata); // ?
+            if (Theme?.Metadata != null)
+                State.SetMetadata(Theme.Metadata);
         }
 
         private void Load()
         {
             try
             {
-                Theme = _settingsStore.Settings.Theme.Clone();
+                Theme = _settingsStore.Settings.CustomTheme.Clone();
                 ShowStatusIcons = _settingsStore.Settings.ShowStatusIcons;
                 ShowStatusColors = _settingsStore.Settings.ShowStatusColors;
             }

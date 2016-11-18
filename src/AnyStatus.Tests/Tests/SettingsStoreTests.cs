@@ -109,13 +109,13 @@ namespace AnyStatus.Tests
         }
 
         [TestMethod]
-        public void AppSettings_Create()
+        public void UserSettings_Create()
         {
-            var settings = AppSettings.Create();
+            var settings = UserSettings.Create();
 
             Assert.IsNotNull(settings.ClientId);
             Assert.IsNotNull(settings.RootItem);
-            Assert.IsNotNull(settings.Theme);
+            Assert.IsNotNull(settings.CustomTheme);
 
             Assert.IsTrue(settings.ShowStatusColors);
             Assert.IsTrue(settings.ShowStatusIcons);

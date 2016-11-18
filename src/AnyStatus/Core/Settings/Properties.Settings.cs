@@ -1,12 +1,11 @@
-﻿using System.Xml.Serialization;
-
-namespace AnyStatus.Properties
+﻿namespace AnyStatus.Properties
 {
     /// <summary>
     /// Extends Properties.Settings.Default
     /// </summary>
     public partial class Settings
     {
+        //obsolete
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         public Item RootItem
@@ -21,18 +20,17 @@ namespace AnyStatus.Properties
             }
         }
 
-        [XmlElement(ElementName = "Settings")]//todo: fix name
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public AppSettings AppSettings
+        public UserSettings UserSettings
         {
             get
             {
-                return this[nameof(AppSettings)] as AppSettings;
+                return this[nameof(UserSettings)] as UserSettings;
             }
             set
             {
-                this[nameof(AppSettings)] = value;
+                this[nameof(UserSettings)] = value;
             }
         }
     }

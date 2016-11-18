@@ -2,7 +2,7 @@
 
 namespace AnyStatus
 {
-    public class AppSettings : NotifyPropertyChanged, ISettings
+    public class UserSettings : NotifyPropertyChanged, ISettings
     {
         private string _clientId;
         private bool _debugMode;
@@ -92,7 +92,7 @@ namespace AnyStatus
             }
         }
 
-        public Theme Theme
+        public Theme CustomTheme
         {
             get
             {
@@ -107,16 +107,16 @@ namespace AnyStatus
 
         #endregion
 
-        public static AppSettings Create()
+        public static UserSettings Create()
         {
-            return new AppSettings
+            return new UserSettings
             {
                 DebugMode = true,
                 ShowStatusIcons = true,
                 ShowStatusColors = true,
                 ReportAnonymousUsage = true,
                 RootItem = new RootItem(),
-                Theme = Theme.Default.Clone(),
+                CustomTheme = Theme.Default.Clone(),
                 ClientId = Guid.NewGuid().ToString(),
             };
         }

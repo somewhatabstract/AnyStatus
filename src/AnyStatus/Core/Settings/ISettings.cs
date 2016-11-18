@@ -16,6 +16,6 @@ namespace AnyStatus
 
         bool ShowStatusColors { get; set; }
 
-        Theme Theme { get; set; }
+        Theme CustomTheme { get; set; }
     }
 }

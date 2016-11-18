@@ -18,7 +18,7 @@ namespace AnyStatus.Tests.Tests
 
         public JobSchedulerTests()
         {
-            var settings = new AppSettings
+            var settings = new UserSettings
             {
                 RootItem = new RootItem
                 {

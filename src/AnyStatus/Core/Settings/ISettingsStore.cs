@@ -8,7 +8,7 @@ namespace AnyStatus
     {
         event EventHandler SettingsReset;
 
-        AppSettings Settings { get; }
+        UserSettings Settings { get; }
 
         bool TryInitialize();
 

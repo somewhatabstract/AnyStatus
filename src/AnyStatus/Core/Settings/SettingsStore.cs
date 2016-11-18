@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
@@ -10,7 +9,7 @@ namespace AnyStatus
     public class SettingsStore : NotifyPropertyChanged, ISettingsStore
     {
         private readonly ILogger _logger;
-        private AppSettings _settings;
+        private UserSettings _settings;
 
         public event EventHandler SettingsReset;
 
@@ -21,7 +20,7 @@ namespace AnyStatus
             PropertyChanged += OnPropertyChanged;
         }
 
-        public AppSettings Settings
+        public UserSettings Settings
         {
             get { return _settings; }
             private set
@@ -155,12 +154,12 @@ namespace AnyStatus
 
         private void Load()
         {
-            Settings = Properties.Settings.Default.AppSettings;
+            Settings = Properties.Settings.Default.UserSettings;
         }
 
         private void Save()
         {
-            Properties.Settings.Default.AppSettings = Settings;
+            Properties.Settings.Default.UserSettings = Settings;
 
             Properties.Settings.Default.Save();
         }
@@ -186,8 +185,8 @@ namespace AnyStatus
                 Settings.RootItem.RestoreParentChildRelationship();
 
             //load theme
-            if (Settings.Theme?.Metadata != null)
-                State.SetMetadata(Settings.Theme.Metadata);
+            if (Settings.CustomTheme?.Metadata != null)
+                State.SetMetadata(Settings.CustomTheme.Metadata);
         }
 
         private void Import(string filePath)
@@ -200,13 +199,13 @@ namespace AnyStatus
             {
                 reader = new StreamReader(filePath);
 
-                var serializer = new XmlSerializer(typeof(AppSettings));
+                var serializer = new XmlSerializer(typeof(UserSettings));
 
-                var settings = (AppSettings)serializer.Deserialize(reader);
+                var settings = (UserSettings)serializer.Deserialize(reader);
 
-                if (settings.Theme == null)
+                if (settings.CustomTheme == null)
                 {
-                    settings.Theme = Settings.Theme ?? Theme.Default.Clone();
+                    settings.CustomTheme = Settings.CustomTheme ?? Theme.Default.Clone();
                 }
 
                 Settings = settings;
@@ -232,7 +231,7 @@ namespace AnyStatus
 
             try
             {
-                var serializer = new XmlSerializer(typeof(AppSettings));
+                var serializer = new XmlSerializer(typeof(UserSettings));
                 writer = new StreamWriter(filePath);
                 serializer.Serialize(writer, Settings);
             }
@@ -251,7 +250,7 @@ namespace AnyStatus
         {
             Properties.Settings.Default.Reset();
 
-            Settings = AppSettings.Create();
+            Settings = UserSettings.Create();
 
             Save();
 
@@ -267,7 +266,7 @@ namespace AnyStatus
 
                 _logger.Info("Upgrading settings...");
 
-                var settings = AppSettings.Create();
+                var settings = UserSettings.Create();
 
                 settings.ClientId = Properties.Settings.Default.ClientId;
                 settings.RootItem = Properties.Settings.Default.RootItem;

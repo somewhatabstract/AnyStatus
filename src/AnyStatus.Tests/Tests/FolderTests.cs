@@ -70,6 +70,8 @@ namespace AnyStatus.Tests
         [TestMethod]
         public void CalculateState_FolderStateIsFailedWhenOneOrMoreItemsFailed()
         {
+            State.SetMetadata(Theme.Default.Metadata); //set states priority
+
             var folder = new Folder();
 
             var item1 = new Item();

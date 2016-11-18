@@ -140,7 +140,7 @@
   <ItemGroup>
     <Compile Include="Core\AnyStatusApp.cs" />
     <Compile Include="Core\ICommandRegistry.cs" />
-    <Compile Include="Core\Settings\AppSettings.cs" />
+    <Compile Include="Core\Settings\UserSettings.cs" />
     <Compile Include="Core\Settings\ISettings.cs" />
     <Compile Include="Core\Settings\ISettingsStore.cs" />
     <Compile Include="Core\Settings\SettingsStore.cs" />
@@ -222,7 +222,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\RelayCommand.cs" />
-    <Compile Include="Core\Settings\Settings.cs" />
+    <Compile Include="Core\Settings\Properties.Settings.cs" />
     <Compile Include="Infrastructure\TinyIoc.cs" />
     <Compile Include="Core\ViewLocator\IViewLocator.cs" />
     <Compile Include="Features\New\NewViewModel.cs" />

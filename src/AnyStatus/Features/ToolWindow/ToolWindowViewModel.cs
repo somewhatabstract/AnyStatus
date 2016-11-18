@@ -25,7 +25,7 @@ namespace AnyStatus
             Initialize();
         }
 
-        public AppSettings Settings
+        public UserSettings Settings
         {
             get
             {
