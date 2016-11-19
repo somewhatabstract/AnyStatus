@@ -3,5 +3,16 @@
                     xmlns:vsp="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.14.0"
                     xmlns:local="clr-namespace:AnyStatus">
 
-    
+    <Style x:Key="StatusPanelStyle" TargetType="{x:Type StackPanel}">
+        <Setter Property="MinWidth" Value="150"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Orientation" Value="Horizontal"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <!--<Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=IsEnabled}" Value="False">
+                            <Setter Property="Opacity" Value="0.5"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>-->
+    </Style>
+
 </ResourceDictionary>

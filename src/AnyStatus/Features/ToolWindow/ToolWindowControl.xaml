@@ -112,10 +112,7 @@
 
                 <!--Folder-->
                 <HierarchicalDataTemplate DataType="{x:Type local:Folder}" ItemsSource="{Binding Items}">
-                    <StackPanel Height="30" 
-                                MinWidth="150"
-                                Orientation="Horizontal"
-                                Background="Transparent"
+                    <StackPanel Style="{StaticResource StatusPanelStyle}"
                                 Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
 
                         <StackPanel.ContextMenu>
@@ -222,10 +219,7 @@
 
                 <!--Item-->
                 <DataTemplate DataType="{x:Type local:Item}">
-                    <StackPanel Orientation="Horizontal"
-                                MinWidth="150"
-                                Height="30"
-                                Background="Transparent"
+                    <StackPanel Style="{StaticResource StatusPanelStyle}"
                                 Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
 
                         <StackPanel.ToolTip>
