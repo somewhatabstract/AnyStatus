@@ -79,7 +79,7 @@
             <TreeView.Resources>
 
                 <!-- Color Status Indicator-->
-                <Rectangle x:Key="ColoredStatusIndicator" x:Shared="False" Width="5" Fill="{Binding State.Metadata.Color, Converter={StaticResource HexToBrushConverter}}">
+                <Rectangle x:Key="ColoredStatusIndicator" x:Shared="False" Width="3" Fill="{Binding State.Metadata.Color, Converter={StaticResource HexToBrushConverter}}">
                     <Rectangle.Style>
                         <Style TargetType="{x:Type Rectangle}">
                             <Setter Property="Visibility" Value="Collapsed"></Setter>
@@ -104,8 +104,8 @@
                             </Style.Triggers>
                         </Style>
                     </Grid.Style>
-                    <Rectangle Width="30" Height="30" Opacity="0.04" Fill="{DynamicResource {x:Static vsp:EnvironmentColors.ToolWindowTextBrushKey}}" />
-                    <Rectangle Width="18" Height="18" Opacity="0.85" Fill="{DynamicResource {x:Static vsp:EnvironmentColors.ToolWindowTextBrushKey}}">
+                    <Rectangle Width="30" Height="30" Opacity="0.05" Fill="{DynamicResource {x:Static vsp:EnvironmentColors.ToolWindowTextBrushKey}}" />
+                    <Rectangle Width="18" Height="18" Opacity="0.8" Fill="{DynamicResource {x:Static vsp:EnvironmentColors.ToolWindowTextBrushKey}}">
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Fill" Visual="{Binding State.Metadata.Icon, Converter={StaticResource IconConverter}}" />
                         </Rectangle.OpacityMask>
