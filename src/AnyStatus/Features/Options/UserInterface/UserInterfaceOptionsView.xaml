@@ -67,7 +67,9 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
 
-                    <Button HorizontalAlignment="Left" Width="110" Margin="0,20,3,3" Content="Restore Defaults" Command="{Binding ResetColorThemeCommand}" />
+                    <Button HorizontalAlignment="Left" Width="110" Margin="3,15,3,3" Content="Restore Defaults" Command="{Binding ResetColorThemeCommand}" />
+
+                    <!--<TextBlock Margin="3">Note: This restores the default color theme, priority and icons.</TextBlock>-->
                     
                 </StackPanel>
             </GroupBox>

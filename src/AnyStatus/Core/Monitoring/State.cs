@@ -23,7 +23,11 @@ namespace AnyStatus
 
         private State(int value) : base(value)
         {
-            Metadata = new StateMetadata() { Value = value };
+            Metadata = new StateMetadata
+            {
+                Value = value,
+                Priority = value
+            };
         }
 
         public StateMetadata Metadata
@@ -51,6 +55,11 @@ namespace AnyStatus
         public static StateMetadata[] GetMetadata()
         {
             return GetAll().Select(state => state.Metadata).ToArray();
+        }
+
+        public static implicit operator int(State state)
+        {
+            return state.Value;
         }
 
         #region INotifyPropertyChanged
