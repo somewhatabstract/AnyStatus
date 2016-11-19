@@ -183,10 +183,7 @@
     <Compile Include="Infrastructure\Converters\HexToBrushConverter.cs" />
     <Compile Include="Infrastructure\Converters\HexToColorConverter.cs" />
     <Compile Include="Infrastructure\Converters\IconConverter.cs" />
-    <Compile Include="Infrastructure\Converters\StateToImageConverter.cs" />
-    <Compile Include="Infrastructure\Converters\StateToMonikerConverter.cs" />
     <Compile Include="Infrastructure\Converters\TooltipConverter.cs" />
-    <Compile Include="Infrastructure\Converters\StateToBrushConverter.cs" />
     <Compile Include="Infrastructure\Discovery.cs" />
     <Compile Include="Infrastructure\Enumeration.cs" />
     <Compile Include="Infrastructure\Extensions.cs" />

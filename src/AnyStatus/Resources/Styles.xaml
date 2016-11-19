@@ -9,11 +9,22 @@
         <Setter Property="Orientation" Value="Horizontal"/>
         <Setter Property="Background" Value="Transparent"/>
 
+        <!--
         <Style.Triggers>
-            <DataTrigger Binding="{Binding Path=IsEnabled}" Value="False">
+            <DataTrigger Binding="{Binding IsEnabled}" Value="true">
                 <Setter Property="Opacity" Value="0.5"></Setter>
             </DataTrigger>
         </Style.Triggers>
+        -->
+    </Style>
+
+    <Style x:Key="TreeViewItemContainerStyle" TargetType="{x:Type TreeViewItem}">
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Margin" Value="0,3,0,0"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static vsp:EnvironmentColors.ToolWindowTextBrushKey}}"/>
+        <Setter Property="Background" Value="{DynamicResource {x:Static vsp:EnvironmentColors.SystemButtonFaceBrushKey}}"/>
+        <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
+        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
     </Style>
 
 </ResourceDictionary>

@@ -17,19 +17,19 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
-            
-            <utilities:BrushToColorConverter x:Key="BrushToColorConverter"/>
+
+            <local:IconConverter x:Key="IconConverter"/>
             <local:TooltipConverter x:Key="TooltipConverter" />
             <local:HexToBrushConverter x:Key="HexToBrushConverter"/>
-            <local:IconConverter x:Key="IconConverter"/>
-            
+            <utilities:BrushToColorConverter x:Key="BrushToColorConverter"/>
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/AnyStatus;component/Resources/Styles.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/AnyStatus;component/Resources/Icons.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/AnyStatus;component/Features/ToolWindow/ItemContextMenu.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/AnyStatus;component/Features/ToolWindow/FolderContextMenu.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            
+
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -134,7 +134,7 @@
 
                 <!--Item-->
                 <DataTemplate DataType="{x:Type local:Item}">
-                    
+
                     <StackPanel Style="{StaticResource StatusPanelStyle}"
                                 ContextMenu="{StaticResource ItemContextMenu}"
                                 Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
@@ -153,16 +153,6 @@
                                                  HorizontalAlignment="Stretch"
                                                  IsEditing="{Binding IsEditing}" 
                                                  SaveCommand="{Binding DataContext.SaveCommand, ElementName=ToolWindow}" />
-
-                        <!--<local:EditableTextBlock.Style>
-                                <Style TargetType="{x:Type local:EditableTextBlock}">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Path=IsEnabled}" Value="False">
-                                            <Setter Property="Foreground" Value="Silver"></Setter>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </local:EditableTextBlock.Style>-->
                     </StackPanel>
                 </DataTemplate>
 
@@ -174,19 +164,13 @@
             </TreeView.InputBindings>
 
             <TreeView.ItemContainerStyle>
-                <Style TargetType="{x:Type TreeViewItem}">
-                    <Setter Property="Padding" Value="0"/>
-                    <Setter Property="Margin" Value="0,3,0,0"/>
-                    <Setter Property="Foreground" Value="{DynamicResource {x:Static vsp:EnvironmentColors.ToolWindowTextBrushKey}}"/>
-                    <Setter Property="Background" Value="{DynamicResource {x:Static vsp:EnvironmentColors.SystemButtonFaceBrushKey}}"/>
-                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
-                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
+                <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource TreeViewItemContainerStyle}">
                     <EventSetter Event="TreeViewItem.MouseMove" Handler="TreeViewItem_MouseMove" />
                     <EventSetter Event="TreeViewItem.DragOver" Handler="TreeViewItem_DragOver" />
                     <EventSetter Event="TreeViewItem.Drop" Handler="TreeViewItem_Drop" />
                 </Style>
             </TreeView.ItemContainerStyle>
-
+            
         </TreeView>
     </Grid>
 
