@@ -75,6 +75,7 @@
                 <local:HexToBrushConverter x:Key="HexToBrushConverter"/>
                 <local:IconConverter x:Key="IconConverter"/>
 
+                <!-- Color Status Indicator-->
                 <Rectangle x:Key="ColoredStatusIndicator" x:Shared="False" Width="5" Fill="{Binding State.Metadata.Color, Converter={StaticResource HexToBrushConverter}}">
                     <Rectangle.Style>
                         <Style TargetType="{x:Type Rectangle}">
@@ -89,12 +90,9 @@
                 </Rectangle>
 
                 <!-- Icon Status Indicator-->
-                <Rectangle x:Key="IconStatusIndicator" x:Shared="False" Width="16" Height="16" Margin="5,0,0,0" Fill="{DynamicResource {x:Static vsp:EnvironmentColors.ToolWindowButtonHoverActiveGlyphBrushKey}}">
-                    <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Fill" Visual="{Binding State.Metadata.Icon, Converter={StaticResource IconConverter}}" />
-                    </Rectangle.OpacityMask>
-                    <Rectangle.Style>
-                        <Style TargetType="{x:Type Rectangle}">
+                <Grid x:Key="IconStatusIndicator" x:Shared="False">
+                    <Grid.Style>
+                        <Style TargetType="{x:Type Grid}">
                             <Setter Property="Visibility" Value="Collapsed"></Setter>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding DataContext.Settings.ShowStatusIcons, ElementName=ToolWindow}" Value="True">
@@ -102,13 +100,19 @@
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
-                    </Rectangle.Style>
-                </Rectangle>
-                
+                    </Grid.Style>
+                    <Rectangle Width="30" Height="30" Opacity="0.05" Fill="{DynamicResource {x:Static vsp:EnvironmentColors.ToolWindowButtonHoverActiveGlyphBrushKey}}" />
+                    <Rectangle Width="18" Height="18" Opacity="0.9" Fill="{DynamicResource {x:Static vsp:EnvironmentColors.ToolWindowButtonHoverActiveGlyphBrushKey}}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{Binding State.Metadata.Icon, Converter={StaticResource IconConverter}}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </Grid>
+
                 <!--Folder-->
                 <HierarchicalDataTemplate DataType="{x:Type local:Folder}" ItemsSource="{Binding Items}">
                     <StackPanel Height="30" 
-                                MinWidth="160"
+                                MinWidth="150"
                                 Orientation="Horizontal"
                                 Background="Transparent"
                                 Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
@@ -202,7 +206,7 @@
                         </StackPanel.ContextMenu>
 
                         <ContentControl Content="{StaticResource ColoredStatusIndicator}"/>
-                        
+
                         <ContentControl Content="{StaticResource IconStatusIndicator}"/>
 
                         <local:EditableTextBlock Text="{Binding Name}" 
@@ -218,7 +222,7 @@
                 <!--Item-->
                 <DataTemplate DataType="{x:Type local:Item}">
                     <StackPanel Orientation="Horizontal"
-                                MinWidth="160"
+                                MinWidth="150"
                                 Height="30"
                                 Background="Transparent"
                                 Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
