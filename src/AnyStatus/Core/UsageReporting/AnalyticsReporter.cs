@@ -55,7 +55,7 @@ namespace AnyStatus
             PropertyId = "UA-83802855-1";
             ApplicationId = "AnyStatus";
             ApplicationName = "AnyStatus";
-            ApplicationVersion = "0.9";
+            ApplicationVersion = "0.10";
 
             _serverUrl = ProductionServerUrl;
             _baseHitData = MakeBaseHitData();
