@@ -17,16 +17,17 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
+            
             <utilities:BrushToColorConverter x:Key="BrushToColorConverter"/>
-            <local:StateToBrushConverter x:Key="StateToBrushConverter" />
             <local:TooltipConverter x:Key="TooltipConverter" />
-            <local:StateToImageConverter x:Key="StateToImageConverter" />
             <local:HexToBrushConverter x:Key="HexToBrushConverter"/>
             <local:IconConverter x:Key="IconConverter"/>
+            
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/AnyStatus;component/Resources/Styles.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/AnyStatus;component/Resources/Icons.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            
         </ResourceDictionary>
     </UserControl.Resources>
 
