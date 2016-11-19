@@ -8,11 +8,12 @@
         <Setter Property="Height" Value="30"/>
         <Setter Property="Orientation" Value="Horizontal"/>
         <Setter Property="Background" Value="Transparent"/>
-        <!--<Style.Triggers>
-                        <DataTrigger Binding="{Binding Path=IsEnabled}" Value="False">
-                            <Setter Property="Opacity" Value="0.5"></Setter>
-                        </DataTrigger>
-                    </Style.Triggers>-->
+
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=IsEnabled}" Value="False">
+                <Setter Property="Opacity" Value="0.5"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 
 </ResourceDictionary>
