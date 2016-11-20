@@ -6,6 +6,8 @@
     <Description xml:space="preserve">Monitor the health, status and availability of services</Description>
     <MoreInfo>https://github.com/AlonAm/AnyStatus</MoreInfo>
     <License>Resources\License.txt</License>
+    <GettingStartedGuide>https://github.com/AlonAm/AnyStatus/wiki/Getting-Started</GettingStartedGuide>
+    <ReleaseNotes>https://github.com/AlonAm/AnyStatus/blob/master/CHANGELOG.md</ReleaseNotes>
     <Icon>Resources\StatusSecurityOK_cyan_128x.png</Icon>
     <PreviewImage>Resources\Preview.png</PreviewImage>
     <Tags>Monitoring, Monitor, Status, Build, TFS, Jenkins, TeamCity, CI, Cloud, AppVeyor, Travis CI</Tags>
