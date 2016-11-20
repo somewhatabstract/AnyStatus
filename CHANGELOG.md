@@ -1,7 +1,7 @@
 # Roadmap
 
+- [x] Status colors customization
 - [ ] TFS Work Item status
-- [ ] Status colors customization
 - [ ] Custom commands (for example, queue new build context menu item)
 - [ ] Improve Visual Studio theme support
 - [ ] Synchronize user settings between Visual Studio instances
@@ -16,6 +16,14 @@ download in the
 
 These are the changes to each version that has been released
 on the official Visual Studio extension gallery.
+
+##0.10
+
+**2016-11-20**
+
+- [x] Status colors customization
+- [x] Status icons vector graphics
+- [x] User settings refactoring
 
 ##0.9
 
