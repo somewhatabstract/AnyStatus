@@ -3,7 +3,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/bqr0m4e08nfkb6g2?svg=true)](https://ci.appveyor.com/project/AlonAmsalem/anystatus)
 [![Release](https://img.shields.io/badge/release-v0.10-blue.svg)](https://visualstudiogallery.msdn.microsoft.com/d2262fef-aeca-45dd-9c8c-87c290ee4eb0)
 
-Download this extension from the [VS Gallery](https://visualstudiogallery.msdn.microsoft.com/d2262fef-aeca-45dd-9c8c-87c290ee4eb0)
+Download this extension from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=AlonAmsalem.AnyStatus)
 or get the [CI build](http://vsixgallery.com/#/extension/AnyStatus.VSPackage.6f25620d-ff50-42d1-89da-709a45cebe10/).
 
 ---------------------------------------
@@ -16,15 +16,17 @@ AnyStatus runs in the background and does not have a significant impact on the p
 
 See the [changelog](https://github.com/AlonAm/AnyStatus/blob/master/CHANGELOG.md) for changes and roadmap.
 
-## Features 
+# Features 
 
 - Colored status indicators
-- Organize items in folders
+- Organize monitors in folders
 - Automatic and Manual status updates
 - Enable or disable items
 - Import and Export settings
 - Informative log messages in output window
-- Monitors
+
+### Monitors
+
   - Basic
     - Ping
     - TCP/IP
