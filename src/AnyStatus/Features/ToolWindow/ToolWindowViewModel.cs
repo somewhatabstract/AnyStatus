@@ -37,6 +37,8 @@ namespace AnyStatus
         {
             _settingsStore.PropertyChanged += (s, e) => OnPropertyChanged(e.PropertyName);
 
+            OpenInBrowserCommand = new OpenInBrowserCommand();
+
             AddFolderCommand = new RelayCommand(p =>
             {
                 try
@@ -204,7 +206,7 @@ namespace AnyStatus
         }
 
         #region Commands
-
+        public ICommand OpenInBrowserCommand { get; set; }
         public ICommand AddFolderCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
         public ICommand RenameCommand { get; set; }

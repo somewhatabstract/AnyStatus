@@ -12,7 +12,7 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 namespace AnyStatus
 {
     [DisplayName("Jenkins Build")]
-    public class JenkinsBuild : Item, IScheduledItem
+    public class JenkinsBuild : Item, IScheduledItem, ICanOpenInBrowser
     {
         [Url]
         [Required]
@@ -36,6 +36,23 @@ namespace AnyStatus
         [PropertyOrder(40)]
         [DisplayName("Ignore SSL Errors")]
         public bool IgnoreSslErrors { get; set; }
+    }
+
+    public class OpenJenkinsBuildInBrowser : IOpenInBrowser<JenkinsBuild>
+    {
+        public void Handle(JenkinsBuild item)
+        {
+            if (item == null)
+                return;
+
+            try
+            {
+                Process.Start(item.Url);
+            }
+            catch
+            {
+            }
+        }
     }
 
     public class JenkinsBuildHandler : IHandler<JenkinsBuild>

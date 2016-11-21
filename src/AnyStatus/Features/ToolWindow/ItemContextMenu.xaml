@@ -3,10 +3,14 @@
                     xmlns:vsp="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.14.0"
                     xmlns:catalog="clr-namespace:Microsoft.VisualStudio.Imaging;assembly=Microsoft.VisualStudio.ImageCatalog"
                     xmlns:imaging="clr-namespace:Microsoft.VisualStudio.Imaging;assembly=Microsoft.VisualStudio.Imaging"
-                    xmlns:local="clr-namespace:AnyStatus">
+                    xmlns:local="clr-namespace:AnyStatus;assembly=AnyStatus">
 
     <ContextMenu x:Key="ItemContextMenu">
-
+        
+        <ContextMenu.Resources>
+            <local:CanOpenInBrowserConverter x:Key="CanOpenInBrowserConverter"/>
+        </ContextMenu.Resources>
+        
         <MenuItem Header=" Refresh" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.RefreshItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}">
@@ -38,6 +42,37 @@
             </Separator.Style>
         </Separator>
 
+        <MenuItem Header=" Open in Browser"
+                  Command="{Binding Path=PlacementTarget.Tag.DataContext.OpenInBrowserCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                  CommandParameter="{Binding}">
+            <MenuItem.Style>
+                <Style TargetType="{x:Type MenuItem}">
+                    <Setter Property="Visibility" Value="Collapsed"></Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Converter={StaticResource CanOpenInBrowserConverter}}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </MenuItem.Style>
+            <MenuItem.Icon>
+                <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Web}" />
+            </MenuItem.Icon>
+        </MenuItem>
+
+        <Separator>
+            <Separator.Style>
+                <Style TargetType="{x:Type Separator}">
+                    <Setter Property="Visibility" Value="Collapsed"></Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Converter={StaticResource CanOpenInBrowserConverter}}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Separator.Style>
+        </Separator>
+        
         <MenuItem Header=" Enable" 
                                           Command="{Binding Path=PlacementTarget.Tag.DataContext.EnableItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}">
