@@ -10,8 +10,8 @@ namespace AnyStatus
         public RefreshAllCommand(IJobScheduler jobScheduler, ILogger logger) :
             base(PackageIds.refreshToolbarCommandId)
         {
-            _jobScheduler = jobScheduler;
             _logger = logger;
+            _jobScheduler = jobScheduler;
         }
 
         protected override void Handle(object sender, EventArgs e)

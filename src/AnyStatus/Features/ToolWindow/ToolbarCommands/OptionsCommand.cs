@@ -8,8 +8,7 @@ namespace AnyStatus
         private Package _package;
         private readonly ILogger _logger;
 
-        public OptionsCommand(Package package, ILogger logger) :
-            base(PackageIds.optionsToolbarCommandId)
+        public OptionsCommand(Package package, ILogger logger) : base(PackageIds.optionsToolbarCommandId)
         {
             _logger = logger;
             _package = package;

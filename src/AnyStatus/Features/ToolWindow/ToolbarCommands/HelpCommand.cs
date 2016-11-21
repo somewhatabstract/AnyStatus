@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace AnyStatus
 {
+    [ExcludeFromCodeCoverage]
     public class HelpCommand : BaseCommand
     {
         public HelpCommand() : base(PackageIds.helpToolbarCommandId)
@@ -12,11 +15,10 @@ namespace AnyStatus
         {
             try
             {
-                System.Diagnostics.Process.Start("https://github.com/AlonAm/AnyStatus/wiki");
+                Process.Start("https://github.com/AlonAm/AnyStatus/wiki");
             }
             catch
             {
-                // Ignore
             }
         }
     }

@@ -3,7 +3,7 @@ using NSubstitute;
 using System;
 using System.Threading.Tasks;
 
-namespace AnyStatus.Tests.Tests
+namespace AnyStatus.Tests
 {
     [TestClass]
     public class ScheduledJobTests

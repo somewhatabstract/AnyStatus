@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace AnyStatus.Tests.Tests
+namespace AnyStatus.Tests
 {
     [TestClass]
     public class SetupAssemblyInitializer

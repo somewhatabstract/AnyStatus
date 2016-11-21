@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 
-namespace AnyStatus.Tests.Tests
+namespace AnyStatus.Tests
 {
     [TestClass]
     public class JobSchedulerTests
