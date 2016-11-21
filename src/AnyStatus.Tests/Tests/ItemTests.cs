@@ -2,8 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace AnyStatus.Tests
 {
@@ -11,51 +11,121 @@ namespace AnyStatus.Tests
     public class ItemTests
     {
         [TestMethod]
-        public void IsParentOf()
+        public void IsAncestorOf_Should_Return_True_When_Contains_Child()
         {
             var item = new Item();
             var child = new Item();
 
-            item.Items = new ObservableCollection<Item>()
-            {
-                child
-            };
+            item.Add(child);
 
-            Assert.IsTrue(item.IsParentOf(child));
+            Assert.IsTrue(item.IsAncestorOf(child));
         }
 
         [TestMethod]
-        public void MoveTo()
+        public void IsAncestorOf_Should_Return_True_When_Contains_Descendant()
+        {
+            Item item = new Item(),
+                 child = new Item(),
+                 grandchild = new Item(),
+                 greatGrandchild = new Item();
+
+            item.Add(child);
+            child.Add(grandchild);
+            grandchild.Add(greatGrandchild);
+
+            Assert.IsTrue(item.IsAncestorOf(greatGrandchild));
+        }
+
+        [TestMethod]
+        public void MoveTo_Target_Should_Contain_Source()
         {
             var item = new Item();
+            var folder = new Folder();
+            var rootItem = new RootItem();
+
+            rootItem.Add(item);
+            rootItem.Add(folder);
+
+            item.MoveTo(folder);
+
+            Assert.IsTrue(folder.Contains(item));
         }
 
         [TestMethod]
-        public void Add()
+        public void MoveTo_RootItem_Should_Contain_Source()
         {
+            var item = new Item();
+            var folder = new Folder();
+            var rootItem = new RootItem();
+
+            folder.Add(item);
+            rootItem.Add(folder);
+
+            item.MoveTo(rootItem);
+
+            Assert.IsTrue(rootItem.Contains(item));
+        }
+
+        [TestMethod]
+        public void Add_Should_Contain_Added_Item()
+        {
+            var item = new Item();
             var parent = new Item();
-            var item = new Item();
 
             parent.Add(item);
 
-            Assert.IsTrue(parent.Items.Contains(item));
+            Assert.IsTrue(parent.Contains(item));
         }
 
         [TestMethod]
-        public void Delete()
+        public void Add_Should_Set_Parent()
         {
-            var parent = new Item();
             var item = new Item();
+            var parent = new Item();
+
+            parent.Add(item);
+
+            Assert.AreSame(parent, item.Parent);
+        }
+
+        [TestMethod]
+        public void Add_Should_Set_Id_If_Empty()
+        {
+            var item = new Item();
+            var parent = new Item();
+
+            parent.Add(item);
+
+            Assert.AreNotEqual(Guid.Empty, item.Id);
+        }
+
+        [TestMethod]
+        public void Add_Should_Not_Set_Id_If_Exists()
+        {
+            var id = Guid.NewGuid();
+            var item = new Item() { Id = id };
+            var parent = new Item();
+
+            parent.Add(item);
+
+            Assert.AreEqual(id, item.Id);
+        }
+
+        [TestMethod]
+        public void Delete_Should_Remove_From_Parent_Collection()
+        {
+            var item = new Item();
+            var parent = new Item();
 
             parent.Add(item);
 
             item.Delete();
 
-            Assert.IsFalse(parent.Items.Contains(item));
+            Assert.IsFalse(parent.Contains(item));
         }
 
         [TestMethod]
-        public void MoveUp()
+        public void MoveUp_Index_Should_Decrease()
         {
             var parent = new Item();
 
@@ -65,13 +135,17 @@ namespace AnyStatus.Tests
             parent.Add(item1);
             parent.Add(item2);
 
+            Assert.IsTrue(parent.Items.IndexOf(item1) == 0);
+            Assert.IsTrue(parent.Items.IndexOf(item2) == 1);
+
             item2.MoveUp();
 
+            Assert.IsTrue(parent.Items.IndexOf(item1) == 1);
             Assert.IsTrue(parent.Items.IndexOf(item2) == 0);
         }
 
         [TestMethod]
-        public void MoveDown()
+        public void MoveDown_Index_Should_Increase()
         {
             var parent = new Item();
 
@@ -81,13 +155,17 @@ namespace AnyStatus.Tests
             parent.Add(item1);
             parent.Add(item2);
 
+            Assert.IsTrue(parent.Items.IndexOf(item1) == 0);
+            Assert.IsTrue(parent.Items.IndexOf(item2) == 1);
+
             item1.MoveDown();
 
             Assert.IsTrue(parent.Items.IndexOf(item1) == 1);
+            Assert.IsTrue(parent.Items.IndexOf(item2) == 0);
         }
 
         [TestMethod]
-        public void Clone()
+        public void Clone_Should_Create_A_New_Object()
         {
             var item = new Item();
 
@@ -97,7 +175,7 @@ namespace AnyStatus.Tests
         }
 
         [TestMethod]
-        public void ReplaceWith()
+        public void ReplaceWith_Should_Replace_Source_With_Target()
         {
             var parent = new Item();
             var item1 = new Item();
@@ -113,7 +191,7 @@ namespace AnyStatus.Tests
         }
 
         [TestMethod]
-        public void Collapse()
+        public void Collapse_Should_Set_IsExpanded_To_False()
         {
             var item = new Item() { IsExpanded = true };
 
@@ -123,7 +201,7 @@ namespace AnyStatus.Tests
         }
 
         [TestMethod]
-        public void CollapseAll()
+        public void CollapseAll_Should_Set_Descendants_IsExpanded_To_False()
         {
             var item = new Item() { IsExpanded = true };
             var child = new Item() { IsExpanded = true };
@@ -140,7 +218,7 @@ namespace AnyStatus.Tests
         }
 
         [TestMethod]
-        public void Expand()
+        public void Expand_Should_Set_IsExpanded_To_True()
         {
             var item = new Item() { IsExpanded = false };
 
@@ -150,7 +228,7 @@ namespace AnyStatus.Tests
         }
 
         [TestMethod]
-        public void ExpandAll()
+        public void ExpandAll_Should_Set_Descendants_IsExpanded_To_True()
         {
             var item = new Item() { IsExpanded = false };
             var child = new Item() { IsExpanded = false };
@@ -167,7 +245,7 @@ namespace AnyStatus.Tests
         }
 
         [TestMethod]
-        public void RestoreParentChildRelationship()
+        public void RestoreParentChildRelationship_Should_Restore_References()
         {
             var parent = new Item();
             var child = new Item();
@@ -183,7 +261,7 @@ namespace AnyStatus.Tests
         }
 
         [TestMethod]
-        public void IsSchedulable()
+        public void IsSchedulable_Should_Return_True_When_Item_Is_Valid_For_Scheduling()
         {
             var item = new Ping()
             {
@@ -192,6 +270,42 @@ namespace AnyStatus.Tests
             };
 
             Assert.IsTrue(item.IsSchedulable());
+        }
+
+        [TestMethod]
+        public void IsSchedulable_Should_Return_False_When_Item_Is_Disabled()
+        {
+            var item = new Ping()
+            {
+                IsEnabled = false,
+                Id = Guid.NewGuid()
+            };
+
+            Assert.IsFalse(item.IsSchedulable());
+        }
+
+        [TestMethod]
+        public void IsSchedulable_Should_Return_False_When_Id_Is_Empty()
+        {
+            var item = new Ping()
+            {
+                IsEnabled = true,
+                Id = Guid.Empty
+            };
+
+            Assert.IsFalse(item.IsSchedulable());
+        }
+
+        [TestMethod]
+        public void IsSchedulable_Should_Return_False_When_Item_Is__Not_IScheduledItem()
+        {
+            var item = new Dummy()
+            {
+                IsEnabled = true,
+                Id = Guid.Empty
+            };
+
+            Assert.IsFalse(item.IsSchedulable());
         }
 
         [TestMethod]

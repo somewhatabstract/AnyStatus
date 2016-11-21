@@ -1,6 +1,9 @@
 ﻿namespace AnyStatus
 {
-    public class RootItem : Item
+    public class RootItem : Folder
     {
+        public RootItem() : base(aggregateState: false)
+        {
+        }
     }
 }

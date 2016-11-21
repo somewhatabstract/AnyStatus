@@ -156,7 +156,9 @@ namespace AnyStatus
             if (item == null || Items == null)
                 throw new InvalidOperationException();
 
-            item.Id = Guid.NewGuid();
+            if (item.Id == Guid.Empty)
+                item.Id = Guid.NewGuid();
+
             item.Parent = this;
 
             Items.Add(item);
@@ -372,6 +374,11 @@ namespace AnyStatus
             return false;
         }
 
+        public bool Contains(Item item)
+        {
+            return Items != null && Items.Contains(item);
+        }
+
         public bool IsValid()
         {
             var context = new ValidationContext(this, serviceProvider: null, items: null);
@@ -388,7 +395,7 @@ namespace AnyStatus
             return Validator.TryValidateObject(this, context, results);
         }
 
-        public bool IsParentOf(Item child)
+        public bool IsAncestorOf(Item child)
         {
             if (this == child)
             {
@@ -398,7 +405,7 @@ namespace AnyStatus
             foreach (var item in Items)
             {
 
-                if (item.IsParentOf(child))
+                if (item.IsAncestorOf(child))
                 {
                     return true;
                 }
@@ -409,7 +416,7 @@ namespace AnyStatus
 
         public bool IsNotParentOf(Item item)
         {
-            return !IsParentOf(item);
+            return !IsAncestorOf(item);
         }
 
         #endregion

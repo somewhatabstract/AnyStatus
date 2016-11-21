@@ -8,9 +8,14 @@ namespace AnyStatus
     [Browsable(false)]
     public class Folder : Item
     {
-        public Folder()
+        public Folder() : this(aggregateState: true)
         {
-            Items.CollectionChanged += Items_CollectionChanged; //todo: What happens when Items is changed?
+        }
+
+        public Folder(bool aggregateState)
+        {
+            if (aggregateState)
+                Items.CollectionChanged += Items_CollectionChanged;
         }
 
         [Browsable(false)]
