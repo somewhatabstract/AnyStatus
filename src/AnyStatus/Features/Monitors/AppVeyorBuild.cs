@@ -10,7 +10,7 @@ namespace AnyStatus
 {
     [DisplayName("AppVeyor Build")]
     [Description("")]
-    public class AppVeyorBuild : Item, IScheduledItem
+    public class AppVeyorBuild : Item, IScheduledItem, ICanOpenInBrowser
     {
         [Required]
         [Category("AppVeyor")]
@@ -95,5 +95,24 @@ namespace AnyStatus
         }
 
         #endregion
+    }
+
+    public class OpenAppVeyorBuildInBrowser : IOpenInBrowser<AppVeyorBuild>
+    {
+        public void Handle(AppVeyorBuild item)
+        {
+            if (item == null)
+                return;
+
+            try
+            {
+                var url = $"https://ci.appveyor.com/project/{item.AccountName}/{item.ProjectSlug}";
+
+                Process.Start(url);
+            }
+            catch
+            {
+            }
+        }
     }
 }

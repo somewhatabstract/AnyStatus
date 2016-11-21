@@ -12,7 +12,7 @@ namespace AnyStatus.Tests
     public class JobSchedulerTests
     {
         private ILogger _logger = Substitute.For<ILogger>();
-        private Func<ScheduledJob> _jobFactory = () => { return new ScheduledJob(Substitute.For<ILogger>()); };
+        private Func<ScheduledJob> _jobFactory = () => { return new ScheduledJob(Substitute.For<ILogger>(), new Mediator()); };
         private ISettingsStore _settingsStore = Substitute.For<ISettingsStore>();
         private Dummy _item = new Dummy { Id = Guid.NewGuid(), Name = "Test" };
 

@@ -36,6 +36,7 @@ namespace AnyStatus.VSPackage
             container.Register<ScheduledJob>().AsMultiInstance();
             container.Register<IUsageReporter, AnalyticsReporter>().AsSingleton();
             container.Register<ICommandRegistry, CommandRegistry>();
+            container.Register<IMediator, Mediator>();
         }
 
         private static void RegisterUI(TinyIoCContainer container)

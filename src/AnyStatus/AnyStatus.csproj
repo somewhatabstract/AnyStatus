@@ -140,6 +140,8 @@
   <ItemGroup>
     <Compile Include="Core\AnyStatusApp.cs" />
     <Compile Include="Core\ICommandRegistry.cs" />
+    <Compile Include="Core\Mediator\IMediator.cs" />
+    <Compile Include="Core\Mediator\Mediator.cs" />
     <Compile Include="Core\Settings\UserSettings.cs" />
     <Compile Include="Core\Settings\ISettings.cs" />
     <Compile Include="Core\Settings\ISettingsStore.cs" />

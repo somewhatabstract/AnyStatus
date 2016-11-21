@@ -6,7 +6,18 @@ namespace AnyStatus
 {
     public class OpenInBrowserCommand : ICommand
     {
+        private IMediator _mediator;
+
         public event EventHandler CanExecuteChanged;
+
+        public OpenInBrowserCommand() : this(new Mediator())
+        {
+        }
+
+        public OpenInBrowserCommand(IMediator mediator)
+        {
+            _mediator = Preconditions.CheckNotNull(mediator, nameof(mediator));
+        }
 
         public bool CanExecute(object parameter)
         {
@@ -20,11 +31,13 @@ namespace AnyStatus
             if (item == null)
                 return;
 
-            var handlerType = typeof(IOpenInBrowser<>);
-            var genericHandlerType = handlerType.MakeGenericType(item.GetType());
-            var handler = TinyIoCContainer.Current.Resolve(genericHandlerType);
-
-            genericHandlerType.GetMethod("Handle").Invoke(handler, new[] { item });
+            try
+            {
+                _mediator.Send(item, typeof(IOpenInBrowser<>));
+            }
+            catch
+            {
+            }
         }
     }
 }

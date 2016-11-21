@@ -7,10 +7,12 @@ namespace AnyStatus
     public class ScheduledJob : IJob
     {
         private ILogger _logger;
+        private IMediator _mediator;
 
-        public ScheduledJob(ILogger logger)
+        public ScheduledJob(ILogger logger, IMediator mediator)
         {
             _logger = Preconditions.CheckNotNull(logger, nameof(logger));
+            _mediator = Preconditions.CheckNotNull(mediator, nameof(mediator));
         }
 
         public Item Item { get; set; }
@@ -20,17 +22,15 @@ namespace AnyStatus
             if (Item == null)
                 throw new InvalidOperationException("Item cannot be null.");
 
+            //todo: separate concerns to layers
+
             try
             {
                 if (Item.IsValid())
                 {
                     _logger.Info($"Updating \"{Item.Name}\".");
 
-                    var handlerType = typeof(IHandler<>);
-                    var genericHandlerType = handlerType.MakeGenericType(Item.GetType());
-                    var handler = TinyIoCContainer.Current.Resolve(genericHandlerType);
-
-                    genericHandlerType.GetMethod("Handle").Invoke(handler, new[] { Item });
+                    _mediator.Send(Item, typeof(IHandler<>));
                 }
                 else
                 {
