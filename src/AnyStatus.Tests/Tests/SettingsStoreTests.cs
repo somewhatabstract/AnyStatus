@@ -8,8 +8,6 @@ namespace AnyStatus.Tests
     [TestClass]
     public class SettingsStoreTests
     {
-        public TestContext TestContext { get; set; }
-
         private static TestContext _testContext;
 
         [ClassInitialize]
@@ -75,7 +73,7 @@ namespace AnyStatus.Tests
         [TestMethod]
         public void SettingsStore_TryImport()
         {
-            var filePath = Path.Combine(TestContext.TestRunDirectory, "ImportTest.xml");
+            var filePath = Path.Combine(_testContext.TestRunDirectory, "ImportTest.xml");
 
             var logger = Substitute.For<ILogger>();
 
@@ -94,7 +92,7 @@ namespace AnyStatus.Tests
         [TestMethod]
         public void SettingsStore_TryExport()
         {
-            var filePath = Path.Combine(TestContext.TestRunDirectory, "ExportTest.xml");
+            var filePath = Path.Combine(_testContext.TestRunDirectory, "ExportTest.xml");
 
             var logger = Substitute.For<ILogger>();
 
