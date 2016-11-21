@@ -59,5 +59,22 @@ namespace AnyStatus.Integration.Tests
 
             Assert.AreSame(State.Ok, request.State);
         }
+
+        [TestMethod]
+        public void GitHubIssueHandler()
+        {
+            var request = new GitHubIssue
+            {
+                IssueNumber = 1,
+                Repository = "AnyStatus",
+                Owner = "AlonAm"
+            };
+
+            var handler = new GitHubIssueHandler();
+
+            handler.Handle(request);
+
+            Assert.AreSame(State.Closed, request.State);
+        }
     }
 }
