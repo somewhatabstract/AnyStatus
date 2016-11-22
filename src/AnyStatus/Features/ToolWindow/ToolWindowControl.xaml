@@ -78,6 +78,12 @@
 
             <TreeView.Resources>
 
+                <!-- Style the inactive selection the same as active -->
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}"
+                     Color="{DynamicResource {x:Static SystemColors.HighlightColorKey}}" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}"
+                     Color="{DynamicResource {x:Static SystemColors.HighlightTextColorKey}}"/>
+                
                 <!-- Color Status Indicator-->
                 <Rectangle x:Key="ColoredStatusIndicator" x:Shared="False" Width="3" Fill="{Binding State.Metadata.Color, Converter={StaticResource HexToBrushConverter}}">
                     <Rectangle.Style>
