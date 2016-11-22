@@ -37,7 +37,7 @@ namespace AnyStatus
 
     public class BatchFileHandler : IHandler<BatchFile>
     {
-        //[DebuggerStepThrough]
+        [DebuggerStepThrough]
         public void Handle(BatchFile item)
         {
             if (!File.Exists(item.FileName))
