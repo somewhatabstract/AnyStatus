@@ -99,7 +99,7 @@ namespace AnyStatus
 
                 EnsureItemIsValid(item);
 
-                var job = new ScheduledJob(_logger) { Item = item };
+                var job = new ScheduledJob(_logger, new Mediator()) { Item = item };
 
                 await job.ExecuteAsync();
             }

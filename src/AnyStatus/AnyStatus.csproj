@@ -140,11 +140,16 @@
   <ItemGroup>
     <Compile Include="Core\AnyStatusApp.cs" />
     <Compile Include="Core\ICommandRegistry.cs" />
+    <Compile Include="Core\Mediator\IMediator.cs" />
+    <Compile Include="Core\Mediator\Mediator.cs" />
     <Compile Include="Core\Settings\UserSettings.cs" />
     <Compile Include="Core\Settings\ISettings.cs" />
     <Compile Include="Core\Settings\ISettingsStore.cs" />
     <Compile Include="Core\Settings\SettingsStore.cs" />
+    <Compile Include="Features\Monitors\ICanOpenInBrowser.cs" />
+    <Compile Include="Features\Monitors\IOpenInBrowser.cs" />
     <Compile Include="Features\New\AddNewItemCommand.cs" />
+    <Compile Include="Features\ToolWindow\Commands\OpenInBrowserCommand.cs" />
     <Compile Include="Features\ToolWindow\ToolbarCommands\BaseCommand.cs" />
     <Compile Include="Features\ToolWindow\ToolbarCommands\CollapseAllCommand.cs" />
     <Compile Include="Features\ToolWindow\ToolbarCommands\ExpandAllCommand.cs" />
@@ -158,6 +163,7 @@
     </Compile>
     <Compile Include="Features\Edit\EditViewModel.cs" />
     <Compile Include="Features\Monitors\AppVeyorBuild.cs" />
+    <Compile Include="Infrastructure\Converters\CanOpenInBrowserConverter.cs" />
     <Compile Include="Infrastructure\Editors\FileEditor.cs" />
     <Compile Include="Infrastructure\Editors\PasswordEditor.cs" />
     <Compile Include="Features\Monitors\BatchFile.cs" />

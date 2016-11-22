@@ -18,7 +18,9 @@ namespace AnyStatus.VSPackage
             RegisterUI(container);
             RegisterItems(container);
             RegisterTemplates(container);
-            RegisterItemHandlers(container);
+
+            RegisterHandlers(container, typeof(IHandler<>));
+            RegisterHandlers(container, typeof(IOpenInBrowser<>));
 
             return container;
         }
@@ -34,6 +36,7 @@ namespace AnyStatus.VSPackage
             container.Register<ScheduledJob>().AsMultiInstance();
             container.Register<IUsageReporter, AnalyticsReporter>().AsSingleton();
             container.Register<ICommandRegistry, CommandRegistry>();
+            container.Register<IMediator, Mediator>();
         }
 
         private static void RegisterUI(TinyIoCContainer container)
@@ -56,16 +59,14 @@ namespace AnyStatus.VSPackage
             container.Register<UserInterfaceOptionsViewModel>().AsSingleton();
         }
 
-        private static void RegisterItemHandlers(TinyIoCContainer container)
+        private static void RegisterHandlers(TinyIoCContainer container, Type type)
         {
-            var baseHandler = typeof(IHandler<>);
-
-            var handlers = Discovery.FindGenericTypesOf(baseHandler, typeof(IHandler<>).Assembly);
+            var handlers = Discovery.FindGenericTypesOf(type, type.Assembly);
 
             foreach (var handler in handlers)
             {
                 container
-                    .Register(handler.GetInterface(baseHandler.Name), handler)
+                    .Register(handler.GetInterface(type.Name), handler)
                     .AsMultiInstance();
             }
         }

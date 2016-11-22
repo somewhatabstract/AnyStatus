@@ -15,7 +15,7 @@ namespace AnyStatus.Tests
         {
             var item = new Dummy { Name = "Test", Id = Guid.NewGuid() };
 
-            var scheduledJob = new ScheduledJob(_logger) { Item = item };
+            var scheduledJob = new ScheduledJob(_logger, new Mediator()) { Item = item };
 
             scheduledJob.Execute();
 
@@ -27,7 +27,7 @@ namespace AnyStatus.Tests
         {
             var item = new Dummy { Name = "Test", Id = Guid.NewGuid() };
 
-            var scheduledJob = new ScheduledJob(_logger) { Item = item };
+            var scheduledJob = new ScheduledJob(_logger, new Mediator()) { Item = item };
 
             await scheduledJob.ExecuteAsync();
 
@@ -37,9 +37,11 @@ namespace AnyStatus.Tests
         [TestMethod]
         public void Execute_Should_Validate_Item()
         {
+            var mediator = Substitute.For<IMediator>();
+
             var invalidItem = new Dummy();
 
-            var scheduledJob = new ScheduledJob(_logger) { Item = invalidItem };
+            var scheduledJob = new ScheduledJob(_logger, mediator) { Item = invalidItem };
 
             scheduledJob.Execute();
 
@@ -56,7 +58,7 @@ namespace AnyStatus.Tests
                 Id = Guid.NewGuid()
             };
 
-            var scheduledJob = new ScheduledJob(_logger) { Item = item };
+            var scheduledJob = new ScheduledJob(_logger, new Mediator()) { Item = item };
 
             scheduledJob.Execute();
 
@@ -67,7 +69,9 @@ namespace AnyStatus.Tests
         [ExpectedException(typeof(InvalidOperationException))]
         public void Execute_Should_Throw_When_ItemIsNull()
         {
-            var scheduledJob = new ScheduledJob(_logger);
+            var mediator = Substitute.For<IMediator>();
+
+            var scheduledJob = new ScheduledJob(_logger, mediator);
 
             scheduledJob.Item = null;
 
