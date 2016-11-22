@@ -15,7 +15,7 @@ namespace AnyStatus
                         new StateMetadata(State.Disabled, 2, "Disabled", "#FF696969", "PauseIcon"),
                         new StateMetadata(State.Canceled, 3, "Canceled", "#FF808080", "StopIcon"),
                         new StateMetadata(State.Ok, 4, "Ok", "#FF32CD32", "OkIcon"),
-                        new StateMetadata(State.Open, 5, "Open", "Green", "OpenIcon"),
+                        new StateMetadata(State.Open, 5, "Open", "#FF32CD32", "OpenIcon"),
                         new StateMetadata(State.Closed, 6, "Closed", "Red", "ClosedIcon"),
                         new StateMetadata(State.PartiallySucceeded, 7, "Partially Succeeded", "Orange", "PartiallySucceededIcon"),
                         new StateMetadata(State.Failed, 8, "Failed", "Red", "FailedIcon"),
