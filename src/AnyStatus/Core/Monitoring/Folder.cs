@@ -15,7 +15,9 @@ namespace AnyStatus
         public Folder(bool aggregateState)
         {
             if (aggregateState)
+            {
                 Items.CollectionChanged += Items_CollectionChanged;
+            }
         }
 
         [Browsable(false)]
@@ -65,6 +67,10 @@ namespace AnyStatus
             if (Items != null && Items.Any())
             {
                 State = Items.Aggregate((a, b) => a.State.Metadata.Priority > b.State.Metadata.Priority ? a : b).State;
+            }
+            else
+            {
+                State = State.None;
             }
         }
     }

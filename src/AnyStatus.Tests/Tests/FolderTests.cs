@@ -68,7 +68,7 @@ namespace AnyStatus.Tests
         }
 
         [TestMethod]
-        public void CalculateState_FolderStateIsFailedWhenOneOrMoreItemsFailed()
+        public void State_Should_Be_Failed_When_OneOrMoreItemsFailed()
         {
             State.SetMetadata(Theme.Default.Metadata); //set states priority
 
@@ -90,7 +90,7 @@ namespace AnyStatus.Tests
         }
 
         [TestMethod]
-        public void CalculateState_FolderStateIsCalculatedByPriority()
+        public void Should_Aggregate_State_By_Priority()
         {
             var folder = new Folder();
 
@@ -107,6 +107,51 @@ namespace AnyStatus.Tests
             item3.State = State.Running;
 
             Assert.AreEqual(State.Running, folder.State);
+        }
+
+        [TestMethod]
+        public void Should_Aggregate_State_When_Moving_Items()
+        {
+            var folder1 = new Folder();
+            var folder2 = new Folder();
+
+            var item1 = new Item();
+            var item2 = new Item();
+
+            folder1.Add(item1);
+            folder1.Add(item2);
+
+            item1.State = State.Ok;
+            item2.State = State.Failed;
+
+            Assert.AreSame(State.Failed, folder1.State);
+
+            item2.MoveTo(folder2);
+
+            Assert.AreSame(State.Ok, folder1.State);
+        }
+
+        [TestMethod]
+        public void State_Should_Be_None_When_No_Items()
+        {
+            var folder1 = new Folder();
+            var folder2 = new Folder();
+
+            var item1 = new Item();
+            var item2 = new Item();
+
+            folder1.Add(item1);
+            folder1.Add(item2);
+
+            item1.State = State.Ok;
+            item2.State = State.Failed;
+
+            Assert.AreSame(State.Failed, folder1.State);
+
+            item1.MoveTo(folder2);
+            item2.MoveTo(folder2);
+
+            Assert.AreSame(State.None, folder1.State);
         }
     }
 }
