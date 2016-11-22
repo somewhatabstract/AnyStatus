@@ -15,9 +15,7 @@ namespace AnyStatus
         public Folder(bool aggregateState)
         {
             if (aggregateState)
-            {
                 Items.CollectionChanged += Items_CollectionChanged;
-            }
         }
 
         [Browsable(false)]
@@ -38,9 +36,7 @@ namespace AnyStatus
                 return;
 
             foreach (INotifyPropertyChanged item in items)
-            {
                 item.PropertyChanged += Item_PropertyChanged;
-            }
         }
 
         private void Unsubscribe(IList items)
@@ -49,29 +45,25 @@ namespace AnyStatus
                 return;
 
             foreach (INotifyPropertyChanged item in items)
-            {
                 item.PropertyChanged -= Item_PropertyChanged;
-            }
         }
 
         private void Item_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName.Equals(nameof(State)))
-            {
                 AggregateState();
-            }
         }
 
         public void AggregateState()
         {
-            if (Items != null && Items.Any())
-            {
-                State = Items.Aggregate((a, b) => a.State.Metadata.Priority > b.State.Metadata.Priority ? a : b).State;
-            }
-            else
-            {
-                State = State.None;
-            }
+            State = Items != null && Items.Any() ?
+                        Items.Aggregate(ByPriority).State :
+                            State.None;
+        }
+
+        private static Item ByPriority(Item a, Item b)
+        {
+            return a.State.Metadata.Priority > b.State.Metadata.Priority ? a : b;
         }
     }
 }
