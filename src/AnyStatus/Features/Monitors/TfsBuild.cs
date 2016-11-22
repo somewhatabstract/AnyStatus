@@ -16,7 +16,7 @@ namespace AnyStatus
 {
     [DisplayName("TFS 2015 Build")]
     [Description("Microsoft Team Foundation Server 2015 or Visual Studio Team Services build status")]
-    public class TfsBuild : Item, IScheduledItem
+    public class TfsBuild : Item, IScheduledItem, ICanOpenInBrowser
     {
         public TfsBuild()
         {
@@ -199,5 +199,37 @@ namespace AnyStatus
         }
 
         #endregion
+    }
+
+    public class OpenTfsBuildInBrowser : IOpenInBrowser<TfsBuild>
+    {
+        private readonly ILogger _logger;
+        private readonly IProcessStarter _processStarter;
+
+        public OpenTfsBuildInBrowser(IProcessStarter processStarter, ILogger logger)
+        {
+            _logger = Preconditions.CheckNotNull(logger, nameof(logger));
+            _processStarter = Preconditions.CheckNotNull(processStarter, nameof(processStarter));
+        }
+
+        public void Handle(TfsBuild item)
+        {
+            try
+            {
+                if (item.BuildDefinitionId > 0)
+                {
+                    var uri = $"{item.Url}/{item.Collection}/{item.TeamProject}/_build?definitionId={item.BuildDefinitionId}&_a=completed";
+
+                    _processStarter.Start(uri.ToString());
+                }
+                else
+                {
+                    _logger.Info("Could not open in browser. The BuildDefinitionId was not set.");
+                }
+            }
+            catch
+            {
+            }
+        }
     }
 }

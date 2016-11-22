@@ -202,12 +202,14 @@
     <Compile Include="Core\UsageReporting\AnalyticsReporter.cs" />
     <Compile Include="Core\UsageReporting\IUsageReporter.cs" />
     <Compile Include="Infrastructure\Converters\NotConverter.cs" />
+    <Compile Include="Infrastructure\IProcessStarter.cs" />
     <Compile Include="Infrastructure\NotifyPropertyChanged.cs" />
     <Compile Include="Infrastructure\Preconditions.cs" />
     <Compile Include="Core\Monitoring\IJobScheduler.cs" />
     <Compile Include="Core\Monitoring\JobScheduler.cs" />
     <Compile Include="Core\Monitoring\ScheduledJob.cs" />
     <Compile Include="Core\Logging\Logger.cs" />
+    <Compile Include="Infrastructure\ProcessStarter.cs" />
     <Compile Include="Infrastructure\Retry.cs" />
     <Compile Include="Core\ViewLocator\ViewLocator.cs" />
     <Compile Include="Core\Logging\ILogger.cs" />

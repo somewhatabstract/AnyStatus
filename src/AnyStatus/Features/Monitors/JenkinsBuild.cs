@@ -40,14 +40,21 @@ namespace AnyStatus
 
     public class OpenJenkinsBuildInBrowser : IOpenInBrowser<JenkinsBuild>
     {
+        private IProcessStarter _processStarter;
+
+        public OpenJenkinsBuildInBrowser(IProcessStarter processStarter)
+        {
+            _processStarter = Preconditions.CheckNotNull(processStarter, nameof(processStarter));
+        }
+
         public void Handle(JenkinsBuild item)
         {
-            if (item == null)
+            if (item == null || string.IsNullOrEmpty(item.Url))
                 return;
 
             try
             {
-                Process.Start(item.Url);
+                _processStarter.Start(item.Url);
             }
             catch
             {

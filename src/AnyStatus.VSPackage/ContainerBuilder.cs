@@ -37,6 +37,7 @@ namespace AnyStatus.VSPackage
             container.Register<IUsageReporter, AnalyticsReporter>().AsSingleton();
             container.Register<ICommandRegistry, CommandRegistry>();
             container.Register<IMediator, Mediator>();
+            container.Register<IProcessStarter, ProcessStarter>();
         }
 
         private static void RegisterUI(TinyIoCContainer container)

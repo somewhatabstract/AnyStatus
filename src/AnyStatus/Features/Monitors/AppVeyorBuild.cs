@@ -99,6 +99,13 @@ namespace AnyStatus
 
     public class OpenAppVeyorBuildInBrowser : IOpenInBrowser<AppVeyorBuild>
     {
+        private IProcessStarter _processStarter;
+
+        public OpenAppVeyorBuildInBrowser(IProcessStarter processStarter)
+        {
+            _processStarter = Preconditions.CheckNotNull(processStarter, nameof(processStarter));
+        }
+
         public void Handle(AppVeyorBuild item)
         {
             if (item == null)
@@ -108,7 +115,7 @@ namespace AnyStatus
             {
                 var url = $"https://ci.appveyor.com/project/{item.AccountName}/{item.ProjectSlug}";
 
-                Process.Start(url);
+                _processStarter.Start(url);
             }
             catch
             {
