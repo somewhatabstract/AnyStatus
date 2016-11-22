@@ -1,9 +1,11 @@
 # Roadmap
 
 - [x] Status colors customization
-- [ ] TFS Work Item status
-- [ ] Custom commands (for example, queue new build context menu item)
-- [ ] Improve Visual Studio theme support
+- [ ] TFS work item status
+- [ ] JIRA work item status
+- [ ] Travis CI build
+- [ ] Circle CI build
+- [ ] Custom commands (for example, queue new build, open in browser, etc.)
 - [ ] Synchronize user settings between Visual Studio instances
 - [ ] Replace AppSettings with WritableSettingsStore (?)
 - [ ] Replace TinyIoc with MEF
@@ -22,8 +24,11 @@ on the official Visual Studio extension gallery.
 **2016-11-20**
 
 - [x] Status colors customization
-- [x] Status icons vector graphics
+- [x] Vector status icons
 - [x] User settings refactoring
+- [x] Set treeview inactive selection color as active
+- [x] Open Jenkins and AppVeyor builds in web browser
+- [x] UI design improvements
 
 ##0.9
 
