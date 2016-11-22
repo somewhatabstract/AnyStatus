@@ -11,7 +11,7 @@ namespace AnyStatus
 {
     [DisplayName("GitHub Issue")]
     [Description("")]
-    public class GitHubIssue : Item, IScheduledItem
+    public class GitHubIssue : Item, IScheduledItem, ICanOpenInBrowser
     {
         [Required]
         [Category("GitHub")]
@@ -83,5 +83,31 @@ namespace AnyStatus
         Open,
         Closed,
         All
+    }
+
+    public class OpenGitHubIssueInBrowser : IOpenInBrowser<GitHubIssue>
+    {
+        private readonly IProcessStarter _processStarter;
+
+        public OpenGitHubIssueInBrowser(IProcessStarter processStarter)
+        {
+            _processStarter = Preconditions.CheckNotNull(processStarter, nameof(processStarter));
+        }
+
+        public void Handle(GitHubIssue item)
+        {
+            if (item == null || string.IsNullOrEmpty(item.Owner) || string.IsNullOrEmpty(item.Repository))
+                return;
+
+            try
+            {
+                var url = $"https://github.com/{item.Owner}/{item.Repository}/issues/{item.IssueNumber}";
+
+                _processStarter.Start(url);
+            }
+            catch
+            {
+            }
+        }
     }
 }

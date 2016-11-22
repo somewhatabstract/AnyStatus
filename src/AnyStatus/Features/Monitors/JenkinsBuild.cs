@@ -40,7 +40,7 @@ namespace AnyStatus
 
     public class OpenJenkinsBuildInBrowser : IOpenInBrowser<JenkinsBuild>
     {
-        private IProcessStarter _processStarter;
+        private readonly IProcessStarter _processStarter;
 
         public OpenJenkinsBuildInBrowser(IProcessStarter processStarter)
         {

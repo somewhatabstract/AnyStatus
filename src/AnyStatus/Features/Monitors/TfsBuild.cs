@@ -214,18 +214,21 @@ namespace AnyStatus
 
         public void Handle(TfsBuild item)
         {
+            if (string.IsNullOrEmpty(item.Url) || string.IsNullOrEmpty(item.Collection) || string.IsNullOrEmpty(item.TeamProject))
+                return;
+
             try
             {
-                if (item.BuildDefinitionId > 0)
+                if (item.BuildDefinitionId == default(int))
                 {
-                    var uri = $"{item.Url}/{item.Collection}/{item.TeamProject}/_build?definitionId={item.BuildDefinitionId}&_a=completed";
+                    _logger.Info($"Cannot not open {item.Name} in browser. The build definition id was not set.");
 
-                    _processStarter.Start(uri.ToString());
+                    return;
                 }
-                else
-                {
-                    _logger.Info("Could not open in browser. The BuildDefinitionId was not set.");
-                }
+
+                var uri = $"{item.Url}/{item.Collection}/{item.TeamProject}/_build?_a=completed&definitionId={item.BuildDefinitionId}";
+
+                _processStarter.Start(uri.ToString());
             }
             catch
             {

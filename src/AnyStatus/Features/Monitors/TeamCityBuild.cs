@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
@@ -15,7 +16,7 @@ namespace AnyStatus
     [CategoryOrder("TeamCity", 10)]
     [DisplayName("TeamCity Build")]
     [Description("")]
-    public class TeamCityBuild : Item, IScheduledItem
+    public class TeamCityBuild : Item, IScheduledItem, ICanOpenInBrowser
     {
         [Url]
         [Required]
@@ -166,5 +167,31 @@ namespace AnyStatus
         }
 
         #endregion
+    }
+
+    public class OpenTeamCityBuildInBrowser : IOpenInBrowser<TeamCityBuild>
+    {
+        private readonly IProcessStarter _processStarter;
+
+        public OpenTeamCityBuildInBrowser(IProcessStarter processStarter)
+        {
+            _processStarter = Preconditions.CheckNotNull(processStarter, nameof(processStarter));
+        }
+
+        public void Handle(TeamCityBuild item)
+        {
+            if (item == null || string.IsNullOrEmpty(item.Url) || string.IsNullOrEmpty(item.BuildTypeId))
+                return;
+
+            try
+            {
+                var url = $"{item.Url}/viewType.html?buildTypeId={item.BuildTypeId}";
+
+                _processStarter.Start(url);
+            }
+            catch
+            {
+            }
+        }
     }
 }

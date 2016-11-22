@@ -99,7 +99,7 @@ namespace AnyStatus
 
     public class OpenAppVeyorBuildInBrowser : IOpenInBrowser<AppVeyorBuild>
     {
-        private IProcessStarter _processStarter;
+        private readonly IProcessStarter _processStarter;
 
         public OpenAppVeyorBuildInBrowser(IProcessStarter processStarter)
         {
@@ -108,7 +108,7 @@ namespace AnyStatus
 
         public void Handle(AppVeyorBuild item)
         {
-            if (item == null)
+            if (item == null || string.IsNullOrEmpty(item.AccountName) || string.IsNullOrEmpty(item.ProjectSlug))
                 return;
 
             try
