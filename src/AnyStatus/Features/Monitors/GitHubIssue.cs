@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -30,6 +31,7 @@ namespace AnyStatus
 
     public class GitHubIssueHandler : IHandler<GitHubIssue>
     {
+        [DebuggerStepThrough]
         public void Handle(GitHubIssue item)
         {
             var state = GetGitHubIssueStateAsync(item).Result;
