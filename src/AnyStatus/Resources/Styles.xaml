@@ -4,7 +4,7 @@
                     xmlns:local="clr-namespace:AnyStatus">
 
     <Style x:Key="StatusPanelStyle" TargetType="{x:Type StackPanel}">
-        <Setter Property="MinWidth" Value="140"/>
+        <Setter Property="MinWidth" Value="150"/>
         <Setter Property="Height" Value="30"/>
         <Setter Property="Orientation" Value="Horizontal"/>
         <Setter Property="Background" Value="Transparent"/>
