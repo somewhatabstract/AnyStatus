@@ -29,7 +29,7 @@ namespace AnyStatus
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "An error occurred.");
+                _logger.Error(ex);
             }
         }
 
@@ -38,7 +38,7 @@ namespace AnyStatus
             var genericHandlerType = handlerType.MakeGenericType(request.GetType());
 
             var handler = TinyIoCContainer.Current.Resolve(genericHandlerType);
-
+            
             genericHandlerType.GetMethod("Handle").Invoke(handler, new[] { request });
         }
     }
