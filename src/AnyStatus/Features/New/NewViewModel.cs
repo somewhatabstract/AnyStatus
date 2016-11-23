@@ -18,6 +18,7 @@ namespace AnyStatus
         private readonly IUsageReporter _usageReporter;
         private readonly ILogger _logger;
         private bool _canTest = true;
+        private readonly Func<ScheduledJob> _jobFactory;
 
         public event EventHandler CloseRequested;
 
@@ -26,6 +27,7 @@ namespace AnyStatus
             ISettingsStore settingsStore,
             IUsageReporter usageReporter,
             IEnumerable<Template> templates,
+            Func<ScheduledJob> jobFactory,
             ILogger logger)
         {
             _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
@@ -33,6 +35,7 @@ namespace AnyStatus
             _usageReporter = Preconditions.CheckNotNull(usageReporter, nameof(usageReporter));
             _logger = Preconditions.CheckNotNull(logger, nameof(logger));
             Templates = Preconditions.CheckNotNull(templates, nameof(templates));
+            _jobFactory = Preconditions.CheckNotNull(jobFactory, nameof(jobFactory));
 
             SelectedTemplate = Templates?.FirstOrDefault();
 
@@ -99,7 +102,9 @@ namespace AnyStatus
 
                 EnsureItemIsValid(item);
 
-                var job = new ScheduledJob(_logger, new Mediator()) { Item = item };
+                var job = _jobFactory();
+
+                job.Item = item;
 
                 await job.ExecuteAsync();
             }

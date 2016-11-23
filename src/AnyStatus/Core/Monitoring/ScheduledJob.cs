@@ -30,7 +30,7 @@ namespace AnyStatus
                 {
                     _logger.Info($"Updating \"{Item.Name}\".");
 
-                    _mediator.Send(Item, typeof(IHandler<>));
+                    _mediator.Send(Item);
                 }
                 else
                 {

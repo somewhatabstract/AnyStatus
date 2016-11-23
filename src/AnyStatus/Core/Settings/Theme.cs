@@ -10,7 +10,7 @@ namespace AnyStatus
         {
             Metadata = new[]
                     {
-                        new StateMetadata(State.None, 0, "None", "Transparent", "NoneIcon"),
+                        new StateMetadata(State.None, 0, "None", "Transparent", string.Empty),
                         new StateMetadata(State.Unknown, 1, "Unknown", "Silver", "HelpIcon"),
                         new StateMetadata(State.Disabled, 2, "Disabled", "#FF696969", "PauseIcon"),
                         new StateMetadata(State.Canceled, 3, "Canceled", "#FF808080", "StopIcon"),

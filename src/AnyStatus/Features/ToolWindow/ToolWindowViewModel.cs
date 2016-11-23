@@ -11,15 +11,18 @@ namespace AnyStatus
         private readonly ISettingsStore _settingsStore;
         private readonly IViewLocator _viewLocator;
         private readonly IJobScheduler _jobScheduler;
+        private readonly IMediator _mediator;
 
         public ToolWindowViewModel(IJobScheduler jobScheduler,
                                    ISettingsStore settingsStore,
                                    IViewLocator viewLocator,
+                                   IMediator mediator,
                                    ILogger logger)
         {
             _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
             _settingsStore = Preconditions.CheckNotNull(settingsStore, nameof(settingsStore));
             _viewLocator = Preconditions.CheckNotNull(viewLocator, nameof(viewLocator));
+            _mediator = Preconditions.CheckNotNull(mediator, nameof(mediator));
             _logger = Preconditions.CheckNotNull(logger, nameof(logger));
 
             Initialize();
@@ -37,31 +40,21 @@ namespace AnyStatus
         {
             _settingsStore.PropertyChanged += (s, e) => OnPropertyChanged(e.PropertyName);
 
-            OpenInBrowserCommand = new OpenInBrowserCommand();
+            OpenInBrowserCommand = new RelayCommand(p =>
+            {
+                var item = p as ICanOpenInBrowser;
+
+                if (item == null)
+                    return;
+
+                _mediator.TrySend(item, typeof(IOpenInBrowser<>));
+            });
 
             AddFolderCommand = new RelayCommand(p =>
             {
-                try
-                {
-                    var item = p as Item ?? _settingsStore.Settings.RootItem;
+                var command = new AddFolderCommand { Item = p as Item };
 
-                    if (item == null) return;
-
-                    var folder = new Folder
-                    {
-                        Name = "New Folder",
-                        IsEditing = true
-                    };
-
-                    item.Add(folder);
-                    item.IsExpanded = true;
-
-                    _settingsStore.TrySave();
-                }
-                catch (Exception ex)
-                {
-                    _logger.Error(ex, "Failed to add a new folder.");
-                }
+                _mediator.TrySend(command);
             });
 
             DeleteCommand = new DeleteCommand(_jobScheduler, _settingsStore, _logger);

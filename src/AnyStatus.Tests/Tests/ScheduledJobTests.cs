@@ -11,27 +11,31 @@ namespace AnyStatus.Tests
         private ILogger _logger = Substitute.For<ILogger>();
 
         [TestMethod]
-        public void Execute_Should_Invoke_Handler()
+        public void Execute_Should_Invoke_Mediator()
         {
+            var mediator = Substitute.For<IMediator>();
+
             var item = new Dummy { Name = "Test", Id = Guid.NewGuid() };
 
-            var scheduledJob = new ScheduledJob(_logger, new Mediator()) { Item = item };
+            var scheduledJob = new ScheduledJob(_logger, mediator) { Item = item };
 
             scheduledJob.Execute();
 
-            Assert.AreEqual(1, item.Counter);
+            mediator.Received(1).Send(item);
         }
 
         [TestMethod]
-        public async Task ExecuteAsync_Should_Invoke_Handler()
+        public async Task ExecuteAsync_Should_Invoke_Mediator()
         {
+            var mediator = Substitute.For<IMediator>();
+
             var item = new Dummy { Name = "Test", Id = Guid.NewGuid() };
 
-            var scheduledJob = new ScheduledJob(_logger, new Mediator()) { Item = item };
+            var scheduledJob = new ScheduledJob(_logger, mediator) { Item = item };
 
             await scheduledJob.ExecuteAsync();
 
-            Assert.AreEqual(1, item.Counter);
+            mediator.Received(1).Send(item);
         }
 
         [TestMethod]
@@ -51,14 +55,19 @@ namespace AnyStatus.Tests
         [TestMethod]
         public void Execute_Should_SetErrorState_When_ExceptionOccurres()
         {
+            var mediator = Substitute.For<IMediator>();
+
+            mediator
+                .When(k => k.Send(Arg.Any<object>()))
+                .Throw(new Exception());
+
             var item = new Dummy
             {
-                Name = "Throws Exception",
-                ThrowException = true,
+                Name = "Test",
                 Id = Guid.NewGuid()
             };
 
-            var scheduledJob = new ScheduledJob(_logger, new Mediator()) { Item = item };
+            var scheduledJob = new ScheduledJob(_logger, mediator) { Item = item };
 
             scheduledJob.Execute();
 

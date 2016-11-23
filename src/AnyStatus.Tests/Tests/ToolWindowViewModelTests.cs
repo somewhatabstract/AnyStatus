@@ -17,10 +17,11 @@ namespace AnyStatus.Tests.Tests
             var viewLocator = Substitute.For<IViewLocator>();
             var jobScheduler = Substitute.For<IJobScheduler>();
             var settingsStore = Substitute.For<ISettingsStore>();
+            var mediator = Substitute.For<IMediator>();
 
             settingsStore.Settings.Returns(settings);
 
-            var viewModel = new ToolWindowViewModel(jobScheduler, settingsStore, viewLocator, logger);
+            var viewModel = new ToolWindowViewModel(jobScheduler, settingsStore, viewLocator, mediator, logger);
 
             var anyPropertyIsNull = viewModel.GetType().GetProperties()
                                              .Select(pi => pi.GetValue(viewModel))
