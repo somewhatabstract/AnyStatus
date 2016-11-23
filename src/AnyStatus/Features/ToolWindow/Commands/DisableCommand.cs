@@ -1,4 +1,5 @@
 ﻿using FluentScheduler;
+using System.Linq;
 
 namespace AnyStatus
 {
@@ -21,12 +22,10 @@ namespace AnyStatus
 
         public void Handle(DisableCommand command)
         {
-            var item = command.Item;
-
-            if (item == null)
+            if (command?.Item == null)
                 return;
 
-            Disable(item);
+            Disable(command.Item);
 
             SaveChanges();
         }
@@ -39,7 +38,7 @@ namespace AnyStatus
 
             if (item.IsEnabled && item is IScheduledItem)
             {
-                JobManager.RemoveJob(item.Id.ToString());
+                DisableSchedule(item.Id.ToString());
 
                 item.IsEnabled = false;
 
@@ -47,11 +46,20 @@ namespace AnyStatus
             }
         }
 
+        private static void DisableSchedule(string name)
+        {
+            var schedule = JobManager.AllSchedules.FirstOrDefault(k => k.Name == name);
+
+            if (schedule != null && !schedule.Disabled)
+                schedule.Disable();
+        }
+
         private void SaveChanges()
         {
             if (_saveChanges)
             {
                 _settingsStore.TrySave();
+
                 _saveChanges = false;
             }
         }

@@ -1,5 +1,6 @@
 ﻿using FluentScheduler;
 using System;
+using System.Linq;
 
 namespace AnyStatus
 {
@@ -20,6 +21,8 @@ namespace AnyStatus
 
         public void Start()
         {
+            JobManager.Start();
+
             Schedule(_settingsStore.Settings.RootItem, includeChildren: true);
         }
 
@@ -97,6 +100,13 @@ namespace AnyStatus
 
         private void Schedule(Item item)
         {
+            if (JobManager.AllSchedules.Any(k => k.Name == item.Id.ToString()))
+            {
+                _logger.Info($"\"{item.Name}\" is already scheduled.");
+
+                return;
+            }
+
             var job = _jobFactory();
 
             job.Item = item;
@@ -107,13 +117,15 @@ namespace AnyStatus
                         .ToRunNow()
                         .AndEvery(item.Interval).Minutes());
 
-            _logger.Info($"Item {item.Name} scheduled to run every {item.Interval} minutes.");
+            _logger.Info($"\"{item.Name}\" scheduled to run every {item.Interval} minutes.");
         }
 
         private void OnSettingsReset(object sender, EventArgs e)
         {
             try
             {
+                Stop();
+
                 RemoveAll();
 
                 Start();

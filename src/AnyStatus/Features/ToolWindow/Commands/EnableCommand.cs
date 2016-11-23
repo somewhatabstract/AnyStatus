@@ -1,4 +1,5 @@
 ﻿using FluentScheduler;
+using System.Linq;
 
 namespace AnyStatus
 {
@@ -11,23 +12,22 @@ namespace AnyStatus
     {
         private bool _saveChanges;
         private readonly ILogger _logger;
+        private readonly IJobScheduler _jobScheduler;
         private readonly ISettingsStore _settingsStore;
 
-
-        public EnableCommandHandler(ISettingsStore settingsStore, ILogger logger)
+        public EnableCommandHandler(ISettingsStore settingsStore, IJobScheduler jobScheduler, ILogger logger)
         {
             _logger = Preconditions.CheckNotNull(logger, nameof(logger));
+            _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
             _settingsStore = Preconditions.CheckNotNull(settingsStore, nameof(settingsStore));
         }
 
         public void Handle(EnableCommand command)
         {
-            var item = command.Item;
-
-            if (item == null)
+            if (command?.Item == null)
                 return;
 
-            Enable(item);
+            Enable(command.Item);
 
             SaveChanges();
         }
@@ -40,25 +40,33 @@ namespace AnyStatus
 
             if (item.IsDisabled && item is IScheduledItem)
             {
-                AddScheduledJob(item);
+                EnableOrAddSchedule(item);
 
                 item.IsEnabled = true;
 
-                item.State = State.None;
+                item.State = State.Unknown;
 
                 _saveChanges = true;
             }
         }
 
-        private static void AddScheduledJob(Item item)
+        private void EnableOrAddSchedule(Item item)
         {
-            JobManager.RemoveJob(item.Id.ToString());
+            var schedule = JobManager.AllSchedules.FirstOrDefault(k => k.Name == item.Id.ToString());
 
-            var job = TinyIoCContainer.Current.Resolve<ScheduledJob>();
+            if (schedule == null)
+            {
+                _jobScheduler.Schedule(item, includeChildren: false);
 
-            job.Item = item;
+                return;
+            }
 
-            JobManager.AddJob(job, s => s.WithName(item.Id.ToString()).ToRunNow().AndEvery(item.Interval).Minutes());
+            if (schedule.Disabled)
+            {
+                schedule.Enable();
+
+                schedule.Execute();
+            }
         }
 
         private void SaveChanges()
@@ -66,6 +74,7 @@ namespace AnyStatus
             if (_saveChanges)
             {
                 _settingsStore.TrySave();
+
                 _saveChanges = false;
             }
         }
