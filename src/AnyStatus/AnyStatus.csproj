@@ -146,8 +146,8 @@
     <Compile Include="Core\Settings\ISettings.cs" />
     <Compile Include="Core\Settings\ISettingsStore.cs" />
     <Compile Include="Core\Settings\SettingsStore.cs" />
-    <Compile Include="Features\Monitors\ICanOpenInBrowser.cs" />
-    <Compile Include="Features\Monitors\IOpenInBrowser.cs" />
+    <Compile Include="Core\Monitoring\ICanOpenInBrowser.cs" />
+    <Compile Include="Core\Monitoring\IOpenInBrowser.cs" />
     <Compile Include="Features\New\AddNewItemCommand.cs" />
     <Compile Include="Features\ToolWindow\Commands\AddFolderCommand.cs" />
     <Compile Include="Features\ToolWindow\Commands\BaseItemCommand.cs" />
