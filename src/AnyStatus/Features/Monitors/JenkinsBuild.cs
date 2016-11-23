@@ -52,13 +52,7 @@ namespace AnyStatus
             if (item == null || string.IsNullOrEmpty(item.Url))
                 return;
 
-            try
-            {
-                _processStarter.Start(item.Url);
-            }
-            catch
-            {
-            }
+            _processStarter.Start(item.Url);
         }
     }
 

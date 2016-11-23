@@ -99,15 +99,9 @@ namespace AnyStatus
             if (item == null || string.IsNullOrEmpty(item.Owner) || string.IsNullOrEmpty(item.Repository))
                 return;
 
-            try
-            {
-                var url = $"https://github.com/{item.Owner}/{item.Repository}/issues/{item.IssueNumber}";
+            var url = $"https://github.com/{item.Owner}/{item.Repository}/issues/{item.IssueNumber}";
 
-                _processStarter.Start(url);
-            }
-            catch
-            {
-            }
+            _processStarter.Start(url);
         }
     }
 }

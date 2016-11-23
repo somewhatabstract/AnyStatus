@@ -183,15 +183,9 @@ namespace AnyStatus
             if (item == null || string.IsNullOrEmpty(item.Url) || string.IsNullOrEmpty(item.BuildTypeId))
                 return;
 
-            try
-            {
-                var url = $"{item.Url}/viewType.html?buildTypeId={item.BuildTypeId}";
+            var url = $"{item.Url}/viewType.html?buildTypeId={item.BuildTypeId}";
 
-                _processStarter.Start(url);
-            }
-            catch
-            {
-            }
+            _processStarter.Start(url);
         }
     }
 }

@@ -111,15 +111,9 @@ namespace AnyStatus
             if (item == null || string.IsNullOrEmpty(item.AccountName) || string.IsNullOrEmpty(item.ProjectSlug))
                 return;
 
-            try
-            {
-                var url = $"https://ci.appveyor.com/project/{item.AccountName}/{item.ProjectSlug}";
+            var url = $"https://ci.appveyor.com/project/{item.AccountName}/{item.ProjectSlug}";
 
-                _processStarter.Start(url);
-            }
-            catch
-            {
-            }
+            _processStarter.Start(url);
         }
     }
 }

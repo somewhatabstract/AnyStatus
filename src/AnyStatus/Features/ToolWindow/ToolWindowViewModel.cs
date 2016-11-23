@@ -25,7 +25,7 @@ namespace AnyStatus
         {
             _settingsStore.PropertyChanged += SettingsStore_PropertyChanged;
 
-            OpenInBrowserCommand = new RelayCommand(item => _mediator.TrySend(item as ICanOpenInBrowser, typeof(IOpenInBrowser<>)));
+            OpenInBrowserCommand = new RelayCommand(item => _mediator.TrySend(item, typeof(IOpenInBrowser<>)));
 
             AddFolderCommand = new RelayCommand(item => _mediator.TrySend(new AddFolderCommand(item as Item)));
 

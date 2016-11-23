@@ -217,22 +217,16 @@ namespace AnyStatus
             if (string.IsNullOrEmpty(item.Url) || string.IsNullOrEmpty(item.Collection) || string.IsNullOrEmpty(item.TeamProject))
                 return;
 
-            try
+            if (item.BuildDefinitionId == default(int))
             {
-                if (item.BuildDefinitionId == default(int))
-                {
-                    _logger.Info($"Cannot not open {item.Name} in browser. The build definition id was not set.");
+                _logger.Info($"Cannot not open {item.Name} in browser. The build definition id was not set.");
 
-                    return;
-                }
-
-                var uri = $"{item.Url}/{item.Collection}/{item.TeamProject}/_build?_a=completed&definitionId={item.BuildDefinitionId}";
-
-                _processStarter.Start(uri.ToString());
+                return;
             }
-            catch
-            {
-            }
+
+            var uri = $"{item.Url}/{item.Collection}/{item.TeamProject}/_build?_a=completed&definitionId={item.BuildDefinitionId}";
+
+            _processStarter.Start(uri.ToString());
         }
     }
 }

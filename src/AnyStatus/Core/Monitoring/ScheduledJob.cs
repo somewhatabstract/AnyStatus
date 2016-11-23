@@ -22,26 +22,30 @@ namespace AnyStatus
             if (Item == null)
                 throw new InvalidOperationException("Item cannot be null.");
 
-            //todo: separate concerns to layers
+            if (Item.State == State.Disabled)
+                return;
+
+            if (Item.IsValid() == false)
+            {
+                Item.State = State.Invalid;
+
+                _logger.Info($"\"{Item.Name}\" is invalid.");
+
+                return;
+            }
 
             try
             {
-                if (Item.IsValid())
-                {
-                    _logger.Info($"Updating \"{Item.Name}\".");
+                _logger.Info($"Updating \"{Item.Name}\".");
 
-                    _mediator.Send(Item);
-                }
-                else
-                {
-                    Item.State = State.Invalid;
-                }
+                _mediator.Send(Item);
             }
             catch (Exception ex)
             {
                 _logger.Error(ex, $"Failed to update \"{Item.Name}\".");
 
-                Item.State = State.Error;
+                if (Item.State != State.Disabled)
+                    Item.State = State.Error;
             }
         }
 
