@@ -66,13 +66,13 @@ namespace AnyStatus.Tests
 
             jobScheduler.Schedule(_item);
 
-            Thread.Sleep(50);
+            Thread.Sleep(100);
 
             Assert.AreEqual(1, _item.Counter);
 
             jobScheduler.Execute(_item);
 
-            Thread.Sleep(50);
+            Thread.Sleep(100);
 
             Assert.AreEqual(2, _item.Counter);
 
