@@ -4,7 +4,7 @@ using System;
 
 namespace AnyStatus.VSPackage
 {
-    class ToolWindowCmd : BaseCommand
+    class ToolWindowCmd : ToolbarCommand
     {
         private readonly Package _package;
         public ToolWindowCmd(Package package) : base(PackageIds.ToolWindowCommandId)

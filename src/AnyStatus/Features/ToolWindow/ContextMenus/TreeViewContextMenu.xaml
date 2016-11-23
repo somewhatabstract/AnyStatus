@@ -1,0 +1,36 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vsp="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.14.0"
+                    xmlns:catalog="clr-namespace:Microsoft.VisualStudio.Imaging;assembly=Microsoft.VisualStudio.ImageCatalog"
+                    xmlns:imaging="clr-namespace:Microsoft.VisualStudio.Imaging;assembly=Microsoft.VisualStudio.Imaging"
+                    xmlns:local="clr-namespace:AnyStatus">
+
+    <ContextMenu x:Key="TreeViewContextMenu">
+
+        <MenuItem Header=" Refresh" 
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.RefreshCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                                          CommandParameter="{Binding Settings.RootItem}">
+            <MenuItem.Icon>
+                <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Refresh}" />
+            </MenuItem.Icon>
+        </MenuItem>
+
+        <Separator />
+
+        <MenuItem Header=" New Item..." 
+                              Command="{Binding Path=PlacementTarget.Tag.DataContext.AddCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
+            <MenuItem.Icon>
+                <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.NewItem}" />
+            </MenuItem.Icon>
+        </MenuItem>
+
+        <MenuItem Header=" New Folder" 
+                              Command="{Binding Path=PlacementTarget.Tag.DataContext.AddFolderCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
+            <MenuItem.Icon>
+                <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.AddFolder}" />
+            </MenuItem.Icon>
+        </MenuItem>
+
+    </ContextMenu>
+
+</ResourceDictionary>

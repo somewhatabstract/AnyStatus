@@ -26,8 +26,9 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/AnyStatus;component/Resources/Styles.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/AnyStatus;component/Resources/Icons.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/AnyStatus;component/Features/ToolWindow/ItemContextMenu.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/AnyStatus;component/Features/ToolWindow/FolderContextMenu.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/AnyStatus;component/Features/ToolWindow/ContextMenus/TreeViewContextMenu.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/AnyStatus;component/Features/ToolWindow/ContextMenus/FolderContextMenu.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/AnyStatus;component/Features/ToolWindow/ContextMenus/ItemContextMenu.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>
@@ -35,7 +36,8 @@
 
     <Grid>
         <TreeView Name="TreeView"
-                  ItemsSource="{Binding Settings.RootItem.Items}" 
+                  ItemsSource="{Binding Settings.RootItem.Items}"
+                  ContextMenu="{StaticResource TreeViewContextMenu}"
                   Background="Transparent" 
                   BorderThickness="0" 
                   FocusVisualStyle="{x:Null}"
@@ -46,36 +48,6 @@
                   Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
                   theming:ImageThemingUtilities.ImageBackgroundColor="{Binding Background, RelativeSource={RelativeSource Self}, Converter={StaticResource BrushToColorConverter}}">
 
-            <TreeView.ContextMenu>
-                <ContextMenu>
-
-                    <MenuItem Header=" Refresh" 
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.RefreshCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding Settings.RootItem}">
-                        <MenuItem.Icon>
-                            <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Refresh}" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-
-                    <Separator />
-
-                    <MenuItem Header=" New Item..." 
-                              Command="{Binding Path=PlacementTarget.Tag.DataContext.AddCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
-                        <MenuItem.Icon>
-                            <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.NewItem}" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-
-                    <MenuItem Header=" New Folder" 
-                              Command="{Binding Path=PlacementTarget.Tag.DataContext.AddFolderCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
-                        <MenuItem.Icon>
-                            <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.AddFolder}" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-
-                </ContextMenu>
-            </TreeView.ContextMenu>
-
             <TreeView.Resources>
 
                 <!-- Style the inactive selection the same as active -->
@@ -83,7 +55,7 @@
                      Color="{DynamicResource {x:Static SystemColors.HighlightColorKey}}" />
                 <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}"
                      Color="{DynamicResource {x:Static SystemColors.HighlightTextColorKey}}"/>
-                
+
                 <!-- Color Status Indicator-->
                 <Rectangle x:Key="ColoredStatusIndicator" x:Shared="False" Width="3" Fill="{Binding State.Metadata.Color, Converter={StaticResource HexToBrushConverter}}">
                     <Rectangle.Style>
@@ -176,7 +148,7 @@
                     <EventSetter Event="TreeViewItem.Drop" Handler="TreeViewItem_Drop" />
                 </Style>
             </TreeView.ItemContainerStyle>
-            
+
         </TreeView>
     </Grid>
 

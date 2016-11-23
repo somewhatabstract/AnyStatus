@@ -157,10 +157,10 @@
     <Compile Include="Features\ToolWindow\Commands\MoveDownCommand .cs" />
     <Compile Include="Features\ToolWindow\Commands\RefreshCommand.cs" />
     <Compile Include="Features\ToolWindow\Commands\MoveUpCommand.cs" />
-    <Compile Include="Features\ToolWindow\ToolbarCommands\BaseCommand.cs" />
+    <Compile Include="Features\ToolWindow\ToolbarCommands\ToolbarCommand.cs" />
     <Compile Include="Features\ToolWindow\ToolbarCommands\CollapseAllCommand.cs" />
     <Compile Include="Features\ToolWindow\ToolbarCommands\ExpandAllCommand.cs" />
-    <Compile Include="Features\ToolWindow\ToolbarCommands\IMenuCommand.cs" />
+    <Compile Include="Features\ToolWindow\ToolbarCommands\IToolbarCommand.cs" />
     <Compile Include="Features\ToolWindow\ToolbarCommands\RefreshAllCommand.cs" />
     <Compile Include="Features\ToolWindow\ToolbarCommands\OptionsCommand.cs" />
     <Compile Include="Features\ToolWindow\ToolbarCommands\HelpCommand.cs" />
@@ -270,11 +270,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Resource Include="Features\ToolWindow\ItemContextMenu.xaml">
+    <Resource Include="Features\ToolWindow\ContextMenus\ItemContextMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Resource>
-    <Resource Include="Features\ToolWindow\FolderContextMenu.xaml">
+    <Resource Include="Features\ToolWindow\ContextMenus\FolderContextMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="Features\ToolWindow\ContextMenus\TreeViewContextMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Resource>

@@ -3,7 +3,7 @@ using System;
 
 namespace AnyStatus
 {
-    public class OptionsCommand : BaseCommand
+    public class OptionsCommand : ToolbarCommand
     {
         private Package _package;
         private readonly ILogger _logger;

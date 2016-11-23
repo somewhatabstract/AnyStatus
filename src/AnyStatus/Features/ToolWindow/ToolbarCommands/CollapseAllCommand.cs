@@ -2,7 +2,7 @@
 
 namespace AnyStatus
 {
-    public class CollapseAllCommand : BaseCommand
+    public class CollapseAllCommand : ToolbarCommand
     {
         private readonly ISettingsStore _settingsStore;
 
