@@ -12,7 +12,7 @@
         </ContextMenu.Resources>
         
         <MenuItem Header=" Refresh" 
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.RefreshItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.RefreshCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}">
             <MenuItem.Style>
                 <Style TargetType="{x:Type MenuItem}">
@@ -74,7 +74,7 @@
         </Separator>
         
         <MenuItem Header=" Enable" 
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.EnableItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.EnableCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}">
             <MenuItem.Style>
                 <Style TargetType="{x:Type MenuItem}">
@@ -92,7 +92,7 @@
         </MenuItem>
 
         <MenuItem Header=" Disable" 
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.DisableItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.DisableCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}">
             <MenuItem.Style>
                 <Style TargetType="{x:Type MenuItem}">
@@ -158,7 +158,7 @@
         <Separator/>
 
         <MenuItem Header=" Properties" 
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.EditItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.EditCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}">
             <MenuItem.Icon>
                 <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Property}" />

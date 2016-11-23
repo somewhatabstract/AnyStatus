@@ -1,47 +1,34 @@
 ﻿using FluentScheduler;
-using System;
-using System.Windows.Input;
 
 namespace AnyStatus
 {
-    public class DisableCommand : ICommand
+    public class DisableCommand : BaseItemCommand
+    {
+        public DisableCommand(Item item) : base(item) { }
+    }
+
+    public class DisableCommandHandler : IHandler<DisableCommand>
     {
         private bool _saveChanges;
         private readonly ILogger _logger;
         private readonly ISettingsStore _settingsStore;
 
-#pragma warning disable 67
-        public event EventHandler CanExecuteChanged;
-#pragma warning disable 67
-
-        public DisableCommand(ISettingsStore settingsStore, ILogger logger)
+        public DisableCommandHandler(ISettingsStore settingsStore, ILogger logger)
         {
             _logger = Preconditions.CheckNotNull(logger, nameof(logger));
             _settingsStore = Preconditions.CheckNotNull(settingsStore, nameof(settingsStore));
         }
 
-        public bool CanExecute(object parameter)
+        public void Handle(DisableCommand command)
         {
-            return true;
-        }
+            var item = command.Item;
 
-        public void Execute(object parameter)
-        {
-            try
-            {
-                var item = parameter as Item;
+            if (item == null)
+                return;
 
-                if (item == null)
-                    return;
+            Disable(item);
 
-                Disable(item);
-
-                SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                _logger.Info("Failed to disable item. Exception: " + ex.ToString());
-            }
+            SaveChanges();
         }
 
         private void Disable(Item item)

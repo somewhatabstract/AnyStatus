@@ -150,6 +150,13 @@
     <Compile Include="Features\Monitors\IOpenInBrowser.cs" />
     <Compile Include="Features\New\AddNewItemCommand.cs" />
     <Compile Include="Features\ToolWindow\Commands\AddFolderCommand.cs" />
+    <Compile Include="Features\ToolWindow\Commands\BaseItemCommand.cs" />
+    <Compile Include="Features\ToolWindow\Commands\DuplicateCommand.cs" />
+    <Compile Include="Features\ToolWindow\Commands\AddItemCommand.cs" />
+    <Compile Include="Features\ToolWindow\Commands\EditItemCommand.cs" />
+    <Compile Include="Features\ToolWindow\Commands\MoveDownCommand .cs" />
+    <Compile Include="Features\ToolWindow\Commands\RefreshCommand.cs" />
+    <Compile Include="Features\ToolWindow\Commands\MoveUpCommand.cs" />
     <Compile Include="Features\ToolWindow\ToolbarCommands\BaseCommand.cs" />
     <Compile Include="Features\ToolWindow\ToolbarCommands\CollapseAllCommand.cs" />
     <Compile Include="Features\ToolWindow\ToolbarCommands\ExpandAllCommand.cs" />

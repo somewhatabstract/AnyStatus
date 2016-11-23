@@ -1,47 +1,35 @@
 ﻿using FluentScheduler;
-using System;
-using System.Windows.Input;
 
 namespace AnyStatus
 {
-    public class EnableCommand : ICommand
+    public class EnableCommand : BaseItemCommand
+    {
+        public EnableCommand(Item item) : base(item) { }
+    }
+
+    public class EnableCommandHandler : IHandler<EnableCommand>
     {
         private bool _saveChanges;
         private readonly ILogger _logger;
         private readonly ISettingsStore _settingsStore;
 
-#pragma warning disable 67
-        public event EventHandler CanExecuteChanged;
-#pragma warning disable 67
 
-        public EnableCommand(ISettingsStore settingsStore, ILogger logger)
+        public EnableCommandHandler(ISettingsStore settingsStore, ILogger logger)
         {
             _logger = Preconditions.CheckNotNull(logger, nameof(logger));
             _settingsStore = Preconditions.CheckNotNull(settingsStore, nameof(settingsStore));
         }
 
-        public bool CanExecute(object parameter)
+        public void Handle(EnableCommand command)
         {
-            return true;
-        }
+            var item = command.Item;
 
-        public void Execute(object parameter)
-        {
-            try
-            {
-                var item = parameter as Item;
+            if (item == null)
+                return;
 
-                if (item == null)
-                    return;
+            Enable(item);
 
-                Enable(item);
-
-                SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                _logger.Info("Failed to enable item. Exception: " + ex.ToString());
-            }
+            SaveChanges();
         }
 
         private void Enable(Item item)

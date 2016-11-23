@@ -1,230 +1,98 @@
-﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿using System.ComponentModel;
 using System.Windows.Input;
 
 namespace AnyStatus
 {
-    public class ToolWindowViewModel : INotifyPropertyChanged
+    public class ToolWindowViewModel : NotifyPropertyChanged
     {
-        private readonly ILogger _logger;
-        private readonly ISettingsStore _settingsStore;
-        private readonly IViewLocator _viewLocator;
-        private readonly IJobScheduler _jobScheduler;
         private readonly IMediator _mediator;
+        private readonly ISettingsStore _settingsStore;
 
-        public ToolWindowViewModel(IJobScheduler jobScheduler,
-                                   ISettingsStore settingsStore,
-                                   IViewLocator viewLocator,
-                                   IMediator mediator,
-                                   ILogger logger)
+        public ToolWindowViewModel(IMediator mediator, ISettingsStore settingsStore)
         {
-            _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
-            _settingsStore = Preconditions.CheckNotNull(settingsStore, nameof(settingsStore));
-            _viewLocator = Preconditions.CheckNotNull(viewLocator, nameof(viewLocator));
             _mediator = Preconditions.CheckNotNull(mediator, nameof(mediator));
-            _logger = Preconditions.CheckNotNull(logger, nameof(logger));
+            _settingsStore = Preconditions.CheckNotNull(settingsStore, nameof(settingsStore));
 
             Initialize();
         }
 
         public UserSettings Settings
         {
-            get
-            {
-                return _settingsStore.Settings;
-            }
+            get { return _settingsStore.Settings; }
         }
 
         private void Initialize()
         {
-            _settingsStore.PropertyChanged += (s, e) => OnPropertyChanged(e.PropertyName);
+            _settingsStore.PropertyChanged += SettingsStore_PropertyChanged;
 
-            OpenInBrowserCommand = new RelayCommand(p =>
-            {
-                var item = p as ICanOpenInBrowser;
+            OpenInBrowserCommand = new RelayCommand(item => _mediator.TrySend(item as ICanOpenInBrowser, typeof(IOpenInBrowser<>)));
 
-                if (item == null)
-                    return;
+            AddFolderCommand = new RelayCommand(item => _mediator.TrySend(new AddFolderCommand(item as Item)));
 
-                _mediator.TrySend(item, typeof(IOpenInBrowser<>));
-            });
+            DeleteCommand = new RelayCommand(item => _mediator.TrySend(new DeleteCommand(item as Item)));
 
-            AddFolderCommand = new RelayCommand(p =>
-            {
-                var command = new AddFolderCommand { Item = p as Item };
+            DuplicateCommand = new RelayCommand(item => _mediator.TrySend(item as Item));
 
-                _mediator.TrySend(command);
-            });
+            AddCommand = new RelayCommand(item => _mediator.TrySend(new AddCommand(item as Item)));
 
-            DeleteCommand = new DeleteCommand(_jobScheduler, _settingsStore, _logger);
+            EditCommand = new RelayCommand(item => _mediator.TrySend(new EditCommand(item as Item)));
 
-            DuplicateCommand = new RelayCommand(p =>
-            {
-                //todo: remove duplication with new item modal
+            EnableCommand = new RelayCommand(item => _mediator.TrySend(new EnableCommand(item as Item)));
 
-                var item = p as Item;
+            DisableCommand = new RelayCommand(item => _mediator.TrySend(new DisableCommand(item as Item)));
 
-                if (item == null) return;
+            SaveCommand = new RelayCommand(item => _settingsStore.TrySave());
 
-                try
-                {
-                    var clone = item.Duplicate();
-
-                    _jobScheduler.Schedule(clone);
-
-                    _settingsStore.TrySave();
-                }
-                catch (Exception ex)
-                {
-                    _logger.Error(ex, "Failed to duplicate item.");
-                }
-            });
-
-            AddItemCommand = new RelayCommand(p =>
-            {
-                try
-                {
-                    var selectedItem = p as Item;
-
-                    var dlg = _viewLocator.NewWindow(selectedItem);
-
-                    dlg.ShowModal();
-                }
-                catch (Exception ex)
-                {
-                    _logger.Info("Failed to open a new item modal dialog. Exception: " + ex.ToString());
-                }
-            });
-
-            EditItemCommand = new RelayCommand(p =>
-            {
-                try
-                {
-                    var selectedItem = p as Item;
-
-                    var dlg = _viewLocator.EditWindow(selectedItem);
-
-                    dlg.ShowModal();
-                }
-                catch (Exception ex)
-                {
-                    _logger.Info("Failed to open item properties modal dialog. Exception: " + ex.ToString());
-                }
-            });
+            RefreshCommand = new RelayCommand(item => _mediator.TrySend(new RefreshCommand(item as Item)));
 
             RenameCommand = new RelayCommand(p =>
             {
                 var item = p as Item;
 
-                if (item == null)
-                    return;
-
-                item.IsEditing = true;
-            });
-
-            EnableItemCommand = new EnableCommand(_settingsStore, _logger);
-
-            DisableItemCommand = new DisableCommand(_settingsStore, _logger);
-
-            SaveCommand = new RelayCommand(p => { _settingsStore.TrySave(); });
-
-            RefreshItemCommand = new RelayCommand(p =>
-            {
-                var item = p as Item;
-
-                if (item == null) return;
-
-                try
-                {
-                    _jobScheduler.Execute(item);
-                }
-                catch (Exception ex)
-                {
-                    _logger.Error(ex, "Failed to refresh item");
-                }
+                if (item != null)
+                    item.IsEditing = true;
             });
 
             MoveUpCommand = new RelayCommand(
-            p =>
-            {
-                try
-                {
-                    var item = p as Item;
-
-                    if (item == null)
-                        return;
-
-                    item.MoveUp();
-
-                    _settingsStore.TrySave();
-                }
-                catch (Exception ex)
-                {
-                    _logger.Error(ex, "Failed to move item up");
-                }
-            },
-            p =>
-            {
-                var item = p as Item;
-
-                return item != null && item.CanMoveUp();
-            });
+                item => _mediator.TrySend(new MoveUpCommand(item as Item)),
+                item => (item as Item) != null && (item as Item).CanMoveUp());
 
             MoveDownCommand = new RelayCommand(
-            p =>
-            {
-                try
-                {
-                    var item = p as Item;
-
-                    if (item == null)
-                        return;
-
-                    item.MoveDown();
-
-                    _settingsStore.TrySave();
-                }
-                catch (Exception ex)
-                {
-                    _logger.Error(ex, "Failed to move item down");
-                }
-            },
-            p =>
-            {
-                var item = p as Item;
-
-                return item != null && item.CanMoveDown();
-            });
+                item => _mediator.TrySend(new MoveDownCommand(item as Item)),
+                item => (item as Item) != null && (item as Item).CanMoveDown());
         }
 
-        #region Commands
-        public ICommand OpenInBrowserCommand { get; set; }
-        public ICommand AddFolderCommand { get; set; }
-        public ICommand DeleteCommand { get; set; }
-        public ICommand RenameCommand { get; set; }
-        public ICommand AddItemCommand { get; set; }
-        public ICommand EditItemCommand { get; set; }
-        public ICommand DuplicateCommand { get; set; }
-        public ICommand RefreshItemCommand { get; set; }
-        public ICommand EnableItemCommand { get; set; }
-        public ICommand DisableItemCommand { get; set; }
-        public ICommand SaveCommand { get; set; }
-        public ICommand MoveUpCommand { get; set; }
-        public ICommand MoveDownCommand { get; set; }
-
-        #endregion
-
-        #region INotifyPropertyChanged
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void SettingsStore_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (e.PropertyName.Equals(nameof(Settings)))
+                OnPropertyChanged(nameof(Settings));
         }
 
-        #endregion
+        public ICommand OpenInBrowserCommand { get; set; }
+
+        public ICommand AddFolderCommand { get; set; }
+
+        public ICommand DeleteCommand { get; set; }
+
+        public ICommand RenameCommand { get; set; }
+
+        public ICommand AddCommand { get; set; }
+
+        public ICommand EditCommand { get; set; }
+
+        public ICommand DuplicateCommand { get; set; }
+
+        public ICommand RefreshCommand { get; set; }
+
+        public ICommand EnableCommand { get; set; }
+
+        public ICommand DisableCommand { get; set; }
+
+        public ICommand SaveCommand { get; set; }
+
+        public ICommand MoveUpCommand { get; set; }
+
+        public ICommand MoveDownCommand { get; set; }
     }
 }
 

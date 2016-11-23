@@ -8,7 +8,7 @@
     <ContextMenu x:Key="FolderContextMenu">
 
         <MenuItem Header=" Refresh" 
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.RefreshItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.RefreshCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}">
             <MenuItem.Icon>
                 <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Refresh}" />
@@ -18,7 +18,7 @@
         <Separator />
 
         <MenuItem Header=" New Item..." 
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.AddItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.AddCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}">
             <MenuItem.Icon>
                 <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.NewItem}" />
@@ -36,7 +36,7 @@
         <Separator/>
 
         <MenuItem Header=" Enable" 
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.EnableItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.EnableCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}">
             <MenuItem.Icon>
                 <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Play}" />
@@ -44,7 +44,7 @@
         </MenuItem>
 
         <MenuItem Header=" Disable" 
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.DisableItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.DisableCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                           CommandParameter="{Binding}">
             <MenuItem.Icon>
                 <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Stop}" />
