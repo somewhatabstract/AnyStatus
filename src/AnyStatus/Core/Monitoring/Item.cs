@@ -299,7 +299,7 @@ namespace AnyStatus
             return target != null &&
                    target != this.Parent &&
                   (target is Folder || target.Parent == this.Parent) &&
-                   this.IsNotParentOf(target);
+                   !IsAncestorOf(target);
         }
 
         public void MoveTo(Item target)
@@ -412,11 +412,6 @@ namespace AnyStatus
             }
 
             return false;
-        }
-
-        public bool IsNotParentOf(Item item)
-        {
-            return !IsAncestorOf(item);
         }
 
         #endregion
