@@ -22,7 +22,7 @@ namespace AnyStatus
             if (Item == null)
                 throw new InvalidOperationException("Item cannot be null.");
 
-            if (Item.State == State.Disabled)
+            if (Item.IsDisabled)
                 return;
 
             if (Item.IsValid() == false)
@@ -42,7 +42,7 @@ namespace AnyStatus
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, $"Failed to update \"{Item.Name}\".");
+                _logger.Error(ex, $"An error occurred while updating \"{Item.Name}\".");
 
                 if (Item.State != State.Disabled)
                     Item.State = State.Error;
@@ -51,10 +51,7 @@ namespace AnyStatus
 
         public async Task ExecuteAsync()
         {
-            await Task.Run(() =>
-            {
-                Execute();
-            });
+            await Task.Run(() => Execute());
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace AnyStatus
 {
-    public class DeleteCommand : BaseItemCommand
+    public class DeleteCommand : ItemCommand
     {
         public DeleteCommand(Item item) : base(item) { }
     }

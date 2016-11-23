@@ -1,8 +1,8 @@
 ﻿namespace AnyStatus
 {
-    public class BaseItemCommand
+    public class ItemCommand
     {
-        public BaseItemCommand(Item item)
+        public ItemCommand(Item item)
         {
             Item = item;
         }

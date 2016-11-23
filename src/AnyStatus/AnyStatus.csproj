@@ -150,7 +150,7 @@
     <Compile Include="Core\Monitoring\IOpenInBrowser.cs" />
     <Compile Include="Features\New\AddNewItemCommand.cs" />
     <Compile Include="Features\ToolWindow\Commands\AddFolderCommand.cs" />
-    <Compile Include="Features\ToolWindow\Commands\BaseItemCommand.cs" />
+    <Compile Include="Features\ToolWindow\Commands\ItemCommand.cs" />
     <Compile Include="Features\ToolWindow\Commands\DuplicateCommand.cs" />
     <Compile Include="Features\ToolWindow\Commands\AddItemCommand.cs" />
     <Compile Include="Features\ToolWindow\Commands\EditItemCommand.cs" />
@@ -209,7 +209,7 @@
     <Compile Include="Core\UsageReporting\AnalyticsReporter.cs" />
     <Compile Include="Core\UsageReporting\IUsageReporter.cs" />
     <Compile Include="Infrastructure\Converters\NotConverter.cs" />
-    <Compile Include="Infrastructure\IProcessStarter.cs" />
+    <Compile Include="Core\IProcessStarter.cs" />
     <Compile Include="Infrastructure\NotifyPropertyChanged.cs" />
     <Compile Include="Infrastructure\Preconditions.cs" />
     <Compile Include="Core\Monitoring\IJobScheduler.cs" />

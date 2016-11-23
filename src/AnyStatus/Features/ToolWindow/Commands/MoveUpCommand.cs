@@ -1,6 +1,6 @@
 ﻿namespace AnyStatus
 {
-    public class MoveUpCommand : BaseItemCommand
+    public class MoveUpCommand : ItemCommand
     {
         public MoveUpCommand(Item item) : base(item) { }
     }

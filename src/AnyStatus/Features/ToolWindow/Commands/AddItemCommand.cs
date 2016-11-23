@@ -1,6 +1,6 @@
 ﻿namespace AnyStatus
 {
-    public class AddCommand : BaseItemCommand
+    public class AddCommand : ItemCommand
     {
         public AddCommand(Item item) : base(item) { }
     }

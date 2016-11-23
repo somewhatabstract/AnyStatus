@@ -1,6 +1,6 @@
 ﻿namespace AnyStatus
 {
-    public class DuplicateCommand : BaseItemCommand
+    public class DuplicateCommand : ItemCommand
     {
         public DuplicateCommand(Item item) : base(item) { }
     }

@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace AnyStatus
 {
-    public class EnableCommand : BaseItemCommand
+    public class EnableCommand : ItemCommand
     {
         public EnableCommand(Item item) : base(item) { }
     }

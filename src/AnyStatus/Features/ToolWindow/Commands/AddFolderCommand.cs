@@ -1,6 +1,6 @@
 ﻿namespace AnyStatus
 {
-    public class AddFolderCommand : BaseItemCommand
+    public class AddFolderCommand : ItemCommand
     {
         public AddFolderCommand(Item item) : base(item) { }
     }

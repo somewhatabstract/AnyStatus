@@ -1,6 +1,6 @@
 ﻿namespace AnyStatus
 {
-    public class RefreshCommand : BaseItemCommand
+    public class RefreshCommand : ItemCommand
     {
         public RefreshCommand(Item item) : base(item) { }
     }

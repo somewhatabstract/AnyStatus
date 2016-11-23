@@ -1,6 +1,6 @@
 ﻿namespace AnyStatus
 {
-    public class EditCommand : BaseItemCommand
+    public class EditCommand : ItemCommand
     {
         public EditCommand(Item item) : base(item) { }
     }
