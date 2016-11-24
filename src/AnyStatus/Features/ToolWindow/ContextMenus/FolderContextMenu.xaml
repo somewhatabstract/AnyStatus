@@ -8,8 +8,8 @@
     <ContextMenu x:Key="FolderContextMenu">
 
         <MenuItem Header=" Refresh" 
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.RefreshCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding}">
+                  Command="{Binding Path=PlacementTarget.Tag.DataContext.RefreshCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                  CommandParameter="{Binding}">
             <MenuItem.Icon>
                 <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Refresh}" />
             </MenuItem.Icon>
@@ -18,16 +18,16 @@
         <Separator />
 
         <MenuItem Header=" New Item..." 
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.AddCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding}">
+                  Command="{Binding Path=PlacementTarget.Tag.DataContext.ShowAddDialogCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                  CommandParameter="{Binding}">
             <MenuItem.Icon>
                 <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.NewItem}" />
             </MenuItem.Icon>
         </MenuItem>
 
         <MenuItem Header=" New Folder" 
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.AddFolderCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding}">
+                  Command="{Binding Path=PlacementTarget.Tag.DataContext.AddFolderCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                  CommandParameter="{Binding}">
             <MenuItem.Icon>
                 <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.AddFolder}" />
             </MenuItem.Icon>
@@ -36,16 +36,16 @@
         <Separator/>
 
         <MenuItem Header=" Enable" 
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.EnableCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding}">
+                  Command="{Binding Path=PlacementTarget.Tag.DataContext.EnableCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                  CommandParameter="{Binding}">
             <MenuItem.Icon>
                 <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Play}" />
             </MenuItem.Icon>
         </MenuItem>
 
         <MenuItem Header=" Disable" 
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.DisableCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding}">
+                  Command="{Binding Path=PlacementTarget.Tag.DataContext.DisableCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                  CommandParameter="{Binding}">
             <MenuItem.Icon>
                 <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Stop}" />
             </MenuItem.Icon>
@@ -54,18 +54,18 @@
         <Separator/>
 
         <MenuItem Header=" Delete"
-                                          InputGestureText="Del"
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.DeleteCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding}">
+                  InputGestureText="Del"
+                  Command="{Binding Path=PlacementTarget.Tag.DataContext.DeleteCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                  CommandParameter="{Binding}">
             <MenuItem.Icon>
                 <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.DeleteFolder}" />
             </MenuItem.Icon>
         </MenuItem>
 
         <MenuItem Header=" Rename"
-                                          InputGestureText="F2"
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.RenameCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding}">
+                  InputGestureText="F2"
+                  Command="{Binding Path=PlacementTarget.Tag.DataContext.RenameCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                  CommandParameter="{Binding}">
             <MenuItem.Icon>
                 <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Rename}" />
             </MenuItem.Icon>
@@ -74,16 +74,16 @@
         <Separator/>
 
         <MenuItem Header=" Move Up"
-                                          CommandParameter="{Binding}"
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.MoveUpCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
+                  Command="{Binding Path=PlacementTarget.Tag.DataContext.MoveUpCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                  CommandParameter="{Binding}">
             <MenuItem.Icon>
                 <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.MoveUp}" />
             </MenuItem.Icon>
         </MenuItem>
 
         <MenuItem Header=" Move Down"
-                                          CommandParameter="{Binding}"
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.MoveDownCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
+                  Command="{Binding Path=PlacementTarget.Tag.DataContext.MoveDownCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                  CommandParameter="{Binding}">
             <MenuItem.Icon>
                 <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.MoveDown}" />
             </MenuItem.Icon>

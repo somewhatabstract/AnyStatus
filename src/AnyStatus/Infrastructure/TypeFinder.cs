@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace AnyStatus
 {
-    public class Discovery
+    public class TypeFinder
     {
         public static IEnumerable<Type> FindGenericTypesOf(Type baseType, Assembly assembly)
         {

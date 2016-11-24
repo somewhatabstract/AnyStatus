@@ -16,20 +16,18 @@
 
         public void Handle(AddFolderCommand command)
         {
-            var item = command?.Item ?? _settingsStore.Settings.RootItem;
-
-            if (item == null)
+            if (command?.Item == null)
                 return;
 
             var folder = new Folder
             {
-                Name = "New Folder",
-                IsEditing = true
+                IsEditing = true,
+                Name = "New Folder"
             };
 
-            item.Add(folder);
+            command.Item.Add(folder);
 
-            item.IsExpanded = true;
+            command.Item.IsExpanded = true;
 
             _settingsStore.TrySave();
         }

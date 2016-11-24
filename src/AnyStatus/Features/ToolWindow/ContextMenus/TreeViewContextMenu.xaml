@@ -8,8 +8,8 @@
     <ContextMenu x:Key="TreeViewContextMenu">
 
         <MenuItem Header=" Refresh" 
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.RefreshCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding Settings.RootItem}">
+                  Command="{Binding Path=PlacementTarget.Tag.DataContext.RefreshCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                  CommandParameter="{Binding Settings.RootItem}">
             <MenuItem.Icon>
                 <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Refresh}" />
             </MenuItem.Icon>
@@ -18,14 +18,16 @@
         <Separator />
 
         <MenuItem Header=" New Item..." 
-                              Command="{Binding Path=PlacementTarget.Tag.DataContext.AddCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
+                  Command="{Binding Path=PlacementTarget.Tag.DataContext.ShowAddDialogCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                  CommandParameter="{Binding Settings.RootItem}">
             <MenuItem.Icon>
                 <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.NewItem}" />
             </MenuItem.Icon>
         </MenuItem>
 
         <MenuItem Header=" New Folder" 
-                              Command="{Binding Path=PlacementTarget.Tag.DataContext.AddFolderCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
+                  Command="{Binding Path=PlacementTarget.Tag.DataContext.AddFolderCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                  CommandParameter="{Binding Settings.RootItem}">
             <MenuItem.Icon>
                 <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.AddFolder}" />
             </MenuItem.Icon>

@@ -12,6 +12,8 @@ namespace AnyStatus
 {
     public class NewViewModel : INotifyPropertyChanged
     {
+        private readonly IMediator _mediator;
+
         private Template _selectedTemplate;
         private readonly ISettingsStore _settingsStore;
         private readonly IJobScheduler _jobScheduler;
@@ -28,8 +30,12 @@ namespace AnyStatus
             IUsageReporter usageReporter,
             IEnumerable<Template> templates,
             Func<ScheduledJob> jobFactory,
+            IMediator mediator,
             ILogger logger)
         {
+            _mediator = Preconditions.CheckNotNull(mediator, nameof(mediator));
+
+
             _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
             _settingsStore = Preconditions.CheckNotNull(settingsStore, nameof(settingsStore));
             _usageReporter = Preconditions.CheckNotNull(usageReporter, nameof(usageReporter));

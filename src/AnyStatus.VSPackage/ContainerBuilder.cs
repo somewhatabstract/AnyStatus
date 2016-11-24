@@ -35,6 +35,7 @@ namespace AnyStatus.VSPackage
             container.Register<IJobScheduler, JobScheduler>().AsSingleton();
             container.Register<ScheduledJob>().AsMultiInstance();
             container.Register<IUsageReporter, AnalyticsReporter>().AsSingleton();
+
             container.Register<ICommandRegistry, CommandRegistry>();
             container.Register<IMediator, Mediator>();
             container.Register<IProcessStarter, ProcessStarter>();
@@ -42,8 +43,6 @@ namespace AnyStatus.VSPackage
 
         private static void RegisterUI(TinyIoCContainer container)
         {
-            container.Register<IViewLocator, ViewLocator>().AsSingleton();
-
             container.Register<ToolWindowControl>().AsSingleton();
             container.Register<ToolWindowViewModel>().AsSingleton();
 
@@ -62,7 +61,7 @@ namespace AnyStatus.VSPackage
 
         private static void RegisterHandlers(TinyIoCContainer container, Type type)
         {
-            var handlers = Discovery.FindGenericTypesOf(type, type.Assembly);
+            var handlers = TypeFinder.FindGenericTypesOf(type, type.Assembly);
 
             foreach (var handler in handlers)
             {
@@ -74,7 +73,7 @@ namespace AnyStatus.VSPackage
 
         private static void RegisterItems(TinyIoCContainer container)
         {
-            var items = Discovery.FindTypesOf(typeof(Item), new[] { typeof(Item).Assembly });
+            var items = TypeFinder.FindTypesOf(typeof(Item), new[] { typeof(Item).Assembly });
 
             items = from item in items
                     where item.IsBrowsable()
@@ -86,7 +85,7 @@ namespace AnyStatus.VSPackage
 
         private static void RegisterMenuCommands(TinyIoCContainer container)
         {
-            var items = Discovery.FindTypesOf(typeof(IToolbarCommand),
+            var items = TypeFinder.FindTypesOf(typeof(IToolbarCommand),
                      new[] { typeof(IToolbarCommand).Assembly,
                              typeof(ContainerBuilder).Assembly });
 

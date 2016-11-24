@@ -33,9 +33,9 @@ namespace AnyStatus
 
             DuplicateCommand = new RelayCommand(item => _mediator.TrySend(item as Item));
 
-            AddCommand = new RelayCommand(item => _mediator.TrySend(new AddCommand(item as Item)));
+            ShowAddDialogCommand = new RelayCommand(item => _mediator.TrySend(new ShowAddDialogCommand(item as Item)));
 
-            EditCommand = new RelayCommand(item => _mediator.TrySend(new EditCommand(item as Item)));
+            ShowEditDialogCommand = new RelayCommand(item => _mediator.TrySend(new ShowEditDialogCommand(item as Item)));
 
             EnableCommand = new RelayCommand(item => _mediator.TrySend(new EnableCommand(item as Item)));
 
@@ -76,9 +76,9 @@ namespace AnyStatus
 
         public ICommand RenameCommand { get; set; }
 
-        public ICommand AddCommand { get; set; }
+        public ICommand ShowAddDialogCommand { get; set; }
 
-        public ICommand EditCommand { get; set; }
+        public ICommand ShowEditDialogCommand { get; set; }
 
         public ICommand DuplicateCommand { get; set; }
 
