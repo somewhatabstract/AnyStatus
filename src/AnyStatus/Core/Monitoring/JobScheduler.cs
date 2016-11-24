@@ -23,7 +23,7 @@ namespace AnyStatus
         {
             JobManager.Start();
 
-            Schedule(_settingsStore.Settings.RootItem, includeChildren: true);
+            Schedule(_settingsStore.Settings?.RootItem, includeChildren: true);
         }
 
         public void Stop()
@@ -31,13 +31,11 @@ namespace AnyStatus
             JobManager.Stop();
         }
 
-        public void Reschedule(Item item, bool includeChildren = false)
+        public void Reschedule(Item item)
         {
-            //todo: remove includeChildren
-
             JobManager.RemoveJob(item.Id.ToString());
 
-            Schedule(item, includeChildren);
+            Schedule(item, includeChildren: false);
         }
 
         public void Execute(Item item)
@@ -117,7 +115,7 @@ namespace AnyStatus
                         .ToRunNow()
                         .AndEvery(item.Interval).Minutes());
 
-            _logger.Info($"\"{item.Name}\" scheduled to run every {item.Interval} minutes.");
+            _logger.Info($"\"{item.Name}\" scheduled to run now and every {item.Interval} minutes.");
         }
 
         private void OnSettingsReset(object sender, EventArgs e)

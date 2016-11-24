@@ -265,8 +265,10 @@ namespace AnyStatus.Tests
         {
             var item = new Ping()
             {
+                Name ="test",
+                Host = "host",
                 IsEnabled = true,
-                Id = Guid.NewGuid()
+                Id = Guid.NewGuid(),
             };
 
             Assert.IsTrue(item.IsSchedulable());

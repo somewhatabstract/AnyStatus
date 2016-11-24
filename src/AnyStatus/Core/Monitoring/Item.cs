@@ -350,9 +350,9 @@ namespace AnyStatus
 
         public bool IsSchedulable()
         {
-            return this is IScheduledItem &&
-                   this.IsEnabled &&
-                   this.Id != Guid.Empty;
+            return this.IsEnabled &&
+                   this is IScheduledItem &&
+                   this.IsValid();
         }
 
         public bool ContainsElements()

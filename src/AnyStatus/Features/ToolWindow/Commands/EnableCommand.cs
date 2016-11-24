@@ -40,11 +40,11 @@ namespace AnyStatus
 
             if (item.IsDisabled && item is IScheduledItem)
             {
-                EnableOrAddSchedule(item);
-
                 item.IsEnabled = true;
 
                 item.State = State.Unknown;
+
+                EnableOrAddSchedule(item);
 
                 _saveChanges = true;
             }
