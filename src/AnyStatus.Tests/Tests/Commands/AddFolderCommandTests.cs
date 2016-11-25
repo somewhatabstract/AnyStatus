@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
+using System;
 
 namespace AnyStatus.Tests.Tests.Commands
 {
@@ -25,6 +26,17 @@ namespace AnyStatus.Tests.Tests.Commands
             Assert.AreEqual(true, folder.IsEditing);
 
             settingsStore.Received(1).TrySave();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void Should_Throw_When_CommandIsNull()
+        {
+            var settingsStore = Substitute.For<ISettingsStore>();
+            
+            var handler = new AddFolderCommandHandler(settingsStore);
+
+            handler.Handle(null);
         }
     }
 }
