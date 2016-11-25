@@ -26,7 +26,7 @@ namespace AnyStatus.Tests.Tests.Commands
 
             handler.Handle(command);
 
-            await scheduledJob.Received(1).ExecuteAsync();
+            await scheduledJob.Received().ExecuteAsync();
 
             Thread.Sleep(10);
 
