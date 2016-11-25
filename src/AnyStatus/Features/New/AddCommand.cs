@@ -40,7 +40,10 @@ namespace AnyStatus
             if (command?.Item == null)
                 return;
 
-            Validate(command.Item);
+            if (!Validate(command.Item))
+            {
+                return;
+            }
 
             command.Parent.Add(command.Item);
 
@@ -53,7 +56,7 @@ namespace AnyStatus
             command.Close();
         }
 
-        private void Validate(Item item)
+        private bool Validate(Item item)
         {
             List<ValidationResult> validationResults = null;
 
@@ -62,7 +65,11 @@ namespace AnyStatus
             if (validationResults.Any())
             {
                 ShowValidationErrorsDialog(validationResults);
+
+                return false;
             }
+
+            return true;
         }
 
         private static void ShowValidationErrorsDialog(IEnumerable<ValidationResult> validationResults)

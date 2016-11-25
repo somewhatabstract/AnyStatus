@@ -10,23 +10,24 @@ namespace AnyStatus
 {
     public class TestCommand : ItemCommand
     {
-        public TestCommand(Item item, Action toggleCanTest) : base(item)
+        public TestCommand(Item item, Action<bool> canExecute, Action<string> message) : base(item)
         {
-            ToggleCanTest = toggleCanTest;
+            CanExecute = canExecute;
+            Message = message;
         }
 
-        public Action ToggleCanTest { get; set; }
+        public Action<bool> CanExecute { get; set; }
+
+        public Action<string> Message { get; set; }
     }
 
     public class TestCommandHandler : IHandler<TestCommand>
     {
         private readonly Func<IScheduledJob> _jobFactory;
-        private readonly IMessageBox _messageBox;
 
-        public TestCommandHandler(Func<IScheduledJob> jobFactory, IMessageBox messageBox)
+        public TestCommandHandler(Func<IScheduledJob> jobFactory)
         {
             _jobFactory = Preconditions.CheckNotNull(jobFactory, nameof(jobFactory));
-            _messageBox = Preconditions.CheckNotNull(messageBox, nameof(messageBox));
         }
 
         public void Handle(TestCommand command)
@@ -34,9 +35,14 @@ namespace AnyStatus
             if (command?.Item == null)
                 return;
 
-            Validate(command.Item);
+            if (!Validate(command.Item))
+            {
+                return;
+            }
 
-            command.ToggleCanTest();
+            command.CanExecute(false);
+
+            command.Message("Testing...");
 
             var job = _jobFactory();
 
@@ -45,14 +51,14 @@ namespace AnyStatus
             Task.Run(job.ExecuteAsync)
                 .ContinueWith(task =>
                 {
-                    _messageBox.Show("Result: " + job.Item.State.Metadata.DisplayName, "Test", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                    command.ToggleCanTest();
+                    //todo: move these to response object
+                    command.CanExecute(true);
+                    command.Message(job.Item.State.Metadata.DisplayName);
                 })
                 .ConfigureAwait(false);
         }
 
-        private void Validate(Item item)
+        private bool Validate(Item item)
         {
             List<ValidationResult> validationResults = null;
 
@@ -61,7 +67,11 @@ namespace AnyStatus
             if (validationResults.Any())
             {
                 ShowValidationErrorsDialog(validationResults);
+
+                return false;
             }
+
+            return true;
         }
 
         private static void ShowValidationErrorsDialog(IEnumerable<ValidationResult> validationResults)

@@ -7,9 +7,10 @@ namespace AnyStatus
 {
     public class NewViewModel : NotifyPropertyChanged
     {
-        private readonly IMediator _mediator;
-        private Template _selectedTemplate;
+        private string _message;
         private bool _canTest = true;
+        private Template _selectedTemplate;
+        private readonly IMediator _mediator;
 
         public event EventHandler CloseRequested;
 
@@ -25,7 +26,10 @@ namespace AnyStatus
         {
             AddCommand = new RelayCommand(item => _mediator.TrySend(new AddCommand(item as Item, Parent, RequestClose)));
 
-            TestCommand = new RelayCommand(item => _mediator.TrySend(new TestCommand(item as Item, ToggleCanTest)), p => CanTest);
+            TestCommand = new RelayCommand(item =>
+                _mediator.TrySend(new TestCommand(item as Item, 
+                canExecute => CanTest = canExecute, 
+                message => Message = message)));
 
             CancelCommand = new RelayCommand(p => RequestClose());
 
@@ -35,11 +39,6 @@ namespace AnyStatus
         private void RequestClose()
         {
             CloseRequested?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void ToggleCanTest()
-        {
-            CanTest = !CanTest;
         }
 
         #region Properties
@@ -65,6 +64,12 @@ namespace AnyStatus
         {
             get { return _canTest; }
             set { _canTest = value; OnPropertyChanged(); }
+        }
+
+        public string Message
+        {
+            get { return _message; }
+            set { _message = value; OnPropertyChanged(); }
         }
 
         #endregion
