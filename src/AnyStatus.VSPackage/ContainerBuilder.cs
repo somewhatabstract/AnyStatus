@@ -43,6 +43,8 @@ namespace AnyStatus.VSPackage
 
         private static void RegisterUI(TinyIoCContainer container)
         {
+            container.Register<IMessageBox, MessageBox>().AsMultiInstance();
+
             container.Register<ToolWindowControl>().AsSingleton();
             container.Register<ToolWindowViewModel>().AsSingleton();
 

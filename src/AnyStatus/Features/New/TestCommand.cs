@@ -21,10 +21,12 @@ namespace AnyStatus
     public class TestCommandHandler : IHandler<TestCommand>
     {
         private readonly Func<IScheduledJob> _jobFactory;
+        private readonly IMessageBox _messageBox;
 
-        public TestCommandHandler(Func<IScheduledJob> jobFactory)
+        public TestCommandHandler(Func<IScheduledJob> jobFactory, IMessageBox messageBox)
         {
             _jobFactory = Preconditions.CheckNotNull(jobFactory, nameof(jobFactory));
+            _messageBox = Preconditions.CheckNotNull(messageBox, nameof(messageBox));
         }
 
         public void Handle(TestCommand command)
@@ -43,7 +45,7 @@ namespace AnyStatus
             Task.Run(job.ExecuteAsync)
                 .ContinueWith(task =>
                 {
-                    MessageBox.Show("Result: " + job.Item.State.Metadata.DisplayName);
+                    _messageBox.Show("Result: " + job.Item.State.Metadata.DisplayName, "Test", MessageBoxButton.OK, MessageBoxImage.Information);
 
                     command.ToggleCanTest();
                 })
@@ -59,8 +61,6 @@ namespace AnyStatus
             if (validationResults.Any())
             {
                 ShowValidationErrorsDialog(validationResults);
-
-                throw new ValidationException();
             }
         }
 
@@ -76,7 +76,7 @@ namespace AnyStatus
                 sb.AppendLine(result.ErrorMessage);
             }
 
-            MessageBox.Show(sb.ToString(), "Validation", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            System.Windows.MessageBox.Show(sb.ToString(), "Validation", MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
     }
 }

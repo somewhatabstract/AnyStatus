@@ -26,7 +26,9 @@ namespace AnyStatus
         private readonly IJobScheduler _jobScheduler;
         private readonly IUsageReporter _usageReporter;
 
-        public AddCommandHandler(ISettingsStore settingsStore, IJobScheduler jobScheduler, IUsageReporter usageReporter)
+        public AddCommandHandler(ISettingsStore settingsStore, 
+                                 IJobScheduler jobScheduler, 
+                                 IUsageReporter usageReporter)
         {
             _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
             _settingsStore = Preconditions.CheckNotNull(settingsStore, nameof(settingsStore));
@@ -60,8 +62,6 @@ namespace AnyStatus
             if (validationResults.Any())
             {
                 ShowValidationErrorsDialog(validationResults);
-
-                throw new ValidationException();
             }
         }
 
@@ -77,7 +77,7 @@ namespace AnyStatus
                 sb.AppendLine(result.ErrorMessage);
             }
 
-            MessageBox.Show(sb.ToString(), "Validation", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            System.Windows.MessageBox.Show(sb.ToString(), "Validation", MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
     }
 }

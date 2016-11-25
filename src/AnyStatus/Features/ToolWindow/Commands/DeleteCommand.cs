@@ -25,7 +25,7 @@ namespace AnyStatus
             if (item == null)
                 return;
 
-            var result = MessageBox.Show($"Are you sure you want to delete {item.Name}?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
+            var result = System.Windows.MessageBox.Show($"Are you sure you want to delete {item.Name}?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
 
             if (result != MessageBoxResult.Yes)
                 return;

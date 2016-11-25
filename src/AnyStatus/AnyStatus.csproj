@@ -199,6 +199,8 @@
     <Compile Include="Infrastructure\Converters\HexToColorConverter.cs" />
     <Compile Include="Infrastructure\Converters\IconConverter.cs" />
     <Compile Include="Infrastructure\Converters\TooltipConverter.cs" />
+    <Compile Include="Infrastructure\IMessageBox.cs" />
+    <Compile Include="Infrastructure\MessageBox.cs" />
     <Compile Include="Infrastructure\TypeFinder.cs" />
     <Compile Include="Infrastructure\Enumeration.cs" />
     <Compile Include="Infrastructure\Extensions.cs" />

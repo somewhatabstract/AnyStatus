@@ -80,7 +80,7 @@ namespace AnyStatus
 
         private void RestoreDefaultSettings()
         {
-            var result = MessageBox.Show("Are you sure?", "Restore Default Settings", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
+            var result = System.Windows.MessageBox.Show("Are you sure?", "Restore Default Settings", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
 
             if (result == MessageBoxResult.Yes)
             {
@@ -103,11 +103,11 @@ namespace AnyStatus
 
             if (_userSettings.TryImport(fileDialog.FileName))
             {
-                MessageBox.Show("Settings imported successfully.", "Import Settings", MessageBoxButton.OK, MessageBoxImage.Information);
+                System.Windows.MessageBox.Show("Settings imported successfully.", "Import Settings", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
-                MessageBox.Show("An error occurred while importing settings.", "Import Settings", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show("An error occurred while importing settings.", "Import Settings", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -124,11 +124,11 @@ namespace AnyStatus
 
             if (_userSettings.TryExport(fileDialog.FileName))
             {
-                MessageBox.Show("Settings exported successfully.", "Export Settings", MessageBoxButton.OK, MessageBoxImage.Information);
+                System.Windows.MessageBox.Show("Settings exported successfully.", "Export Settings", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
-                MessageBox.Show("An error occurred while exporting settings.", "Export Settings", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show("An error occurred while exporting settings.", "Export Settings", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
