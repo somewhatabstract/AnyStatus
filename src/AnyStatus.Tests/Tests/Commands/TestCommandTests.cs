@@ -1,7 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using System;
-using System.Windows;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace AnyStatus.Tests.Tests.Commands
 {
@@ -9,22 +10,29 @@ namespace AnyStatus.Tests.Tests.Commands
     public class TestCommandTests
     {
         [TestMethod]
-        public async void Should_ExecuteScheduledJob()
+        public async Task Should_ExecuteScheduledJob()
         {
-            var logger = Substitute.For<ILogger>();
-            var mediator = Substitute.For<IMediator>();
+            State.SetMetadata(Theme.Default.Metadata);
+            bool canExecute = true;
+            string message = string.Empty;
             var scheduledJob = Substitute.For<IScheduledJob>();
             Func<IScheduledJob> _jobFactory = () => { return scheduledJob; };
 
+            scheduledJob.ExecuteAsync().Returns(Task.FromResult<object>(null));
+
             var item = new Item { Name = "Test" };
-            var command = new TestCommand(item, canExecute => { /* todo: test can execute */ }, message => { });
+            var command = new TestCommand(item, c => { canExecute = c; }, m => { message = m; });
             var handler = new TestCommandHandler(_jobFactory);
 
             handler.Handle(command);
 
             await scheduledJob.Received(1).ExecuteAsync();
 
+            Thread.Sleep(10);
+
             Assert.AreSame(scheduledJob.Item, command.Item);
+            Assert.IsFalse(string.IsNullOrEmpty(message));
+            Assert.IsTrue(canExecute);
         }
     }
 }
