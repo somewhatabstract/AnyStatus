@@ -6,8 +6,6 @@
 
         void Schedule(Item item, bool includeChildren = false);
 
-        void Reschedule(Item item);
-
         void Execute(Item item);
 
         void Remove(Item item);

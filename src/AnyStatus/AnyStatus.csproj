@@ -149,6 +149,7 @@
     <Compile Include="Core\Settings\SettingsStore.cs" />
     <Compile Include="Core\Monitoring\ICanOpenInBrowser.cs" />
     <Compile Include="Core\Monitoring\IOpenInBrowser.cs" />
+    <Compile Include="Features\Edit\EditCommand.cs" />
     <Compile Include="Features\New\TestCommand.cs" />
     <Compile Include="Features\New\AddCommand.cs" />
     <Compile Include="Features\ToolWindow\Commands\AddFolderCommand.cs" />

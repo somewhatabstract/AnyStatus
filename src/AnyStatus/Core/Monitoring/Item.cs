@@ -343,6 +343,9 @@ namespace AnyStatus
 
         public void ReplaceWith(Item item)
         {
+            if (Parent == null)
+                throw new InvalidOperationException();
+
             var index = Parent.Items.IndexOf(this);
 
             Parent.Items[index] = item;
@@ -350,8 +353,8 @@ namespace AnyStatus
 
         public bool IsSchedulable()
         {
-            return this.IsEnabled && 
-                   this is IScheduledItem && 
+            return this.IsEnabled &&
+                   this is IScheduledItem &&
                    this.Id != Guid.Empty;
         }
 

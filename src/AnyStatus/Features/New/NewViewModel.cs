@@ -24,7 +24,8 @@ namespace AnyStatus
 
         private void Initialize()
         {
-            AddCommand = new RelayCommand(item => _mediator.TrySend(new AddCommand(item as Item, Parent, RequestClose)));
+            AddCommand = new RelayCommand(item => 
+                _mediator.TrySend(new AddCommand(item as Item, Parent, RequestClose)));
 
             TestCommand = new RelayCommand(item =>
                 _mediator.TrySend(new TestCommand(item as Item, 

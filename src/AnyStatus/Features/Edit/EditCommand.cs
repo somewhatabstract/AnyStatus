@@ -7,35 +7,31 @@ using System.Windows;
 
 namespace AnyStatus
 {
-    public class AddCommand : ItemCommand
+    public class EditCommand : ItemCommand
     {
-        public AddCommand(Item item, Item parent, Action close) : base(item)
+        public EditCommand(Item item, Item source, Action close) : base(item)
         {
-            Parent = parent;
+            Source = source;
             Close = close;
         }
 
-        public Item Parent { get; set; }
+        public Item Source { get; set; }
 
         public Action Close { get; set; }
     }
 
-    public class AddCommandHandler : IHandler<AddCommand>
+    public class EditCommandHandler : IHandler<EditCommand>
     {
         private readonly ISettingsStore _settingsStore;
         private readonly IJobScheduler _jobScheduler;
-        private readonly IUsageReporter _usageReporter;
 
-        public AddCommandHandler(ISettingsStore settingsStore, 
-                                 IJobScheduler jobScheduler, 
-                                 IUsageReporter usageReporter)
+        public EditCommandHandler(ISettingsStore settingsStore, IJobScheduler jobScheduler)
         {
             _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
             _settingsStore = Preconditions.CheckNotNull(settingsStore, nameof(settingsStore));
-            _usageReporter = Preconditions.CheckNotNull(usageReporter, nameof(usageReporter));
         }
 
-        public void Handle(AddCommand command)
+        public void Handle(EditCommand command)
         {
             if (command == null)
                 throw new InvalidOperationException();
@@ -43,17 +39,36 @@ namespace AnyStatus
             if (!Validate(command.Item))
                 return;
 
-            command.Parent.Add(command.Item);
+            command.Source.ReplaceWith(command.Item);
 
             command.Item.IsSelected = true;
 
+            _jobScheduler.Remove(command.Source);
+
+            _jobScheduler.Schedule(command.Item, includeChildren: false);
+
             _settingsStore.TrySave();
 
-            _jobScheduler.Schedule(command.Item);
-
-            _usageReporter.ReportEvent("Items", "Add", command.Item.GetType().Name);
-
             command.Close();
+
+            //private void Save()
+            //{
+            //    try
+            //    {
+            //        //todo: validate item
+            //        _sourceItem.ReplaceWith(_item);
+            //        _settingsStore.TrySave();
+            //        _jobScheduler.Reschedule(_item);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        _logger.Info("Failed to save changes. Exception:" + ex.ToString());
+            //    }
+            //    finally
+            //    {
+            //        CloseRequested?.Invoke(this, EventArgs.Empty);
+            //    }
+            //}
         }
 
         private bool Validate(Item item)

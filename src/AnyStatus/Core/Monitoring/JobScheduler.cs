@@ -25,13 +25,6 @@ namespace AnyStatus
             JobManager.Stop();
         }
 
-        public void Reschedule(Item item)
-        {
-            JobManager.RemoveJob(item.Id.ToString());
-
-            Schedule(item, includeChildren: false);
-        }
-
         public void Execute(Item item)
         {
             if (item == null) return;

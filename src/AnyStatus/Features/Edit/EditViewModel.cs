@@ -8,48 +8,27 @@ namespace AnyStatus
         private Item _item;
         private Item _sourceItem;
 
-        private readonly ILogger _logger;
-        private readonly ISettingsStore _settingsStore;
-        private readonly IJobScheduler _jobScheduler;
+        private readonly IMediator _mediator;
 
         public event EventHandler CloseRequested;
 
-        public EditViewModel(ISettingsStore userSettings, IJobScheduler jobScheduler, ILogger logger)
+        public EditViewModel(IMediator mediator)
         {
-            _logger = Preconditions.CheckNotNull(logger, nameof(logger));
-            _settingsStore = Preconditions.CheckNotNull(userSettings, nameof(userSettings));
-            _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
+            _mediator = Preconditions.CheckNotNull(mediator, nameof(mediator));
 
             Initialize();
         }
 
         private void Initialize()
         {
-            SaveCommand = new RelayCommand(p => Save());
+            SaveCommand = new RelayCommand(item => _mediator.TrySend(new EditCommand(item as Item, SourceItem, RequestClose)));
 
-            CancelCommand = new RelayCommand(p => CloseRequested?.Invoke(this, EventArgs.Empty));
+            CancelCommand = new RelayCommand(p => RequestClose());
         }
 
-        private void Save()
+        private void RequestClose()
         {
-            try
-            {
-                //todo: validate item
-
-                _sourceItem.ReplaceWith(_item);
-
-                _settingsStore.TrySave();
-
-                _jobScheduler.Reschedule(_item);
-            }
-            catch (Exception ex)
-            {
-                _logger.Info("Failed to save changes. Exception:" + ex.ToString());
-            }
-            finally
-            {
-                CloseRequested?.Invoke(this, EventArgs.Empty);
-            }
+            CloseRequested?.Invoke(this, EventArgs.Empty);
         }
 
         public Item Item
@@ -60,10 +39,12 @@ namespace AnyStatus
             }
             set
             {
-                _item = (Item)value.Clone();
+                _item = value.Clone() as Item;
                 _sourceItem = value;
             }
         }
+
+        public Item SourceItem { get { return _sourceItem; } }
 
         #region Commands
 
