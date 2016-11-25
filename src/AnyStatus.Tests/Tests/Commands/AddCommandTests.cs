@@ -25,6 +25,8 @@ namespace AnyStatus.Tests.Tests.Commands
 
             Assert.IsTrue(closed);
             Assert.IsTrue(parent.Contains(item));
+            Assert.IsTrue(item.IsSelected);
+
             settingsStore.Received(1).TrySave();
             jobScheduler.Received(1).Schedule(item);
             usageReporter.Received(1).ReportEvent("Items", "Add", command.Item.GetType().Name);

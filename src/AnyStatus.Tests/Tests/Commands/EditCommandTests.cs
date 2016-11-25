@@ -11,7 +11,7 @@ namespace AnyStatus.Tests.Tests.Commands
         IUsageReporter _usageReporter = Substitute.For<IUsageReporter>();
 
         [TestMethod]
-        public void Should_Reschedule_And_Close()
+        public void Should_Reschedule_Save_And_Close()
         {
             var closeRequested = false;
 
@@ -30,8 +30,10 @@ namespace AnyStatus.Tests.Tests.Commands
 
             _jobScheduler.Received().Remove(source);
             _jobScheduler.Received().Schedule(item);
+
             _settingsStore.Received().TrySave();
 
+            Assert.IsTrue(item.IsSelected);
             Assert.IsTrue(closeRequested);
         }
     }
