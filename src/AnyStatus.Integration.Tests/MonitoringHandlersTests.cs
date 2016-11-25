@@ -70,6 +70,7 @@ namespace AnyStatus.Integration.Tests
             Assert.AreSame(State.Ok, request.State);
         }
 
+        [Ignore]//limited by github api
         [TestMethod]
         public void GitHubIssueHandler()
         {
