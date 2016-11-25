@@ -1,4 +1,6 @@
-﻿namespace AnyStatus
+﻿using System;
+
+namespace AnyStatus
 {
     public class AddFolderCommand : ItemCommand
     {
@@ -16,8 +18,8 @@
 
         public void Handle(AddFolderCommand command)
         {
-            if (command?.Item == null)
-                return;
+            if (command == null)
+                throw new InvalidOperationException();
 
             var folder = new Folder
             {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
+using System;
 
 namespace AnyStatus.Tests.Tests.Commands
 {
@@ -18,20 +19,6 @@ namespace AnyStatus.Tests.Tests.Commands
             handler.Handle(command);
 
             jobScheduler.Received(1).Execute(command.Item);
-        }
-
-        [TestMethod]
-        public void Should_Not_Execute_When_ItemIsNull()
-        {
-            var jobScheduler = Substitute.For<IJobScheduler>();
-
-            var command = new RefreshCommand(null);
-
-            var handler = new RefreshCommandHandler(jobScheduler);
-
-            handler.Handle(command);
-
-            jobScheduler.DidNotReceive().Execute(Arg.Any<Item>());
         }
     }
 }

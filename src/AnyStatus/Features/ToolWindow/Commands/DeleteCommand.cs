@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace AnyStatus
 {
@@ -20,19 +21,17 @@ namespace AnyStatus
 
         public void Handle(DeleteCommand command)
         {
-            var item = command.Item;
+            if (command == null)
+                throw new InvalidOperationException();
 
-            if (item == null)
-                return;
-
-            var result = System.Windows.MessageBox.Show($"Are you sure you want to delete {item.Name}?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
+            var result = System.Windows.MessageBox.Show($"Are you sure you want to delete {command.Item.Name}?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
 
             if (result != MessageBoxResult.Yes)
                 return;
 
-            Unschedule(item);
+            Unschedule(command.Item);
 
-            item.Delete();
+            command.Item.Delete();
 
             _settingsStore.TrySave();
         }

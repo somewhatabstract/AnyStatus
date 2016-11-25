@@ -1,4 +1,6 @@
-﻿namespace AnyStatus
+﻿using System;
+
+namespace AnyStatus
 {
     public class DuplicateCommand : ItemCommand
     {
@@ -18,9 +20,10 @@
 
         public void Handle(DuplicateCommand command)
         {
-            var item = command.Item;
+            if (command == null)
+                throw new InvalidOperationException();
 
-            var clone = item.Duplicate();
+            var clone = command.Item.Duplicate();
 
             _jobScheduler.Schedule(clone);
 

@@ -26,9 +26,8 @@ namespace AnyStatus.Tests.Tests.Commands
 
             handler.Handle(command);
 
-            await scheduledJob.Received().ExecuteAsync();
-
-            Thread.Sleep(10);
+            await scheduledJob.Received().ExecuteAsync()
+                .ConfigureAwait(true);
 
             Assert.AreSame(scheduledJob.Item, command.Item);
             Assert.IsFalse(string.IsNullOrEmpty(message));

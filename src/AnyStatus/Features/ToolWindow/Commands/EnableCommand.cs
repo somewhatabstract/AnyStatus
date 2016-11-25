@@ -1,4 +1,5 @@
 ﻿using FluentScheduler;
+using System;
 using System.Linq;
 
 namespace AnyStatus
@@ -24,8 +25,8 @@ namespace AnyStatus
 
         public void Handle(EnableCommand command)
         {
-            if (command?.Item == null)
-                return;
+            if (command == null)
+                throw new InvalidOperationException();
 
             Enable(command.Item);
 
