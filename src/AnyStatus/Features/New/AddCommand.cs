@@ -37,13 +37,11 @@ namespace AnyStatus
 
         public void Handle(AddCommand command)
         {
-            if (command?.Item == null)
-                return;
+            if (command == null)
+                throw new InvalidOperationException();
 
             if (!Validate(command.Item))
-            {
                 return;
-            }
 
             command.Parent.Add(command.Item);
 

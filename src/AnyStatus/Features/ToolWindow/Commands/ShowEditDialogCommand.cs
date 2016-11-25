@@ -1,4 +1,6 @@
-﻿namespace AnyStatus
+﻿using System;
+
+namespace AnyStatus
 {
     public class ShowEditDialogCommand : ItemCommand
     {
@@ -23,8 +25,8 @@
 
         public void Handle(ShowEditDialogCommand command)
         {
-            if (command.Item == null)
-                return;
+            if (command == null)
+                throw new InvalidOperationException();
 
             _viewModel.Item = command.Item;
 

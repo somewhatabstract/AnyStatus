@@ -32,17 +32,15 @@ namespace AnyStatus
 
         public void Handle(TestCommand command)
         {
-            if (command?.Item == null)
-                return;
+            if (command == null)
+                throw new InvalidOperationException();
 
             if (!Validate(command.Item))
-            {
                 return;
-            }
 
-            command.CanExecute(false);
+            command?.CanExecute(false);
 
-            command.Message("Testing...");
+            command?.Message("Testing...");
 
             var job = _jobFactory();
 
@@ -51,9 +49,8 @@ namespace AnyStatus
             Task.Run(job.ExecuteAsync)
                 .ContinueWith(task =>
                 {
-                    //todo: move these to response object
-                    command.CanExecute(true);
-                    command.Message(job.Item.State.Metadata.DisplayName);
+                    command?.CanExecute(true);
+                    command?.Message(job.Item.State.Metadata.DisplayName);
                 })
                 .ConfigureAwait(false);
         }

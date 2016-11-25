@@ -1,4 +1,6 @@
-﻿namespace AnyStatus
+﻿using System;
+
+namespace AnyStatus
 {
     public class ShowAddDialogCommand : ItemCommand
     {
@@ -23,8 +25,8 @@
 
         public void Handle(ShowAddDialogCommand command)
         {
-            if (command.Item == null)
-                return;
+            if (command == null)
+                throw new InvalidOperationException();
 
             _viewModel.Parent = command.Item;
 

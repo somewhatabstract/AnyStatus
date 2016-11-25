@@ -1,4 +1,6 @@
-﻿namespace AnyStatus
+﻿using System;
+
+namespace AnyStatus
 {
     public class MoveUpCommand : ItemCommand
     {
@@ -16,8 +18,8 @@
 
         public void Handle(MoveUpCommand command)
         {
-            if (command.Item == null)
-                return;
+            if (command == null)
+                throw new InvalidOperationException();
 
             command.Item.MoveUp();
 

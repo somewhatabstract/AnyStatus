@@ -1,4 +1,6 @@
-﻿namespace AnyStatus
+﻿using System;
+
+namespace AnyStatus
 {
     public class RefreshCommand : ItemCommand
     {
@@ -16,8 +18,8 @@
 
         public void Handle(RefreshCommand command)
         {
-            if (command.Item == null)
-                return;
+            if (command == null)
+                throw new InvalidOperationException();
 
             _jobScheduler.Execute(command.Item);
         }
