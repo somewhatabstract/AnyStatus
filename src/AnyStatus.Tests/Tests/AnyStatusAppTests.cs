@@ -1,5 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FluentScheduler;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace AnyStatus.Tests
@@ -12,7 +16,20 @@ namespace AnyStatus.Tests
         IUsageReporter _usageReporter = Substitute.For<IUsageReporter>();
         IJobScheduler _jobScheduler = Substitute.For<IJobScheduler>();
         ICommandRegistry _commandRegistry = Substitute.For<ICommandRegistry>();
+        private Dummy _item = new Dummy { Id = Guid.NewGuid(), Name = "Test" };
 
+        public AnyStatusAppTests()
+        {
+            var settings = new UserSettings
+            {
+                RootItem = new RootItem
+                {
+                    Items = new ObservableCollection<Item> { _item }
+                }
+            };
+
+            _settingsStore.Settings.Returns(settings);
+        }
         [TestMethod]
         public async Task InitializeAsync()
         {
@@ -36,6 +53,7 @@ namespace AnyStatus.Tests
 
             _jobScheduler.Received(1).Start();
             _usageReporter.Received(1).ReportStartSession();
+            _jobScheduler.Received(1).Schedule(_settingsStore.Settings.RootItem, true);
         }
 
         [TestMethod]

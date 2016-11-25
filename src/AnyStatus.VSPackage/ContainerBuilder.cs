@@ -33,7 +33,7 @@ namespace AnyStatus.VSPackage
             container.Register<ISettingsStore, SettingsStore>().AsSingleton();
             container.Register<ILogger, Logger>().AsSingleton();
             container.Register<IJobScheduler, JobScheduler>().AsSingleton();
-            container.Register<ScheduledJob>().AsMultiInstance();
+            container.Register<IScheduledJob, ScheduledJob>().AsMultiInstance();
             container.Register<IUsageReporter, AnalyticsReporter>().AsSingleton();
 
             container.Register<ICommandRegistry, CommandRegistry>();

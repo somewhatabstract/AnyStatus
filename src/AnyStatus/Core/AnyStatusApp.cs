@@ -33,6 +33,8 @@ namespace AnyStatus
                 _commandRegistry.RegisterCommands();
 
                 await LoadSettings().ConfigureAwait(false);
+
+                _settingsStore.SettingsReset += OnSettingsReset;
             }
             catch (Exception ex)
             {
@@ -45,6 +47,8 @@ namespace AnyStatus
             try
             {
                 _jobScheduler.Start();
+
+                _jobScheduler.Schedule(_settingsStore.Settings.RootItem, true);
 
                 _usageReporter.ReportStartSession();
             }
@@ -75,6 +79,20 @@ namespace AnyStatus
             _logger.IsEnabled = _settingsStore.Settings.DebugMode;
             _usageReporter.ClientId = _settingsStore.Settings.ClientId;
             _usageReporter.IsEnabled = _settingsStore.Settings.ReportAnonymousUsage;
+        }
+
+        private void OnSettingsReset(object sender, EventArgs e)
+        {
+            try
+            {
+                _jobScheduler.Restart();
+
+                _jobScheduler.Schedule(_settingsStore.Settings.RootItem, true);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "An error occurred while restarting job scheduler.");
+            }
         }
     }
 }

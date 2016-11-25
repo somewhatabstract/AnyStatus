@@ -7,23 +7,17 @@ namespace AnyStatus
     public class JobScheduler : IJobScheduler
     {
         private readonly ILogger _logger;
-        private ISettingsStore _settingsStore;
-        private readonly Func<ScheduledJob> _jobFactory;
+        private readonly Func<IScheduledJob> _jobFactory;
 
-        public JobScheduler(Func<ScheduledJob> jobFactory, ISettingsStore settingsStore, ILogger logger)
+        public JobScheduler(Func<IScheduledJob> jobFactory, ILogger logger)
         {
-            _jobFactory = Preconditions.CheckNotNull(jobFactory, nameof(jobFactory));
-            _settingsStore = Preconditions.CheckNotNull(settingsStore, nameof(settingsStore));
             _logger = Preconditions.CheckNotNull(logger, nameof(logger));
-
-            _settingsStore.SettingsReset += OnSettingsReset;
+            _jobFactory = Preconditions.CheckNotNull(jobFactory, nameof(jobFactory));
         }
 
         public void Start()
         {
             JobManager.Start();
-
-            Schedule(_settingsStore.Settings?.RootItem, includeChildren: true);
         }
 
         public void Stop()
@@ -88,12 +82,21 @@ namespace AnyStatus
             }
         }
 
-        private void RemoveAll()
+        public void RemoveAll()
         {
             foreach (var schedule in JobManager.AllSchedules)
             {
                 JobManager.RemoveJob(schedule.Name);
             }
+        }
+
+        public void Restart()
+        {
+            Stop();
+
+            RemoveAll();
+
+            Start();
         }
 
         private void Schedule(Item item)
@@ -116,22 +119,6 @@ namespace AnyStatus
                         .AndEvery(item.Interval).Minutes());
 
             _logger.Info($"\"{item.Name}\" scheduled to run now and every {item.Interval} minutes.");
-        }
-
-        private void OnSettingsReset(object sender, EventArgs e)
-        {
-            try
-            {
-                Stop();
-
-                RemoveAll();
-
-                Start();
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, "An error occurred while restarting job scheduler.");
-            }
         }
     }
 }

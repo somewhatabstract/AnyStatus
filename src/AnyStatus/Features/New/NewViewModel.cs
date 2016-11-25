@@ -1,146 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Windows;
 using System.Windows.Input;
 
 namespace AnyStatus
 {
-    public class NewViewModel : INotifyPropertyChanged
+    public class NewViewModel : NotifyPropertyChanged
     {
         private readonly IMediator _mediator;
-
         private Template _selectedTemplate;
-        private readonly ISettingsStore _settingsStore;
-        private readonly IJobScheduler _jobScheduler;
-        private readonly IUsageReporter _usageReporter;
-        private readonly ILogger _logger;
         private bool _canTest = true;
-        private readonly Func<ScheduledJob> _jobFactory;
 
         public event EventHandler CloseRequested;
 
-        public NewViewModel(
-            IJobScheduler jobScheduler,
-            ISettingsStore settingsStore,
-            IUsageReporter usageReporter,
-            IEnumerable<Template> templates,
-            Func<ScheduledJob> jobFactory,
-            IMediator mediator,
-            ILogger logger)
+        public NewViewModel(IMediator mediator, IEnumerable<Template> templates)
         {
             _mediator = Preconditions.CheckNotNull(mediator, nameof(mediator));
-
-
-            _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
-            _settingsStore = Preconditions.CheckNotNull(settingsStore, nameof(settingsStore));
-            _usageReporter = Preconditions.CheckNotNull(usageReporter, nameof(usageReporter));
-            _logger = Preconditions.CheckNotNull(logger, nameof(logger));
             Templates = Preconditions.CheckNotNull(templates, nameof(templates));
-            _jobFactory = Preconditions.CheckNotNull(jobFactory, nameof(jobFactory));
-
-            SelectedTemplate = Templates?.FirstOrDefault();
 
             Initialize();
         }
 
         private void Initialize()
         {
-            AddCommand = new RelayCommand(p => AddNewItem(p as Item));
+            AddCommand = new RelayCommand(item => _mediator.TrySend(new AddCommand(item as Item, Parent, RequestClose)));
 
-            TestCommand = new RelayCommand(p => Test(p as Item), p => CanTest);
+            TestCommand = new RelayCommand(item => _mediator.TrySend(new TestCommand(item as Item, ToggleCanTest)), p => CanTest);
 
-            CancelCommand = new RelayCommand(p => CloseRequested?.Invoke(this, EventArgs.Empty));
+            CancelCommand = new RelayCommand(p => RequestClose());
+
+            SelectedTemplate = Templates?.FirstOrDefault();
         }
 
-        private void AddNewItem(Item item)
+        private void RequestClose()
         {
-            try
-            {
-                EnsureItemIsValid(item);
-
-                if (Parent != null) Parent.Add(item);
-                else _settingsStore.Settings.RootItem.Add(item);
-
-                _settingsStore.TrySave();
-
-                _jobScheduler.Schedule(item);
-
-                _usageReporter.ReportEvent("Items", "Add", item.GetType().Name);
-
-                CloseRequested?.Invoke(this, EventArgs.Empty);
-            }
-            catch (ValidationException)
-            {
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, "Failed to add new item");
-            }
+            CloseRequested?.Invoke(this, EventArgs.Empty);
         }
 
-        private void EnsureItemIsValid(Item item)
+        private void ToggleCanTest()
         {
-            if (item == null)
-                throw new InvalidOperationException("Item cannot be null.");
-
-            List<ValidationResult> validationResults = null;
-
-            item.Validate(out validationResults);
-
-            if (validationResults.Any())
-            {
-                ShowValidationErrorsDialog(validationResults);
-
-                throw new ValidationException();
-            }
+            CanTest = !CanTest;
         }
 
-        private async void Test(Item item)
-        {
-            try
-            {
-                CanTest = false;
-
-                EnsureItemIsValid(item);
-
-                var job = _jobFactory();
-
-                job.Item = item;
-
-                await job.ExecuteAsync();
-            }
-            catch (ValidationException)
-            {
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, "Test failed");
-            }
-            finally
-            {
-                CanTest = true;
-            }
-        }
-
-        private static void ShowValidationErrorsDialog(IEnumerable<ValidationResult> validationResults)
-        {
-            if (validationResults == null || !validationResults.Any())
-                return;
-
-            var sb = new StringBuilder();
-
-            foreach (var result in validationResults)
-            {
-                sb.AppendLine(result.ErrorMessage);
-            }
-
-            MessageBox.Show(sb.ToString(), "Validation", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-        }
+        #region Properties
 
         public Template SelectedTemplate
         {
@@ -165,6 +67,8 @@ namespace AnyStatus
             set { _canTest = value; OnPropertyChanged(); }
         }
 
+        #endregion
+
         #region Commands
 
         public ICommand AddCommand { get; set; }
@@ -172,17 +76,6 @@ namespace AnyStatus
         public ICommand TestCommand { get; set; }
 
         public ICommand CancelCommand { get; set; }
-
-        #endregion
-
-        #region INotifyPropertyChanged
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         #endregion
     }

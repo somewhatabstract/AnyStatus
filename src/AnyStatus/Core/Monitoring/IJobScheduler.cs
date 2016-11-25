@@ -11,9 +11,13 @@
         void Execute(Item item);
 
         void Remove(Item item);
-         
+
+        void RemoveAll();
+
         void ExecuteAll();
 
         void Stop();
+
+        void Restart();
     }
 }

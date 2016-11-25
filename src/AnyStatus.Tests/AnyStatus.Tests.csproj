@@ -133,6 +133,10 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tests\Commands\TestCommandTests.cs" />
+    <Compile Include="Tests\Commands\RefreshCommandTests.cs" />
+    <Compile Include="Tests\Commands\AddFolderCommandTests.cs" />
+    <Compile Include="Tests\Commands\AddCommandTests.cs" />
     <Compile Include="Tests\ItemTests.cs" />
     <Compile Include="Tests\AnalyticsReporterTests.cs" />
     <Compile Include="Tests\FolderTests.cs" />

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace AnyStatus
 {
-    public class ScheduledJob : IJob
+    public class ScheduledJob : IScheduledJob
     {
         private ILogger _logger;
         private IMediator _mediator;

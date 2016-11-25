@@ -301,7 +301,7 @@ namespace AnyStatus.Tests
         [TestMethod]
         public void IsSchedulable_Should_Return_False_When_Item_Is__Not_IScheduledItem()
         {
-            var item = new Dummy()
+            var item = new Item()
             {
                 IsEnabled = true,
                 Id = Guid.Empty

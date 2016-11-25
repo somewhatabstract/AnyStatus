@@ -142,12 +142,15 @@
     <Compile Include="Core\ICommandRegistry.cs" />
     <Compile Include="Core\Mediator\IMediator.cs" />
     <Compile Include="Core\Mediator\Mediator.cs" />
+    <Compile Include="Core\Monitoring\IScheduledJob.cs" />
     <Compile Include="Core\Settings\UserSettings.cs" />
     <Compile Include="Core\Settings\ISettings.cs" />
     <Compile Include="Core\Settings\ISettingsStore.cs" />
     <Compile Include="Core\Settings\SettingsStore.cs" />
     <Compile Include="Core\Monitoring\ICanOpenInBrowser.cs" />
     <Compile Include="Core\Monitoring\IOpenInBrowser.cs" />
+    <Compile Include="Features\New\TestCommand.cs" />
+    <Compile Include="Features\New\AddCommand.cs" />
     <Compile Include="Features\ToolWindow\Commands\AddFolderCommand.cs" />
     <Compile Include="Features\ToolWindow\Commands\ItemCommand.cs" />
     <Compile Include="Features\ToolWindow\Commands\DuplicateCommand.cs" />
