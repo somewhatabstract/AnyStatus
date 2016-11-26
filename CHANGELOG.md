@@ -1,13 +1,10 @@
 # Roadmap
 
-- [x] Status colors customization
 - [ ] TFS work item status
 - [ ] JIRA work item status
 - [ ] Travis CI build
 - [ ] Circle CI build
 - [ ] Custom commands (for example, queue new build, open in browser, etc.)
-- [ ] Synchronize user settings between Visual Studio instances
-- [ ] Replace AppSettings with WritableSettingsStore (?)
 - [ ] Replace TinyIoc with MEF
 
 Features that have a checkmark are complete and available for
@@ -23,11 +20,11 @@ on the official Visual Studio extension gallery.
 
 **2016-11-20**
 
+- [x] Open builds in browser
 - [x] Status colors customization
-- [x] Vector status icons
+- [x] Status icon indicators
 - [x] User settings refactoring
 - [x] Set treeview inactive selection color as active
-- [x] Open Jenkins and AppVeyor builds in web browser
 - [x] UI design improvements
 
 ##0.9
