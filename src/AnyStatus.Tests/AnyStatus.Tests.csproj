@@ -134,6 +134,7 @@
   <ItemGroup>
     <Compile Include="Commands\EnableCommandTests.cs" />
     <Compile Include="Commands\DisableCommandTests.cs" />
+    <Compile Include="Commands\DuplicateCommandTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Commands\TestCommandTests.cs" />
     <Compile Include="Commands\RefreshCommandTests.cs" />
