@@ -12,11 +12,13 @@ namespace AnyStatus
     {
         private readonly ISettingsStore _settingsStore;
         private readonly IJobScheduler _jobScheduler;
+        private readonly IDialogService _dialogService;
 
-        public DeleteCommandHandler(IJobScheduler jobScheduler, ISettingsStore settingsStore)
+        public DeleteCommandHandler(IJobScheduler jobScheduler, ISettingsStore settingsStore, IDialogService dialogService)
         {
-            _settingsStore = Preconditions.CheckNotNull(settingsStore, nameof(settingsStore)); ;
-            _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler)); ;
+            _settingsStore = Preconditions.CheckNotNull(settingsStore, nameof(settingsStore));
+            _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
+            _dialogService = Preconditions.CheckNotNull(dialogService, nameof(dialogService));
         }
 
         public void Handle(DeleteCommand command)
@@ -24,7 +26,7 @@ namespace AnyStatus
             if (command == null)
                 throw new InvalidOperationException();
 
-            var result = System.Windows.MessageBox.Show($"Are you sure you want to delete {command.Item.Name}?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
+            var result = _dialogService.Show($"Are you sure you want to delete {command.Item.Name}?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
 
             if (result != MessageBoxResult.Yes)
                 return;

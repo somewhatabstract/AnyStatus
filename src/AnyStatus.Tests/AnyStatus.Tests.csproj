@@ -139,6 +139,7 @@
     <Compile Include="Tests\Commands\AddCommandTests.cs" />
     <Compile Include="Tests\Commands\ItemCommandTests.cs" />
     <Compile Include="Tests\Commands\EditCommandTests.cs" />
+    <Compile Include="Tests\Commands\DeleteCommandTests.cs" />
     <Compile Include="Tests\ItemTests.cs" />
     <Compile Include="Tests\AnalyticsReporterTests.cs" />
     <Compile Include="Tests\FolderTests.cs" />
