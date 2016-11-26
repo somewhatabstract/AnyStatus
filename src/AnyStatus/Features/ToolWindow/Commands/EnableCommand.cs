@@ -12,13 +12,11 @@ namespace AnyStatus
     public class EnableCommandHandler : IHandler<EnableCommand>
     {
         private bool _saveChanges;
-        private readonly ILogger _logger;
         private readonly IJobScheduler _jobScheduler;
         private readonly ISettingsStore _settingsStore;
 
-        public EnableCommandHandler(ISettingsStore settingsStore, IJobScheduler jobScheduler, ILogger logger)
+        public EnableCommandHandler(ISettingsStore settingsStore, IJobScheduler jobScheduler)
         {
-            _logger = Preconditions.CheckNotNull(logger, nameof(logger));
             _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
             _settingsStore = Preconditions.CheckNotNull(settingsStore, nameof(settingsStore));
         }
@@ -39,13 +37,14 @@ namespace AnyStatus
                 foreach (var child in item.Items)
                     Enable(child);
 
-            if (item.IsDisabled && item is IScheduledItem)
+            if (item.IsDisabled)
             {
                 item.IsEnabled = true;
 
-                item.State = State.Unknown;
+                item.State = State.None;
 
-                EnableOrAddSchedule(item);
+                if (item is IScheduledItem)
+                    EnableOrAddSchedule(item);
 
                 _saveChanges = true;
             }
@@ -53,20 +52,15 @@ namespace AnyStatus
 
         private void EnableOrAddSchedule(Item item)
         {
-            var schedule = JobManager.AllSchedules.FirstOrDefault(k => k.Name == item.Id.ToString());
+            if (_jobScheduler.Contains(item))
+            {
+                _jobScheduler.Enable(item);
 
-            if (schedule == null)
+                _jobScheduler.Execute(item);
+            }
+            else
             {
                 _jobScheduler.Schedule(item, includeChildren: false);
-
-                return;
-            }
-
-            if (schedule.Disabled)
-            {
-                schedule.Enable();
-
-                schedule.Execute();
             }
         }
 

@@ -92,6 +92,27 @@ namespace AnyStatus
             Start();
         }
 
+        public void Disable(Item item)
+        {
+            var schedule = JobManager.AllSchedules.FirstOrDefault(k => k.Name == item.Id.ToString());
+
+            if (schedule != null)
+                schedule.Disable();
+        }
+
+        public void Enable(Item item)
+        {
+            var schedule = JobManager.AllSchedules.FirstOrDefault(k => k.Name == item.Id.ToString());
+
+            if (schedule != null)
+                schedule.Enable();
+        }
+
+        public bool Contains(Item item)
+        {
+            return JobManager.AllSchedules.Any(k => k.Name == item.Id.ToString());
+        }
+
         private void Schedule(Item item)
         {
             if (JobManager.AllSchedules.Any(k => k.Name == item.Id.ToString()))

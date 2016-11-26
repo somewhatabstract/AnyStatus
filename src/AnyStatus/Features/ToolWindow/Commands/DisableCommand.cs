@@ -12,13 +12,13 @@ namespace AnyStatus
     public class DisableCommandHandler : IHandler<DisableCommand>
     {
         private bool _saveChanges;
-        private readonly ILogger _logger;
+        private readonly IJobScheduler _jobScheduler;
         private readonly ISettingsStore _settingsStore;
 
-        public DisableCommandHandler(ISettingsStore settingsStore, ILogger logger)
+        public DisableCommandHandler(ISettingsStore settingsStore, IJobScheduler jobScheduler)
         {
-            _logger = Preconditions.CheckNotNull(logger, nameof(logger));
             _settingsStore = Preconditions.CheckNotNull(settingsStore, nameof(settingsStore));
+            _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
         }
 
         public void Handle(DisableCommand command)
@@ -37,22 +37,15 @@ namespace AnyStatus
                 foreach (var child in item.Items)
                     Disable(child);
 
-            if (item.IsEnabled && item is IScheduledItem)
-            {
-                DisableSchedule(item.Id.ToString());
+            if (item.IsDisabled)
+                return;
 
-                item.IsEnabled = false;
+            if (item is IScheduledItem)
+                _jobScheduler.Disable(item);
 
-                _saveChanges = true;
-            }
-        }
+            item.IsEnabled = false;
 
-        private static void DisableSchedule(string name)
-        {
-            var schedule = JobManager.AllSchedules.FirstOrDefault(k => k.Name == name);
-
-            if (schedule != null && !schedule.Disabled)
-                schedule.Disable();
+            _saveChanges = true;
         }
 
         private void SaveChanges()

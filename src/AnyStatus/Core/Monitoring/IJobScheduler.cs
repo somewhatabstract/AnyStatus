@@ -17,5 +17,11 @@
         void Stop();
 
         void Restart();
+
+        void Disable(Item item);
+
+        void Enable(Item item);
+
+        bool Contains(Item item);
     }
 }
