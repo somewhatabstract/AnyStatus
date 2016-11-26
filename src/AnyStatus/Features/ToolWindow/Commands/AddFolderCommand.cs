@@ -2,6 +2,8 @@
 
 namespace AnyStatus
 {
+    //todo: should be AddCommand?
+
     public class AddFolderCommand : ItemCommand
     {
         public AddFolderCommand(Item item) : base(item) { }

@@ -9,7 +9,7 @@ namespace AnyStatus
 {
     public class EditCommand : ItemCommand
     {
-        public EditCommand(Item item, Item source, Action close) : base(item)
+        public EditCommand(Item target, Item source, Action close) : base(target)
         {
             Source = source;
             Close = close;
@@ -50,25 +50,6 @@ namespace AnyStatus
             _settingsStore.TrySave();
 
             command.Close();
-
-            //private void Save()
-            //{
-            //    try
-            //    {
-            //        //todo: validate item
-            //        _sourceItem.ReplaceWith(_item);
-            //        _settingsStore.TrySave();
-            //        _jobScheduler.Reschedule(_item);
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        _logger.Info("Failed to save changes. Exception:" + ex.ToString());
-            //    }
-            //    finally
-            //    {
-            //        CloseRequested?.Invoke(this, EventArgs.Empty);
-            //    }
-            //}
         }
 
         private bool Validate(Item item)

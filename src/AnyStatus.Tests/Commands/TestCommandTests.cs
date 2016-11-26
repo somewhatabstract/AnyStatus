@@ -12,7 +12,7 @@ namespace AnyStatus.Tests.Tests.Commands
         [TestMethod]
         public async Task Should_ExecuteScheduledJob()
         {
-            State.SetMetadata(Theme.Default.Metadata);
+            
             bool canExecute = true;
             string message = string.Empty;
             var scheduledJob = Substitute.For<IScheduledJob>();

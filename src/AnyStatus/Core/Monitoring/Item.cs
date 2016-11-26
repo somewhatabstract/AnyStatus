@@ -151,7 +151,7 @@ namespace AnyStatus
 
         #region Methods
 
-        public void Add(Item item)
+        public virtual void Add(Item item)
         {
             if (item == null || Items == null)
                 throw new InvalidOperationException();
@@ -196,7 +196,7 @@ namespace AnyStatus
             }
         }
 
-        public void Delete()
+        public virtual void Delete()
         {
             if (Parent == null || Parent.Items == null)
                 throw new InvalidOperationException();
@@ -207,7 +207,7 @@ namespace AnyStatus
             }
         }
 
-        public Item Duplicate()
+        public virtual Item Duplicate()
         {
             if (Parent == null)
                 throw new InvalidOperationException("Item must have a Parent");
@@ -250,7 +250,7 @@ namespace AnyStatus
             }
         }
 
-        public void MoveUp()
+        public virtual void MoveUp()
         {
             if (CanMoveUp())
             {
@@ -267,7 +267,7 @@ namespace AnyStatus
                    Parent.Items.IndexOf(this) > 0;
         }
 
-        public void MoveDown()
+        public virtual void MoveDown()
         {
             if (CanMoveDown())
             {
@@ -341,7 +341,7 @@ namespace AnyStatus
             Parent.Items.Insert(targetIndex + 1, this);
         }
 
-        public void ReplaceWith(Item item)
+        public virtual void ReplaceWith(Item item)
         {
             if (Parent == null)
                 throw new InvalidOperationException();

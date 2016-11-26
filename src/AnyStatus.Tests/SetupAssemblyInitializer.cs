@@ -8,6 +8,8 @@ namespace AnyStatus.Tests
         [AssemblyInitialize]
         public static void AssemblyInit(TestContext context)
         {
+            State.SetMetadata(Theme.Default.Metadata);
+
             TinyIoCContainer.Current.RegisterMultiple(typeof(Item), new[] { typeof(Dummy) });
 
             TinyIoCContainer.Current.Register(typeof(IHandler<Dummy>), typeof(DummyHandler)).AsMultiInstance();

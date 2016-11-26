@@ -13,20 +13,18 @@ namespace AnyStatus.Tests.Commands
         {
             var jobScheduler = Substitute.For<IJobScheduler>();
             var settingsStore = Substitute.For<ISettingsStore>();
-
-            var parent = new Item();
-            var item = new Item();
-
-            parent.Add(item);
-
+            var item = Substitute.For<Item>();
+            var clone = new Item();
             var command = new DuplicateCommand(item);
             var handler = new DuplicateCommandHandler(jobScheduler, settingsStore);
 
+            item.Duplicate().Returns(clone);
+
             handler.Handle(command);
 
-            Assert.IsNotNull(parent.Items.ElementAtOrDefault(1));
+            item.Received().Duplicate();
 
-            jobScheduler.Received().Schedule(parent.Items[1], false);
+            jobScheduler.Received().Schedule(clone, false);
 
             settingsStore.Received().TrySave();
         }

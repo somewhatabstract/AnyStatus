@@ -14,21 +14,17 @@ namespace AnyStatus.Tests.Tests.Commands
             var jobScheduler = Substitute.For<IJobScheduler>();
             var settingsStore = Substitute.For<ISettingsStore>();
             var dialogService = Substitute.For<IDialogService>();
+            var item = Substitute.For<Dummy>();
 
             dialogService.Show(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<MessageBoxButton>(), Arg.Any<MessageBoxImage>())
                 .Returns(MessageBoxResult.Yes);
-
-            var parent = new Item();
-            var item = new Dummy();
-
-            parent.Add(item);
 
             var command = new DeleteCommand(item);
             var handler = new DeleteCommandHandler(jobScheduler, settingsStore, dialogService);
 
             handler.Handle(command);
 
-            Assert.IsFalse(parent.Contains(item));
+            item.Received().Delete();
 
             jobScheduler.Received().Remove(item);
         }

@@ -135,6 +135,8 @@
     <Compile Include="Commands\EnableCommandTests.cs" />
     <Compile Include="Commands\DisableCommandTests.cs" />
     <Compile Include="Commands\DuplicateCommandTests.cs" />
+    <Compile Include="Commands\MoveUpCommandTests.cs" />
+    <Compile Include="Commands\MoveDownCommandTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Commands\TestCommandTests.cs" />
     <Compile Include="Commands\RefreshCommandTests.cs" />
@@ -146,7 +148,7 @@
     <Compile Include="Core\ItemTests.cs" />
     <Compile Include="Core\AnalyticsReporterTests.cs" />
     <Compile Include="Core\FolderTests.cs" />
-    <Compile Include="Core\SetupAssemblyInitializer.cs" />
+    <Compile Include="SetupAssemblyInitializer.cs" />
     <Compile Include="Core\SettingsStoreTests.cs" />
     <Compile Include="Core\AnyStatusAppTests.cs" />
     <Compile Include="Core\JobSchedulerTests.cs" />
