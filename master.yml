@@ -13,10 +13,6 @@ configuration: Release
 
 platform: Any CPU
 
-environment:
-  my_variable:
-    secure: QClT3Pvt7uimgQ4FrF6qqZfvEY3orUlCbdMH3THzB9s2HCQuaMUhM9J6K4KXMe3x
-
 install:
   - ps: (new-object Net.WebClient).DownloadString("https://raw.github.com/madskristensen/ExtensionScripts/master/AppVeyor/vsix.ps1") | iex
 
@@ -29,5 +25,3 @@ build_script:
 
 after_test:
   - ps: Vsix-PushArtifacts | Vsix-PublishToGallery
-  - cmd: .\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -filter:"+[*]*" -target:"C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\MSTest.exe" -targetargs:"/testcontainer:AnyStatus.Tests/bin/release/AnyStatus.Tests.dll" -output:coverage.xml
-  - cmd: .\packages\coveralls.io.1.3.4\tools\coveralls.net.exe --opencover coverage.xml
