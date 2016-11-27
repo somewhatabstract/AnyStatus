@@ -10,7 +10,7 @@ namespace AnyStatus.VSPackage
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)] // Info on this package for Help/About
     [ProvideMenuResource("Menus.ctmenu", 1)]
-    [ProvideToolWindow(typeof(ToolWindowHost))]
+    [ProvideToolWindow(typeof(ToolWindowHost), Transient = true)]
     [Guid(PackageGuids.guidToolWindowPackageString)]
     [ProvideOptionPage(typeof(GeneralOptions), "AnyStatus", "General", 0, 0, true)]
     [ProvideOptionPage(typeof(UserInterfaceOptions), "AnyStatus", "User Interface", 0, 1, true)]
