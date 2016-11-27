@@ -14,7 +14,7 @@ configuration: Release
 platform: Any CPU
 
 environment:
-    my_variable:
+    COVERALLS_REPO_TOKEN:
         secure: QClT3Pvt7uimgQ4FrF6qqZfvEY3orUlCbdMH3THzB9s2HCQuaMUhM9J6K4KXMe3x
     
 install:
