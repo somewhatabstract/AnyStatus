@@ -15,7 +15,7 @@ platform: Any CPU
 
 environment:
     COVERALLS_REPO_TOKEN:
-        secure: QClT3Pvt7uimgQ4FrF6qqZfvEY3orUlCbdMH3THzB9s2HCQuaMUhM9J6K4KXMe3x
+        secure: jlcm0lBlKUqgOgzGEtwALYs3UT1LcHOJ8gTw4/Z+BrHnXharzwEh1FM+fDYEQ715
     
 install:
   - ps: (new-object Net.WebClient).DownloadString("https://raw.github.com/madskristensen/ExtensionScripts/master/AppVeyor/vsix.ps1") | iex
