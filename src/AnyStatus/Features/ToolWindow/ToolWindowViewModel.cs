@@ -31,7 +31,7 @@ namespace AnyStatus
 
             DeleteCommand = new RelayCommand(item => _mediator.TrySend(new DeleteCommand(item as Item)));
 
-            DuplicateCommand = new RelayCommand(item => _mediator.TrySend(item as Item));
+            DuplicateCommand = new RelayCommand(item => _mediator.TrySend(new DuplicateCommand(item as Item)));
 
             ShowAddDialogCommand = new RelayCommand(item => _mediator.TrySend(new ShowAddDialogCommand(item as Item)));
 
