@@ -10,7 +10,7 @@ namespace AnyStatus
 {
     [DisplayName("HTTP")]
     [Description("")]
-    public class HttpStatus : Item, IScheduledItem
+    public class HttpStatus : Item, IScheduledItem, ICanOpenInBrowser
     {
         public HttpStatus()
         {
@@ -63,6 +63,24 @@ namespace AnyStatus
                     });
                 }
             }
+        }
+    }
+
+    public class OpenHttpInBrowser : IOpenInBrowser<HttpStatus>
+    {
+        private readonly IProcessStarter _processStarter;
+
+        public OpenHttpInBrowser(IProcessStarter processStarter)
+        {
+            _processStarter = Preconditions.CheckNotNull(processStarter, nameof(processStarter));
+        }
+
+        public void Handle(HttpStatus item)
+        {
+            if (item == null || string.IsNullOrEmpty(item.Url))
+                return;
+
+            _processStarter.Start(item.Url);
         }
     }
 }
