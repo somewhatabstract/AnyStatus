@@ -404,6 +404,7 @@ namespace AnyStatus.Tests
             var clone = item.Duplicate();
 
             Assert.AreNotSame(item, clone);
+            Assert.AreNotEqual(item.Id, clone.Id);
         }
 
         [TestMethod]

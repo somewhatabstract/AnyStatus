@@ -214,6 +214,8 @@ namespace AnyStatus
 
             var item = (Item)Clone();
 
+            item.Id = Guid.NewGuid();
+
             item.Name = GetNextName();
 
             Parent.Add(item);
