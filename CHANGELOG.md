@@ -20,7 +20,7 @@ on the official Visual Studio extension gallery.
 
 **2016-11-20**
 
-- [x] Open builds in browser
+- [x] Added "Open in browser" to context menu
 - [x] Status colors customization
 - [x] Status icon indicators
 - [x] User settings refactoring
