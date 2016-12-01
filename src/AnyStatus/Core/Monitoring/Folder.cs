@@ -65,5 +65,20 @@ namespace AnyStatus
         {
             return a.State.Metadata.Priority > b.State.Metadata.Priority ? a : b;
         }
+
+        #region ICloneable
+
+        public override object Clone()
+        {
+            var clone = (Item)base.Clone();
+
+            foreach (var item in Items)
+                if (item != null)
+                    clone.Add((Item)item.Clone());
+
+            return clone;
+        }
+
+        #endregion
     }
 }

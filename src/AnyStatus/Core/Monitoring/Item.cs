@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
@@ -439,9 +440,23 @@ namespace AnyStatus
 
         #region ICloneable
 
-        public object Clone()
+        public virtual object Clone()
         {
-            return MemberwiseClone();
+            var clone = (Item)Activator.CreateInstance(GetType());
+
+            clone.Id = Guid.NewGuid();
+
+            var properties = from p in GetType().GetProperties()
+                             where p.CanWrite &&
+                                   p.Name != nameof(Id) &&
+                                   p.Name != nameof(Parent) &&
+                                   p.Name != nameof(Items)
+                             select p;
+
+            foreach (var property in properties)
+                property.SetValue(clone, property.GetValue(this, null), null);
+
+            return clone;
         }
 
         #endregion

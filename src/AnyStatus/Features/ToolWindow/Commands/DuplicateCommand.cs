@@ -25,7 +25,7 @@ namespace AnyStatus
 
             var clone = command.Item.Duplicate();
 
-            _jobScheduler.Schedule(clone);
+            _jobScheduler.Schedule(clone, includeChildren: true);
 
             _settingsStore.TrySave();
         }

@@ -1,4 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace AnyStatus.Tests
 {
@@ -152,6 +154,26 @@ namespace AnyStatus.Tests
             item2.MoveTo(folder2);
 
             Assert.AreSame(State.None, folder1.State);
+        }
+
+        [TestMethod]
+        public void Clone_Should_DeepCopy()
+        {
+            var folder = new Folder();
+            var subFolder = new Folder();
+            var item = new Item();
+
+            folder.Add(subFolder);
+            subFolder.Add(item);
+
+            var clone = (Folder)folder.Clone();
+
+            Assert.AreNotEqual(clone, folder);
+
+            Assert.AreNotEqual(clone.Items, folder.Items);
+
+            Assert.AreNotEqual(clone.Items[0], subFolder);
+            Assert.AreNotEqual(clone.Items[0].Items[0], item);
         }
     }
 }

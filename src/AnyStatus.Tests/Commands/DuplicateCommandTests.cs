@@ -9,7 +9,7 @@ namespace AnyStatus.Tests.Commands
     public class DuplicateCommandTests
     {
         [TestMethod]
-        public void Should_Duplication_Schedule_And_Save()
+        public void Should_Duplicate_Schedule_And_Save()
         {
             var jobScheduler = Substitute.For<IJobScheduler>();
             var settingsStore = Substitute.For<ISettingsStore>();
@@ -24,7 +24,7 @@ namespace AnyStatus.Tests.Commands
 
             item.Received().Duplicate();
 
-            jobScheduler.Received().Schedule(clone, false);
+            jobScheduler.Received().Schedule(clone, true);
 
             settingsStore.Received().TrySave();
         }
