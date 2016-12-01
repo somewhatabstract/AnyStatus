@@ -20,8 +20,8 @@ on the official Visual Studio extension gallery.
 
 **2016-11-20**
 
-- [x] Open builds in browser
-- [x] Status colors customization
+- [x] Added "Open in browser" option to context menu
+- [x] Replaced status icon with vector graphics
 - [x] Status icon indicators
 - [x] User settings refactoring
 - [x] Set treeview inactive selection color as active
@@ -31,7 +31,7 @@ on the official Visual Studio extension gallery.
 
 **2016-11-03**
 
-- [x] Added status icons (show/hide colored or icon status indicators in settings)
+- [x] Status icon indicators
 - [x] Added aggregated status indicators to Folders
 - [x] Added tooltips that describes the status and type of the monitors.
 - [x] Duplicate items
