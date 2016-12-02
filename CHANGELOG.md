@@ -20,6 +20,7 @@ on the official Visual Studio extension gallery.
 
 **2016-11-20**
 
+- [x] Duplicate folders
 - [x] Added "Open in browser" option to context menu
 - [x] Replaced status icon with vector graphics
 - [x] Status icon indicators
