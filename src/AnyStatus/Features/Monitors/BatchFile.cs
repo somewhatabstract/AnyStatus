@@ -6,9 +6,9 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace AnyStatus
 {
-    [CategoryOrder("Batch File", 10)]
-    [DisplayName("Batch File")]
-    [Description("Execute a batch file.")]
+    [CategoryOrder("Batch Script", 10)]
+    [DisplayName("Batch Script")]
+    [Description("Execute a batch script.")]
     public class BatchFile : Item, IScheduledItem
     {
         public BatchFile()
@@ -37,6 +37,8 @@ namespace AnyStatus
 
     public class BatchFileHandler : IHandler<BatchFile>
     {
+        //todo: use IProcessStarter
+
         [DebuggerStepThrough]
         public void Handle(BatchFile item)
         {

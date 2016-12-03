@@ -44,6 +44,8 @@ namespace AnyStatus
 
     public class PowerShellScriptHandler : IHandler<PowerShellScript>
     {
+        //todo: use IProcessStarter
+
         private ILogger _logger;
 
         public PowerShellScriptHandler(ILogger logger)
