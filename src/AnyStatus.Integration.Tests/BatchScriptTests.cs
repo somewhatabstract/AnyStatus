@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NSubstitute;
 using System.IO;
 
 namespace AnyStatus.Integration.Tests
@@ -8,6 +8,8 @@ namespace AnyStatus.Integration.Tests
     public class BatchScriptTests
     {
         private static TestContext _testContext;
+
+        IProcessStarter _processStarter = new ProcessStarter(Substitute.For<ILogger>());
 
         [ClassInitialize]
         public static void SetupTests(TestContext testContext)
@@ -24,7 +26,7 @@ namespace AnyStatus.Integration.Tests
                 FileName = Path.Combine(_testContext.TestRunDirectory, "Out", "BatchScript.cmd")
             };
 
-            var handler = new BatchFileHandler();
+            var handler = new BatchFileHandler(_processStarter);
 
             handler.Handle(request);
 
@@ -40,7 +42,7 @@ namespace AnyStatus.Integration.Tests
                 FileName = string.Empty
             };
 
-            var handler = new BatchFileHandler();
+            var handler = new BatchFileHandler(_processStarter);
 
             handler.Handle(request);
         }

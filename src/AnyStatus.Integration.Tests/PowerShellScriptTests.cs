@@ -9,7 +9,7 @@ namespace AnyStatus.Integration.Tests
     {
         private static TestContext _testContext;
 
-        ILogger _logger = Substitute.For<ILogger>();
+        IProcessStarter _processStarter = new ProcessStarter(Substitute.For<ILogger>());
 
         [ClassInitialize]
         public static void SetupTests(TestContext testContext)
@@ -21,12 +21,13 @@ namespace AnyStatus.Integration.Tests
         [DeploymentItem(@"Scripts\PowerShell.ps1")]
         public void Should_Execute_PowerShellScript()
         {
+
             var request = new PowerShellScript
             {
                 FileName = Path.Combine(_testContext.TestRunDirectory, "Out", "PowerShell.ps1")
             };
 
-            var handler = new PowerShellScriptHandler(_logger);
+            var handler = new PowerShellScriptHandler(_processStarter);
 
             handler.Handle(request);
 
@@ -42,7 +43,7 @@ namespace AnyStatus.Integration.Tests
                 FileName = string.Empty
             };
 
-            var handler = new PowerShellScriptHandler(_logger);
+            var handler = new PowerShellScriptHandler(_processStarter);
 
             handler.Handle(request);
         }

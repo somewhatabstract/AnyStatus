@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.IO;
@@ -37,28 +38,39 @@ namespace AnyStatus
 
     public class BatchFileHandler : IHandler<BatchFile>
     {
-        //todo: use IProcessStarter
+        private readonly IProcessStarter _processStarter;
+
+        public BatchFileHandler(IProcessStarter processStarter)
+        {
+            _processStarter = Preconditions.CheckNotNull(processStarter, nameof(processStarter));
+        }
 
         [DebuggerStepThrough]
         public void Handle(BatchFile item)
         {
-            if (!File.Exists(item.FileName))
-                throw new FileNotFoundException(item.FileName);
+            Validate(item);
 
-            var startInfo = new ProcessStartInfo
+            var info = new ProcessStartInfo
             {
                 FileName = item.FileName,
+                Arguments = item.Arguments,
                 CreateNoWindow = true,
                 ErrorDialog = false,
                 LoadUserProfile = false,
                 WindowStyle = ProcessWindowStyle.Hidden,
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
             };
 
-            var process = Process.Start(startInfo);
+            var exitCode = _processStarter.Start(info, TimeSpan.FromMinutes(item.Timeout));
 
-            process.WaitForExit(item.Timeout * 60 * 1000);
+            item.State = exitCode == 0 ? State.Ok : State.Failed;
+        }
 
-            item.State = (process.ExitCode == 0) ? State.Ok : State.Failed;
+        private static void Validate(BatchFile item)
+        {
+            if (!File.Exists(item.FileName))
+                throw new FileNotFoundException(item.FileName);
         }
     }
 }

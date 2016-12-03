@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.IO;
@@ -44,26 +45,23 @@ namespace AnyStatus
 
     public class PowerShellScriptHandler : IHandler<PowerShellScript>
     {
-        //todo: use IProcessStarter
+        private readonly IProcessStarter _processStarter;
 
-        private ILogger _logger;
-
-        public PowerShellScriptHandler(ILogger logger)
+        public PowerShellScriptHandler(IProcessStarter processStarter)
         {
-            _logger = logger;
+            _processStarter = Preconditions.CheckNotNull(processStarter, nameof(processStarter));
         }
 
         [DebuggerStepThrough]
         public void Handle(PowerShellScript item)
         {
-            if (!File.Exists(item.FileName))
-                throw new FileNotFoundException(item.FileName);
+            Validate(item);
 
             var executionPolicy = item.BypassExecutionPolicy ? "ByPass" : "Restricted";
 
-            var startInfo = new ProcessStartInfo
+            var info = new ProcessStartInfo
             {
-                FileName = "powershell.exe",
+                FileName = "PowerShell.exe",
                 Arguments = $"-ExecutionPolicy {executionPolicy} -File \"{item.FileName}\" {item.Arguments}",
                 CreateNoWindow = true,
                 ErrorDialog = false,
@@ -73,15 +71,15 @@ namespace AnyStatus
                 RedirectStandardOutput = true,
             };
 
-            var process = Process.Start(startInfo);
+            var exitCode = _processStarter.Start(info, TimeSpan.FromMinutes(item.Timeout));
 
-            process.WaitForExit(item.Timeout * 60 * 1000);
+            item.State = exitCode == 0 ? State.Ok : State.Failed;
+        }
 
-            var output = process.StandardOutput.ReadToEnd();
-
-            _logger.Info(output);
-
-            item.State = (process.ExitCode == 0) ? State.Ok : State.Failed;
+        private static void Validate(PowerShellScript item)
+        {
+            if (!File.Exists(item.FileName))
+                throw new FileNotFoundException(item.FileName);
         }
     }
 }
