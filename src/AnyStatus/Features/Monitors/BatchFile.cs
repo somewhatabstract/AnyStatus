@@ -19,19 +19,19 @@ namespace AnyStatus
 
         [Required]
         [PropertyOrder(10)]
-        [Category("Batch File")]
+        [Category("Batch Script")]
         [DisplayName("File Name")]
         [Description("The batch file path")]
         [Editor(typeof(FileEditor), typeof(FileEditor))]
         public string FileName { get; set; }
 
         [PropertyOrder(20)]
-        [Category("Batch File")]
+        [Category("Batch Script")]
         [Description("The batch file arguments")]
         public string Arguments { get; set; }
 
         [PropertyOrder(30)]
-        [Category("Batch File")]
+        [Category("Batch Script")]
         [Description("The script execution timeout in minutes")]
         public int Timeout { get; set; }
     }
@@ -67,6 +67,7 @@ namespace AnyStatus
             item.State = exitCode == 0 ? State.Ok : State.Failed;
         }
 
+        [DebuggerStepThrough]
         private static void Validate(BatchFile item)
         {
             if (!File.Exists(item.FileName))

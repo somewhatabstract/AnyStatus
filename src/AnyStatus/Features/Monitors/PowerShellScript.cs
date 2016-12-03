@@ -76,6 +76,7 @@ namespace AnyStatus
             item.State = exitCode == 0 ? State.Ok : State.Failed;
         }
 
+        [DebuggerStepThrough]
         private static void Validate(PowerShellScript item)
         {
             if (!File.Exists(item.FileName))
