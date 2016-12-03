@@ -1,0 +1,50 @@
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NSubstitute;
+using System.IO;
+
+namespace AnyStatus.Integration.Tests
+{
+    [TestClass]
+    public class PowerShellScriptTests
+    {
+        private static TestContext _testContext;
+
+        ILogger _logger = Substitute.For<ILogger>();
+
+        [ClassInitialize]
+        public static void SetupTests(TestContext testContext)
+        {
+            _testContext = testContext;
+        }
+
+        [TestMethod]
+        [DeploymentItem(@"Scripts\PowerShell.ps1")]
+        public void Should_Execute_PowerShellScript()
+        {
+            var request = new PowerShellScript
+            {
+                FileName = Path.Combine(_testContext.TestRunDirectory, "Out", "PowerShell.ps1")
+            };
+
+            var handler = new PowerShellScriptHandler(_logger);
+
+            handler.Handle(request);
+
+            Assert.AreSame(State.Ok, request.State);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(FileNotFoundException))]
+        public void Should_Throw_When_FileNotFound()
+        {
+            var request = new PowerShellScript
+            {
+                FileName = string.Empty
+            };
+
+            var handler = new PowerShellScriptHandler(_logger);
+
+            handler.Handle(request);
+        }
+    }
+}
