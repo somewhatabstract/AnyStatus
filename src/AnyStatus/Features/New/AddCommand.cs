@@ -9,30 +9,33 @@ namespace AnyStatus
 {
     public class AddCommand : ItemCommand
     {
-        public AddCommand(Item item, Item parent, Action close) : base(item)
+        public AddCommand(Item item, Item parent, Action closeView) : base(item)
         {
             Parent = parent;
-            Close = close;
+            CloseView = closeView;
         }
 
         public Item Parent { get; set; }
 
-        public Action Close { get; set; }
+        public Action CloseView { get; set; }
     }
 
     public class AddCommandHandler : IHandler<AddCommand>
     {
-        private readonly ISettingsStore _settingsStore;
         private readonly IJobScheduler _jobScheduler;
+        private readonly ISettingsStore _settingsStore;
         private readonly IUsageReporter _usageReporter;
+        private readonly IDialogService _dialogService;
 
-        public AddCommandHandler(ISettingsStore settingsStore, 
-                                 IJobScheduler jobScheduler, 
-                                 IUsageReporter usageReporter)
+        public AddCommandHandler(ISettingsStore settingsStore,
+                                 IJobScheduler jobScheduler,
+                                 IUsageReporter usageReporter,
+                                 IDialogService dialogService)
         {
             _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
             _settingsStore = Preconditions.CheckNotNull(settingsStore, nameof(settingsStore));
             _usageReporter = Preconditions.CheckNotNull(usageReporter, nameof(usageReporter));
+            _dialogService = Preconditions.CheckNotNull(dialogService, nameof(dialogService));
         }
 
         public void Handle(AddCommand command)
@@ -53,18 +56,18 @@ namespace AnyStatus
 
             _usageReporter.ReportEvent("Items", "Add", command.Item.GetType().Name);
 
-            command.Close();
+            command.CloseView();
         }
 
         private bool Validate(Item item)
         {
-            List<ValidationResult> validationResults = null;
+            List<ValidationResult> results = null;
 
-            item.Validate(out validationResults);
+            item.Validate(out results);
 
-            if (validationResults.Any())
+            if (results.Any())
             {
-                ShowValidationErrorsDialog(validationResults);
+                ShowValidationErrorsDialog(results);
 
                 return false;
             }
@@ -72,19 +75,16 @@ namespace AnyStatus
             return true;
         }
 
-        private static void ShowValidationErrorsDialog(IEnumerable<ValidationResult> validationResults)
+        private void ShowValidationErrorsDialog(IEnumerable<ValidationResult> validationResults)
         {
-            if (validationResults == null || !validationResults.Any())
-                return;
-
-            var sb = new StringBuilder();
+            var message = new StringBuilder();
 
             foreach (var result in validationResults)
             {
-                sb.AppendLine(result.ErrorMessage);
+                message.AppendLine(result.ErrorMessage);
             }
 
-            System.Windows.MessageBox.Show(sb.ToString(), "Validation", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            _dialogService.ShowWarning(message.ToString(), "Validation");
         }
     }
 }

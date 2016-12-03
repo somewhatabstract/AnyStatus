@@ -30,6 +30,7 @@ namespace AnyStatus.Tests
 
             _settingsStore.Settings.Returns(settings);
         }
+
         [TestMethod]
         public async Task InitializeAsync()
         {
@@ -43,7 +44,7 @@ namespace AnyStatus.Tests
         }
 
         [TestMethod]
-        public async Task Start()
+        public async Task Should_Start_JobScheduler_When_Starting()
         {
             var app = new AnyStatusApp(_logger, _settingsStore, _usageReporter, _jobScheduler, _commandRegistry);
 
@@ -57,7 +58,7 @@ namespace AnyStatus.Tests
         }
 
         [TestMethod]
-        public async Task Stop()
+        public async Task Should_Stop_JobScheduler_When_Stopping()
         {
             var app = new AnyStatusApp(_logger, _settingsStore, _usageReporter, _jobScheduler, _commandRegistry);
 
@@ -67,6 +68,20 @@ namespace AnyStatus.Tests
 
             _jobScheduler.Received(1).Stop();
             _usageReporter.Received(1).ReportEndSession();
+        }
+
+        [TestMethod]
+        public async Task Should_RestartJobScheduler_When_SettingsReset()
+        {
+            var app = new AnyStatusApp(_logger, _settingsStore, _usageReporter, _jobScheduler, _commandRegistry);
+
+            await app.InitializeAsync();
+
+            _settingsStore.SettingsReset += Raise.Event();
+
+            _jobScheduler.Received().Restart();
+
+            _jobScheduler.Schedule(Arg.Any<Item>(), true);
         }
     }
 }
