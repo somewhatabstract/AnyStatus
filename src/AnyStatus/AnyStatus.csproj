@@ -139,6 +139,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\AnyStatusApp.cs" />
+    <Compile Include="Core\Domain\ICanTriggerBuild.cs" />
+    <Compile Include="Core\Domain\ITriggerBuild.cs" />
     <Compile Include="Core\ICommandRegistry.cs" />
     <Compile Include="Core\Mediator\IMediator.cs" />
     <Compile Include="Core\Mediator\Mediator.cs" />
@@ -173,6 +175,7 @@
     </Compile>
     <Compile Include="Features\Edit\EditViewModel.cs" />
     <Compile Include="Features\Monitors\AppVeyorBuild.cs" />
+    <Compile Include="Infrastructure\Converters\CanTriggerBuildConverter.cs" />
     <Compile Include="Infrastructure\Converters\CanOpenInBrowserConverter.cs" />
     <Compile Include="Infrastructure\Editors\FileEditor.cs" />
     <Compile Include="Infrastructure\Editors\PasswordEditor.cs" />

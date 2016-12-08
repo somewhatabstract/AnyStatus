@@ -27,6 +27,8 @@ namespace AnyStatus
 
             OpenInBrowserCommand = new RelayCommand(item => _mediator.TrySend(item, typeof(IOpenInBrowser<>)));
 
+            TriggerBuildCommand = new RelayCommand(item => _mediator.TrySend(item, typeof(ITriggerBuild<>)));
+
             AddFolderCommand = new RelayCommand(item => _mediator.TrySend(new AddFolderCommand(item as Item)));
 
             DeleteCommand = new RelayCommand(item => _mediator.TrySend(new DeleteCommand(item as Item)));
@@ -69,6 +71,8 @@ namespace AnyStatus
         }
 
         public ICommand OpenInBrowserCommand { get; set; }
+
+        public ICommand TriggerBuildCommand { get; set; }
 
         public ICommand AddFolderCommand { get; set; }
 

@@ -9,6 +9,7 @@
         
         <ContextMenu.Resources>
             <local:CanOpenInBrowserConverter x:Key="CanOpenInBrowserConverter"/>
+            <local:CanTriggerBuildConverter x:Key="CanTriggerBuildConverter"/>
         </ContextMenu.Resources>
         
         <MenuItem Header=" Refresh" 
@@ -60,6 +61,24 @@
             </MenuItem.Icon>
         </MenuItem>
 
+        <MenuItem Header=" Trigger a new build"
+                  Command="{Binding Path=PlacementTarget.Tag.DataContext.TriggerBuildCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                  CommandParameter="{Binding}">
+            <MenuItem.Style>
+                <Style TargetType="{x:Type MenuItem}">
+                    <Setter Property="Visibility" Value="Collapsed"></Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Converter={StaticResource CanTriggerBuildConverter}}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </MenuItem.Style>
+            <MenuItem.Icon>
+                <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.AddBuildToQueue}" />
+            </MenuItem.Icon>
+        </MenuItem>
+        
         <Separator>
             <Separator.Style>
                 <Style TargetType="{x:Type Separator}">

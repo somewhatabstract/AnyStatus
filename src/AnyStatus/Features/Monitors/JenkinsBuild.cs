@@ -11,8 +11,10 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace AnyStatus
 {
+    //todo: refactor duplications
+
     [DisplayName("Jenkins Build")]
-    public class JenkinsBuild : Item, IScheduledItem, ICanOpenInBrowser
+    public class JenkinsBuild : Item, IScheduledItem, ICanOpenInBrowser, ICanTriggerBuild
     {
         [Url]
         [Required]
@@ -53,6 +55,55 @@ namespace AnyStatus
                 return;
 
             _processStarter.Start(item.Url);
+        }
+    }
+
+    public class TriggerJenkinsBuild : ITriggerBuild<JenkinsBuild>
+    {
+        private readonly ILogger _logger;
+
+        public TriggerJenkinsBuild(ILogger logger)
+        {
+            _logger = Preconditions.CheckNotNull(logger, nameof(logger));
+        }
+
+        public void Handle(JenkinsBuild item)
+        {
+            using (var handler = new WebRequestHandler())
+            {
+                handler.UseDefaultCredentials = true;
+
+                if (item.IgnoreSslErrors)
+                {
+                    handler.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
+                }
+
+                using (var client = new HttpClient(handler))
+                {
+                    ConfigureHttpClientAuthorization(item, client);
+
+                    var baseUri = new Uri(item.Url);
+
+                    var uri = new Uri(baseUri, "buildWithParameters?delay=0sec");
+
+                    var response = client.PostAsync(uri, new StringContent(string.Empty)).Result;
+
+                    response.EnsureSuccessStatusCode();
+
+                    _logger.Info($"Build \"{item.Name}\" was triggered.");
+                }
+            }
+        }
+
+        private static void ConfigureHttpClientAuthorization(JenkinsBuild item, HttpClient client)
+        {
+            if (string.IsNullOrEmpty(item.UserName) || string.IsNullOrEmpty(item.ApiToken))
+                return;
+
+            client.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue(
+                    "Basic", Convert.ToBase64String(
+                        Encoding.ASCII.GetBytes(string.Format("{0}:{1}", item.UserName, item.ApiToken))));
         }
     }
 
@@ -104,7 +155,9 @@ namespace AnyStatus
                 {
                     ConfigureHttpClientAuthorization(item, client);
 
-                    var apiUrl = $"{item.Url}/lastBuild/api/json?tree=result,building";
+                    var baseUri = new Uri(item.Url);
+
+                    var apiUrl = new Uri(baseUri, "lastBuild/api/json?tree=result,building");
 
                     var response = await client.GetAsync(apiUrl);
 

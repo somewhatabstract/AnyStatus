@@ -21,6 +21,7 @@ namespace AnyStatus.VSPackage
 
             RegisterHandlers(container, typeof(IHandler<>));
             RegisterHandlers(container, typeof(IOpenInBrowser<>));
+            RegisterHandlers(container, typeof(ITriggerBuild<>));
 
             return container;
         }
