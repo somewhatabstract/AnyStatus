@@ -348,6 +348,8 @@ namespace AnyStatus
             if (Parent == null)
                 throw new InvalidOperationException();
 
+            item.Parent = Parent;
+
             var index = Parent.Items.IndexOf(this);
 
             Parent.Items[index] = item;

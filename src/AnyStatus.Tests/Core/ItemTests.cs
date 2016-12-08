@@ -188,6 +188,7 @@ namespace AnyStatus.Tests
             item1.ReplaceWith(item2);
 
             Assert.AreSame(parent.Items[index], item2);
+            Assert.AreSame(parent, item2.Parent);
         }
 
         [TestMethod]
