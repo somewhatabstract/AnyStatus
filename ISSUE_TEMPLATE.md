@@ -1,6 +1,6 @@
 ### Installed product versions
 - Visual Studio: [example 2015 Professional]
-- AnyStatus: [example 0.7]
+- AnyStatus: [example 0.10]
 
 ### Description
 Replace this text with a short description
