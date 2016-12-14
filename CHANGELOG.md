@@ -1,5 +1,6 @@
 # Roadmap
 
+- [x] Trigger a new Jenkins build
 - [ ] TFS work item status
 - [ ] JIRA work item status
 - [ ] Travis CI build
@@ -20,13 +21,15 @@ on the official Visual Studio extension gallery.
 
 **2016-11-20**
 
+- [x] Trigger a new Jenkins build
 - [x] Duplicate folders
 - [x] Added "Open in browser" option to context menu
 - [x] Replaced status icon with vector graphics
 - [x] Status icon indicators
 - [x] User settings refactoring
 - [x] Set treeview inactive selection color as active
-- [x] UI design improvements
+- [x] UX/UI improvements
+- [x] Changed toolbar name to AnyStatus instead of Test Toolbar
 
 ##0.9
 
