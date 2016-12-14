@@ -12,8 +12,8 @@
       <Menu guid="guidToolWindowPackageCmdSet" id="ToolbarId" type="Toolbar">
         <CommandFlag>DefaultDocked</CommandFlag>
         <Strings>
-          <ButtonText>Test Toolbar</ButtonText>
-          <CommandName>Test Toolbar</CommandName>
+          <ButtonText>AnyStatus</ButtonText>
+          <CommandName>AnyStatus</CommandName>
         </Strings>
       </Menu>
     </Menus>
