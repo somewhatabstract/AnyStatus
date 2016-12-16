@@ -27,10 +27,13 @@ namespace AnyStatus.VSPackage
         public const int ToolbarGroup1Id = 0x1001;
         public const int ToolbarGroup2Id = 0x1005;
         public const int ToolbarGroup3Id = 0x1006;
+        public const int ToolbarGroup4Id = 0x1011;
         public const int optionsToolbarCommandId = 0x1002;
         public const int refreshToolbarCommandId = 0x1003;
         public const int helpToolbarCommandId = 0x1004;
         public const int collapseToolbarCommandId = 0x1007;
         public const int expandToolbarCommandId = 0x1008;
+        public const int newItemToolbarCommandId = 0x1009;
+        public const int addFolderToolbarCommandId = 0x1010;
     }
 }

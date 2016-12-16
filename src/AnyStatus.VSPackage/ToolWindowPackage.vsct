@@ -31,7 +31,10 @@
       <Group guid="guidToolWindowPackageCmdSet" id="ToolbarGroup3Id" priority="0x0000">
         <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarId" />
       </Group>
-      
+
+      <Group guid="guidToolWindowPackageCmdSet" id="ToolbarGroup4Id" priority="0x0000">
+        <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarId" />
+      </Group>
     </Groups>
 
     <Buttons>
@@ -74,9 +77,29 @@
           <CommandName>expandToolbarCommandId</CommandName>
         </Strings>
       </Button>
-      
-      <Button guid="guidToolWindowPackageCmdSet" id="optionsToolbarCommandId" priority="0x0500" type="Button">
+
+      <Button guid="guidToolWindowPackageCmdSet" id="newItemToolbarCommandId" priority="0x0500" type="Button">
         <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarGroup3Id"/>
+        <Icon guid="ImageCatalogGuid" id="NewItem" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <ButtonText>New Item</ButtonText>
+          <CommandName>newItemToolbarCommandId</CommandName>
+        </Strings>
+      </Button>
+
+      <Button guid="guidToolWindowPackageCmdSet" id="addFolderToolbarCommandId" priority="0x0600" type="Button">
+        <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarGroup3Id"/>
+        <Icon guid="ImageCatalogGuid" id="AddFolder" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <ButtonText>Add Folder</ButtonText>
+          <CommandName>addFolderToolbarCommandId</CommandName>
+        </Strings>
+      </Button>
+      
+      <Button guid="guidToolWindowPackageCmdSet" id="optionsToolbarCommandId" priority="0x0700" type="Button">
+        <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarGroup4Id"/>
         <Icon guid="ImageCatalogGuid" id="Settings" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <Strings>
@@ -85,8 +108,8 @@
         </Strings>
       </Button>
 
-      <Button guid="guidToolWindowPackageCmdSet" id="helpToolbarCommandId" priority="0x0600" type="Button">
-        <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarGroup3Id"/>
+      <Button guid="guidToolWindowPackageCmdSet" id="helpToolbarCommandId" priority="0x0800" type="Button">
+        <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarGroup4Id"/>
         <Icon guid="ImageCatalogGuid" id="QuestionMark" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <Strings>
@@ -117,6 +140,7 @@
       <IDSymbol name="ToolbarGroup1Id" value="0x1001" />
       <IDSymbol name="ToolbarGroup2Id" value="0x1005" />
       <IDSymbol name="ToolbarGroup3Id" value="0x1006" />
+      <IDSymbol name="ToolbarGroup4Id" value="0x1011" />
 
       <!--Toolbar Buttons-->
       <IDSymbol name="optionsToolbarCommandId" value="0x1002" />
@@ -124,6 +148,8 @@
       <IDSymbol name="helpToolbarCommandId" value="0x1004" />
       <IDSymbol name="collapseToolbarCommandId" value="0x1007" />
       <IDSymbol name="expandToolbarCommandId" value="0x1008" />
+      <IDSymbol name="newItemToolbarCommandId" value="0x1009" />
+      <IDSymbol name="addFolderToolbarCommandId" value="0x1010" />
       
     </GuidSymbol>
 
