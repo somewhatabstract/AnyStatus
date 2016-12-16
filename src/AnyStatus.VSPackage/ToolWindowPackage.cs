@@ -34,6 +34,6 @@ namespace AnyStatus.VSPackage
         public const int collapseToolbarCommandId = 0x1007;
         public const int expandToolbarCommandId = 0x1008;
         public const int newItemToolbarCommandId = 0x1009;
-        public const int addFolderToolbarCommandId = 0x1010;
+        public const int newFolderToolbarCommandId = 0x1010;
     }
 }

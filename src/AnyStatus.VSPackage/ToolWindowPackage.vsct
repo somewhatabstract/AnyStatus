@@ -88,13 +88,13 @@
         </Strings>
       </Button>
 
-      <Button guid="guidToolWindowPackageCmdSet" id="addFolderToolbarCommandId" priority="0x0600" type="Button">
+      <Button guid="guidToolWindowPackageCmdSet" id="newFolderToolbarCommandId" priority="0x0600" type="Button">
         <Parent guid="guidToolWindowPackageCmdSet" id="ToolbarGroup3Id"/>
         <Icon guid="ImageCatalogGuid" id="AddFolder" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <Strings>
-          <ButtonText>Add Folder</ButtonText>
-          <CommandName>addFolderToolbarCommandId</CommandName>
+          <ButtonText>New Folder</ButtonText>
+          <CommandName>newFolderToolbarCommandId</CommandName>
         </Strings>
       </Button>
       
@@ -149,7 +149,7 @@
       <IDSymbol name="collapseToolbarCommandId" value="0x1007" />
       <IDSymbol name="expandToolbarCommandId" value="0x1008" />
       <IDSymbol name="newItemToolbarCommandId" value="0x1009" />
-      <IDSymbol name="addFolderToolbarCommandId" value="0x1010" />
+      <IDSymbol name="newFolderToolbarCommandId" value="0x1010" />
       
     </GuidSymbol>
 

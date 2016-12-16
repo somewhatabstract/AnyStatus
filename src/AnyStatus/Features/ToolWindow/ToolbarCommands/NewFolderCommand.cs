@@ -7,7 +7,7 @@ namespace AnyStatus.Features.ToolWindow.ToolbarCommands
         private readonly IMediator _mediator;
         private readonly ISettingsStore _settingsStore;
 
-        public NewFolderCommand(IMediator mediator, ISettingsStore settingsStore) :base(PackageIds.addFolderToolbarCommandId)
+        public NewFolderCommand(IMediator mediator, ISettingsStore settingsStore) :base(PackageIds.newFolderToolbarCommandId)
         {
             _mediator = Preconditions.CheckNotNull(mediator, nameof(mediator));
             _settingsStore = Preconditions.CheckNotNull(settingsStore, nameof(settingsStore));
