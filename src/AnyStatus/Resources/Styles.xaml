@@ -8,6 +8,7 @@
         <Setter Property="Height" Value="30"/>
         <Setter Property="Orientation" Value="Horizontal"/>
         <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="None"/>
 
         <!--
         <Style.Triggers>
