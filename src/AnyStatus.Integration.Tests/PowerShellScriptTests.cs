@@ -27,7 +27,7 @@ namespace AnyStatus.Integration.Tests
                 FileName = Path.Combine(_testContext.TestRunDirectory, "Out", "PowerShell.ps1")
             };
 
-            var handler = new PowerShellScriptHandler(_processStarter);
+            var handler = new PowerShellScriptMonitor(_processStarter);
 
             handler.Handle(request);
 
@@ -43,7 +43,7 @@ namespace AnyStatus.Integration.Tests
                 FileName = string.Empty
             };
 
-            var handler = new PowerShellScriptHandler(_processStarter);
+            var handler = new PowerShellScriptMonitor(_processStarter);
 
             handler.Handle(request);
         }

@@ -33,7 +33,7 @@ namespace AnyStatus
         public bool IgnoreSslErrors { get; set; }
     }
 
-    public class HttpStatusHandler : IHandler<HttpStatus>
+    public class HttpStatusMonitor : IMonitor<HttpStatus>
     {
         [DebuggerStepThrough]
         public void Handle(HttpStatus item)

@@ -43,11 +43,11 @@ namespace AnyStatus
         public bool BypassExecutionPolicy { get; set; }
     }
 
-    public class PowerShellScriptHandler : IHandler<PowerShellScript>
+    public class PowerShellScriptMonitor : IMonitor<PowerShellScript>
     {
         private readonly IProcessStarter _processStarter;
 
-        public PowerShellScriptHandler(IProcessStarter processStarter)
+        public PowerShellScriptMonitor(IProcessStarter processStarter)
         {
             _processStarter = Preconditions.CheckNotNull(processStarter, nameof(processStarter));
         }

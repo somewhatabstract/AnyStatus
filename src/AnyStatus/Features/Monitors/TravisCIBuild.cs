@@ -10,7 +10,7 @@ namespace AnyStatus
     {
     }
 
-    public class TravisCIBuildHandler : IHandler<TravisCIBuild>
+    public class TravisCIBuildMonitor : IMonitor<TravisCIBuild>
     {
         public void Handle(TravisCIBuild item)
         {

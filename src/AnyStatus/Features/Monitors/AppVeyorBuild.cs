@@ -10,7 +10,7 @@ namespace AnyStatus
 {
     [DisplayName("AppVeyor Build")]
     [Description("")]
-    public class AppVeyorBuild : Item, IScheduledItem, ICanOpenInBrowser
+    public class AppVeyorBuild : Item, IScheduledItem, ICanOpenInBrowser, ICanTriggerBuild
     {
         [Required]
         [Category("AppVeyor")]
@@ -34,7 +34,7 @@ namespace AnyStatus
         public string ApiToken { get; set; }
     }
 
-    public class AppVeyorBuildHandler : IHandler<AppVeyorBuild>
+    public class AppVeyorBuildMonitor : IMonitor<AppVeyorBuild>
     {
         [DebuggerStepThrough]
         public void Handle(AppVeyorBuild item)
@@ -95,6 +95,14 @@ namespace AnyStatus
         }
 
         #endregion
+    }
+
+    public class TriggerAppVeyorBuild : ITriggerBuild<AppVeyorBuild>
+    {
+        public void Handle(AppVeyorBuild item)
+        {
+
+        }
     }
 
     public class OpenAppVeyorBuildInBrowser : IOpenInBrowser<AppVeyorBuild>

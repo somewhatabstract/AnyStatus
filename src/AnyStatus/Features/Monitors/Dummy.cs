@@ -10,7 +10,7 @@ namespace AnyStatus
         public int Counter { get; set; }
     }
 
-    public class DummyHandler : IHandler<Dummy>
+    public class DummyMonitor : IMonitor<Dummy>
     {
         public void Handle(Dummy item)
         {

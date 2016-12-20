@@ -29,7 +29,7 @@ namespace AnyStatus
         public int IssueNumber { get; set; }
     }
 
-    public class GitHubIssueHandler : IHandler<GitHubIssue>
+    public class GitHubIssueMonitor : IMonitor<GitHubIssue>
     {
         [DebuggerStepThrough]
         public void Handle(GitHubIssue item)

@@ -10,7 +10,7 @@ namespace AnyStatus
     {
     }
 
-    public class TfsWorkItemHandler : IHandler<TfsWorkItem>
+    public class TfsWorkItemMonitor : IMonitor<TfsWorkItem>
     {
         public void Handle(TfsWorkItem item)
         {

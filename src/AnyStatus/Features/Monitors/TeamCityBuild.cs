@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
@@ -60,7 +59,7 @@ namespace AnyStatus
         public bool IgnoreSslErrors { get; set; }
     }
 
-    public class TeamCityBuildHandler : IHandler<TeamCityBuild>
+    public class TeamCityBuildMonitor : IMonitor<TeamCityBuild>
     {
         [DebuggerStepThrough]
         public void Handle(TeamCityBuild item)

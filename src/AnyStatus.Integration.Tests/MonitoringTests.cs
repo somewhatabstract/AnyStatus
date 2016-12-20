@@ -5,14 +5,14 @@ using System.IO;
 namespace AnyStatus.Integration.Tests
 {
     [TestClass]
-    public class MonitoringHandlersTests
+    public class MonitoringTests
     {
         [TestMethod]
-        public void HttpHandler()
+        public void HttpMonitor()
         {
             var request = new HttpStatus { Url = "http://www.microsoft.com" };
 
-            var handler = new HttpStatusHandler();
+            var handler = new HttpStatusMonitor();
 
             handler.Handle(request);
 
@@ -24,7 +24,7 @@ namespace AnyStatus.Integration.Tests
         {
             var request = new Ping { Host = "localhost" };
 
-            var handler = new PingHandler();
+            var handler = new PingMonitor();
 
             handler.Handle(request);
 
@@ -40,7 +40,7 @@ namespace AnyStatus.Integration.Tests
                 Port = 80
             };
 
-            var handler = new TcpPortHandler();
+            var handler = new TcpPortMonitor();
 
             handler.Handle(request);
 
@@ -55,7 +55,7 @@ namespace AnyStatus.Integration.Tests
                 ServiceName = "Dhcp"
             };
 
-            var handler = new WindowsServiceHandler();
+            var handler = new WindowsServiceMonitor();
 
             handler.Handle(request);
 
@@ -72,7 +72,7 @@ namespace AnyStatus.Integration.Tests
                 Owner = "AlonAm"
             };
 
-            var handler = new GitHubIssueHandler();
+            var handler = new GitHubIssueMonitor();
 
             handler.Handle(request);
 

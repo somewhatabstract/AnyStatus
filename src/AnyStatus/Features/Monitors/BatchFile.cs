@@ -36,11 +36,11 @@ namespace AnyStatus
         public int Timeout { get; set; }
     }
 
-    public class BatchFileHandler : IHandler<BatchFile>
+    public class BatchFileMonitor : IMonitor<BatchFile>
     {
         private readonly IProcessStarter _processStarter;
 
-        public BatchFileHandler(IProcessStarter processStarter)
+        public BatchFileMonitor(IProcessStarter processStarter)
         {
             _processStarter = Preconditions.CheckNotNull(processStarter, nameof(processStarter));
         }

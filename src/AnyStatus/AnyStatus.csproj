@@ -140,6 +140,7 @@
   <ItemGroup>
     <Compile Include="Core\AnyStatusApp.cs" />
     <Compile Include="Core\Interfaces\ICanTriggerBuild.cs" />
+    <Compile Include="Core\Interfaces\IMonitor.cs" />
     <Compile Include="Core\Interfaces\IPackage.cs" />
     <Compile Include="Core\Interfaces\ITriggerBuild.cs" />
     <Compile Include="Core\Interfaces\ICommandRegistry.cs" />

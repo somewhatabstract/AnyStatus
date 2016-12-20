@@ -112,7 +112,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="MonitoringHandlersTests.cs" />
+    <Compile Include="MonitoringTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BatchScriptTests.cs" />
     <Compile Include="PowerShellScriptTests.cs" />

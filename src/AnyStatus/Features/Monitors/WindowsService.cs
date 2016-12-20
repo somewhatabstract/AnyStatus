@@ -28,7 +28,7 @@ namespace AnyStatus
         public ServiceControllerStatus Status { get; set; }
     }
 
-    public class WindowsServiceHandler : IHandler<WindowsService>
+    public class WindowsServiceMonitor : IMonitor<WindowsService>
     {
         [DebuggerStepThrough]
         public void Handle(WindowsService item)

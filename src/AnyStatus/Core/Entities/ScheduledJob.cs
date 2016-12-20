@@ -37,7 +37,7 @@ namespace AnyStatus
             {
                 _logger.Info($"Updating \"{Item.Name}\".");
 
-                _mediator.Send(Item);
+                _mediator.Send(Item, typeof(IMonitor<>));
             }
             catch (Exception ex)
             {

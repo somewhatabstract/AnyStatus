@@ -15,7 +15,7 @@ namespace AnyStatus.Tests.Tests
 
             var item = new Dummy();
 
-            mediator.Send(item);
+            mediator.Send(item, typeof(IMonitor<>));
 
             Assert.AreSame(State.Ok, item.State);
         }
@@ -29,7 +29,7 @@ namespace AnyStatus.Tests.Tests
 
             var item = new Dummy();
 
-            mediator.Send(item, typeof(IHandler<>));
+            mediator.Send(item, typeof(IMonitor<>));
 
             Assert.AreSame(State.Ok, item.State);
         }

@@ -22,7 +22,7 @@ namespace AnyStatus
         public int Port { get; set; }
     }
 
-    public class TcpPortHandler : IHandler<TcpPort>
+    public class TcpPortMonitor : IMonitor<TcpPort>
     {
         public void Handle(TcpPort item)
         {

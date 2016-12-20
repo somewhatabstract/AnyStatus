@@ -15,7 +15,7 @@ namespace AnyStatus
         public string Host { get; set; }
     }
 
-    public class PingHandler : IHandler<Ping>
+    public class PingMonitor : IMonitor<Ping>
     {
         [DebuggerStepThrough]
         public void Handle(Ping item)

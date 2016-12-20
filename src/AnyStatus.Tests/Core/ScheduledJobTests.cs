@@ -21,7 +21,7 @@ namespace AnyStatus.Tests
 
             scheduledJob.Execute();
 
-            mediator.Received(1).Send(item);
+            mediator.Received(1).Send(item, typeof(IMonitor<>));
         }
 
         [TestMethod]
@@ -35,7 +35,7 @@ namespace AnyStatus.Tests
 
             await scheduledJob.ExecuteAsync();
 
-            mediator.Received(1).Send(item);
+            mediator.Received(1).Send(item, typeof(IMonitor<>));
         }
 
         [TestMethod]
@@ -58,7 +58,7 @@ namespace AnyStatus.Tests
             var mediator = Substitute.For<IMediator>();
 
             mediator
-                .When(k => k.Send(Arg.Any<object>()))
+                .When(k => k.Send(Arg.Any<object>(), typeof(IMonitor<>)))
                 .Throw(new Exception());
 
             var item = new Dummy

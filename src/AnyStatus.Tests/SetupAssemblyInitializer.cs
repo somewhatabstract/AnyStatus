@@ -12,7 +12,7 @@ namespace AnyStatus.Tests
 
             TinyIoCContainer.Current.RegisterMultiple(typeof(Item), new[] { typeof(Dummy) });
 
-            TinyIoCContainer.Current.Register(typeof(IHandler<Dummy>), typeof(DummyHandler)).AsMultiInstance();
+            TinyIoCContainer.Current.Register(typeof(IMonitor<Dummy>), typeof(DummyMonitor)).AsMultiInstance();
         }
     }
 }

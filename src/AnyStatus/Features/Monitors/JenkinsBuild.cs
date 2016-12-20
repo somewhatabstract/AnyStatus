@@ -107,7 +107,7 @@ namespace AnyStatus
         }
     }
 
-    public class JenkinsBuildHandler : IHandler<JenkinsBuild>
+    public class JenkinsBuildMonitor : IMonitor<JenkinsBuild>
     {
         [DebuggerStepThrough]
         public void Handle(JenkinsBuild item)

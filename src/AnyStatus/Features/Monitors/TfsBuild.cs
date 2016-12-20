@@ -109,7 +109,7 @@ namespace AnyStatus
         }
     }
 
-    public class TfsBuildHandler : BaseTfsBuildHandler, IHandler<TfsBuild>
+    public class TfsBuildMonitor : BaseTfsBuildHandler, IMonitor<TfsBuild>
     {
         [DebuggerStepThrough]
         public override void Handle(TfsBuild item)

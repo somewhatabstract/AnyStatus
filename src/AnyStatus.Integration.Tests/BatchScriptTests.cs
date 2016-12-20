@@ -26,7 +26,7 @@ namespace AnyStatus.Integration.Tests
                 FileName = Path.Combine(_testContext.TestRunDirectory, "Out", "BatchScript.cmd")
             };
 
-            var handler = new BatchFileHandler(_processStarter);
+            var handler = new BatchFileMonitor(_processStarter);
 
             handler.Handle(request);
 
@@ -42,7 +42,7 @@ namespace AnyStatus.Integration.Tests
                 FileName = string.Empty
             };
 
-            var handler = new BatchFileHandler(_processStarter);
+            var handler = new BatchFileMonitor(_processStarter);
 
             handler.Handle(request);
         }
