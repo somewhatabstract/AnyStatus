@@ -2,7 +2,7 @@
 
 namespace AnyStatus
 {
-    public interface IToolbarCommand
+    public interface IMenuCommand
     {
         MenuCommand MenuCommand { get; }
     }

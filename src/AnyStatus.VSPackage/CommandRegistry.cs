@@ -8,9 +8,9 @@ namespace AnyStatus.VSPackage
     public class CommandRegistry: ICommandRegistry
     {
         private readonly IServiceProvider _serviceProvider;
-        private readonly IEnumerable<IToolbarCommand> _commands;
+        private readonly IEnumerable<IMenuCommand> _commands;
 
-        public CommandRegistry(IServiceProvider serviceProvider, IEnumerable<IToolbarCommand> commands)
+        public CommandRegistry(IServiceProvider serviceProvider, IEnumerable<IMenuCommand> commands)
         {
             _commands = Preconditions.CheckNotNull(commands, nameof(commands));
             _serviceProvider = Preconditions.CheckNotNull(serviceProvider, nameof(serviceProvider)); ;

@@ -3,7 +3,7 @@ using System.ComponentModel.Design;
 
 namespace AnyStatus
 {
-    public abstract class ToolbarCommand : IToolbarCommand
+    public abstract class ToolbarCommand : IMenuCommand
     {
         public ToolbarCommand(int commandId)
         {

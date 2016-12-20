@@ -94,11 +94,11 @@ namespace AnyStatus.VSPackage
 
         private static void RegisterMenuCommands(TinyIoCContainer container)
         {
-            var items = TypeFinder.FindTypesOf(typeof(IToolbarCommand),
-                            new[] { typeof(IToolbarCommand).Assembly,
+            var items = TypeFinder.FindTypesOf(typeof(IMenuCommand),
+                            new[] { typeof(IMenuCommand).Assembly,
                                     typeof(ContainerBuilder).Assembly });
 
-            container.RegisterMultiple(typeof(IToolbarCommand), items);
+            container.RegisterMultiple(typeof(IMenuCommand), items);
         }
 
         private static void RegisterTemplates(TinyIoCContainer container)

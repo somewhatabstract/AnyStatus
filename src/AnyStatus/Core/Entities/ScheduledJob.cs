@@ -1,5 +1,4 @@
-﻿using FluentScheduler;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 
 namespace AnyStatus

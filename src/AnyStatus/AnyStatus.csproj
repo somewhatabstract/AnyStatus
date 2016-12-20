@@ -139,22 +139,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\AnyStatusApp.cs" />
-    <Compile Include="Core\Domain\ICanTriggerBuild.cs" />
-    <Compile Include="Core\Domain\IPackage.cs" />
-    <Compile Include="Core\Domain\ITriggerBuild.cs" />
-    <Compile Include="Core\Domain\ICommandRegistry.cs" />
-    <Compile Include="Core\Mediator\IMediator.cs" />
-    <Compile Include="Core\Mediator\Mediator.cs" />
-    <Compile Include="Core\Domain\IScheduledJob.cs" />
-    <Compile Include="Core\Settings\UserSettings.cs" />
-    <Compile Include="Core\Settings\ISettings.cs" />
-    <Compile Include="Core\Settings\ISettingsStore.cs" />
-    <Compile Include="Core\Settings\SettingsStore.cs" />
-    <Compile Include="Core\Domain\ICanOpenInBrowser.cs" />
-    <Compile Include="Core\Domain\IOpenInBrowser.cs" />
-    <Compile Include="Features\Edit\EditCommand.cs" />
-    <Compile Include="Features\New\TestCommand.cs" />
-    <Compile Include="Features\New\AddCommand.cs" />
+    <Compile Include="Core\Interfaces\ICanTriggerBuild.cs" />
+    <Compile Include="Core\Interfaces\IPackage.cs" />
+    <Compile Include="Core\Interfaces\ITriggerBuild.cs" />
+    <Compile Include="Core\Interfaces\ICommandRegistry.cs" />
+    <Compile Include="Core\Interfaces\IMediator.cs" />
+    <Compile Include="Core\Mediator.cs" />
+    <Compile Include="Core\Interfaces\IScheduledJob.cs" />
+    <Compile Include="Core\UserSettings.cs" />
+    <Compile Include="Core\Interfaces\ISettings.cs" />
+    <Compile Include="Core\Interfaces\ISettingsStore.cs" />
+    <Compile Include="Core\SettingsStore.cs" />
+    <Compile Include="Core\Interfaces\ICanOpenInBrowser.cs" />
+    <Compile Include="Core\Interfaces\IOpenInBrowser.cs" />
+    <Compile Include="Core\Commands\EditCommand.cs" />
+    <Compile Include="Core\Commands\TestCommand.cs" />
+    <Compile Include="Core\Commands\AddCommand.cs" />
     <Compile Include="Core\Commands\AddFolderCommand.cs" />
     <Compile Include="Core\Commands\ItemCommand.cs" />
     <Compile Include="Core\Commands\DuplicateCommand.cs" />
@@ -163,16 +163,16 @@
     <Compile Include="Core\Commands\MoveDownCommand .cs" />
     <Compile Include="Core\Commands\RefreshCommand.cs" />
     <Compile Include="Core\Commands\MoveUpCommand.cs" />
-    <Compile Include="Core\Commands\ToolbarCommands\NewFolderCommand.cs" />
-    <Compile Include="Core\Commands\ToolbarCommands\NewItemCommand.cs" />
-    <Compile Include="Core\Commands\ToolbarCommands\ToolbarCommand.cs" />
-    <Compile Include="Core\Commands\ToolbarCommands\CollapseAllCommand.cs" />
-    <Compile Include="Core\Commands\ToolbarCommands\ExpandAllCommand.cs" />
-    <Compile Include="Core\Commands\ToolbarCommands\IToolbarCommand.cs" />
-    <Compile Include="Core\Commands\ToolbarCommands\RefreshAllCommand.cs" />
-    <Compile Include="Core\Commands\ToolbarCommands\OptionsCommand.cs" />
-    <Compile Include="Core\Commands\ToolbarCommands\HelpCommand.cs" />
-    <Compile Include="Core\Commands\ToolbarCommands\ToolWindowPackage.cs" />
+    <Compile Include="Core\Commands\NewFolderCommand.cs" />
+    <Compile Include="Core\Commands\NewItemCommand.cs" />
+    <Compile Include="Core\Commands\MenuCommandBase.cs" />
+    <Compile Include="Core\Commands\CollapseAllCommand.cs" />
+    <Compile Include="Core\Commands\ExpandAllCommand.cs" />
+    <Compile Include="Core\Commands\IMenuCommand.cs" />
+    <Compile Include="Core\Commands\RefreshAllCommand.cs" />
+    <Compile Include="Core\Commands\OptionsCommand.cs" />
+    <Compile Include="Core\Commands\HelpCommand.cs" />
+    <Compile Include="ToolWindowPackage.cs" />
     <Compile Include="Features\Edit\EditWindow.xaml.cs">
       <DependentUpon>EditWindow.xaml</DependentUpon>
     </Compile>
@@ -183,15 +183,15 @@
     <Compile Include="Infrastructure\Editors\FileEditor.cs" />
     <Compile Include="Infrastructure\Editors\PasswordEditor.cs" />
     <Compile Include="Features\Monitors\BatchFile.cs" />
-    <Compile Include="Core\Monitoring\IScheduledItem.cs" />
+    <Compile Include="Core\Interfaces\IScheduledItem.cs" />
     <Compile Include="Features\Monitors\Dummy.cs" />
-    <Compile Include="Core\Domain\State.cs" />
-    <Compile Include="Core\Domain\RootItem.cs" />
+    <Compile Include="Core\Entities\State.cs" />
+    <Compile Include="Core\Entities\RootItem.cs" />
     <Compile Include="Features\Monitors\GitHubIssue.cs" />
     <Compile Include="Features\Monitors\PowerShellScript.cs" />
-    <Compile Include="Core\Domain\StateMetadata.cs" />
+    <Compile Include="Core\Entities\StateMetadata.cs" />
     <Compile Include="Features\Monitors\TfsWorkItem.cs" />
-    <Compile Include="Core\Settings\Theme.cs" />
+    <Compile Include="Core\Entities\Theme.cs" />
     <Compile Include="Features\Options\UserInterface\UserInterfaceOptionsView.xaml.cs">
       <DependentUpon>UserInterfaceOptionsView.xaml</DependentUpon>
     </Compile>
@@ -203,7 +203,7 @@
     <Compile Include="Infrastructure\Converters\HexToColorConverter.cs" />
     <Compile Include="Infrastructure\Converters\IconConverter.cs" />
     <Compile Include="Infrastructure\Converters\TooltipConverter.cs" />
-    <Compile Include="Infrastructure\IDialogService.cs" />
+    <Compile Include="Core\Interfaces\IDialogService.cs" />
     <Compile Include="Infrastructure\DialogService.cs" />
     <Compile Include="Infrastructure\TypeFinder.cs" />
     <Compile Include="Infrastructure\Enumeration.cs" />
@@ -214,22 +214,22 @@
     <Compile Include="Features\Monitors\WindowsService.cs" />
     <Compile Include="Features\Monitors\TravisCIBuild.cs" />
     <Compile Include="Infrastructure\Controls\EditableTextBlock.cs" />
-    <Compile Include="Core\UsageReporting\AnalyticsReporter.cs" />
-    <Compile Include="Core\UsageReporting\IUsageReporter.cs" />
+    <Compile Include="Core\AnalyticsReporter.cs" />
+    <Compile Include="Core\Interfaces\IUsageReporter.cs" />
     <Compile Include="Infrastructure\Converters\NotConverter.cs" />
-    <Compile Include="Core\Domain\IProcessStarter.cs" />
+    <Compile Include="Core\Interfaces\IProcessStarter.cs" />
     <Compile Include="Infrastructure\NotifyPropertyChanged.cs" />
     <Compile Include="Infrastructure\Preconditions.cs" />
-    <Compile Include="Core\Monitoring\IJobScheduler.cs" />
-    <Compile Include="Core\Monitoring\JobScheduler.cs" />
-    <Compile Include="Core\Monitoring\ScheduledJob.cs" />
+    <Compile Include="Core\Interfaces\IJobScheduler.cs" />
+    <Compile Include="Core\JobScheduler.cs" />
+    <Compile Include="Core\Entities\ScheduledJob.cs" />
     <Compile Include="Infrastructure\ProcessStarter.cs" />
     <Compile Include="Infrastructure\Retry.cs" />
-    <Compile Include="Core\Domain\ILogger.cs" />
-    <Compile Include="Core\Domain\Folder.cs" />
-    <Compile Include="Core\Domain\IHandler.cs" />
+    <Compile Include="Core\Interfaces\ILogger.cs" />
+    <Compile Include="Core\Entities\Folder.cs" />
+    <Compile Include="Core\Interfaces\IHandler.cs" />
     <Compile Include="Features\Monitors\Http.cs" />
-    <Compile Include="Core\Domain\Item.cs" />
+    <Compile Include="Core\Entities\Item.cs" />
     <Compile Include="Features\Monitors\JenkinsBuild.cs" />
     <Compile Include="Features\Monitors\Ping.cs" />
     <Compile Include="Features\Monitors\Template.cs" />
@@ -240,7 +240,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\RelayCommand.cs" />
-    <Compile Include="Core\Settings\Properties.Settings.cs" />
+    <Compile Include="Infrastructure\Properties.Settings.cs" />
     <Compile Include="Infrastructure\TinyIoc.cs" />
     <Compile Include="Features\New\NewViewModel.cs" />
     <Compile Include="Features\Options\General\GeneralOptionsViewModel.cs" />
