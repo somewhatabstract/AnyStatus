@@ -184,7 +184,7 @@ namespace AnyStatus
         [DebuggerStepThrough]
         public override void Handle(TfsBuild item)
         {
-            if (item.IsValid() == false)
+            if (item == null || item.IsValid() == false)
                 return;
 
             base.Handle(item);
@@ -243,7 +243,7 @@ namespace AnyStatus
 
         public override void Handle(TfsBuild item)
         {
-            if (item.IsValid() == false)
+            if (item == null || item.IsValid() == false)
                 return;
 
             base.Handle(item);

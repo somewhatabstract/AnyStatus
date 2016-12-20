@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 
@@ -99,9 +100,37 @@ namespace AnyStatus
 
     public class TriggerAppVeyorBuild : ITriggerBuild<AppVeyorBuild>
     {
+        const string Url = @"https://ci.appveyor.com/api/builds";
+
         public void Handle(AppVeyorBuild item)
         {
+            if (item == null || item.IsValid() == false)
+                return;
 
+            QueueNewBuild(item);
+        }
+
+        private void QueueNewBuild(AppVeyorBuild item)
+        {
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", item.ApiToken);
+
+                var request = new
+                {
+                    accountName = item.AccountName,
+                    projectSlug = item.ProjectSlug
+                };
+
+                var data = new JavaScriptSerializer().Serialize(request);
+
+                var content = new StringContent(data, Encoding.UTF8, "application/json");
+
+                var response = client.PostAsync(Url, content).Result;
+
+                response.EnsureSuccessStatusCode();
+            }
         }
     }
 
@@ -116,7 +145,7 @@ namespace AnyStatus
 
         public void Handle(AppVeyorBuild item)
         {
-            if (item == null || string.IsNullOrEmpty(item.AccountName) || string.IsNullOrEmpty(item.ProjectSlug))
+            if (item == null || item.IsValid() == false)
                 return;
 
             var url = $"https://ci.appveyor.com/project/{item.AccountName}/{item.ProjectSlug}";
