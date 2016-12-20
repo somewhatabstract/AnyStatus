@@ -230,7 +230,7 @@
     <Compile Include="Infrastructure\Retry.cs" />
     <Compile Include="Core\ILogger.cs" />
     <Compile Include="Core\Domain\Folder.cs" />
-    <Compile Include="Core\Mediator\IHandler.cs" />
+    <Compile Include="Core\Domain\IHandler.cs" />
     <Compile Include="Features\Monitors\Http.cs" />
     <Compile Include="Core\Domain\Item.cs" />
     <Compile Include="Features\Monitors\JenkinsBuild.cs" />
