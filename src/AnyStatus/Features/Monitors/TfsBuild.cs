@@ -16,7 +16,7 @@ namespace AnyStatus
 {
     [DisplayName("TFS 2015 Build")]
     [Description("Microsoft Team Foundation Server 2015 or Visual Studio Team Services build status")]
-    public class TfsBuild : Item, IScheduledItem, ICanOpenInBrowser
+    public class TfsBuild : Item, IScheduledItem, ICanOpenInBrowser, ICanTriggerBuild
     {
         public TfsBuild()
         {
@@ -67,15 +67,54 @@ namespace AnyStatus
         public string Password { get; set; }
     }
 
-    public class TfsBuildHandler : IHandler<TfsBuild>
+    public abstract class BaseTfsBuildHandler
     {
-        [DebuggerStepThrough]
-        public void Handle(TfsBuild item)
+        public virtual void Handle(TfsBuild item)
         {
             if (item.BuildDefinitionId <= 0)
             {
                 item.BuildDefinitionId = GetBuildDefinitionIdAsync(item).Result;
             }
+        }
+
+        protected async Task<int> GetBuildDefinitionIdAsync(TfsBuild item)
+        {
+            using (var handler = new WebRequestHandler())
+            {
+                handler.UseDefaultCredentials = string.IsNullOrEmpty(item.UserName) || string.IsNullOrEmpty(item.Password); ;
+
+                using (var client = new HttpClient(handler))
+                {
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    if (handler.UseDefaultCredentials == false)
+                    {
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
+                            Convert.ToBase64String(Encoding.ASCII.GetBytes($"{item.UserName}:{item.Password}")));
+                    }
+
+                    var url = $"{item.Url}/{item.Collection}/{item.TeamProject}/_apis/build/definitions?api-version=2.0&name={item.BuildDefinition}";
+
+                    var response = await client.GetAsync(url);
+
+                    response.EnsureSuccessStatusCode();
+
+                    var content = await response.Content.ReadAsStringAsync();
+
+                    var buildDefinitionResponse = new JavaScriptSerializer().Deserialize<BuildDefinitionResponse>(content);
+
+                    return buildDefinitionResponse.Value.First().Id;
+                }
+            }
+        }
+    }
+
+    public class TfsBuildHandler : BaseTfsBuildHandler, IHandler<TfsBuild>
+    {
+        [DebuggerStepThrough]
+        public override void Handle(TfsBuild item)
+        {
+            base.Handle(item);
 
             var buildDetails = GetBuildDetailsAsync(item).Result;
 
@@ -108,52 +147,17 @@ namespace AnyStatus
             }
         }
 
-        private async Task<int> GetBuildDefinitionIdAsync(TfsBuild item)
-        {
-            var useDefaultCredentials = string.IsNullOrEmpty(item.UserName) && string.IsNullOrEmpty(item.Password);
-
-            using (var handler = new WebRequestHandler())
-            {
-                handler.UseDefaultCredentials = useDefaultCredentials;
-
-                using (var client = new HttpClient(handler))
-                {
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                    if (!useDefaultCredentials)
-                    {
-                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
-                            Convert.ToBase64String(Encoding.ASCII.GetBytes($"{item.UserName}:{item.Password}")));
-                    }
-
-                    var url = $"{item.Url}/{item.Collection}/{item.TeamProject}/_apis/build/definitions?api-version=2.0&name={item.BuildDefinition}";
-
-                    var response = await client.GetAsync(url);
-
-                    response.EnsureSuccessStatusCode();
-
-                    var content = await response.Content.ReadAsStringAsync();
-
-                    var buildDefinitionResponse = new JavaScriptSerializer().Deserialize<BuildDefinitionResponse>(content);
-
-                    return buildDefinitionResponse.Value.First().Id;
-                }
-            }
-        }
-
         private async Task<TfsBuildDetails> GetBuildDetailsAsync(TfsBuild item)
         {
-            var useDefaultCredentials = string.IsNullOrEmpty(item.UserName) && string.IsNullOrEmpty(item.Password);
-
             using (var handler = new WebRequestHandler())
             {
-                handler.UseDefaultCredentials = useDefaultCredentials;
+                handler.UseDefaultCredentials = string.IsNullOrEmpty(item.UserName) || string.IsNullOrEmpty(item.Password); ;
 
                 using (var client = new HttpClient(handler))
                 {
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                    if (!useDefaultCredentials)
+                    if (handler.UseDefaultCredentials == false)
                     {
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
                             Convert.ToBase64String(Encoding.ASCII.GetBytes($"{item.UserName}:{item.Password}")));
@@ -173,35 +177,60 @@ namespace AnyStatus
                 }
             }
         }
-
-        #region Contracts
-
-        private class BuildDefinitionResponse
-        {
-            public List<BuildDefinitionDetails> Value { get; set; }
-        }
-
-        private class BuildDefinitionDetails
-        {
-            public int Id { get; set; }
-        }
-
-        private class TfsBuildDetailsResponse
-        {
-            public List<TfsBuildDetails> Value { get; set; }
-        }
-
-        private class TfsBuildDetails
-        {
-            public string Result { get; set; }
-
-            public string Status { get; set; }
-        }
-
-        #endregion
     }
 
-    public class OpenTfsBuildInBrowser : IOpenInBrowser<TfsBuild>
+    public class TriggerTfsBuild : BaseTfsBuildHandler, ITriggerBuild<TfsBuild>
+    {
+        [DebuggerStepThrough]
+        public override void Handle(TfsBuild item)
+        {
+            if (item.IsValid() == false)
+                return;
+
+            base.Handle(item);
+
+            QueueNewBuild(item);
+        }
+
+        private void QueueNewBuild(TfsBuild item)
+        {
+            using (var handler = new WebRequestHandler())
+            {
+                handler.UseDefaultCredentials = string.IsNullOrEmpty(item.UserName) || string.IsNullOrEmpty(item.Password); ;
+
+                using (var client = new HttpClient(handler))
+                {
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    if (handler.UseDefaultCredentials == false)
+                    {
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
+                            Convert.ToBase64String(Encoding.ASCII.GetBytes($"{item.UserName}:{item.Password}")));
+                    }
+
+                    var url = $"{item.Url}/{item.Collection}/{item.TeamProject}/_apis/build/builds?api-version=2.0";
+
+                    var request = new QueueNewBuildRequest
+                    {
+                        Definition = new Definition
+                        {
+                            Id = item.BuildDefinitionId
+                        }
+                    };
+
+                    var json = new JavaScriptSerializer().Serialize(request);
+
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    var response = client.PostAsync(url, content).Result;
+
+                    response.EnsureSuccessStatusCode();
+                }
+            }
+        }
+    }
+
+    public class OpenTfsBuildInBrowser : BaseTfsBuildHandler, IOpenInBrowser<TfsBuild>
     {
         private readonly ILogger _logger;
         private readonly IProcessStarter _processStarter;
@@ -212,21 +241,52 @@ namespace AnyStatus
             _processStarter = Preconditions.CheckNotNull(processStarter, nameof(processStarter));
         }
 
-        public void Handle(TfsBuild item)
+        public override void Handle(TfsBuild item)
         {
-            if (string.IsNullOrEmpty(item.Url) || string.IsNullOrEmpty(item.Collection) || string.IsNullOrEmpty(item.TeamProject))
+            if (item.IsValid() == false)
                 return;
 
-            if (item.BuildDefinitionId == default(int))
-            {
-                _logger.Info($"Cannot not open {item.Name} in browser. The build definition id was not set.");
-
-                return;
-            }
+            base.Handle(item);
 
             var uri = $"{item.Url}/{item.Collection}/{item.TeamProject}/_build?_a=completed&definitionId={item.BuildDefinitionId}";
 
             _processStarter.Start(uri.ToString());
         }
     }
+
+    #region Contracts
+
+    internal class QueueNewBuildRequest
+    {
+        public Definition Definition { get; set; }
+    }
+
+    internal class Definition
+    {
+        public int Id { get; set; }
+    }
+
+    internal class BuildDefinitionResponse
+    {
+        public List<BuildDefinitionDetails> Value { get; set; }
+    }
+
+    internal class BuildDefinitionDetails
+    {
+        public int Id { get; set; }
+    }
+
+    internal class TfsBuildDetailsResponse
+    {
+        public List<TfsBuildDetails> Value { get; set; }
+    }
+
+    internal class TfsBuildDetails
+    {
+        public string Result { get; set; }
+
+        public string Status { get; set; }
+    }
+
+    #endregion
 }
