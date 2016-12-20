@@ -6,8 +6,10 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
+using System.Xml.Serialization;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace AnyStatus
@@ -15,7 +17,7 @@ namespace AnyStatus
     [CategoryOrder("TeamCity", 10)]
     [DisplayName("TeamCity Build")]
     [Description("")]
-    public class TeamCityBuild : Item, IScheduledItem, ICanOpenInBrowser
+    public class TeamCityBuild : Item, IScheduledItem, ICanOpenInBrowser, ICanTriggerBuild
     {
         [Url]
         [Required]
@@ -185,6 +187,69 @@ namespace AnyStatus
             var url = $"{item.Url}/viewType.html?buildTypeId={item.BuildTypeId}";
 
             _processStarter.Start(url);
+        }
+    }
+
+    public class TriggerTeamCityBuild : ITriggerBuild<TeamCityBuild>
+    {
+        public void Handle(TeamCityBuild item)
+        {
+            using (var handler = new WebRequestHandler())
+            {
+                handler.UseDefaultCredentials = true;
+
+                if (item.IgnoreSslErrors)
+                {
+                    handler.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
+                }
+
+                string authType = string.Empty;
+
+                if (item.GuestUser)
+                {
+                    authType = "guestAuth";
+                }
+                else
+                {
+                    authType = "httpAuth";
+
+                    if (!string.IsNullOrEmpty(item.UserName) && !string.IsNullOrEmpty(item.Password))
+                    {
+                        handler.Credentials = new NetworkCredential(item.UserName, item.Password);
+                    }
+                }
+
+                using (var client = new HttpClient(handler))
+                {
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
+
+                    if (item.Url.EndsWith("/"))
+                    {
+                        item.Url = item.Url.Remove(item.Url.Length - 1);
+                    }
+
+                    var url = $"{item.Url}/{authType}/app/rest/buildQueue";
+
+                    var request = $"<build><buildType id=\"{item.BuildTypeId}\"/></build>";
+
+                    var content = new StringContent(request, Encoding.UTF8, "application/xml");
+
+                    var response = client.PostAsync(url, content).Result;
+
+                    response.EnsureSuccessStatusCode();
+                }
+            }
+        }
+
+        public class Build
+        {
+            public BuildType BuildType { get; set; }
+        }
+
+        public class BuildType
+        {
+            [XmlAttribute]
+            public string Id { get; set; }
         }
     }
 }
