@@ -47,12 +47,12 @@ namespace AnyStatus.Tests
         public void OptionsCommand_Should_Show_General_Options_Page()
         {
             var logger = Substitute.For<ILogger>();
-            var package = Substitute.For<Package>();
+            var package = Substitute.For<IPackage>();
             var command = new OptionsCommand(package, logger);
 
             command.MenuCommand.Invoke();
 
-            package.Received(1).ShowOptionPage(typeof(GeneralOptions));
+            package.Received().ShowOptions();
         }
 
         [TestMethod]

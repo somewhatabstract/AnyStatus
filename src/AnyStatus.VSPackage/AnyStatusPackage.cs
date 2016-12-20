@@ -15,9 +15,14 @@ namespace AnyStatus.VSPackage
     [ProvideOptionPage(typeof(GeneralOptions), "AnyStatus", "General", 0, 0, true)]
     [ProvideOptionPage(typeof(UserInterfaceOptions), "AnyStatus", "User Interface", 0, 1, true)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
-    public sealed class AnyStatusPackage : Package
+    public sealed class AnyStatusPackage : Package, IPackage
     {
         private AnyStatusApp _app;
+
+        public void ShowOptions()
+        {
+            ShowOptionPage(typeof(GeneralOptions));
+        }
 
         protected override async void Initialize()
         {

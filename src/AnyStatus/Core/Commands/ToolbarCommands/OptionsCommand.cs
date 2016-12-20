@@ -1,14 +1,13 @@
-﻿using Microsoft.VisualStudio.Shell;
-using System;
+﻿using System;
 
 namespace AnyStatus
 {
     public class OptionsCommand : ToolbarCommand
     {
-        private Package _package;
+        private IPackage _package;
         private readonly ILogger _logger;
 
-        public OptionsCommand(Package package, ILogger logger) : base(PackageIds.optionsToolbarCommandId)
+        public OptionsCommand(IPackage package, ILogger logger) : base(PackageIds.optionsToolbarCommandId)
         {
             _logger = logger;
             _package = package;
@@ -18,11 +17,11 @@ namespace AnyStatus
         {
             try
             {
-                _package.ShowOptionPage(typeof(GeneralOptions));
+                _package.ShowOptions();
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Failed to open options dialog");
+                _logger.Error(ex, "Failed to show options dialog.");
             }
         }
     }

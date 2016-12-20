@@ -9,7 +9,7 @@ namespace AnyStatus.VSPackage
 {
     internal class ContainerBuilder
     {
-        internal static TinyIoCContainer Build(Package package)
+        internal static TinyIoCContainer Build(AnyStatusPackage package)
         {
             var container = TinyIoCContainer.Current;
 
@@ -18,28 +18,25 @@ namespace AnyStatus.VSPackage
             RegisterUI(container);
             RegisterItems(container);
             RegisterTemplates(container);
-
-            RegisterHandlers(container, typeof(IHandler<>));
-            RegisterHandlers(container, typeof(IOpenInBrowser<>));
-            RegisterHandlers(container, typeof(ITriggerBuild<>));
+            RegisterHandlers(container);
 
             return container;
         }
 
-        private static void RegisterCore(TinyIoCContainer container, Package package)
+        private static void RegisterCore(TinyIoCContainer container, AnyStatusPackage package)
         {
-            container.Register(package);
-            container.Register<AnyStatusApp>().AsSingleton();
+            container.Register<Package>(package); //backward compatibility. used in ToolWindowCmd
+            container.Register<IPackage>(package);
             container.Register<IServiceProvider>(package);
+            container.Register<AnyStatusApp>().AsSingleton();
             container.Register<ISettingsStore, SettingsStore>().AsSingleton();
             container.Register<ILogger, Logger>().AsSingleton();
             container.Register<IJobScheduler, JobScheduler>().AsSingleton();
             container.Register<IScheduledJob, ScheduledJob>().AsMultiInstance();
             container.Register<IUsageReporter, AnalyticsReporter>().AsSingleton();
-
-            container.Register<ICommandRegistry, CommandRegistry>();
-            container.Register<IMediator, Mediator>();
-            container.Register<IProcessStarter, ProcessStarter>();
+            container.Register<ICommandRegistry, CommandRegistry>().AsSingleton();
+            container.Register<IMediator, Mediator>().AsMultiInstance();
+            container.Register<IProcessStarter, ProcessStarter>().AsMultiInstance();
         }
 
         private static void RegisterUI(TinyIoCContainer container)
@@ -62,21 +59,29 @@ namespace AnyStatus.VSPackage
             container.Register<UserInterfaceOptionsViewModel>().AsSingleton();
         }
 
-        private static void RegisterHandlers(TinyIoCContainer container, Type type)
+        private static void RegisterHandlers(TinyIoCContainer container)
         {
-            var handlers = TypeFinder.FindGenericTypesOf(type, type.Assembly);
+            var baseType = typeof(IHandler);
 
-            foreach (var handler in handlers)
+            var registrations = from handler in TypeFinder.FindTypesOf(baseType, baseType.Assembly)
+                                from @interface in handler.GetInterfaces().Where(k => k.IsGenericType)
+                                select new
+                                {
+                                    Type = @interface,
+                                    Implementation = handler
+                                };
+
+            foreach (var registration in registrations)
             {
-                container
-                    .Register(handler.GetInterface(type.Name), handler)
-                    .AsMultiInstance();
+                container.Register(registration.Type, registration.Implementation).AsMultiInstance();
             }
         }
 
         private static void RegisterItems(TinyIoCContainer container)
         {
-            var items = TypeFinder.FindTypesOf(typeof(Item), new[] { typeof(Item).Assembly });
+            var type = typeof(Item);
+
+            var items = TypeFinder.FindTypesOf(type, type.Assembly);
 
             items = from item in items
                     where item.IsBrowsable()
@@ -89,8 +94,8 @@ namespace AnyStatus.VSPackage
         private static void RegisterMenuCommands(TinyIoCContainer container)
         {
             var items = TypeFinder.FindTypesOf(typeof(IToolbarCommand),
-                     new[] { typeof(IToolbarCommand).Assembly,
-                             typeof(ContainerBuilder).Assembly });
+                            new[] { typeof(IToolbarCommand).Assembly,
+                                    typeof(ContainerBuilder).Assembly });
 
             container.RegisterMultiple(typeof(IToolbarCommand), items);
         }

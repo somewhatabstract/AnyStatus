@@ -57,6 +57,7 @@
     <Compile Include="CommandRegistry.cs" />
     <Compile Include="ContainerBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Logger.cs" />
     <Compile Include="ToolWindowCmd.cs" />
     <Compile Include="ToolWindowHost.cs" />
     <Compile Include="AnyStatusPackage.cs" />

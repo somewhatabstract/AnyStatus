@@ -24,6 +24,11 @@ namespace AnyStatus
                    select type;
         }
 
+        public static IEnumerable<Type> FindTypesOf(Type baseType, Assembly assembly)
+        {
+            return FindTypesOf(baseType, new[] { assembly });
+        }
+
         public static IEnumerable<Type> FindTypesOf(Type baseType, Assembly[] assemblies)
         {
             return from assembly in assemblies

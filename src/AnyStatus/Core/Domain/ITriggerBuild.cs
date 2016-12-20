@@ -1,6 +1,6 @@
 ﻿namespace AnyStatus
 {
-    public interface ITriggerBuild<in T> where T : Item
+    public interface ITriggerBuild<in T> : IHandler where T : Item
     {
         void Handle(T item);
     }
