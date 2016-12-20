@@ -2,20 +2,20 @@
 using System.ComponentModel;
 using System.Windows;
 
-namespace AnyStatus
+namespace AnyStatus.VSPackage
 {
-    public class UserInterfaceOptions : UIElementDialogPage
+    public class GeneralOptions : UIElementDialogPage
     {
-        private UserInterfaceOptionsView _view;
-        private UserInterfaceOptionsViewModel _viewModel;
+        private readonly GeneralOptionsView _view;
+        private readonly GeneralOptionsViewModel _viewModel;
 
-        public UserInterfaceOptions() : this(TinyIoCContainer.Current.Resolve<UserInterfaceOptionsViewModel>()) { }
+        public GeneralOptions() : this(TinyIoCContainer.Current.Resolve<GeneralOptionsViewModel>()) { }
 
-        public UserInterfaceOptions(UserInterfaceOptionsViewModel viewModel)
+        public GeneralOptions(GeneralOptionsViewModel viewModel)
         {
             _viewModel = Preconditions.CheckNotNull(viewModel, nameof(viewModel));
 
-            _view = new UserInterfaceOptionsView(viewModel);
+            _view = new GeneralOptionsView(viewModel);
         }
 
         protected override UIElement Child

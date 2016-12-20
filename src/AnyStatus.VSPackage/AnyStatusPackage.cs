@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -22,6 +23,20 @@ namespace AnyStatus.VSPackage
         public void ShowOptions()
         {
             ShowOptionPage(typeof(GeneralOptions));
+        }
+
+        public void ShowToolWindow()
+        {
+            ToolWindowPane window = FindToolWindow(typeof(ToolWindowHost), 0, true);
+
+            if ((null == window) || (null == window.Frame))
+            {
+                throw new NotSupportedException("Cannot create tool window");
+            }
+
+            IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
+
+            Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.Show());
         }
 
         protected override async void Initialize()

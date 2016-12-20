@@ -192,9 +192,6 @@
     <Compile Include="Core\Domain\StateMetadata.cs" />
     <Compile Include="Features\Monitors\TfsWorkItem.cs" />
     <Compile Include="Core\Settings\Theme.cs" />
-    <Compile Include="Features\Options\UserInterface\UserInterfaceOptions.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Features\Options\UserInterface\UserInterfaceOptionsView.xaml.cs">
       <DependentUpon>UserInterfaceOptionsView.xaml</DependentUpon>
     </Compile>
@@ -253,9 +250,6 @@
     </Compile>
     <Compile Include="Features\Options\General\GeneralOptionsView.xaml.cs">
       <DependentUpon>GeneralOptionsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Features\Options\General\GeneralOptions.cs">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Features\ToolWindow\ToolWindowControl.xaml.cs">
       <DependentUpon>ToolWindowControl.xaml</DependentUpon>

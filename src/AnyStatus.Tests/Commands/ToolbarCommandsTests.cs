@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
-using Microsoft.VisualStudio.Shell;
 
 namespace AnyStatus.Tests
 {
