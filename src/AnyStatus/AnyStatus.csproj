@@ -142,7 +142,7 @@
     <Compile Include="Core\Domain\ICanTriggerBuild.cs" />
     <Compile Include="Core\Domain\IPackage.cs" />
     <Compile Include="Core\Domain\ITriggerBuild.cs" />
-    <Compile Include="Core\ICommandRegistry.cs" />
+    <Compile Include="Core\Domain\ICommandRegistry.cs" />
     <Compile Include="Core\Mediator\IMediator.cs" />
     <Compile Include="Core\Mediator\Mediator.cs" />
     <Compile Include="Core\Domain\IScheduledJob.cs" />
@@ -220,7 +220,7 @@
     <Compile Include="Core\UsageReporting\AnalyticsReporter.cs" />
     <Compile Include="Core\UsageReporting\IUsageReporter.cs" />
     <Compile Include="Infrastructure\Converters\NotConverter.cs" />
-    <Compile Include="Core\IProcessStarter.cs" />
+    <Compile Include="Core\Domain\IProcessStarter.cs" />
     <Compile Include="Infrastructure\NotifyPropertyChanged.cs" />
     <Compile Include="Infrastructure\Preconditions.cs" />
     <Compile Include="Core\Monitoring\IJobScheduler.cs" />
@@ -228,7 +228,7 @@
     <Compile Include="Core\Monitoring\ScheduledJob.cs" />
     <Compile Include="Infrastructure\ProcessStarter.cs" />
     <Compile Include="Infrastructure\Retry.cs" />
-    <Compile Include="Core\ILogger.cs" />
+    <Compile Include="Core\Domain\ILogger.cs" />
     <Compile Include="Core\Domain\Folder.cs" />
     <Compile Include="Core\Domain\IHandler.cs" />
     <Compile Include="Features\Monitors\Http.cs" />
