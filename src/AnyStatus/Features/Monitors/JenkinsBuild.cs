@@ -187,10 +187,14 @@ namespace AnyStatus
         }
     }
 
+    #region Contracts
+
     public class JenkinsBuildDetails
     {
         public bool Building { get; set; }
 
         public string Result { get; set; }
     }
+
+    #endregion
 }

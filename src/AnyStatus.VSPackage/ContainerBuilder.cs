@@ -63,17 +63,18 @@ namespace AnyStatus.VSPackage
         {
             var baseType = typeof(IHandler);
 
-            var registrations = from handler in TypeFinder.FindTypesOf(baseType, baseType.Assembly)
+            var handlers = from handler in TypeFinder.FindTypesOf(baseType, baseType.Assembly)
                                 from @interface in handler.GetInterfaces().Where(k => k.IsGenericType)
+                                where handler.IsAbstract == false
                                 select new
                                 {
                                     Type = @interface,
                                     Implementation = handler
                                 };
 
-            foreach (var registration in registrations)
+            foreach (var handler in handlers)
             {
-                container.Register(registration.Type, registration.Implementation).AsMultiInstance();
+                container.Register(handler.Type, handler.Implementation).AsMultiInstance();
             }
         }
 
