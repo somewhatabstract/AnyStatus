@@ -8,6 +8,7 @@
     <ContextMenu x:Key="ItemContextMenu">
         
         <ContextMenu.Resources>
+            <local:HasTasksConverter x:Key="HasTasksConverter"/>
             <local:CanOpenInBrowserConverter x:Key="CanOpenInBrowserConverter"/>
             <local:CanTriggerBuildConverter x:Key="CanTriggerBuildConverter"/>
             <local:CanStartWindowsServiceConverter x:Key="CanStartWindowsServiceConverter"/>
@@ -46,6 +47,8 @@
             </Separator.Style>
         </Separator>
 
+        <!-- TASKS -->
+        
         <MenuItem Header=" Open in Browser"
                   Command="{Binding Path=PlacementTarget.Tag.DataContext.OpenInBrowserCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                   CommandParameter="{Binding}">
@@ -135,20 +138,21 @@
                 <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Restart}" />
             </MenuItem.Icon>
         </MenuItem>
-        
-        <Separator />
-        <!--<Separator>
+                
+        <Separator>
             <Separator.Style>
                 <Style TargetType="{x:Type Separator}">
                     <Setter Property="Visibility" Value="Collapsed"></Setter>
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding Converter={StaticResource CanOpenInBrowserConverter}}" Value="True">
+                        <DataTrigger Binding="{Binding Converter={StaticResource HasTasksConverter}}" Value="True">
                             <Setter Property="Visibility" Value="Visible"></Setter>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </Separator.Style>
-        </Separator>-->
+        </Separator>
+
+        <!-- END TASKS -->
         
         <MenuItem Header=" Enable" 
                   Command="{Binding Path=PlacementTarget.Tag.DataContext.EnableCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"

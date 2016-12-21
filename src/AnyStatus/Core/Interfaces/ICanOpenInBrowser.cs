@@ -1,6 +1,6 @@
 ﻿namespace AnyStatus
 {
-    public interface ICanOpenInBrowser
+    public interface ICanOpenInBrowser : ITask
     {
     }
 }

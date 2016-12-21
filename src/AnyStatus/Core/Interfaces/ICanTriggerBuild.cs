@@ -1,6 +1,6 @@
 ﻿namespace AnyStatus
 {
-    public interface ICanTriggerBuild
+    public interface ICanTriggerBuild : ITask
     {
     }
 }

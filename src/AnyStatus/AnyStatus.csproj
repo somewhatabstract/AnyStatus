@@ -148,6 +148,7 @@
     <Compile Include="Core\Interfaces\IRestartWindowsService.cs" />
     <Compile Include="Core\Interfaces\IStartWindowsService.cs" />
     <Compile Include="Core\Interfaces\IStopWindowsService.cs" />
+    <Compile Include="Core\Interfaces\ITask.cs" />
     <Compile Include="Core\Interfaces\ITriggerBuild.cs" />
     <Compile Include="Core\Interfaces\ICommandRegistry.cs" />
     <Compile Include="Core\Interfaces\IMediator.cs" />
@@ -179,6 +180,7 @@
     <Compile Include="Core\Commands\RefreshAllCommand.cs" />
     <Compile Include="Core\Commands\OptionsCommand.cs" />
     <Compile Include="Core\Commands\HelpCommand.cs" />
+    <Compile Include="Infrastructure\Converters\HasTasksConverter.cs" />
     <Compile Include="Infrastructure\Converters\CanRestartWindowsServiceConverter.cs" />
     <Compile Include="Infrastructure\Converters\CanStopWindowsServiceConverter.cs" />
     <Compile Include="Infrastructure\Converters\CanStartWindowsServiceConverter.cs" />

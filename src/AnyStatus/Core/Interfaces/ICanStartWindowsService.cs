@@ -1,6 +1,6 @@
 ﻿namespace AnyStatus
 {
-    public interface ICanStartWindowsService
+    public interface ICanStartWindowsService : ITask
     {
     }
 }

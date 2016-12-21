@@ -1,6 +1,6 @@
 ﻿namespace AnyStatus
 {
-    public interface ICanStopWindowsService
+    public interface ICanStopWindowsService : ITask
     {
     }
 }
