@@ -2,7 +2,7 @@
 
 namespace AnyStatus
 {
-    public class RefreshAllCommand : ToolbarCommand
+    public class RefreshAllCommand : MenuCommandBase
     {
         private ILogger _logger;
         private IJobScheduler _jobScheduler;

@@ -1,6 +1,6 @@
 ﻿namespace AnyStatus
 {
-    public class ItemCommand
+    public abstract class ItemCommand
     {
         public ItemCommand(Item item)
         {

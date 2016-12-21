@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace AnyStatus
 {
     [ExcludeFromCodeCoverage]
-    public class HelpCommand : ToolbarCommand
+    public class HelpCommand : MenuCommandBase
     {
         public HelpCommand() : base(PackageIds.helpToolbarCommandId)
         {

@@ -3,9 +3,9 @@ using System.ComponentModel.Design;
 
 namespace AnyStatus
 {
-    public abstract class ToolbarCommand : IMenuCommand
+    public abstract class MenuCommandBase : IMenuCommand
     {
-        public ToolbarCommand(int commandId)
+        public MenuCommandBase(int commandId)
         {
             var command = new CommandID(PackageGuids.guidToolWindowPackageCmdSet, commandId);
 

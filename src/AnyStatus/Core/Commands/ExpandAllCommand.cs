@@ -2,7 +2,7 @@
 
 namespace AnyStatus
 {
-    public class ExpandAllCommand : ToolbarCommand
+    public class ExpandAllCommand : MenuCommandBase
     {
         private readonly ISettingsStore _settingsStore;
 

@@ -2,7 +2,7 @@
 
 namespace AnyStatus
 {
-    public class OptionsCommand : ToolbarCommand
+    public class OptionsCommand : MenuCommandBase
     {
         private IPackage _package;
         private readonly ILogger _logger;

@@ -10,7 +10,14 @@ namespace AnyStatus.Tests.Tests.Commands
         [ExpectedException(typeof(ArgumentNullException))]
         public void Should_Throw_When_ItemIsNull()
         {
-            var command = new ItemCommand(null);
+            var command = new TestCommand(null);
+        }
+
+        class TestCommand : ItemCommand
+        {
+            public TestCommand(Item item) : base(item)
+            {
+            }
         }
     }
 }

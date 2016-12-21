@@ -2,7 +2,7 @@
 
 namespace AnyStatus.Features.ToolWindow.ToolbarCommands
 {
-    public class NewFolderCommand : ToolbarCommand
+    public class NewFolderCommand : MenuCommandBase
     {
         private readonly IMediator _mediator;
         private readonly ISettingsStore _settingsStore;
