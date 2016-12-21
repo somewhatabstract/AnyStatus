@@ -10,11 +10,14 @@
         <ContextMenu.Resources>
             <local:CanOpenInBrowserConverter x:Key="CanOpenInBrowserConverter"/>
             <local:CanTriggerBuildConverter x:Key="CanTriggerBuildConverter"/>
+            <local:CanStartWindowsServiceConverter x:Key="CanStartWindowsServiceConverter"/>
+            <local:CanStopWindowsServiceConverter x:Key="CanStopWindowsServiceConverter"/>
+            <local:CanRestartWindowsServiceConverter x:Key="CanRestartWindowsServiceConverter"/>
         </ContextMenu.Resources>
         
         <MenuItem Header=" Refresh" 
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.RefreshCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding}">
+                  Command="{Binding Path=PlacementTarget.Tag.DataContext.RefreshCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                  CommandParameter="{Binding}">
             <MenuItem.Style>
                 <Style TargetType="{x:Type MenuItem}">
                     <Setter Property="Visibility" Value="Collapsed"></Setter>
@@ -78,8 +81,63 @@
                 <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.AddBuildToQueue}" />
             </MenuItem.Icon>
         </MenuItem>
+
+        <MenuItem Header=" Start Service"
+                  Command="{Binding Path=PlacementTarget.Tag.DataContext.StartWindowsServiceCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                  CommandParameter="{Binding}">
+            <MenuItem.Style>
+                <Style TargetType="{x:Type MenuItem}">
+                    <Setter Property="Visibility" Value="Collapsed"></Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Converter={StaticResource CanStartWindowsServiceConverter}}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </MenuItem.Style>
+            <MenuItem.Icon>
+                <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Run}" />
+            </MenuItem.Icon>
+        </MenuItem>
+
+        <MenuItem Header=" Stop Service"
+                  Command="{Binding Path=PlacementTarget.Tag.DataContext.StopWindowsServiceCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                  CommandParameter="{Binding}">
+            <MenuItem.Style>
+                <Style TargetType="{x:Type MenuItem}">
+                    <Setter Property="Visibility" Value="Collapsed"></Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Converter={StaticResource CanStopWindowsServiceConverter}}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </MenuItem.Style>
+            <MenuItem.Icon>
+                <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Stop}" />
+            </MenuItem.Icon>
+        </MenuItem>
+
+        <MenuItem Header=" Restart Service"
+                  Command="{Binding Path=PlacementTarget.Tag.DataContext.RestartWindowsServiceCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                  CommandParameter="{Binding}">
+            <MenuItem.Style>
+                <Style TargetType="{x:Type MenuItem}">
+                    <Setter Property="Visibility" Value="Collapsed"></Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Converter={StaticResource CanRestartWindowsServiceConverter}}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </MenuItem.Style>
+            <MenuItem.Icon>
+                <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Restart}" />
+            </MenuItem.Icon>
+        </MenuItem>
         
-        <Separator>
+        <Separator />
+        <!--<Separator>
             <Separator.Style>
                 <Style TargetType="{x:Type Separator}">
                     <Setter Property="Visibility" Value="Collapsed"></Setter>
@@ -90,11 +148,11 @@
                     </Style.Triggers>
                 </Style>
             </Separator.Style>
-        </Separator>
+        </Separator>-->
         
         <MenuItem Header=" Enable" 
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.EnableCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding}">
+                  Command="{Binding Path=PlacementTarget.Tag.DataContext.EnableCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                  CommandParameter="{Binding}">
             <MenuItem.Style>
                 <Style TargetType="{x:Type MenuItem}">
                     <Setter Property="Visibility" Value="Collapsed"></Setter>
@@ -111,8 +169,8 @@
         </MenuItem>
 
         <MenuItem Header=" Disable" 
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.DisableCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding}">
+                  Command="{Binding Path=PlacementTarget.Tag.DataContext.DisableCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                  CommandParameter="{Binding}">
             <MenuItem.Style>
                 <Style TargetType="{x:Type MenuItem}">
                     <Setter Property="Visibility" Value="Collapsed"></Setter>
@@ -131,26 +189,26 @@
         <Separator/>
 
         <MenuItem Header=" Delete" 
-                                          InputGestureText="Del"
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.DeleteCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding}">
+                  InputGestureText="Del"
+                  Command="{Binding Path=PlacementTarget.Tag.DataContext.DeleteCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                  CommandParameter="{Binding}">
             <MenuItem.Icon>
                 <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Cancel}" />
             </MenuItem.Icon>
         </MenuItem>
 
         <MenuItem Header=" Rename"
-                                          InputGestureText="F2"
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.RenameCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding}">
+                  InputGestureText="F2"
+                  Command="{Binding Path=PlacementTarget.Tag.DataContext.RenameCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                  CommandParameter="{Binding}">
             <MenuItem.Icon>
                 <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Rename}" />
             </MenuItem.Icon>
         </MenuItem>
 
         <MenuItem Header=" Duplicate" 
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.DuplicateCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding}">
+                  Command="{Binding Path=PlacementTarget.Tag.DataContext.DuplicateCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                  CommandParameter="{Binding}">
             <MenuItem.Icon>
                 <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.CopyItem}" />
             </MenuItem.Icon>
@@ -159,16 +217,16 @@
         <Separator/>
 
         <MenuItem Header=" Move Up"
-                                          CommandParameter="{Binding}"
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.MoveUpCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
+                  CommandParameter="{Binding}"
+                  Command="{Binding Path=PlacementTarget.Tag.DataContext.MoveUpCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
             <MenuItem.Icon>
                 <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.MoveUp}" />
             </MenuItem.Icon>
         </MenuItem>
 
         <MenuItem Header=" Move Down"
-                                          CommandParameter="{Binding}"
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.MoveDownCEditCommandommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
+                  CommandParameter="{Binding}"
+                  Command="{Binding Path=PlacementTarget.Tag.DataContext.MoveDownCEditCommandommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}">
             <MenuItem.Icon>
                 <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.MoveDown}" />
             </MenuItem.Icon>
@@ -177,8 +235,8 @@
         <Separator/>
 
         <MenuItem Header=" Properties" 
-                                          Command="{Binding Path=PlacementTarget.Tag.DataContext.ShowEditDialogCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
-                                          CommandParameter="{Binding}">
+                  Command="{Binding Path=PlacementTarget.Tag.DataContext.ShowEditDialogCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                  CommandParameter="{Binding}">
             <MenuItem.Icon>
                 <imaging:CrispImage Width="16" Height="16" Moniker="{x:Static catalog:KnownMonikers.Property}" />
             </MenuItem.Icon>

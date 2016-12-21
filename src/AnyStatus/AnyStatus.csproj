@@ -139,9 +139,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\AnyStatusApp.cs" />
+    <Compile Include="Core\Interfaces\ICanRestartWindowsService.cs" />
+    <Compile Include="Core\Interfaces\ICanStartWindowsService.cs" />
+    <Compile Include="Core\Interfaces\ICanStopWindowsService.cs" />
     <Compile Include="Core\Interfaces\ICanTriggerBuild.cs" />
     <Compile Include="Core\Interfaces\IMonitor.cs" />
     <Compile Include="Core\Interfaces\IPackage.cs" />
+    <Compile Include="Core\Interfaces\IRestartWindowsService.cs" />
+    <Compile Include="Core\Interfaces\IStartWindowsService.cs" />
+    <Compile Include="Core\Interfaces\IStopWindowsService.cs" />
     <Compile Include="Core\Interfaces\ITriggerBuild.cs" />
     <Compile Include="Core\Interfaces\ICommandRegistry.cs" />
     <Compile Include="Core\Interfaces\IMediator.cs" />
@@ -173,6 +179,9 @@
     <Compile Include="Core\Commands\RefreshAllCommand.cs" />
     <Compile Include="Core\Commands\OptionsCommand.cs" />
     <Compile Include="Core\Commands\HelpCommand.cs" />
+    <Compile Include="Infrastructure\Converters\CanRestartWindowsServiceConverter.cs" />
+    <Compile Include="Infrastructure\Converters\CanStopWindowsServiceConverter.cs" />
+    <Compile Include="Infrastructure\Converters\CanStartWindowsServiceConverter.cs" />
     <Compile Include="ToolWindowPackage.cs" />
     <Compile Include="Features\Edit\EditWindow.xaml.cs">
       <DependentUpon>EditWindow.xaml</DependentUpon>

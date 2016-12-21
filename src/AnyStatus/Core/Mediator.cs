@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace AnyStatus
 {
@@ -40,6 +41,27 @@ namespace AnyStatus
             var handler = TinyIoCContainer.Current.Resolve(genericHandlerType);
             
             genericHandlerType.GetMethod("Handle").Invoke(handler, new[] { request });
+        }
+
+        public async Task SendAsync(object request, Type handlerType)
+        {
+            var genericHandlerType = handlerType.MakeGenericType(request.GetType());
+
+            var handler = TinyIoCContainer.Current.Resolve(genericHandlerType);
+
+            await (Task) genericHandlerType.GetMethod("HandleAsync").Invoke(handler, new[] { request });
+        }
+
+        public async Task TrySendAsync(object request, Type handlerType)
+        {
+            try
+            {
+                await SendAsync(request, handlerType);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+            }
         }
     }
 }

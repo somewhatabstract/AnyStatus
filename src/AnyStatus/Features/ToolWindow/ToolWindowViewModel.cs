@@ -62,6 +62,12 @@ namespace AnyStatus
             MoveDownCommand = new RelayCommand(
                 item => _mediator.TrySend(new MoveDownCommand(item as Item)),
                 item => (item as Item) != null && (item as Item).CanMoveDown());
+
+            StartWindowsServiceCommand = new RelayCommand(async item => await _mediator.TrySendAsync(item, typeof(IStartWindowsService<>)));
+
+            StopWindowsServiceCommand = new RelayCommand(async item => await _mediator.TrySendAsync(item, typeof(IStopWindowsService<>)));
+
+            RestartWindowsServiceCommand = new RelayCommand(async item => await _mediator.TrySendAsync(item, typeof(IRestartWindowsService<>)));
         }
 
         private void SettingsStore_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -97,6 +103,12 @@ namespace AnyStatus
         public ICommand MoveUpCommand { get; set; }
 
         public ICommand MoveDownCommand { get; set; }
+
+        public ICommand StartWindowsServiceCommand { get; set; }
+
+        public ICommand StopWindowsServiceCommand { get; set; }
+
+        public ICommand RestartWindowsServiceCommand { get; set; }
     }
 }
 
