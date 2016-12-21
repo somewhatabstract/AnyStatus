@@ -4,4 +4,8 @@ With AnyStatus you can monitor HTTP servers, send Ping requests, check TCP ports
 
 AnyStatus runs in the background and does not have a significant impact on the performance or startup of Visual Studio. Moreover, it loads only when the tool window is activated.
 
-See the changelog for changes and roadmap.  
+See the changelog for changes and roadmap.
+
+# Features
+
+
