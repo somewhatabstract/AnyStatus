@@ -1,1 +1,4 @@
 theme: jekyll-theme-cayman
+name: AnyStatus
+description: Monitor the health, status and availability of services
+author: Alon Amsalem
