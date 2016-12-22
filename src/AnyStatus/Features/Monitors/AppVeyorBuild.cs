@@ -113,19 +113,19 @@ namespace AnyStatus
             _dialogService = Preconditions.CheckNotNull(dialogService, nameof(dialogService));
         }
 
-        public void Handle(AppVeyorBuild build)
+        public async Task HandleAsync(AppVeyorBuild build)
         {
             var result = _dialogService.Show($"Are you sure you want to trigger {build.Name}?", "Trigger a new build", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
 
             if (result != MessageBoxResult.Yes)
                 return;
 
-            QueueNewBuild(build);
+            await QueueNewBuild(build);
 
             _logger.Info($"Build \"{build.Name}\" was triggered.");
         }
 
-        private void QueueNewBuild(AppVeyorBuild item)
+        private async Task QueueNewBuild(AppVeyorBuild item)
         {
             using (var client = new HttpClient())
             {
@@ -142,7 +142,7 @@ namespace AnyStatus
 
                 var content = new StringContent(data, Encoding.UTF8, "application/json");
 
-                var response = client.PostAsync(Url, content).Result;
+                var response = await client.PostAsync(Url, content);
 
                 response.EnsureSuccessStatusCode();
             }

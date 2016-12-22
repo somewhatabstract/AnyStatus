@@ -78,6 +78,14 @@ namespace AnyStatus
             }
         }
 
+        public virtual async Task HandleAsync(TfsBuild item)
+        {
+            if (item.BuildDefinitionId <= 0)
+            {
+                item.BuildDefinitionId = await GetBuildDefinitionIdAsync(item);
+            }
+        }
+
         protected async Task<int> GetBuildDefinitionIdAsync(TfsBuild item)
         {
             using (var handler = new WebRequestHandler())
@@ -192,21 +200,21 @@ namespace AnyStatus
         }
 
         [DebuggerStepThrough]
-        public override void Handle(TfsBuild build)
+        public override async Task HandleAsync(TfsBuild build)
         {
             var result = _dialogService.Show($"Are you sure you want to trigger {build.Name}?", "Trigger a new build", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
 
             if (result != MessageBoxResult.Yes)
                 return;
 
-            base.Handle(build);
+            await base.HandleAsync(build);
 
-            QueueNewBuild(build);
+            await QueueNewBuild(build);
 
             _logger.Info($"Build \"{build.Name}\" was triggered.");
         }
 
-        private void QueueNewBuild(TfsBuild item)
+        private async Task QueueNewBuild(TfsBuild item)
         {
             using (var handler = new WebRequestHandler())
             {
@@ -236,7 +244,7 @@ namespace AnyStatus
 
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                    var response = client.PostAsync(url, content).Result;
+                    var response = await client.PostAsync(url, content);
 
                     response.EnsureSuccessStatusCode();
                 }

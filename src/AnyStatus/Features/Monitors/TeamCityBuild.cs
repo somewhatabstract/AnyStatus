@@ -202,19 +202,19 @@ namespace AnyStatus
             _dialogService = Preconditions.CheckNotNull(dialogService, nameof(dialogService));
         }
 
-        public void Handle(TeamCityBuild build)
+        public async Task HandleAsync(TeamCityBuild build)
         {
             var result = _dialogService.Show($"Are you sure you want to trigger {build.Name}?", "Trigger a new build", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
 
             if (result != MessageBoxResult.Yes)
                 return;
 
-            QueueNewBuild(build);
+            await QueueNewBuild(build);
 
             _logger.Info($"Build \"{build.Name}\" was triggered.");
         }
 
-        private static void QueueNewBuild(TeamCityBuild item)
+        private async Task QueueNewBuild(TeamCityBuild item)
         {
             using (var handler = new WebRequestHandler())
             {
@@ -256,7 +256,7 @@ namespace AnyStatus
 
                     var content = new StringContent(request, Encoding.UTF8, "application/xml");
 
-                    var response = client.PostAsync(url, content).Result;
+                    var response = await client.PostAsync(url, content);
 
                     response.EnsureSuccessStatusCode();
                 }

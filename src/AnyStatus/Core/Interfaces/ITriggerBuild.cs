@@ -1,7 +1,9 @@
-﻿namespace AnyStatus
+﻿using System.Threading.Tasks;
+
+namespace AnyStatus
 {
     public interface ITriggerBuild<in T> : IHandler where T : Item
     {
-        void Handle(T item);
+        Task HandleAsync(T item);
     }
 }
