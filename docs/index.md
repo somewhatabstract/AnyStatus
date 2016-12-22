@@ -1,5 +1,5 @@
 ---
-title: AnyStatus
+title: AnyStatus - Monitoring extension for Visual Studio
 ---
 
 AnyStatus adds monitoring capabilities to Visual Studio to enable you monitor your development environment and other resources and applications on-premise or on the cloud. 
