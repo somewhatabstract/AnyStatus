@@ -27,7 +27,7 @@ namespace AnyStatus
     [XmlInclude(typeof(AppVeyorBuild))]
     [XmlInclude(typeof(TravisCIBuild))]
     [XmlInclude(typeof(WindowsService))]
-    public class Item : INotifyPropertyChanged, ICloneable
+    public class Item : INotifyPropertyChanged, ICloneable, IValidatable
     {
         #region Fields
 
@@ -386,6 +386,8 @@ namespace AnyStatus
             return Items != null && Items.Contains(item);
         }
 
+        #region Validation
+
         public bool IsValid()
         {
             var context = new ValidationContext(this, serviceProvider: null, items: null);
@@ -400,7 +402,9 @@ namespace AnyStatus
             var context = new ValidationContext(this, serviceProvider: null, items: null);
 
             return Validator.TryValidateObject(this, context, results);
-        }
+        } 
+
+        #endregion
 
         public bool IsAncestorOf(Item child)
         {
@@ -459,6 +463,8 @@ namespace AnyStatus
 
             return clone;
         }
+
+        
 
         #endregion
     }

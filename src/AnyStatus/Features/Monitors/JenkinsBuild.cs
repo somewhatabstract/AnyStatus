@@ -7,12 +7,11 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
+using System.Windows;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace AnyStatus
 {
-    //todo: refactor duplications
-
     [DisplayName("Jenkins Build")]
     public class JenkinsBuild : Item, IScheduledItem, ICanOpenInBrowser, ICanTriggerBuild
     {
@@ -61,36 +60,48 @@ namespace AnyStatus
     public class TriggerJenkinsBuild : ITriggerBuild<JenkinsBuild>
     {
         private readonly ILogger _logger;
+        private readonly IDialogService _dialogService;
 
-        public TriggerJenkinsBuild(ILogger logger)
+        public TriggerJenkinsBuild(IDialogService dialogService, ILogger logger)
         {
             _logger = Preconditions.CheckNotNull(logger, nameof(logger));
+            _dialogService = Preconditions.CheckNotNull(dialogService, nameof(dialogService));
         }
 
-        public void Handle(JenkinsBuild item)
+        public void Handle(JenkinsBuild build)
+        {
+            var result = _dialogService.Show($"Are you sure you want to trigger {build.Name}?", "Trigger a new build", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
+
+            if (result != MessageBoxResult.Yes)
+                return;
+
+            QueueNewBuild(build);
+
+            _logger.Info($"Build \"{build.Name}\" was triggered.");
+        }
+
+        private void QueueNewBuild(JenkinsBuild build)
         {
             using (var handler = new WebRequestHandler())
             {
                 handler.UseDefaultCredentials = true;
 
-                if (item.IgnoreSslErrors)
+                if (build.IgnoreSslErrors)
                 {
                     handler.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
                 }
 
                 using (var client = new HttpClient(handler))
                 {
-                    ConfigureHttpClientAuthorization(item, client);
+                    ConfigureHttpClientAuthorization(build, client);
 
-                    var baseUri = new Uri(item.Url);
+                    var baseUri = new Uri(build.Url);
 
                     var uri = new Uri(baseUri, "buildWithParameters?delay=0sec");
 
                     var response = client.PostAsync(uri, new StringContent(string.Empty)).Result;
 
                     response.EnsureSuccessStatusCode();
-
-                    _logger.Info($"Build \"{item.Name}\" was triggered.");
                 }
             }
         }

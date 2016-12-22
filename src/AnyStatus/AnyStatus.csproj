@@ -152,6 +152,7 @@
     <Compile Include="Core\Interfaces\ITriggerBuild.cs" />
     <Compile Include="Core\Interfaces\ICommandRegistry.cs" />
     <Compile Include="Core\Interfaces\IMediator.cs" />
+    <Compile Include="Core\Interfaces\IValidatable.cs" />
     <Compile Include="Core\Mediator.cs" />
     <Compile Include="Core\Interfaces\IScheduledJob.cs" />
     <Compile Include="Core\UserSettings.cs" />

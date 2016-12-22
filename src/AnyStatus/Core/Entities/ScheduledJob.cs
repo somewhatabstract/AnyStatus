@@ -41,7 +41,7 @@ namespace AnyStatus
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, $"An error occurred while updating \"{Item.Name}\".");
+                _logger.Error(ex, $"An error occurred while updating \"{Item.Name}\"");
 
                 if (Item.State != State.Disabled)
                     Item.State = State.Error;

@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
+using System.Windows;
 
 namespace AnyStatus
 {
@@ -37,7 +38,7 @@ namespace AnyStatus
 
     public class AppVeyorBuildMonitor : IMonitor<AppVeyorBuild>
     {
-        //[DebuggerStepThrough]
+        [DebuggerStepThrough]
         public void Handle(AppVeyorBuild item)
         {
             var build = GetBuildDetailsAsync(item).Result;
@@ -103,12 +104,25 @@ namespace AnyStatus
     {
         const string Url = @"https://ci.appveyor.com/api/builds";
 
-        public void Handle(AppVeyorBuild item)
+        private readonly ILogger _logger;
+        private readonly IDialogService _dialogService;
+
+        public TriggerAppVeyorBuild(IDialogService dialogService, ILogger logger)
         {
-            if (item == null || item.IsValid() == false)
+            _logger = Preconditions.CheckNotNull(logger, nameof(logger));
+            _dialogService = Preconditions.CheckNotNull(dialogService, nameof(dialogService));
+        }
+
+        public void Handle(AppVeyorBuild build)
+        {
+            var result = _dialogService.Show($"Are you sure you want to trigger {build.Name}?", "Trigger a new build", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
+
+            if (result != MessageBoxResult.Yes)
                 return;
 
-            QueueNewBuild(item);
+            QueueNewBuild(build);
+
+            _logger.Info($"Build \"{build.Name}\" was triggered.");
         }
 
         private void QueueNewBuild(AppVeyorBuild item)

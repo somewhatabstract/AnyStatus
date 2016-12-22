@@ -9,6 +9,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
+using System.Windows;
 using System.Xml.Serialization;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
@@ -181,15 +182,28 @@ namespace AnyStatus
 
     public class TriggerTfsBuild : BaseTfsBuildHandler, ITriggerBuild<TfsBuild>
     {
-        [DebuggerStepThrough]
-        public override void Handle(TfsBuild item)
+        private readonly ILogger _logger;
+        private readonly IDialogService _dialogService;
+
+        public TriggerTfsBuild(IDialogService dialogService, ILogger logger)
         {
-            if (item == null || item.IsValid() == false)
+            _logger = Preconditions.CheckNotNull(logger, nameof(logger));
+            _dialogService = Preconditions.CheckNotNull(dialogService, nameof(dialogService));
+        }
+
+        [DebuggerStepThrough]
+        public override void Handle(TfsBuild build)
+        {
+            var result = _dialogService.Show($"Are you sure you want to trigger {build.Name}?", "Trigger a new build", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
+
+            if (result != MessageBoxResult.Yes)
                 return;
 
-            base.Handle(item);
+            base.Handle(build);
 
-            QueueNewBuild(item);
+            QueueNewBuild(build);
+
+            _logger.Info($"Build \"{build.Name}\" was triggered.");
         }
 
         private void QueueNewBuild(TfsBuild item)
@@ -243,9 +257,6 @@ namespace AnyStatus
 
         public override void Handle(TfsBuild item)
         {
-            if (item == null || item.IsValid() == false)
-                return;
-
             base.Handle(item);
 
             var uri = $"{item.Url}/{item.Collection}/{item.TeamProject}/_build?_a=completed&definitionId={item.BuildDefinitionId}";

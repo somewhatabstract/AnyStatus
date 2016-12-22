@@ -9,6 +9,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
+using System.Windows;
 using System.Xml.Serialization;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
@@ -192,7 +193,28 @@ namespace AnyStatus
 
     public class TriggerTeamCityBuild : ITriggerBuild<TeamCityBuild>
     {
-        public void Handle(TeamCityBuild item)
+        private readonly ILogger _logger;
+        private readonly IDialogService _dialogService;
+
+        public TriggerTeamCityBuild(IDialogService dialogService, ILogger logger)
+        {
+            _logger = Preconditions.CheckNotNull(logger, nameof(logger));
+            _dialogService = Preconditions.CheckNotNull(dialogService, nameof(dialogService));
+        }
+
+        public void Handle(TeamCityBuild build)
+        {
+            var result = _dialogService.Show($"Are you sure you want to trigger {build.Name}?", "Trigger a new build", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
+
+            if (result != MessageBoxResult.Yes)
+                return;
+
+            QueueNewBuild(build);
+
+            _logger.Info($"Build \"{build.Name}\" was triggered.");
+        }
+
+        private static void QueueNewBuild(TeamCityBuild item)
         {
             using (var handler = new WebRequestHandler())
             {
@@ -240,6 +262,8 @@ namespace AnyStatus
                 }
             }
         }
+        
+        #region Contracts
 
         public class Build
         {
@@ -250,6 +274,8 @@ namespace AnyStatus
         {
             [XmlAttribute]
             public string Id { get; set; }
-        }
+        } 
+        
+        #endregion
     }
 }

@@ -13,7 +13,7 @@ namespace AnyStatus.Tests.Tests
 
             var mediator = new Mediator(logger);
 
-            var item = new Dummy();
+            var item = new Dummy { Name = "dummy" };
 
             mediator.Send(item, typeof(IMonitor<>));
 
@@ -27,7 +27,7 @@ namespace AnyStatus.Tests.Tests
 
             var mediator = new Mediator(logger);
 
-            var item = new Dummy();
+            var item = new Dummy { Name = "dummy" };
 
             mediator.Send(item, typeof(IMonitor<>));
 
