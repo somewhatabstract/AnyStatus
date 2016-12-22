@@ -1,12 +1,11 @@
 # Roadmap
 
-- [ ] Start, stop and restart windows services
-- [ ] Trigger Jenkins, TFS, AppVeyor and TeamCity builds
+- [x] Start, stop and restart windows services
+- [x] Trigger Jenkins, TFS, AppVeyor and TeamCity builds
 - [ ] TFS work item status
 - [ ] JIRA work item status
 - [ ] Travis CI build
 - [ ] Circle CI build
-- [x] Custom commands (for example, queue new build, open in browser, etc.)
 - [ ] Replace TinyIoc with MEF
 
 Features that have a checkmark are complete and available for
@@ -17,6 +16,12 @@ download in the
 
 These are the changes to each version that has been released
 on the official Visual Studio extension gallery
+
+##0.11
+
+- [x] Trigger Jenkins, TFS, AppVeyor and TeamCity builds
+- [x] Start, stop and restart windows services
+- [x] Custom commands (for example, queue new build, open in browser, etc.)
 
 ##0.10
 
