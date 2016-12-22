@@ -1,3 +1,7 @@
+---
+title: AnyStatus
+---
+
 AnyStatus adds monitoring capabilities to Visual Studio to enable you monitor your development environment and other resources and applications on-premise or on the cloud. 
 
 With AnyStatus you can monitor HTTP servers, send Ping requests, check TCP ports, monitor GitHub Issues, monitor builds on Team Foundation Server, Jenkins, TeamCity, AppVeyor and much more. All from within Visual Studio.
