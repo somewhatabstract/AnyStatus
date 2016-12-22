@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.ServiceProcess;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace AnyStatus
 {
@@ -63,16 +64,39 @@ namespace AnyStatus
 
     public class StartWindowsService : BaseWindowsServiceHandler, IStartWindowsService<WindowsService>
     {
+        private readonly ILogger _logger;
+        private readonly IDialogService _dialogService;
+
+        public StartWindowsService(IDialogService dialogService, ILogger logger)
+        {
+            _logger = Preconditions.CheckNotNull(logger, nameof(logger));
+            _dialogService = Preconditions.CheckNotNull(dialogService, nameof(dialogService));
+        }
+
         public async Task HandleAsync(WindowsService windowsService)
+        {
+            var result = _dialogService.Show($"Are you sure you want to start {windowsService.Name}?", "Start Windows Service", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
+
+            if (result != MessageBoxResult.Yes)
+                return;
+
+            _logger.Info($"Starting {windowsService.Name}.");
+
+            await Start(windowsService);
+        }
+
+        private async Task Start(WindowsService windowsService)
         {
             await Task.Run(() =>
             {
                 using (var sc = GetServiceController(windowsService))
                 {
                     if (sc.Status != ServiceControllerStatus.Running && sc.Status != ServiceControllerStatus.StartPending)
+                    {
                         sc.Start();
 
-                    sc.WaitForStatus(ServiceControllerStatus.Running, Timeout);
+                        sc.WaitForStatus(ServiceControllerStatus.Running, Timeout);
+                    }
 
                     SetState(windowsService, sc);
 
@@ -84,16 +108,39 @@ namespace AnyStatus
 
     public class StopWindowsService : BaseWindowsServiceHandler, IStopWindowsService<WindowsService>
     {
+        private readonly ILogger _logger;
+        private readonly IDialogService _dialogService;
+
+        public StopWindowsService(IDialogService dialogService, ILogger logger)
+        {
+            _logger = Preconditions.CheckNotNull(logger, nameof(logger));
+            _dialogService = Preconditions.CheckNotNull(dialogService, nameof(dialogService));
+        }
+
         public async Task HandleAsync(WindowsService windowsService)
+        {
+            var result = _dialogService.Show($"Are you sure you want to stop {windowsService.Name}?", "Stop Windows Service", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
+
+            if (result != MessageBoxResult.Yes)
+                return;
+
+            _logger.Info($"Stopping {windowsService.Name}.");
+
+            await Stop(windowsService);
+        }
+
+        private async Task Stop(WindowsService windowsService)
         {
             await Task.Run(() =>
             {
                 using (var sc = GetServiceController(windowsService))
                 {
                     if (sc.Status == ServiceControllerStatus.Running || sc.Status == ServiceControllerStatus.StartPending)
+                    {
                         sc.Stop();
 
-                    sc.WaitForStatus(ServiceControllerStatus.Stopped, Timeout);
+                        sc.WaitForStatus(ServiceControllerStatus.Stopped, Timeout);
+                    }
 
                     SetState(windowsService, sc);
 
@@ -105,16 +152,39 @@ namespace AnyStatus
 
     public class RestartWindowsService : BaseWindowsServiceHandler, IRestartWindowsService<WindowsService>
     {
+        private readonly ILogger _logger;
+        private readonly IDialogService _dialogService;
+
+        public RestartWindowsService(IDialogService dialogService, ILogger logger)
+        {
+            _logger = Preconditions.CheckNotNull(logger, nameof(logger));
+            _dialogService = Preconditions.CheckNotNull(dialogService, nameof(dialogService));
+        }
+
         public async Task HandleAsync(WindowsService windowsService)
+        {
+            var result = _dialogService.Show($"Are you sure you want to restart {windowsService.Name}?", "Restart Windows Service", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
+
+            if (result != MessageBoxResult.Yes)
+                return;
+
+            _logger.Info($"Restarting {windowsService.Name}.");
+
+            await Restart(windowsService);
+        }
+
+        private async Task Restart(WindowsService windowsService)
         {
             await Task.Run(() =>
             {
                 using (var sc = GetServiceController(windowsService))
                 {
                     if (sc.Status == ServiceControllerStatus.Running || sc.Status == ServiceControllerStatus.StartPending)
+                    {
                         sc.Stop();
 
-                    sc.WaitForStatus(ServiceControllerStatus.Stopped, Timeout);
+                        sc.WaitForStatus(ServiceControllerStatus.Stopped, Timeout);
+                    }
 
                     SetState(windowsService, sc);
 
