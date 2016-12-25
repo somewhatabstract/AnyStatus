@@ -117,8 +117,9 @@
                                                  SaveCommand="{Binding DataContext.SaveCommand, ElementName=ToolWindow}" />
                     </StackPanel>
                     <HierarchicalDataTemplate.ItemContainerStyle>
+                        <!-- ItemContainerStyle of CHILD items -->
                         <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource TreeViewItemContainerStyle}">
-                            <Setter Property="ContextMenu" Value="{StaticResource FolderContextMenu}" />
+                            <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
                         </Style>
                     </HierarchicalDataTemplate.ItemContainerStyle>
                 </HierarchicalDataTemplate>
@@ -154,7 +155,7 @@
 
             <TreeView.ItemContainerStyle>
                 <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource TreeViewItemContainerStyle}">
-                    <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+                    <Setter Property="ContextMenu" Value="{StaticResource FolderContextMenu}" />
                 </Style>
             </TreeView.ItemContainerStyle>
 
