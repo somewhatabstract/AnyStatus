@@ -18,20 +18,8 @@ namespace AnyStatus
 
         public void Execute()
         {
-            if (Item == null)
-                throw new InvalidOperationException("Item cannot be null.");
-
-            if (Item.IsDisabled)
+            if (CanExecute() == false)
                 return;
-
-            if (Item.IsValid() == false)
-            {
-                Item.State = State.Invalid;
-
-                _logger.Info($"\"{Item.Name}\" is invalid.");
-
-                return;
-            }
 
             try
             {
@@ -51,6 +39,24 @@ namespace AnyStatus
         public async Task ExecuteAsync()
         {
             await Task.Run(() => Execute());
+        }
+
+        private bool CanExecute()
+        {
+            if (Item == null)
+                throw new ArgumentNullException(nameof(Item));
+
+            if (Item.IsValid())
+                return true;
+
+            if (Item.IsDisabled)
+                return false;
+
+            Item.State = State.Invalid;
+
+            _logger.Info($"\"{Item.Name}\" is invalid. Make sure all required fields are valid.");
+
+            return false;
         }
     }
 }

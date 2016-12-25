@@ -96,9 +96,6 @@ namespace AnyStatus
 
         public void Handle(GitHubIssue item)
         {
-            if (item == null || string.IsNullOrEmpty(item.Owner) || string.IsNullOrEmpty(item.Repository))
-                return;
-
             var url = $"https://github.com/{item.Owner}/{item.Repository}/issues/{item.IssueNumber}";
 
             _processStarter.Start(url);

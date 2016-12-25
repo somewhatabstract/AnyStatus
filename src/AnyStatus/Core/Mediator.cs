@@ -72,10 +72,12 @@ namespace AnyStatus
         private void Validate(object request)
         {
             if (request == null)
-                throw new InvalidOperationException("Mediator: request cannot be null");
+                throw new ArgumentNullException(nameof(request));
 
-            if (request is IValidatable && (request as IValidatable).IsValid() == false)
-                throw new ValidationException("Mediator: request is invalid");
+            var validatable = request as IValidatable;
+
+            if (validatable != null && !validatable.IsValid())
+                throw new ValidationException("Invalid item. Make sure all properties are valid.");
         }
     }
 }

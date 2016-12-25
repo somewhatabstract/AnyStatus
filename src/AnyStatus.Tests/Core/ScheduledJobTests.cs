@@ -75,7 +75,7 @@ namespace AnyStatus.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void Execute_Should_Throw_When_ItemIsNull()
         {
             var mediator = Substitute.For<IMediator>();

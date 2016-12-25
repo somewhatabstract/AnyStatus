@@ -13,6 +13,8 @@ namespace AnyStatus
         {
             _logger = Preconditions.CheckNotNull(logger, nameof(logger));
             _jobFactory = Preconditions.CheckNotNull(jobFactory, nameof(jobFactory));
+
+            JobManager.JobException += OnJobException;
         }
 
         public void Start()
@@ -133,6 +135,11 @@ namespace AnyStatus
                         .AndEvery(item.Interval).Minutes());
 
             _logger.Info($"\"{item.Name}\" scheduled to run now and every {item.Interval} minutes.");
+        }
+
+        private void OnJobException(JobExceptionInfo info)
+        {
+            _logger.Error(info.Exception, "A job exception occurred. Job name: " + info.Name);
         }
     }
 }

@@ -137,6 +137,7 @@
     <Compile Include="Commands\DuplicateCommandTests.cs" />
     <Compile Include="Commands\MoveUpCommandTests.cs" />
     <Compile Include="Commands\MoveDownCommandTests.cs" />
+    <Compile Include="Commands\OpenInBrowserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Commands\TestCommandTests.cs" />
     <Compile Include="Commands\RefreshCommandTests.cs" />
