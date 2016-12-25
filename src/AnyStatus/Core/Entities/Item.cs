@@ -48,7 +48,7 @@ namespace AnyStatus
         public Item()
         {
             IsEnabled = true;
-            IsExpanded = true;
+            IsExpanded = false;
             Interval = 5;
             State = State.None;
             Items = new ObservableCollection<Item>(); //todo: set for root and folder items only.
