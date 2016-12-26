@@ -5,7 +5,6 @@ namespace AnyStatus
 {
     [Browsable(false)]
     [DisplayName("Travis CI Build")]
-    [Description("")]
     public class TravisCIBuild : Item, IScheduledItem
     {
     }

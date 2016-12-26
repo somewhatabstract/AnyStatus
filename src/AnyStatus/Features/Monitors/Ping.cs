@@ -6,7 +6,7 @@ using System.Net.NetworkInformation;
 namespace AnyStatus
 {
     [DisplayName("Ping")]
-    [Description("")]
+    [Description("Test the reachability of a host")]
     public class Ping : Item, IScheduledItem
     {
         [Required]

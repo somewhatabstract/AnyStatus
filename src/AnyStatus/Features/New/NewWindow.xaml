@@ -30,17 +30,7 @@
                  BorderBrush="{x:Null}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Name}" Height="40" Padding="12">
-                        <!--<TextBlock.Style>
-                            <Style TargetType="ToolTip">
-                                <Style.Triggers>
-                                    <Trigger Property="Content" Value="{x:Null}">
-                                        <Setter Property="Visibility" Value="Collapsed" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>-->
-                    </TextBlock>
+                    <TextBlock Text="{Binding Name}" Height="40" Padding="12" ToolTip="{Binding Description}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

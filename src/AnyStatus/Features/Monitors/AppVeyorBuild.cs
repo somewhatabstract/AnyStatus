@@ -11,7 +11,7 @@ using System.Windows;
 namespace AnyStatus
 {
     [DisplayName("AppVeyor Build")]
-    [Description("")]
+    [Description("AppVeyor build status")]
     public class AppVeyorBuild : Item, IScheduledItem, ICanOpenInBrowser, ICanTriggerBuild
     {
         [Required]

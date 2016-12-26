@@ -6,7 +6,7 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 namespace AnyStatus
 {
     [DisplayName("TCP")]
-    [Description("")]
+    [Description("Check TCP server connectivity")]
     public class TcpPort : Item, IScheduledItem
     {
         [Required]

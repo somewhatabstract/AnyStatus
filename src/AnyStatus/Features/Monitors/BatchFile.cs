@@ -7,11 +7,13 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace AnyStatus
 {
-    [CategoryOrder("Batch Script", 10)]
-    [DisplayName("Batch Script")]
-    [Description("Execute a batch script.")]
+    [CategoryOrder("Batch File", 10)]
+    [DisplayName("Batch File")]
+    [Description("Test the exit code of a batch file")]
     public class BatchFile : Item, IScheduledItem
     {
+        private const string Category = "Batch File";
+
         public BatchFile()
         {
             Timeout = 1;
@@ -19,19 +21,19 @@ namespace AnyStatus
 
         [Required]
         [PropertyOrder(10)]
-        [Category("Batch Script")]
+        [Category(Category)]
         [DisplayName("File Name")]
         [Description("The batch file path")]
         [Editor(typeof(FileEditor), typeof(FileEditor))]
         public string FileName { get; set; }
 
         [PropertyOrder(20)]
-        [Category("Batch Script")]
+        [Category(Category)]
         [Description("The batch file arguments")]
         public string Arguments { get; set; }
 
         [PropertyOrder(30)]
-        [Category("Batch Script")]
+        [Category(Category)]
         [Description("The script execution timeout in minutes")]
         public int Timeout { get; set; }
     }

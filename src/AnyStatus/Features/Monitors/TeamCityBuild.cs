@@ -17,7 +17,7 @@ namespace AnyStatus
 {
     [CategoryOrder("TeamCity", 10)]
     [DisplayName("TeamCity Build")]
-    [Description("")]
+    [Description("TeamCity build status")]
     public class TeamCityBuild : Item, IScheduledItem, ICanOpenInBrowser, ICanTriggerBuild
     {
         [Url]

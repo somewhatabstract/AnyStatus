@@ -4,16 +4,15 @@ using System.Threading;
 
 namespace AnyStatus
 {
-    [Browsable(false)]
     [DisplayName("CPU Usage")]
-    [Description("Experimental.")]
+    [Description("Experimental. Shows the percentage of CPU usage")]
     public class CpuUsage : Metric, IScheduledItem
     {
         private const string Category = "CPU Usage";
 
         [DisplayName("Machine Name")]
         [Category(Category)]
-        [Description("The machine name (optional). Leave blank for local computer")]
+        [Description("Optional. Leave blank for local computer.")]
         public string MachineName { get; set; }
     }
 

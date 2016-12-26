@@ -8,7 +8,7 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 namespace AnyStatus
 {
     [DisplayName("PowerShell Script")]
-    [Description("Execute a PowerShell script")]
+    [Description("Test the exit code of a PowerShell script")]
     public class PowerShellScript : Item, IScheduledItem
     {
         public PowerShellScript()

@@ -9,25 +9,27 @@ using System.Windows;
 namespace AnyStatus
 {
     [DisplayName("Windows Service")]
-    [Description("")]
+    [Description("Test whether a windows service is running")]
     public class WindowsService : Item, IScheduledItem, ICanStartWindowsService, ICanStopWindowsService, ICanRestartWindowsService
     {
+        private const string Category = "Windows Service";
+
         public WindowsService()
         {
             Status = ServiceControllerStatus.Running;
         }
 
         [Required]
-        [Category("Windows Service")]
+        [Category(Category)]
         [DisplayName("Service Name")]
         public string ServiceName { get; set; }
 
         [DisplayName("Machine Name")]
-        [Category("Windows Service")]
-        [Description("The machine name (optional). Leave blank for local computer")]
+        [Category(Category)]
+        [Description("Optional. Leave blank for local computer.")]
         public string MachineName { get; set; }
 
-        [Category("Windows Service")]
+        [Category(Category)]
         public ServiceControllerStatus Status { get; set; }
     }
 

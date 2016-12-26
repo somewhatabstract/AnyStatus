@@ -9,7 +9,7 @@ using System.Web.Script.Serialization;
 namespace AnyStatus
 {
     [DisplayName("GitHub Issue")]
-    [Description("")]
+    [Description("GitHub issue status")]
     public class GitHubIssue : Item, IScheduledItem, ICanOpenInBrowser
     {
         [Required]

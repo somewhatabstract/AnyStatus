@@ -4,9 +4,8 @@ using System.Diagnostics;
 
 namespace AnyStatus
 {
-    [Browsable(false)]
     [DisplayName("Performance Counter")]
-    [Description("Experimental.")]
+    [Description("Experimental. Shows the value of a performance counter")]
     public class PerformanceCounter : Metric, IScheduledItem
     {
         private const string Category = "Performance Counter";
@@ -28,7 +27,6 @@ namespace AnyStatus
         [Description("")]
         public string CounterName { get; set; }
 
-        [Required]
         [DisplayName("Instance")]
         [Category(Category)]
         [Description("")]

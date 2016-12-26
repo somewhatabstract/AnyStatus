@@ -15,10 +15,12 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace AnyStatus
 {
-    [DisplayName("TFS 2015 Build")]
-    [Description("Microsoft Team Foundation Server 2015 or Visual Studio Team Services build status")]
+    [DisplayName("TFS Build")]
+    [Description("Microsoft Team Foundation Server build status (on-premise and cloud)")]
     public class TfsBuild : Item, IScheduledItem, ICanOpenInBrowser, ICanTriggerBuild
     {
+        private const string Category = "TFS";
+
         public TfsBuild()
         {
             Collection = "DefaultCollection";
@@ -26,29 +28,29 @@ namespace AnyStatus
 
         [Url]
         [Required]
-        [Category("TFS")]
+        [Category(Category)]
         [PropertyOrder(10)]
-        [Description("Visual Studio Team Services account (https://{account}.visualstudio.com) or TFS server (http://{server:port}/tfs)")]
+        [Description("Required. Visual Studio Team Services account (https://{account}.visualstudio.com) or TFS server (http://{server:port}/tfs)")]
         public string Url { get; set; }
 
         [Required]
-        [Category("TFS")]
+        [Category(Category)]
         [PropertyOrder(20)]
-        [Description()]
+        [Description("Required. The TFS collection name.")]
         public string Collection { get; set; }
 
         [Required]
-        [Category("TFS")]
+        [Category(Category)]
         [PropertyOrder(30)]
         [DisplayName("Team Project")]
-        [Description()]
+        [Description("Required. The team project name.")]
         public string TeamProject { get; set; }
 
         [Required]
-        [Category("TFS")]
+        [Category(Category)]
         [PropertyOrder(40)]
         [DisplayName("Build Definition")]
-        [Description()]
+        [Description("Required. The build definition name.")]
         public string BuildDefinition { get; set; }
 
         [XmlIgnore]
@@ -56,14 +58,14 @@ namespace AnyStatus
         public int BuildDefinitionId { get; set; }
 
         [PropertyOrder(50)]
-        [Category("TFS")]
+        [Category(Category)]
         [DisplayName("User Name")]
-        [Description("The TFS user name (optional)")]
+        [Description("Optional.")]
         public string UserName { get; set; }
 
-        [Category("TFS")]
+        [Category(Category)]
         [PropertyOrder(60)]
-        [Description("The TFS password (optional)")]
+        [Description("Optional.")]
         [Editor(typeof(PasswordEditor), typeof(PasswordEditor))]
         public string Password { get; set; }
 

@@ -5,7 +5,6 @@ namespace AnyStatus
 {
     [Browsable(false)]
     [DisplayName("TFS 15 Work Item")]
-    [Description("")]
     public class TfsWorkItem : Item, IScheduledItem
     {
     }
