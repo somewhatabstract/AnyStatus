@@ -17,19 +17,19 @@ namespace AnyStatus
         public string MachineName { get; set; }
 
         [Required]
-        [DisplayName("Category Name")]
+        [DisplayName("Category")]
         [Category(Category)]
         [Description("")]
         public string CategoryName { get; set; }
 
         [Required]
-        [DisplayName("Counter Name")]
+        [DisplayName("Counter")]
         [Category(Category)]
         [Description("")]
         public string CounterName { get; set; }
 
         [Required]
-        [DisplayName("Instance Name")]
+        [DisplayName("Instance")]
         [Category(Category)]
         [Description("")]
         public string InstanceName { get; set; }
@@ -60,7 +60,7 @@ namespace AnyStatus
 
             counter.NextValue();
 
-            Thread.Sleep(1000);
+            Thread.Sleep(100);
 
             return (int)counter.NextValue();
         }

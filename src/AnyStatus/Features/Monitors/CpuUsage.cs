@@ -21,7 +21,7 @@ namespace AnyStatus
         [DebuggerStepThrough]
         public void Handle(CpuUsage item)
         {
-            item.Value = GetCpuUsage(item.MachineName);
+            item.Value = GetCpuUsage(item.MachineName) + "%";
 
             item.State = State.Ok;
         }
@@ -35,7 +35,7 @@ namespace AnyStatus
 
             counter.NextValue();
 
-            Thread.Sleep(1000);
+            Thread.Sleep(100);
 
             return (int)counter.NextValue();
         }
