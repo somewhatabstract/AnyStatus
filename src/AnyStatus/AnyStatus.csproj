@@ -139,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\AnyStatusApp.cs" />
+    <Compile Include="Core\Entities\Metric.cs" />
     <Compile Include="Core\Interfaces\ICanRestartWindowsService.cs" />
     <Compile Include="Core\Interfaces\ICanStartWindowsService.cs" />
     <Compile Include="Core\Interfaces\ICanStopWindowsService.cs" />
@@ -181,10 +182,18 @@
     <Compile Include="Core\Commands\RefreshAllCommand.cs" />
     <Compile Include="Core\Commands\OptionsCommand.cs" />
     <Compile Include="Core\Commands\HelpCommand.cs" />
+    <Compile Include="Features\Monitors\PerformanceCounter.cs" />
+    <Compile Include="Features\Monitors\CpuUsage.cs" />
+    <Compile Include="Features\ToolWindow\ItemStyleSelector.cs" />
+    <Compile Include="Features\ToolWindow\ItemTemplateSelector.cs" />
     <Compile Include="Infrastructure\Converters\HasTasksConverter.cs" />
     <Compile Include="Infrastructure\Converters\CanRestartWindowsServiceConverter.cs" />
     <Compile Include="Infrastructure\Converters\CanStopWindowsServiceConverter.cs" />
     <Compile Include="Infrastructure\Converters\CanStartWindowsServiceConverter.cs" />
+    <Compile Include="Infrastructure\Converters\StringConverter.cs" />
+    <Compile Include="Resources\Styles.xaml.cs">
+      <DependentUpon>Styles.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ToolWindowPackage.cs" />
     <Compile Include="Features\Edit\EditWindow.xaml.cs">
       <DependentUpon>EditWindow.xaml</DependentUpon>

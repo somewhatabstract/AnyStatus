@@ -27,6 +27,8 @@ namespace AnyStatus
     [XmlInclude(typeof(AppVeyorBuild))]
     [XmlInclude(typeof(TravisCIBuild))]
     [XmlInclude(typeof(WindowsService))]
+    [XmlInclude(typeof(PerformanceCounter))]
+    [XmlInclude(typeof(CpuUsage))]
     public class Item : INotifyPropertyChanged, ICloneable, IValidatable
     {
         #region Fields

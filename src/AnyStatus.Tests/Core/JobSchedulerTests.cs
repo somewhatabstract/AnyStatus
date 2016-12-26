@@ -31,6 +31,7 @@ namespace AnyStatus.Tests
         [TestMethod]
         public void Should_Execute_When_SchedulingAndExecutingItem()
         {
+            //todo: seperate tests
             var jobScheduler = new JobScheduler(_jobFactory, _logger);
 
             Assert.AreEqual(0, _item.Counter);
@@ -104,6 +105,30 @@ namespace AnyStatus.Tests
             Thread.Sleep(100);
 
             Assert.AreEqual(0, item.Counter);
+        }
+
+        [TestMethod]
+        public void Should_ExecuteItems_When_ExecutingAll()
+        {
+            var item = new Dummy
+            {
+                Id = Guid.NewGuid(),
+                Name = "Test"
+            };
+
+            var jobScheduler = new JobScheduler(_jobFactory, _logger);
+
+            jobScheduler.Schedule(item);
+
+            Thread.Sleep(100);
+
+            Assert.AreEqual(1, item.Counter);
+
+            jobScheduler.ExecuteAll();
+
+            Thread.Sleep(100);
+
+            Assert.AreEqual(2, item.Counter);
         }
     }
 }

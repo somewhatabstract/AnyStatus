@@ -19,7 +19,11 @@
             <local:IconConverter x:Key="IconConverter"/>
             <local:TooltipConverter x:Key="TooltipConverter" />
             <local:HexToBrushConverter x:Key="HexToBrushConverter"/>
+            <local:StringConverter x:Key="StringConverter"/>
             <utilities:BrushToColorConverter x:Key="BrushToColorConverter"/>
+
+            <local:ItemTemplateSelector x:Key="ItemTemplateSelector"/>
+            <local:ItemStyleSelector x:Key="ItemStyleSelector"/>
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/AnyStatus;component/Resources/Styles.xaml"/>
@@ -43,17 +47,30 @@
                   Drop="TreeViewItem_Drop"
                   DragOver="TreeViewItem_DragOver"
                   PreviewMouseRightButtonDown="OnPreviewMouseRightButtonDown"
+                  ItemTemplateSelector="{StaticResource ItemTemplateSelector}"
+                  ItemContainerStyleSelector="{DynamicResource ItemStyleSelector}"
                   Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
                   theming:ImageThemingUtilities.ImageBackgroundColor="{Binding Background, RelativeSource={RelativeSource Self}, Converter={StaticResource BrushToColorConverter}}">
 
             <TreeView.Resources>
-
-                <!-- Style the inactive selection the same as active -->
+                <!-- TreeViewItem Events (must be in this xaml) -->
+                <Style x:Key="TreeViewItemContainerStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource TreeViewItemStyle}">
+                    <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"/>
+                    <EventSetter Event="TreeViewItem.MouseMove" Handler="TreeViewItem_MouseMove" />
+                    <EventSetter Event="TreeViewItem.DragOver" Handler="TreeViewItem_DragOver" />
+                    <EventSetter Event="TreeViewItem.Drop" Handler="TreeViewItem_Drop" />
+                </Style>
+                <Style x:Key="treeViewItemStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource TreeViewItemContainerStyle}">
+                    <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+                </Style>
+                <Style x:Key="treeViewFolderStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource TreeViewItemContainerStyle}">
+                    <Setter Property="ContextMenu" Value="{StaticResource FolderContextMenu}" />
+                </Style>
                 <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}"
                      Color="{DynamicResource {x:Static SystemColors.HighlightColorKey}}" />
                 <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}"
                      Color="{DynamicResource {x:Static SystemColors.HighlightTextColorKey}}"/>
-
+                
                 <!-- Color Status Indicator-->
                 <Rectangle x:Key="ColoredStatusIndicator" x:Shared="False" Width="3" Fill="{Binding State.Metadata.Color, Converter={StaticResource HexToBrushConverter}}">
                     <Rectangle.Style>
@@ -88,16 +105,25 @@
                     </Rectangle>
                 </Grid>
 
-                <!-- TreeView item style (must be in this xaml) -->
-                <Style x:Key="TreeViewItemContainerStyle" TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource TreeViewItemStyle}">
-                    <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"/>
-                    <EventSetter Event="TreeViewItem.MouseMove" Handler="TreeViewItem_MouseMove" />
-                    <EventSetter Event="TreeViewItem.DragOver" Handler="TreeViewItem_DragOver" />
-                    <EventSetter Event="TreeViewItem.Drop" Handler="TreeViewItem_Drop" />
-                </Style>
-                
-                <!--Folder-->
-                <HierarchicalDataTemplate DataType="{x:Type local:Folder}" ItemsSource="{Binding Items}">
+                <!-- Metric Value-->
+                <Grid x:Key="MetricValue" x:Shared="False">
+                    <Grid.Style>
+                        <Style TargetType="{x:Type Grid}">
+                            <Setter Property="Visibility" Value="Collapsed"></Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding DataContext.Settings.ShowStatusIcons, ElementName=ToolWindow}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
+                    <Rectangle Width="30" Height="30" Opacity="0.05" Fill="{DynamicResource {x:Static vsp:EnvironmentColors.ToolWindowTextBrushKey}}" />
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontStretch="Condensed" Foreground="{DynamicResource {x:Static vsp:EnvironmentColors.ToolWindowTextBrushKey}}" Text="{Binding Value, Converter={StaticResource StringConverter}}" Margin="5" />
+                </Grid>
+
+                <!--Metric -->
+                <DataTemplate  x:Key="metricTemplate">
+
                     <StackPanel Style="{StaticResource StatusPanelStyle}">
 
                         <StackPanel.ToolTip>
@@ -106,26 +132,20 @@
 
                         <ContentControl Content="{StaticResource ColoredStatusIndicator}"/>
 
-                        <ContentControl Content="{StaticResource IconStatusIndicator}"/>
+                        <ContentControl Content="{StaticResource MetricValue}"/>
 
-                        <local:EditableTextBlock Text="{Binding Name}" 
+                        <local:EditableTextBlock Text="{Binding Name}"
                                                  Margin="5,0,5,0"
-                                                 FontWeight="Bold"
                                                  VerticalAlignment="Center"
                                                  HorizontalAlignment="Stretch"
                                                  IsEditing="{Binding IsEditing}" 
                                                  SaveCommand="{Binding DataContext.SaveCommand, ElementName=ToolWindow}" />
                     </StackPanel>
-                    <HierarchicalDataTemplate.ItemContainerStyle>
-                        <!-- ItemContainerStyle of CHILD items -->
-                        <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource TreeViewItemContainerStyle}">
-                            <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
-                        </Style>
-                    </HierarchicalDataTemplate.ItemContainerStyle>
-                </HierarchicalDataTemplate>
+
+                </DataTemplate>
 
                 <!--Item-->
-                <DataTemplate DataType="{x:Type local:Item}">
+                <DataTemplate  x:Key="itemTemplate">
 
                     <StackPanel Style="{StaticResource StatusPanelStyle}">
 
@@ -146,18 +166,36 @@
                     </StackPanel>
                 </DataTemplate>
 
+                <!--Folder-->
+                <HierarchicalDataTemplate x:Key="folderTemplate" ItemsSource="{Binding Items}">
+
+                    <StackPanel Style="{StaticResource StatusPanelStyle}">
+
+                        <StackPanel.ToolTip>
+                            <TextBlock Text="{Binding Converter={StaticResource TooltipConverter}}" />
+                        </StackPanel.ToolTip>
+
+                        <ContentControl Content="{StaticResource ColoredStatusIndicator}"/>
+
+                        <ContentControl Content="{StaticResource IconStatusIndicator}"/>
+
+                        <local:EditableTextBlock Text="{Binding Name}" 
+                                                 Margin="5,0,5,0"
+                                                 FontWeight="Bold"
+                                                 VerticalAlignment="Center"
+                                                 HorizontalAlignment="Stretch"
+                                                 IsEditing="{Binding IsEditing}" 
+                                                 SaveCommand="{Binding DataContext.SaveCommand, ElementName=ToolWindow}" />
+                    </StackPanel>
+
+                </HierarchicalDataTemplate>
+
             </TreeView.Resources>
 
             <TreeView.InputBindings>
                 <KeyBinding Key="F2" Command="{Binding RenameCommand}" CommandParameter="{Binding ElementName=TreeView, Path=SelectedItem}"/>
                 <KeyBinding Key="Delete" Command="{Binding DeleteCommand}" CommandParameter="{Binding ElementName=TreeView, Path=SelectedItem}"/>
             </TreeView.InputBindings>
-
-            <TreeView.ItemContainerStyle>
-                <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource TreeViewItemContainerStyle}">
-                    <Setter Property="ContextMenu" Value="{StaticResource FolderContextMenu}" />
-                </Style>
-            </TreeView.ItemContainerStyle>
 
         </TreeView>
     </Grid>

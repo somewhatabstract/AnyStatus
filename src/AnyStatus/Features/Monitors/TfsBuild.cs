@@ -79,6 +79,7 @@ namespace AnyStatus
 
     public abstract class BaseTfsBuildHandler
     {
+        [DebuggerStepThrough]
         public virtual void Handle(TfsBuild item)
         {
             if (item.BuildDefinitionId <= 0)

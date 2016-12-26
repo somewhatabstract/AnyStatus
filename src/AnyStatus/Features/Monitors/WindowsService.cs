@@ -42,6 +42,7 @@ namespace AnyStatus
                     new ServiceController(windowsService.ServiceName, windowsService.MachineName);
         }
 
+        [DebuggerStepThrough]
         protected static void SetState(WindowsService windowsService, ServiceController serviceController)
         {
             windowsService.State = serviceController.Status == windowsService.Status ? State.Ok : State.Failed;
