@@ -66,6 +66,15 @@ namespace AnyStatus
         [Description("The TFS password (optional)")]
         [Editor(typeof(PasswordEditor), typeof(PasswordEditor))]
         public string Password { get; set; }
+
+        public override object Clone()
+        {
+            var clone = base.Clone() as TfsBuild;
+
+            clone.BuildDefinitionId = 0;
+
+            return clone;
+        }
     }
 
     public abstract class BaseTfsBuildHandler
