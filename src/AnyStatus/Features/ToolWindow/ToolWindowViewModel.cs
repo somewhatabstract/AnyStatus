@@ -27,7 +27,9 @@ namespace AnyStatus
 
             OpenInBrowserCommand = new RelayCommand(item => _mediator.TrySend(item, typeof(IOpenInBrowser<>)));
 
-            TriggerBuildCommand = new RelayCommand(async item => await _mediator.TrySendAsync(item, typeof(ITriggerBuild<>)));
+            TriggerBuildCommand =
+                new RelayCommand(async item => await _mediator.TrySendAsync(item, typeof(ITriggerBuild<>))
+                        .ContinueWith(task => _mediator.TrySend(new RefreshCommand(item as Item))));
 
             AddFolderCommand = new RelayCommand(item => _mediator.TrySend(new AddFolderCommand(item as Item)));
 
@@ -73,8 +75,12 @@ namespace AnyStatus
         private void SettingsStore_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName.Equals(nameof(Settings)))
+            {
                 OnPropertyChanged(nameof(Settings));
+            }
         }
+        
+        #region Commands
 
         public ICommand OpenInBrowserCommand { get; set; }
 
@@ -108,7 +114,9 @@ namespace AnyStatus
 
         public ICommand StopWindowsServiceCommand { get; set; }
 
-        public ICommand RestartWindowsServiceCommand { get; set; }
+        public ICommand RestartWindowsServiceCommand { get; set; } 
+
+        #endregion
     }
 }
 
