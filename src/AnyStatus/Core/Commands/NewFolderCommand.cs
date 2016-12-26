@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AnyStatus.Features.ToolWindow.ToolbarCommands
+namespace AnyStatus
 {
     public class NewFolderCommand : MenuCommandBase
     {
