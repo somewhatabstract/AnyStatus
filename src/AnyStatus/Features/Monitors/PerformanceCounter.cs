@@ -40,16 +40,16 @@ namespace AnyStatus
         [DebuggerStepThrough]
         public void Handle(PerformanceCounter item)
         {
-            item.Value = GetValue(item);
+            if (string.IsNullOrWhiteSpace(item.MachineName))
+                item.MachineName = "localhost";
+
+            item.Value = (int)GetValue(item);
 
             item.State = State.Ok;
         }
 
-        public int GetValue(PerformanceCounter item)
+        public float GetValue(PerformanceCounter item)
         {
-            if (string.IsNullOrWhiteSpace(item.MachineName))
-                item.MachineName = "localhost";
-
             var counter = new System.Diagnostics.PerformanceCounter
             {
                 CategoryName = item.CategoryName,
@@ -58,11 +58,7 @@ namespace AnyStatus
                 MachineName = item.MachineName
             };
 
-            counter.NextValue();
-
-            Thread.Sleep(100);
-
-            return (int)counter.NextValue();
+            return counter.NextValue();
         }
     }
 }
