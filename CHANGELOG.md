@@ -24,7 +24,7 @@ on the official Visual Studio extension gallery
 - [x] Trigger Jenkins, TFS, AppVeyor and TeamCity builds
 - [x] Start, stop and restart windows services
 - [x] Collapse folders when starting
-- [x] Update build status when triggering a build
+- [x] Update build status after triggering a build
 - [x] Fixed bug when duplicating TFS builds
 - [x] Fixed keyboard navigation and context menu issues
 - [x] Custom commands (for example, queue new build, open in browser, etc.)
