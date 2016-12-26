@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
-using System.Threading;
 
 namespace AnyStatus
 {
+    [Browsable(false)]
     [DisplayName("Performance Counter")]
     [Description("Experimental.")]
     public class PerformanceCounter : Metric, IScheduledItem
