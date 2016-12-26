@@ -22,8 +22,8 @@ on the official Visual Studio extension gallery
 **2016-12-22**
 
 - [x] Trigger Jenkins, TFS, AppVeyor and TeamCity builds
-- [x] Folders are collapsed by default
 - [x] Start, stop and restart windows services
+- [x] Folders are collapsed by default
 - [x] Update build status when triggering a build
 - [x] Fixed bug when duplicating TFS builds
 - [x] Fixed keyboard navigation and context menu issues
