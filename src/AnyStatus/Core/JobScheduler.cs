@@ -29,7 +29,8 @@ namespace AnyStatus
 
         public void Execute(Item item)
         {
-            if (item == null) return;
+            if (item == null)
+                throw new ArgumentNullException(nameof(item));
 
             if (item is IScheduledItem)
             {
@@ -50,7 +51,7 @@ namespace AnyStatus
         public void Schedule(Item item, bool includeChildren = false)
         {
             if (item == null)
-                return;
+                throw new ArgumentNullException(nameof(item));
 
             if (item.IsSchedulable())
             {

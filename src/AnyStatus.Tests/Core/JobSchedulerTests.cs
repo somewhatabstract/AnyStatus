@@ -49,5 +49,61 @@ namespace AnyStatus.Tests
 
             jobScheduler.Remove(_item);
         }
+
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Should_Throw_When_ExecutingNullItem()
+        {
+            var jobScheduler = new JobScheduler(_jobFactory, _logger);
+
+            jobScheduler.Execute(null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Should_Throw_When_SchedulingNullItem()
+        {
+            var jobScheduler = new JobScheduler(_jobFactory, _logger);
+
+            jobScheduler.Schedule(null);
+        }
+
+        [TestMethod]
+        public void Should_ExecuteChildItems_When_ExecutingFolder()
+        {
+            var folder = new Folder();
+            var item = new Dummy { Name = "Test" };
+
+            folder.Add(item);
+
+            var jobScheduler = new JobScheduler(_jobFactory, _logger);
+
+            jobScheduler.Schedule(item);
+
+            Thread.Sleep(100);
+
+            Assert.AreEqual(1, item.Counter);
+
+            jobScheduler.Execute(folder);
+
+            Thread.Sleep(100);
+
+            Assert.AreEqual(2, item.Counter);
+        }
+
+        [TestMethod]
+        public void Should_NotExecuteItem_When_ItemNotScheduled()
+        {
+            var item = new Dummy { Name = "test" };
+
+            var jobScheduler = new JobScheduler(_jobFactory, _logger);
+
+            jobScheduler.Execute(item);
+
+            Thread.Sleep(100);
+
+            Assert.AreEqual(0, item.Counter);
+        }
     }
 }
