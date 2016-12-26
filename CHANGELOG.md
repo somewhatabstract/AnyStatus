@@ -33,9 +33,7 @@ on the official Visual Studio extension gallery
 
 **2016-11-20**
 
-- [x] Trigger a new Jenkins build
-- [x] New item toolbar button
-- [x] New folder toolbar button
+- [x] New item/folder toolbar buttons
 - [x] Duplicate folders
 - [x] Added "Open in browser" option to context menu
 - [x] Replaced status icon with vector graphics
