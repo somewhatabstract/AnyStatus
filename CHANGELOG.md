@@ -2,6 +2,8 @@
 
 - [x] Start, stop and restart windows services
 - [x] Trigger Jenkins, TFS, AppVeyor and TeamCity builds
+- [ ] Coveralls code coverage
+- [ ] Pingdom metrics
 - [ ] TFS work item status
 - [ ] JIRA work item status
 - [ ] Travis CI build
