@@ -8,7 +8,8 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace AnyStatus
 {
-    [DisplayName("HTTP")]
+    [DisplayName("HTTP(S)")]
+    [DisplayColumn("Network")]
     [Description("Check web server HTTP response code")]
     public class HttpStatus : Item, IScheduledItem, ICanOpenInBrowser
     {

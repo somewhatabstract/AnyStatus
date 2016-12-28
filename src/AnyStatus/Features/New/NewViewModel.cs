@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
 
@@ -25,28 +24,28 @@ namespace AnyStatus
             Initialize();
         }
 
-        private void SetTemplatesView()
-        {
-            Templates = CollectionViewSource.GetDefaultView(_templates);
-            Templates.GroupDescriptions.Add(new PropertyGroupDescription(nameof(Template.Group)));
-            Templates.SortDescriptions.Add(new SortDescription(nameof(Template.Group), ListSortDirection.Ascending));
-        }
-
         private void Initialize()
         {
             SetTemplatesView();
 
             AddCommand = new RelayCommand(item =>
-                _mediator.TrySend(new AddCommand(item as Item, Parent, RequestClose)));
+                _mediator.TrySend(new AddCommand(item as Item, Parent, RequestClose)),
+                item => SelectedTemplate != null);
 
             TestCommand = new RelayCommand(item =>
                 _mediator.TrySend(new TestCommand(item as Item,
                 canExecute => CanTest = canExecute,
-                message => Message = message)));
+                message => Message = message)),
+                item => SelectedTemplate != null);
 
             CancelCommand = new RelayCommand(p => RequestClose());
+        }
 
-            SelectedTemplate = _templates.FirstOrDefault();
+        private void SetTemplatesView()
+        {
+            Templates = CollectionViewSource.GetDefaultView(_templates);
+            Templates.GroupDescriptions.Add(new PropertyGroupDescription(nameof(Template.Group)));
+            Templates.SortDescriptions.Add(new SortDescription(nameof(Template.Group), ListSortDirection.Ascending));
         }
 
         private void RequestClose()

@@ -34,7 +34,7 @@ namespace AnyStatus.Integration.Tests
                 Port = 80
             };
 
-            new TcpPortMonitor().Handle(request);
+            new TcpMonitor().Handle(request);
 
             Assert.AreSame(State.Ok, request.State);
         }

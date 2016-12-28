@@ -5,12 +5,12 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace AnyStatus
 {
-    [DisplayName("TCP")]
+    [DisplayName("UDP")]
     [DisplayColumn("Network")]
-    [Description("Check TCP server connectivity")]
-    public class TcpPort : Item, IScheduledItem
+    [Description("Check UDP server connectivity")]
+    public class Udp : Item, IScheduledItem
     {
-        private const string Category = "TCP";
+        private const string Category = "UDP";
 
         [Required]
         [Category(Category)]
@@ -25,21 +25,21 @@ namespace AnyStatus
         public int Port { get; set; }
     }
 
-    public class TcpMonitor : IMonitor<TcpPort>
+    public class UdpMonitor : IMonitor<Udp>
     {
-        public void Handle(TcpPort tcp)
+        public void Handle(Udp udp)
         {
-            using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+            using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Udp))
             {
                 try
                 {
-                    socket.Connect(tcp.Host, tcp.Port);
+                    socket.Connect(udp.Host, udp.Port);
 
-                    tcp.State = State.Ok;
+                    udp.State = State.Ok;
                 }
                 catch (SocketException)
                 {
-                    tcp.State = State.Failed;
+                    udp.State = State.Failed;
                 }
             }
         }

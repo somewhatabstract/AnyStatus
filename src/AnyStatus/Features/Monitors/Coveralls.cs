@@ -9,6 +9,7 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 namespace AnyStatus
 {
     [DisplayName("Coveralls")]
+    [DisplayColumn("Continuous Integration")]
     [Description("Shows the covered code percentage")]
     public class CoverallsCoveredPercent : Metric, IScheduledItem, ICanOpenInBrowser
     {
