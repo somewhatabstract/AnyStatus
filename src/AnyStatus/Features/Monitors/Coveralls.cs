@@ -1,28 +1,84 @@
 ﻿using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Net.Http;
+using System.Web.Script.Serialization;
+using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
-namespace AnyStatus.Features.Monitors
+namespace AnyStatus
 {
-    [Browsable(false)]
     [DisplayName("Coveralls")]
-    [Description("Shows the percentage of code coverage")]
-    public class Coveralls : Metric, IScheduledItem
+    [Description("Shows the covered code percentage")]
+    public class CoverallsCoveredPercent : Metric, IScheduledItem
     {
+        public CoverallsCoveredPercent()
+        {
+            Threshold = 80;
+        }
+
+        [Url]
+        [Required]
+        [PropertyOrder(10)]
+        [Category("Coveralls")]
+        [Description("Coveralls repository URL address. For example: https://coveralls.io/github/AlonAm/AnyStatus")]
         public string Url { get; set; }
+
+        [Required]
+        [PropertyOrder(20)]
+        [Category("Coveralls")]
+        [Description("")]
+        public int Threshold { get; set; }
     }
 
-    public class CoverallsMonitor : IMonitor<Coveralls>
+    public class CoverallsMonitor : IMonitor<CoverallsCoveredPercent>
     {
-        [DebuggerStepThrough]
-        public void Handle(Coveralls item)
+        //[DebuggerStepThrough]
+        public void Handle(CoverallsCoveredPercent item)
         {
-            //https://coveralls.io/github/AlonAm/AnyStatus.json?branch=master
+            var uri = new Uri(item.Url);
+
+            var endpoint = uri.GetLeftPart(UriPartial.Path) + ".json" + uri.Query;
+
+            using (var httpClient = new HttpClient())
+            {
+                var httpResponse = httpClient.GetAsync(endpoint).Result;
+
+                httpResponse.EnsureSuccessStatusCode();
+
+                var content = httpResponse.Content.ReadAsStringAsync().Result;
+
+                var response = new JavaScriptSerializer()
+                        .Deserialize<CoveredPercentResponse>(content);
+
+                if (response == null)
+                {
+                    item.State = State.Error;
+                    item.Value = string.Empty;
+                    return;
+                }
+
+                item.Value = response.CoveredPercent + "%";
+
+                item.State = response.CoveredPercent < item.Threshold ? State.Failed : State.Ok;
+            }
         }
 
-        class CoverallsResponse
+        #region Contracts
+
+        class CoveredPercentResponse
         {
-            public string covered_percent { get; set; }
+            public float covered_percent { private get; set; }
+
+            public int CoveredPercent
+            {
+                get
+                {
+                    return (int)covered_percent;
+                }
+            }
         }
+
+        #endregion
     }
 }

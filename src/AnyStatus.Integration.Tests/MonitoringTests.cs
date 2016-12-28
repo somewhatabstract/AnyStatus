@@ -79,5 +79,20 @@ namespace AnyStatus.Integration.Tests
 
             Assert.AreSame(State.Closed, request.State);
         }
+
+        [TestMethod]
+        public void CoverallsHandler()
+        {
+            var request = new CoverallsCoveredPercent
+            {
+                Url = "https://coveralls.io/github/AlonAm/AnyStatus?branch=master"
+            };
+
+            var handler = new CoverallsMonitor();
+
+            handler.Handle(request);
+
+            Assert.AreNotSame(State.None, request.State);
+        }
     }
 }

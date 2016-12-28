@@ -11,6 +11,11 @@ namespace AnyStatus
     {
         private const string Category = "CPU Usage";
 
+        public CpuUsage()
+        {
+            Interval = 1;
+        }
+
         [DisplayName("Machine Name")]
         [Category(Category)]
         [Description("Optional. Leave blank for local computer.")]

@@ -10,6 +10,11 @@ namespace AnyStatus
     {
         private const string Category = "Performance Counter";
 
+        public PerformanceCounter()
+        {
+            Interval = 1;
+        }
+
         [DisplayName("Machine Name")]
         [Category(Category)]
         [Description("Optional. Leave blank for local computer.")]

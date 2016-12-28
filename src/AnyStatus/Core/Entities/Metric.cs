@@ -6,11 +6,6 @@ namespace AnyStatus
     {
         private object _value;
 
-        public Metric()
-        {
-            Interval = 1;
-        }
-
         [Browsable(false)]
         public object Value
         {
