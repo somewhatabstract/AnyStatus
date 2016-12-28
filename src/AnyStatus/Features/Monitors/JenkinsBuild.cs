@@ -51,9 +51,6 @@ namespace AnyStatus
 
         public void Handle(JenkinsBuild item)
         {
-            if (item == null || string.IsNullOrEmpty(item.Url))
-                return;
-
             _processStarter.Start(item.Url);
         }
     }

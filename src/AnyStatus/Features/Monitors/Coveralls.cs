@@ -10,7 +10,7 @@ namespace AnyStatus
 {
     [DisplayName("Coveralls")]
     [Description("Shows the covered code percentage")]
-    public class CoverallsCoveredPercent : Metric, IScheduledItem
+    public class CoverallsCoveredPercent : Metric, IScheduledItem, ICanOpenInBrowser
     {
         private const string Category = "Coveralls";
 
@@ -33,14 +33,12 @@ namespace AnyStatus
         public int Threshold { get; set; }
     }
 
-    public class CoverallsMonitor : IMonitor<CoverallsCoveredPercent>
+    public class CoverallsCoveredPercentMonitor : IMonitor<CoverallsCoveredPercent>
     {
         [DebuggerStepThrough]
         public void Handle(CoverallsCoveredPercent item)
         {
-            var uri = new Uri(item.Url);
-
-            var endpoint = uri.GetLeftPart(UriPartial.Path) + ".json" + uri.Query;
+            string endpoint = GetEndpoint(item);
 
             using (var httpClient = new HttpClient())
             {
@@ -53,24 +51,26 @@ namespace AnyStatus
                 var response = new JavaScriptSerializer()
                         .Deserialize<CoveredPercentResponse>(content);
 
-                if (response == null)
-                {
-                    item.State = State.Error;
-                    item.Value = string.Empty;
-                    return;
-                }
-
                 item.Value = response.CoveredPercent + "%";
 
                 item.State = response.CoveredPercent < item.Threshold ? State.Failed : State.Ok;
             }
         }
 
+        private static string GetEndpoint(CoverallsCoveredPercent item)
+        {
+            const string json = ".json";
+
+            var uri = new Uri(item.Url);
+
+            return uri.GetLeftPart(UriPartial.Path) + json + uri.Query;
+        }
+
         #region Contracts
 
         class CoveredPercentResponse
         {
-            internal float covered_percent { private get; set; }
+            public float covered_percent { private get; set; }
 
             public int CoveredPercent
             {
@@ -82,5 +82,20 @@ namespace AnyStatus
         }
 
         #endregion
+    }
+
+    public class OpenCoverallsInBrowser : IOpenInBrowser<CoverallsCoveredPercent>
+    {
+        private readonly IProcessStarter _processStarter;
+
+        public OpenCoverallsInBrowser(IProcessStarter processStarter)
+        {
+            _processStarter = Preconditions.CheckNotNull(processStarter, nameof(processStarter));
+        }
+
+        public void Handle(CoverallsCoveredPercent item)
+        {
+            _processStarter.Start(item.Url);
+        }
     }
 }
