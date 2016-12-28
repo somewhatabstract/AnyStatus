@@ -76,7 +76,7 @@ namespace AnyStatus.Integration.Tests
                 Url = "https://coveralls.io/github/AlonAm/AnyStatus?branch=master"
             };
 
-            new CoverallsMonitor().Handle(request);
+            new CoverallsCoveredPercentMonitor().Handle(request);
 
             Assert.AreNotSame(State.None, request.State);
         }
