@@ -4,7 +4,6 @@ using System.Threading;
 
 namespace AnyStatus
 {
-    [Browsable(false)]
     [DisplayName("CPU Usage")]
     [Description("Experimental. Shows the percentage of CPU usage")]
     public class CpuUsage : Metric, IScheduledItem

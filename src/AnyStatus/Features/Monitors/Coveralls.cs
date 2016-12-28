@@ -10,7 +10,7 @@ namespace AnyStatus
 {
     [DisplayName("Coveralls")]
     [DisplayColumn("Continuous Integration")]
-    [Description("Shows the covered code percentage")]
+    [Description("Coveralls code coverage percentage")]
     public class CoverallsCoveredPercent : Metric, IScheduledItem, ICanOpenInBrowser
     {
         private const string Category = "Coveralls";
@@ -30,7 +30,7 @@ namespace AnyStatus
         [Required]
         [PropertyOrder(20)]
         [Category(Category)]
-        [Description("")]
+        [Description("Code coverage threshold.")]
         public int Threshold { get; set; }
     }
 
