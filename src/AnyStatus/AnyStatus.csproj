@@ -139,7 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\AnyStatusApp.cs" />
-    <Compile Include="Core\Commands\ShowToolWindow.cs" />
+    <Compile Include="Core\Commands\ShowToolWindowCommand.cs" />
     <Compile Include="Core\Entities\Metric.cs" />
     <Compile Include="Core\Interfaces\ICanRestartWindowsService.cs" />
     <Compile Include="Core\Interfaces\ICanStartWindowsService.cs" />

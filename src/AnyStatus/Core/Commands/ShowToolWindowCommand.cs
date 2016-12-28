@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace AnyStatus.Core.Commands
+namespace AnyStatus
 {
-    public class ShowToolWindow : MenuCommandBase
+    public class ShowToolWindowCommand : MenuCommandBase
     {
         private readonly IPackage _package;
 
-        public ShowToolWindow(IPackage package) : base(PackageIds.ToolWindowCommandId)
+        public ShowToolWindowCommand(IPackage package) : base(PackageIds.ToolWindowCommandId)
         {
             _package = package;
         }
