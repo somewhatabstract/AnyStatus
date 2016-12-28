@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace AnyStatus
@@ -11,30 +13,40 @@ namespace AnyStatus
         private bool _canTest = true;
         private Template _selectedTemplate;
         private readonly IMediator _mediator;
+        private readonly IEnumerable<Template> _templates;
 
         public event EventHandler CloseRequested;
 
         public NewViewModel(IMediator mediator, IEnumerable<Template> templates)
         {
             _mediator = Preconditions.CheckNotNull(mediator, nameof(mediator));
-            Templates = Preconditions.CheckNotNull(templates, nameof(templates));
+            _templates = Preconditions.CheckNotNull(templates, nameof(templates));
 
             Initialize();
         }
 
+        private void SetTemplatesView()
+        {
+            Templates = CollectionViewSource.GetDefaultView(_templates);
+            Templates.GroupDescriptions.Add(new PropertyGroupDescription(nameof(Template.Group)));
+            Templates.SortDescriptions.Add(new SortDescription(nameof(Template.Group), ListSortDirection.Ascending));
+        }
+
         private void Initialize()
         {
-            AddCommand = new RelayCommand(item => 
+            SetTemplatesView();
+
+            AddCommand = new RelayCommand(item =>
                 _mediator.TrySend(new AddCommand(item as Item, Parent, RequestClose)));
 
             TestCommand = new RelayCommand(item =>
-                _mediator.TrySend(new TestCommand(item as Item, 
-                canExecute => CanTest = canExecute, 
+                _mediator.TrySend(new TestCommand(item as Item,
+                canExecute => CanTest = canExecute,
                 message => Message = message)));
 
             CancelCommand = new RelayCommand(p => RequestClose());
 
-            SelectedTemplate = Templates?.FirstOrDefault();
+            SelectedTemplate = _templates.FirstOrDefault();
         }
 
         private void RequestClose()
@@ -57,7 +69,7 @@ namespace AnyStatus
             }
         }
 
-        public IEnumerable<Template> Templates { get; set; }
+        public ICollectionView Templates { get; set; }
 
         public Item Parent { get; set; }
 

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace AnyStatus
 {
     [Browsable(false)]
     [DisplayName("Travis CI Build")]
+    [DisplayColumn("Continuous Integration")]
     public class TravisCIBuild : Item, IScheduledItem
     {
     }

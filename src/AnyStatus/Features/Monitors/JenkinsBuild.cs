@@ -14,6 +14,7 @@ namespace AnyStatus
 {
     [DisplayName("Jenkins Build")]
     [Description("Jenkins build status")]
+    [DisplayColumn("Continuous Integration")]
     public class JenkinsBuild : Item, IScheduledItem, ICanOpenInBrowser, ICanTriggerBuild
     {
         [Url]

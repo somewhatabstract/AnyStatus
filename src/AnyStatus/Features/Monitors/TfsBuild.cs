@@ -16,6 +16,7 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 namespace AnyStatus
 {
     [DisplayName("TFS Build")]
+    [DisplayColumn("Continuous Integration")]
     [Description("Microsoft Team Foundation Server build status (on-premise and cloud)")]
     public class TfsBuild : Item, IScheduledItem, ICanOpenInBrowser, ICanTriggerBuild
     {

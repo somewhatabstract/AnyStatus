@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 
@@ -64,13 +65,13 @@ namespace AnyStatus.VSPackage
             var baseType = typeof(IHandler);
 
             var handlers = from handler in TypeFinder.FindTypesOf(baseType, baseType.Assembly)
-                                from @interface in handler.GetInterfaces().Where(k => k.IsGenericType)
-                                where handler.IsAbstract == false
-                                select new
-                                {
-                                    Type = @interface,
-                                    Implementation = handler
-                                };
+                           from @interface in handler.GetInterfaces().Where(k => k.IsGenericType)
+                           where handler.IsAbstract == false
+                           select new
+                           {
+                               Type = @interface,
+                               Implementation = handler
+                           };
 
             foreach (var handler in handlers)
             {
@@ -95,8 +96,10 @@ namespace AnyStatus.VSPackage
         private static void RegisterMenuCommands(TinyIoCContainer container)
         {
             var items = TypeFinder.FindTypesOf(typeof(IMenuCommand),
-                            new[] { typeof(IMenuCommand).Assembly,
-                                    typeof(ContainerBuilder).Assembly });
+                            new[] {
+                                typeof(IMenuCommand).Assembly,
+                                typeof(ContainerBuilder).Assembly
+                            });
 
             container.RegisterMultiple(typeof(IMenuCommand), items);
         }
@@ -107,24 +110,26 @@ namespace AnyStatus.VSPackage
             {
                 var items = c.ResolveAll<Item>();
 
-                var templates = new List<Template>();
+                var templates = from item in items
+                                select CreateTemplateFor(item);
 
-                foreach (var item in items)
-                {
-                    var type = item.GetType();
-
-                    var nameAtt = type.GetCustomAttribute<DisplayNameAttribute>();
-                    var descAtt = type.GetCustomAttribute<DescriptionAttribute>();
-
-                    var displayName = nameAtt != null ? nameAtt.DisplayName : type.Name;
-
-                    var template = new Template(item, displayName, descAtt?.Description);
-
-                    templates.Add(template);
-                }
-
-                return templates;
+                return templates.ToList();
             });
+        }
+
+        private static Template CreateTemplateFor(Item item)
+        {
+            var type = item.GetType();
+
+            var nameAtt = type.GetCustomAttribute<DisplayNameAttribute>();
+            var descAtt = type.GetCustomAttribute<DescriptionAttribute>();
+            var columnAtt = type.GetCustomAttribute<DisplayColumnAttribute>();
+
+            var name = string.IsNullOrEmpty(nameAtt?.DisplayName) ? type.Name : nameAtt.DisplayName;
+
+            var group = string.IsNullOrEmpty(columnAtt?.DisplayColumn) ? "General" : columnAtt.DisplayColumn;
+
+            return new Template(item, name, descAtt?.Description, group);
         }
     }
 }

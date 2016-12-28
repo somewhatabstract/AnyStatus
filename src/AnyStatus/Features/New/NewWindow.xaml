@@ -28,9 +28,26 @@
                  ItemsSource="{Binding Templates}" 
                  SelectedItem="{Binding SelectedTemplate}" 
                  BorderBrush="{x:Null}">
+            <ListBox.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <Expander Padding="3" Header="{Binding Name}" IsExpanded="False">
+                                            <ItemsPresenter />
+                                        </Expander>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+            </ListBox.GroupStyle>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Name}" Height="40" Padding="12" ToolTip="{Binding Description}"/>
+                    <TextBlock Text="{Binding Name}" Padding="3" ToolTip="{Binding Description}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
