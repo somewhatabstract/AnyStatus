@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
+using System;
 
 namespace AnyStatus.Tests.Commands
 {
@@ -16,6 +17,15 @@ namespace AnyStatus.Tests.Commands
             command.MenuCommand.Invoke();
 
             package.Received().ShowToolWindow();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Should_Throw_When_PackageIsNull()
+        {
+            var command = new ShowToolWindowCommand(null);
+
+            Assert.IsNull(command);
         }
     }
 }

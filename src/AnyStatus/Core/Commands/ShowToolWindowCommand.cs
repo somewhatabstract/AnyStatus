@@ -8,7 +8,7 @@ namespace AnyStatus
 
         public ShowToolWindowCommand(IPackage package) : base(PackageIds.ToolWindowCommandId)
         {
-            _package = package;
+            _package = Preconditions.CheckNotNull(package, nameof(package));
         }
 
         protected override void Handle(object sender, EventArgs e)
