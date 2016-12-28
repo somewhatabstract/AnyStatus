@@ -35,7 +35,7 @@
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate>
-                                        <Expander Padding="3" IsExpanded="False">
+                                        <Expander Padding="2" IsExpanded="True">
                                             <Expander.Header>
                                                 <TextBlock Text="{Binding Name}" FontWeight="Bold" />
                                             </Expander.Header>
