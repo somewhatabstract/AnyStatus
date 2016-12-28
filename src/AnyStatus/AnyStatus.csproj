@@ -139,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\AnyStatusApp.cs" />
+    <Compile Include="Core\Commands\ShowToolWindow.cs" />
     <Compile Include="Core\Entities\Metric.cs" />
     <Compile Include="Core\Interfaces\ICanRestartWindowsService.cs" />
     <Compile Include="Core\Interfaces\ICanStartWindowsService.cs" />
@@ -182,6 +183,7 @@
     <Compile Include="Core\Commands\RefreshAllCommand.cs" />
     <Compile Include="Core\Commands\OptionsCommand.cs" />
     <Compile Include="Core\Commands\HelpCommand.cs" />
+    <Compile Include="Features\Monitors\Coveralls.cs" />
     <Compile Include="Features\Monitors\PerformanceCounter.cs" />
     <Compile Include="Features\Monitors\CpuUsage.cs" />
     <Compile Include="Features\ToolWindow\ItemStyleSelector.cs" />

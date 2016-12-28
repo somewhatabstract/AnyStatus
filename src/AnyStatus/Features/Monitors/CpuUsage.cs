@@ -4,6 +4,7 @@ using System.Threading;
 
 namespace AnyStatus
 {
+    [Browsable(false)]
     [DisplayName("CPU Usage")]
     [Description("Experimental. Shows the percentage of CPU usage")]
     public class CpuUsage : Metric, IScheduledItem
@@ -35,7 +36,7 @@ namespace AnyStatus
 
             counter.NextValue();
 
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
 
             return (int)counter.NextValue();
         }
