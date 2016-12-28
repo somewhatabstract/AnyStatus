@@ -8,9 +8,9 @@
              xmlns:local="clr-namespace:AnyStatus"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
-             Height="450"
-             Width="600"
-             Title="Add New Item"
+             Height="480"
+             Width="640"
+             Title="New Item..."
              WindowStartupLocation="CenterScreen"
              d:DataContext="{d:DesignInstance Type=local:NewViewModel}">
     <Grid>
