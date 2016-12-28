@@ -12,6 +12,8 @@ namespace AnyStatus
     [Description("Shows the covered code percentage")]
     public class CoverallsCoveredPercent : Metric, IScheduledItem
     {
+        private const string Category = "Coveralls";
+
         public CoverallsCoveredPercent()
         {
             Threshold = 80;
@@ -20,20 +22,20 @@ namespace AnyStatus
         [Url]
         [Required]
         [PropertyOrder(10)]
-        [Category("Coveralls")]
+        [Category(Category)]
         [Description("Coveralls repository URL address. For example: https://coveralls.io/github/AlonAm/AnyStatus")]
         public string Url { get; set; }
 
         [Required]
         [PropertyOrder(20)]
-        [Category("Coveralls")]
+        [Category(Category)]
         [Description("")]
         public int Threshold { get; set; }
     }
 
     public class CoverallsMonitor : IMonitor<CoverallsCoveredPercent>
     {
-        //[DebuggerStepThrough]
+        [DebuggerStepThrough]
         public void Handle(CoverallsCoveredPercent item)
         {
             var uri = new Uri(item.Url);
@@ -68,7 +70,7 @@ namespace AnyStatus
 
         class CoveredPercentResponse
         {
-            public float covered_percent { private get; set; }
+            internal float covered_percent { private get; set; }
 
             public int CoveredPercent
             {

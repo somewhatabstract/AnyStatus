@@ -1,6 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NSubstitute;
-using System.IO;
 
 namespace AnyStatus.Integration.Tests
 {
@@ -12,9 +10,7 @@ namespace AnyStatus.Integration.Tests
         {
             var request = new HttpStatus { Url = "http://www.microsoft.com" };
 
-            var handler = new HttpStatusMonitor();
-
-            handler.Handle(request);
+            new HttpStatusMonitor().Handle(request);
 
             Assert.AreSame(State.Ok, request.State);
         }
@@ -24,9 +20,7 @@ namespace AnyStatus.Integration.Tests
         {
             var request = new Ping { Host = "localhost" };
 
-            var handler = new PingMonitor();
-
-            handler.Handle(request);
+            new PingMonitor().Handle(request);
 
             Assert.AreSame(State.Ok, request.State);
         }
@@ -40,9 +34,7 @@ namespace AnyStatus.Integration.Tests
                 Port = 80
             };
 
-            var handler = new TcpPortMonitor();
-
-            handler.Handle(request);
+            new TcpPortMonitor().Handle(request);
 
             Assert.AreSame(State.Ok, request.State);
         }
@@ -55,9 +47,7 @@ namespace AnyStatus.Integration.Tests
                 ServiceName = "Dhcp"
             };
 
-            var handler = new WindowsServiceMonitor();
-
-            handler.Handle(request);
+            new WindowsServiceMonitor().Handle(request);
 
             Assert.AreSame(State.Ok, request.State);
         }
@@ -73,9 +63,7 @@ namespace AnyStatus.Integration.Tests
                 Owner = "AlonAm"
             };
 
-            var handler = new GitHubIssueMonitor();
-
-            handler.Handle(request);
+            new GitHubIssueMonitor().Handle(request);
 
             Assert.AreSame(State.Closed, request.State);
         }
@@ -88,9 +76,7 @@ namespace AnyStatus.Integration.Tests
                 Url = "https://coveralls.io/github/AlonAm/AnyStatus?branch=master"
             };
 
-            var handler = new CoverallsMonitor();
-
-            handler.Handle(request);
+            new CoverallsMonitor().Handle(request);
 
             Assert.AreNotSame(State.None, request.State);
         }
