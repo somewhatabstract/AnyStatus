@@ -9,4 +9,4 @@ or get the [CI build](http://vsixgallery.com/#/extension/AnyStatus.VSPackage.6f2
 
 ---------------------------------------
 
-For more information visit [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=AlonAmsalem.AnyStatus) or http://www.anystat.us
+For more information visit http://www.anystat.us
