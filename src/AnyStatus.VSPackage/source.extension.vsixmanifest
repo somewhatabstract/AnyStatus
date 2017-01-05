@@ -4,9 +4,9 @@
     <Identity Id="AnyStatus.VSPackage.6f25620d-ff50-42d1-89da-709a45cebe10" Version="0.11" Language="en-US" Publisher="Alon Amsalem" />
     <DisplayName>AnyStatus</DisplayName>
     <Description xml:space="preserve">Monitor the health, status and availability of services</Description>
-    <MoreInfo>https://github.com/AlonAm/AnyStatus</MoreInfo>
+    <MoreInfo>http://www.anystat.us/</MoreInfo>
     <License>Resources\License.txt</License>
-    <ReleaseNotes>https://github.com/AlonAm/AnyStatus/blob/master/CHANGELOG.md</ReleaseNotes>
+    <ReleaseNotes>http://www.anystat.us/changelog</ReleaseNotes>
     <Icon>Resources\StatusSecurityOK_cyan_128x.png</Icon>
     <PreviewImage>Resources\Preview.png</PreviewImage>
     <Tags>Monitoring, Monitor, Status, Build, TFS, Jenkins, TeamCity, CI, Cloud, AppVeyor, Travis CI</Tags>
