@@ -5,7 +5,7 @@ using System.ComponentModel.Design;
 
 namespace AnyStatus.VSPackage
 {
-    public class CommandRegistry: ICommandRegistry
+    public class CommandRegistry : ICommandRegistry
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly IEnumerable<IMenuCommand> _commands;

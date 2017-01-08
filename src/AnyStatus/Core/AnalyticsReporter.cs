@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -171,13 +172,16 @@ namespace AnyStatus
             return result;
         }
 
-        private async void SendHitDataAsync(Dictionary<string, string> hitData)
+        private void SendHitDataAsync(Dictionary<string, string> hitData)
         {
             try
             {
-                using (var client = new HttpClient())
-                using (var form = new FormUrlEncodedContent(hitData))
-                    await client.PostAsync(_serverUrl, form).ConfigureAwait(false);
+                Task.Run(async () =>
+                {
+                    using (var client = new HttpClient())
+                    using (var form = new FormUrlEncodedContent(hitData))
+                        await client.PostAsync(_serverUrl, form).ConfigureAwait(false);
+                });
             }
             catch (Exception ex)
             {

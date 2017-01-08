@@ -40,6 +40,7 @@
         <TreeView Name="TreeView"
                   ItemsSource="{Binding Settings.RootItem.Items}"
                   ContextMenu="{StaticResource TreeViewContextMenu}"
+                  VirtualizingPanel.IsVirtualizing="True"
                   Background="Transparent" 
                   BorderThickness="0" 
                   FocusVisualStyle="{x:Null}"

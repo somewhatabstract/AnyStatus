@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 
 namespace AnyStatus
 {
@@ -9,48 +8,35 @@ namespace AnyStatus
         private readonly ISettingsStore _settingsStore;
         private readonly IUsageReporter _usageReporter;
         private readonly IJobScheduler _jobScheduler;
-        private readonly ICommandRegistry _commandRegistry;
 
         public AnyStatusApp(ILogger logger,
                             ISettingsStore settingsStore,
                             IUsageReporter usageReporter,
-                            IJobScheduler jobScheduler,
-                            ICommandRegistry commandRegistry)
+                            IJobScheduler jobScheduler)
         {
             _logger = Preconditions.CheckNotNull(logger, nameof(logger));
             _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
             _settingsStore = Preconditions.CheckNotNull(settingsStore, nameof(settingsStore));
             _usageReporter = Preconditions.CheckNotNull(usageReporter, nameof(usageReporter));
-            _commandRegistry = Preconditions.CheckNotNull(commandRegistry, nameof(commandRegistry));
-        }
-
-        public async Task InitializeAsync()
-        {
-            try
-            {
-                _logger.Info("Initializing...");
-
-                _commandRegistry.RegisterCommands();
-
-                await LoadSettings().ConfigureAwait(false);
-
-                _settingsStore.SettingsReset += OnSettingsReset;
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, "An error occurred while initializing AnyStatus");
-            }
         }
 
         public void Start()
         {
             try
             {
+                _logger.Info("Starting AnyStatus...");
+
+                LoadSettings();
+
+                _settingsStore.SettingsReset += OnSettingsReset;
+
                 _jobScheduler.Start();
 
                 _jobScheduler.Schedule(_settingsStore.Settings.RootItem, true);
 
                 _usageReporter.ReportStartSession();
+
+                _logger.Info("AnyStatus started.");
             }
             catch (Exception ex)
             {
@@ -62,6 +48,8 @@ namespace AnyStatus
         {
             try
             {
+                _settingsStore.SettingsReset -= OnSettingsReset;
+
                 _jobScheduler.Stop();
 
                 _usageReporter.ReportEndSession();
@@ -72,9 +60,10 @@ namespace AnyStatus
             }
         }
 
-        private async Task LoadSettings()
+        private void LoadSettings()
         {
-            await _settingsStore.TryInitializeAsync().ConfigureAwait(false);
+            if (!_settingsStore.TryInitialize())
+                return;
 
             _logger.IsEnabled = _settingsStore.Settings.DebugMode;
             _usageReporter.ClientId = _settingsStore.Settings.ClientId;

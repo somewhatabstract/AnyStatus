@@ -19,6 +19,40 @@ namespace AnyStatus.VSPackage
     public sealed class AnyStatusPackage : Package, IPackage
     {
         private AnyStatusApp _app;
+        private EnvDTE.DTEEvents _events;
+
+        protected override void Initialize()
+        {
+            base.Initialize();
+
+            try
+            {
+                var container = ContainerBuilder.Build(this);
+
+                container.Resolve<ICommandRegistry>().RegisterCommands();
+
+                _app = container.Resolve<AnyStatusApp>();
+
+                KnownUIContexts.ShellInitializedContext.WhenActivated(() =>
+                {
+                    System.Threading.Tasks.Task.Run(() =>
+                    {
+                        _app.Start();
+                    });
+                });
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+        }
+
+        protected override int QueryClose(out bool canClose)
+        {
+            _app?.Stop();
+
+            return base.QueryClose(out canClose);
+        }
 
         public void ShowOptions()
         {
@@ -37,33 +71,6 @@ namespace AnyStatus.VSPackage
             IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
 
             Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.Show());
-        }
-
-        protected override async void Initialize()
-        {
-            base.Initialize();
-
-            try
-            {
-                var container = ContainerBuilder.Build(this);
-
-                _app = container.Resolve<AnyStatusApp>();
-
-                await _app.InitializeAsync().ConfigureAwait(false);
-
-                _app.Start();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-        }
-
-        protected override int QueryClose(out bool canClose)
-        {
-            _app?.Stop();
-
-            return base.QueryClose(out canClose);
         }
     }
 }
