@@ -18,22 +18,19 @@ namespace AnyStatus
         [Required]
         [Category("AppVeyor")]
         [DisplayName("Account Name")]
-        [Description("The AppVeyor account name")]
+        [Description("Required. AppVeyor account name.")]
         public string AccountName { get; set; }
-
-        [Browsable(false)]
-        public string ProjectName { get; set; } //Obsolete. Remove in future versions.
 
         [Required]
         [Category("AppVeyor")]
         [DisplayName("Project Slug")]
-        [Description("The project slug is the last part of the AppVeyor project URL. For example: https://ci.appveyor.com/project/AccountName/Project-Slug")]
+        [Description("Required. Project slug is the last part of the AppVeyor project URL. For example: https://ci.appveyor.com/project/AccountName/Project-Slug")]
         public string ProjectSlug { get; set; }
 
         [Required]
         [Category("AppVeyor")]
         [DisplayName("API Token")]
-        [Description("The AppVeyor API token")]
+        [Description("Required. AppVeyor API token.")]
         public string ApiToken { get; set; }
     }
 

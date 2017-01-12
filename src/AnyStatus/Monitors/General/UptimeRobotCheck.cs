@@ -16,9 +16,9 @@ namespace AnyStatus
         private const string Category = "Uptime Robot";
 
         [Required]
-        [DisplayName("Api Key")]
+        [DisplayName("API Key")]
         [Category(Category)]
-        [Description("Required.")]
+        [Description("Required. Uptime Robot API key. You can get the key from \"My Settings\" page.")]
         public string ApiKey { get; set; }
 
         [DisplayName("Monitor Name")]
