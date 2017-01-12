@@ -183,10 +183,11 @@
     <Compile Include="Core\Commands\RefreshAllCommand.cs" />
     <Compile Include="Core\Commands\OptionsCommand.cs" />
     <Compile Include="Core\Commands\HelpCommand.cs" />
-    <Compile Include="Monitors\Coveralls.cs" />
-    <Compile Include="Monitors\PerformanceCounter.cs" />
-    <Compile Include="Monitors\CpuUsage.cs" />
-    <Compile Include="Monitors\UDP.cs" />
+    <Compile Include="Monitors\ContinuousIntegration\Coveralls.cs" />
+    <Compile Include="Monitors\General\PerformanceCounter.cs" />
+    <Compile Include="Monitors\General\CpuUsage.cs" />
+    <Compile Include="Monitors\General\UptimeRobotCheck.cs" />
+    <Compile Include="Monitors\Network\UDP.cs" />
     <Compile Include="Features\ToolWindow\ItemStyleSelector.cs" />
     <Compile Include="Features\ToolWindow\ItemTemplateSelector.cs" />
     <Compile Include="Infrastructure\Converters\HasTasksConverter.cs" />
@@ -202,20 +203,20 @@
       <DependentUpon>EditWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Features\Edit\EditViewModel.cs" />
-    <Compile Include="Monitors\AppVeyorBuild.cs" />
+    <Compile Include="Monitors\ContinuousIntegration\AppVeyorBuild.cs" />
     <Compile Include="Infrastructure\Converters\CanTriggerBuildConverter.cs" />
     <Compile Include="Infrastructure\Converters\CanOpenInBrowserConverter.cs" />
     <Compile Include="Infrastructure\Editors\FileEditor.cs" />
     <Compile Include="Infrastructure\Editors\PasswordEditor.cs" />
-    <Compile Include="Monitors\BatchFile.cs" />
+    <Compile Include="Monitors\Scripts\BatchFile.cs" />
     <Compile Include="Core\Interfaces\IScheduledItem.cs" />
-    <Compile Include="Monitors\Dummy.cs" />
+    <Compile Include="Monitors\Testing\Dummy.cs" />
     <Compile Include="Core\Entities\State.cs" />
     <Compile Include="Core\Entities\RootItem.cs" />
-    <Compile Include="Monitors\GitHubIssue.cs" />
-    <Compile Include="Monitors\PowerShellScript.cs" />
+    <Compile Include="Monitors\General\GitHubIssue.cs" />
+    <Compile Include="Monitors\Scripts\PowerShellScript.cs" />
     <Compile Include="Core\Entities\StateMetadata.cs" />
-    <Compile Include="Monitors\TfsWorkItem.cs" />
+    <Compile Include="Monitors\General\TfsWorkItem.cs" />
     <Compile Include="Core\Entities\Theme.cs" />
     <Compile Include="Features\Options\UserInterface\UserInterfaceOptionsView.xaml.cs">
       <DependentUpon>UserInterfaceOptionsView.xaml</DependentUpon>
@@ -233,11 +234,11 @@
     <Compile Include="Infrastructure\TypeFinder.cs" />
     <Compile Include="Infrastructure\Enumeration.cs" />
     <Compile Include="Infrastructure\Extensions.cs" />
-    <Compile Include="Monitors\TCP.cs" />
-    <Compile Include="Monitors\TeamCityBuild.cs" />
-    <Compile Include="Monitors\TfsBuild.cs" />
-    <Compile Include="Monitors\WindowsService.cs" />
-    <Compile Include="Monitors\TravisCIBuild.cs" />
+    <Compile Include="Monitors\Network\TCP.cs" />
+    <Compile Include="Monitors\ContinuousIntegration\TeamCityBuild.cs" />
+    <Compile Include="Monitors\ContinuousIntegration\TfsBuild.cs" />
+    <Compile Include="Monitors\General\WindowsService.cs" />
+    <Compile Include="Monitors\ContinuousIntegration\TravisCIBuild.cs" />
     <Compile Include="Infrastructure\Controls\EditableTextBlock.cs" />
     <Compile Include="Core\AnalyticsReporter.cs" />
     <Compile Include="Core\Interfaces\IUsageReporter.cs" />
@@ -253,11 +254,11 @@
     <Compile Include="Core\Interfaces\ILogger.cs" />
     <Compile Include="Core\Entities\Folder.cs" />
     <Compile Include="Core\Interfaces\IHandler.cs" />
-    <Compile Include="Monitors\Http.cs" />
+    <Compile Include="Monitors\Network\Http.cs" />
     <Compile Include="Core\Entities\Item.cs" />
-    <Compile Include="Monitors\JenkinsBuild.cs" />
-    <Compile Include="Monitors\Ping.cs" />
-    <Compile Include="Monitors\Template.cs" />
+    <Compile Include="Monitors\ContinuousIntegration\JenkinsBuild.cs" />
+    <Compile Include="Monitors\Network\Ping.cs" />
+    <Compile Include="Core\Entities\Template.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

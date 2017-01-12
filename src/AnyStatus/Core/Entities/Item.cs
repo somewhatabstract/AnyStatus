@@ -30,6 +30,7 @@ namespace AnyStatus
     [XmlInclude(typeof(PerformanceCounter))]
     [XmlInclude(typeof(CpuUsage))]
     [XmlInclude(typeof(CoverallsCoveredPercent))]
+    [XmlInclude(typeof(UptimeRobot))]
     public class Item : INotifyPropertyChanged, ICloneable, IValidatable
     {
         #region Fields
