@@ -25,13 +25,13 @@ namespace AnyStatus
         [Category(Category)]
         [Description("Optional. Leave empty for overall status.")]
         public string MonitorName { get; set; }
-
-        [Browsable(false)]
-        public bool IsSingleMode { get { return !string.IsNullOrEmpty(MonitorName); } }
     }
 
     public class UptimeRobotMonitor : IMonitor<UptimeRobot>
     {
+        private const string UptimeRobotApi = "https://api.uptimerobot.com";
+        private const string ConstApiParams = "format=json&noJsonCallback=1";
+
         private readonly ILogger _logger;
 
         public UptimeRobotMonitor(ILogger logger)
@@ -44,43 +44,41 @@ namespace AnyStatus
         {
             Status status;
 
-            if (uptimeRobot.IsSingleMode)
+            if (string.IsNullOrEmpty(uptimeRobot.MonitorName))
             {
-                var monitor = GetMonitor(uptimeRobot);
-
-                status = monitor.status;
+                var monitors = GetMonitors(uptimeRobot);
+                status = monitors.Max(k => k.status);
             }
             else
             {
-                var monitors = GetMonitors(uptimeRobot);
-
-                status = monitors.Max(k => k.status);
+                var monitor = GetMonitor(uptimeRobot);
+                status = monitor.status;
             }
 
+            uptimeRobot.State = GetState(status);
+        }
+
+        private static State GetState(Status status)
+        {
             switch (status)
             {
                 case Status.Pause:
-                    uptimeRobot.State = State.Disabled;
-                    break;
+                    return State.Disabled;
                 case Status.NotChecked:
-                    uptimeRobot.State = State.None;
-                    break;
+                    return State.None;
                 case Status.Up:
-                    uptimeRobot.State = State.Ok;
-                    break;
+                    return State.Ok;
                 case Status.SeemsDown:
                 case Status.Down:
-                    uptimeRobot.State = State.Failed;
-                    break;
+                    return State.Failed;
                 default:
-                    uptimeRobot.State = State.Unknown;
-                    break;
+                    return State.Unknown;
             }
         }
 
         private static Monitor GetMonitor(UptimeRobot uptimeRobot)
         {
-            var monitorsResponse = GetMonitorsResponse(uptimeRobot.ApiKey, uptimeRobot.MonitorName);
+            var monitorsResponse = SendMonitorsRequest(uptimeRobot.ApiKey, uptimeRobot.MonitorName);
 
             if (monitorsResponse.stat == "fail")
             {
@@ -97,7 +95,7 @@ namespace AnyStatus
 
             while (monitors.Count < total)
             {
-                var monitorsResponse = GetMonitorsResponse(uptimeRobot.ApiKey, monitors.Count);
+                var monitorsResponse = SendMonitorsRequest(uptimeRobot.ApiKey, monitors.Count);
 
                 if (monitorsResponse.stat == "fail")
                     throw new Exception($"\"{uptimeRobot.Name}\" failed to update. Uptime Robot: {monitorsResponse.message}.");
@@ -110,9 +108,9 @@ namespace AnyStatus
             return monitors;
         }
 
-        private static MonitorsResponse GetMonitorsResponse(string apiKey, string monitorName)
+        private static MonitorsResponse SendMonitorsRequest(string apiKey, string monitorName)
         {
-            var uri = $"https://api.uptimerobot.com/getMonitors?apiKey={apiKey}&format=json&noJsonCallback=1&limit=1&search={monitorName}";
+            var uri = new Uri($"{UptimeRobotApi}/getMonitors?apiKey={apiKey}&{ConstApiParams}&limit=1&search={monitorName}");
 
             using (var client = new HttpClient())
             {
@@ -126,9 +124,9 @@ namespace AnyStatus
             }
         }
 
-        private static MonitorsResponse GetMonitorsResponse(string apiKey, int offset)
+        private static MonitorsResponse SendMonitorsRequest(string apiKey, int offset)
         {
-            var uri = $"https://api.uptimerobot.com/getMonitors?apiKey={apiKey}&format=json&noJsonCallback=1&offset={offset}";
+            var uri = new Uri($"{UptimeRobotApi}/getMonitors?apiKey={apiKey}&{ConstApiParams}&offset={offset}");
 
             using (var client = new HttpClient())
             {

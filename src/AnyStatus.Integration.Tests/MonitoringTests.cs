@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NSubstitute;
 
 namespace AnyStatus.Integration.Tests
 {
@@ -52,7 +53,7 @@ namespace AnyStatus.Integration.Tests
             Assert.AreSame(State.Ok, request.State);
         }
 
-        [Ignore]
+        //[Ignore]
         [TestMethod]
         public void GitHubIssueHandler()
         {
@@ -77,6 +78,37 @@ namespace AnyStatus.Integration.Tests
             };
 
             new CoverallsCoveredPercentMonitor().Handle(request);
+
+            Assert.AreNotSame(State.None, request.State);
+        }
+
+        [TestMethod]
+        public void UptimeRobotOverallStatus()
+        {
+            var logger = Substitute.For<ILogger>();
+
+            var request = new UptimeRobot
+            {
+                ApiKey = "u131608-259ebe191e11db9a9e47aa51"
+            };
+
+            new UptimeRobotMonitor(logger).Handle(request);
+
+            Assert.AreNotSame(State.None, request.State);
+        }
+
+        [TestMethod]
+        public void UptimeRobotMonitorStatus()
+        {
+            var logger = Substitute.For<ILogger>();
+
+            var request = new UptimeRobot
+            {
+                ApiKey = "u131608-259ebe191e11db9a9e47aa51",
+                MonitorName = "Blog"
+            };
+
+            new UptimeRobotMonitor(logger).Handle(request);
 
             Assert.AreNotSame(State.None, request.State);
         }
