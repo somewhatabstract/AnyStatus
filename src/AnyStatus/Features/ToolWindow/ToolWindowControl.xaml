@@ -20,6 +20,7 @@
             <local:TooltipConverter x:Key="TooltipConverter" />
             <local:HexToBrushConverter x:Key="HexToBrushConverter"/>
             <local:StringConverter x:Key="StringConverter"/>
+            <local:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
             <utilities:BrushToColorConverter x:Key="BrushToColorConverter"/>
 
             <local:ItemTemplateSelector x:Key="ItemTemplateSelector"/>
@@ -71,7 +72,7 @@
                      Color="{DynamicResource {x:Static SystemColors.HighlightColorKey}}" />
                 <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}"
                      Color="{DynamicResource {x:Static SystemColors.HighlightTextColorKey}}"/>
-                
+
                 <!-- Color Status Indicator-->
                 <Rectangle x:Key="ColoredStatusIndicator" x:Shared="False" Width="3" Fill="{Binding State.Metadata.Color, Converter={StaticResource HexToBrushConverter}}">
                     <Rectangle.Style>
@@ -199,6 +200,10 @@
             </TreeView.InputBindings>
 
         </TreeView>
+        
+        <Border BorderThickness="0" Visibility="{Binding Converter={StaticResource NullToVisibilityConverter}, Path=Settings}">
+            <TextBlock Text="Please wait..." VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{DynamicResource {x:Static vsp:EnvironmentColors.ToolWindowTextBrushKey}}"/>
+        </Border>
     </Grid>
 
 </UserControl>

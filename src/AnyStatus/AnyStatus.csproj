@@ -183,6 +183,10 @@
     <Compile Include="Core\Commands\RefreshAllCommand.cs" />
     <Compile Include="Core\Commands\OptionsCommand.cs" />
     <Compile Include="Core\Commands\HelpCommand.cs" />
+    <Compile Include="Infrastructure\Controls\CircularProgressBar.xaml.cs">
+      <DependentUpon>CircularProgressBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Monitors\ContinuousIntegration\Coveralls.cs" />
     <Compile Include="Monitors\General\PerformanceCounter.cs" />
     <Compile Include="Monitors\General\CpuUsage.cs" />
@@ -296,6 +300,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Features\Options\UserInterface\UserInterfaceOptionsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Infrastructure\Controls\CircularProgressBar.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
