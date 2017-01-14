@@ -7,6 +7,7 @@ namespace AnyStatus
     public class UserInterfaceOptionsViewModel : INotifyPropertyChanged
     {
         private Theme _theme;
+        private bool _rightToLeft;
         private bool _showStatusIcons;
         private bool _showStatusColors;
 
@@ -55,6 +56,16 @@ namespace AnyStatus
             }
         }
 
+        public bool RightToLeft
+        {
+            get { return _rightToLeft; }
+            set
+            {
+                _rightToLeft = value;
+                OnPropertyChanged();
+            }
+        }
+
         public Theme Theme
         {
             get { return _theme; }
@@ -71,6 +82,7 @@ namespace AnyStatus
 
         private void Save()
         {
+            _settingsStore.Settings.RightToLeft = RightToLeft;
             _settingsStore.Settings.ShowStatusIcons = ShowStatusIcons;
             _settingsStore.Settings.ShowStatusColors = ShowStatusColors;
             _settingsStore.Settings.CustomTheme = Theme;
@@ -85,6 +97,7 @@ namespace AnyStatus
             try
             {
                 Theme = _settingsStore.Settings.CustomTheme.Clone();
+                RightToLeft = _settingsStore.Settings.RightToLeft;
                 ShowStatusIcons = _settingsStore.Settings.ShowStatusIcons;
                 ShowStatusColors = _settingsStore.Settings.ShowStatusColors;
             }

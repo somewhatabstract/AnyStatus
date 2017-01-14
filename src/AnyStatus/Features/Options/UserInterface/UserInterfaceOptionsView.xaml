@@ -20,8 +20,14 @@
         <StackPanel>
 
             <GroupBox Header="Options" Padding="5" Margin="5">
+                <GroupBox.Resources>
+                    <Style TargetType="CheckBox">
+                        <Setter Property="Margin" Value="0,0,0,6"/>
+                    </Style>
+                </GroupBox.Resources>
                 <StackPanel>
-                    <CheckBox Margin="0,0,0,6" IsChecked="{Binding ShowStatusColors}">Show status colors</CheckBox>
+                    <CheckBox IsChecked="{Binding RightToLeft}">Right to left</CheckBox>
+                    <CheckBox IsChecked="{Binding ShowStatusColors}">Show status colors</CheckBox>
                     <CheckBox IsChecked="{Binding ShowStatusIcons}">Show status icons</CheckBox>
                 </StackPanel>
             </GroupBox>
@@ -70,7 +76,7 @@
                     <Button HorizontalAlignment="Left" Width="110" Margin="3,15,3,3" Content="Restore Defaults" Command="{Binding ResetColorThemeCommand}" />
 
                     <!--<TextBlock Margin="3">Note: This restores the default color theme, priority and icons.</TextBlock>-->
-                    
+
                 </StackPanel>
             </GroupBox>
 

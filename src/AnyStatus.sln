@@ -19,9 +19,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnyStatus.Integration.Tests", "AnyStatus.Integration.Tests\AnyStatus.Integration.Tests.csproj", "{671AB357-4DA9-4741-AB71-DB00ACA6A4C0}"
 EndProject
 Global
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU

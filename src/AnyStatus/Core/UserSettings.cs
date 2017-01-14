@@ -7,6 +7,7 @@ namespace AnyStatus
         private string _clientId;
         private bool _debugMode;
         private bool _reportAnonymousUsage;
+        private bool _rightToLeft;
         private bool _showStatusColors;
         private bool _showStatusIcons;
         private Theme _theme;
@@ -105,6 +106,18 @@ namespace AnyStatus
             }
         }
 
+        public bool RightToLeft {
+            get
+            {
+                return _rightToLeft;
+            }
+            set
+            {
+                _rightToLeft = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         public static UserSettings Create()
@@ -112,6 +125,7 @@ namespace AnyStatus
             return new UserSettings
             {
                 DebugMode = true,
+                RightToLeft = false,
                 ShowStatusIcons = true,
                 ShowStatusColors = true,
                 ReportAnonymousUsage = true,

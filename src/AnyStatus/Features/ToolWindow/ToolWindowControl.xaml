@@ -39,6 +39,7 @@
 
     <Grid>
         <TreeView Name="TreeView"
+                  Style="{StaticResource TreeViewStyle}"
                   ItemsSource="{Binding Settings.RootItem.Items}"
                   ContextMenu="{StaticResource TreeViewContextMenu}"
                   VirtualizingPanel.IsVirtualizing="True"
@@ -100,7 +101,7 @@
                         </Style>
                     </Grid.Style>
                     <Rectangle Width="30" Height="30" Opacity="0.05" Fill="{DynamicResource {x:Static vsp:EnvironmentColors.ToolWindowTextBrushKey}}" />
-                    <Rectangle Width="18" Height="18" Opacity="0.8" Fill="{DynamicResource {x:Static vsp:EnvironmentColors.ToolWindowTextBrushKey}}">
+                    <Rectangle FlowDirection="LeftToRight" Width="18" Height="18" Opacity="0.8" Fill="{DynamicResource {x:Static vsp:EnvironmentColors.ToolWindowTextBrushKey}}">
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Fill" Visual="{Binding State.Metadata.Icon, Converter={StaticResource IconConverter}}" />
                         </Rectangle.OpacityMask>
@@ -119,7 +120,7 @@
                             </Style.Triggers>
                         </Style>
                     </Grid.Style>
-                    <Rectangle Width="30" Height="30" Opacity="0.05" Fill="{DynamicResource {x:Static vsp:EnvironmentColors.ToolWindowTextBrushKey}}" />
+                    <Rectangle MinWidth="30" Height="30" Opacity="0.05" Fill="{DynamicResource {x:Static vsp:EnvironmentColors.ToolWindowTextBrushKey}}" />
                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontStretch="Condensed" Foreground="{DynamicResource {x:Static vsp:EnvironmentColors.ToolWindowTextBrushKey}}" Text="{Binding Value, Converter={StaticResource StringConverter}}" Margin="5" />
                 </Grid>
 

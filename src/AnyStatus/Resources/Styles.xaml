@@ -3,6 +3,14 @@
                     xmlns:vsp="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.14.0"
                     xmlns:local="clr-namespace:AnyStatus">
 
+    <Style x:Key="TreeViewStyle" TargetType="{x:Type TreeView}">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding DataContext.Settings.RightToLeft, ElementName=ToolWindow}" Value="True">
+                <Setter Property="FlowDirection" Value="RightToLeft"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
     <Style x:Key="StatusPanelStyle" TargetType="{x:Type StackPanel}">
         <Setter Property="MinWidth" Value="150"/>
         <Setter Property="Height" Value="30"/>
