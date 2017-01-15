@@ -21,6 +21,9 @@ namespace AnyStatus
     public class AnalyticsReporter : IUsageReporter
     {
         #region Fields
+
+        private const string AppVersion = "0.12";
+
         private static TimeSpan Timeout = TimeSpan.FromSeconds(3);
 
         private const string ProductionServerUrl = "https://www.google-analytics.com/collect";
@@ -56,7 +59,7 @@ namespace AnyStatus
             PropertyId = "UA-83802855-1";
             ApplicationId = "AnyStatus";
             ApplicationName = "AnyStatus";
-            ApplicationVersion = "0.11";
+            ApplicationVersion = AppVersion;
 
             _serverUrl = ProductionServerUrl;
             _baseHitData = MakeBaseHitData();
