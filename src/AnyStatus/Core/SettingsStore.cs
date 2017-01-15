@@ -168,7 +168,7 @@ namespace AnyStatus
             {
                 var filePath = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
 
-                _logger.Info("Using Configuration file: " + filePath);
+                _logger.Info("Using configuration file: " + filePath);
 
                 var watcher = new FileSystemWatcher();
 
