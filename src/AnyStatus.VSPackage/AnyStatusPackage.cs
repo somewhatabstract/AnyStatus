@@ -19,7 +19,6 @@ namespace AnyStatus.VSPackage
     public sealed class AnyStatusPackage : Package, IPackage
     {
         private AnyStatusApp _app;
-        private EnvDTE.DTEEvents _events;
 
         protected override void Initialize()
         {
@@ -61,16 +60,21 @@ namespace AnyStatus.VSPackage
 
         public void ShowToolWindow()
         {
-            ToolWindowPane window = FindToolWindow(typeof(ToolWindowHost), 0, true);
+            var toolWindow = FindToolWindow(typeof(ToolWindowHost), 0, true);
 
-            if ((null == window) || (null == window.Frame))
+            if ((null == toolWindow) || (null == toolWindow.Frame))
             {
                 throw new NotSupportedException("Cannot create tool window");
             }
 
-            IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
+            var windowFrame = (IVsWindowFrame)toolWindow.Frame;
 
             Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.Show());
+        }
+        
+        public IToolWindow FindToolWindow()
+        {
+            return (IToolWindow)FindToolWindow(typeof(ToolWindowHost), 0, false);
         }
     }
 }

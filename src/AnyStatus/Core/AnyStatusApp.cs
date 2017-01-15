@@ -30,7 +30,14 @@ namespace AnyStatus
 
                 _settingsStore.SettingsReset += OnSettingsReset;
 
-                _settingsStore.SettingsChanged += (s, e) => { _logger.Info("Configuration file changed."); };
+                _settingsStore.SettingsChanged += (s, e) => {
+
+                    _logger.Info("The configuration file has been changed.");
+
+                    var infoBarService = TinyIoCContainer.Current.Resolve<IInfoBarService>();
+
+                    infoBarService.ShowInfoBar();
+                };
 
                 _jobScheduler.Start();
 

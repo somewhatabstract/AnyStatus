@@ -5,7 +5,7 @@
                     xmlns:imaging="clr-namespace:Microsoft.VisualStudio.Imaging;assembly=Microsoft.VisualStudio.Imaging"
                     xmlns:local="clr-namespace:AnyStatus">
 
-    <ContextMenu x:Key="TreeViewContextMenu">
+    <ContextMenu x:Key="TreeViewContextMenu" FlowDirection="LeftToRight">
 
         <MenuItem Header=" Refresh" 
                   Command="{Binding Path=PlacementTarget.Tag.DataContext.RefreshCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"

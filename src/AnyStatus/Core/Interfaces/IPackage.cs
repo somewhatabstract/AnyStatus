@@ -5,5 +5,7 @@
         void ShowOptions();
 
         void ShowToolWindow();
+
+        IToolWindow FindToolWindow();
     }
 }

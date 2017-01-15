@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualStudio.Shell;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -26,8 +25,8 @@ namespace AnyStatus.VSPackage
 
         private static void RegisterCore(TinyIoCContainer container, AnyStatusPackage package)
         {
-            container.Register<Package>(package); //backward compatibility. used in ToolWindowCmd
             container.Register<IPackage>(package);
+            container.Register<IInfoBarService, InfoBarService>();
             container.Register<IServiceProvider>(package);
             container.Register<AnyStatusApp>().AsSingleton();
             container.Register<ISettingsStore, SettingsStore>().AsSingleton();

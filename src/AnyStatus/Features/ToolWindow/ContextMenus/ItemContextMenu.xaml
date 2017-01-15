@@ -5,7 +5,7 @@
                     xmlns:imaging="clr-namespace:Microsoft.VisualStudio.Imaging;assembly=Microsoft.VisualStudio.Imaging"
                     xmlns:local="clr-namespace:AnyStatus;assembly=AnyStatus">
 
-    <ContextMenu x:Key="ItemContextMenu">
+    <ContextMenu x:Key="ItemContextMenu" FlowDirection="LeftToRight">
         
         <ContextMenu.Resources>
             <local:HasTasksConverter x:Key="HasTasksConverter"/>
