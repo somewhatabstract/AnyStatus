@@ -26,7 +26,7 @@
                     </Style>
                 </GroupBox.Resources>
                 <StackPanel>
-                    <CheckBox IsChecked="{Binding RightToLeft}">Right to left</CheckBox>
+                    <CheckBox IsChecked="{Binding RightToLeft}">Right-to-Left layout</CheckBox>
                     <CheckBox IsChecked="{Binding ShowStatusColors}">Show status colors</CheckBox>
                     <CheckBox IsChecked="{Binding ShowStatusIcons}">Show status icons</CheckBox>
                 </StackPanel>
