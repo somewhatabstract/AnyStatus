@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Configuration;
 using System.IO;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -10,8 +11,10 @@ namespace AnyStatus
     {
         private readonly ILogger _logger;
         private UserSettings _settings;
-
+        private DateTime _lastSaved;
+        
         public event EventHandler SettingsReset;
+        public event EventHandler SettingsChanged;
 
         public SettingsStore(ILogger logger)
         {
@@ -150,6 +153,8 @@ namespace AnyStatus
             {
                 RestoreDefaultSettings();
             }
+
+            WatchConfigurationFile();
         }
 
         private void Load()
@@ -157,8 +162,44 @@ namespace AnyStatus
             Settings = Properties.Settings.Default.UserSettings;
         }
 
+        private void WatchConfigurationFile()
+        {
+            try
+            {
+                var filePath = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
+
+                _logger.Info("Using Configuration file: " + filePath);
+
+                var watcher = new FileSystemWatcher();
+
+                watcher.Path = Path.GetDirectoryName(filePath);
+
+                watcher.Filter = Path.GetFileName(filePath);
+
+                watcher.NotifyFilter = NotifyFilters.LastWrite;
+
+                watcher.IncludeSubdirectories = false;
+
+                watcher.Changed += (s, e) =>
+                {
+                    if (DateTime.Now.Subtract(_lastSaved) > TimeSpan.FromMilliseconds(500))
+                    {
+                        SettingsChanged?.Invoke(s, e);
+                    }
+                };
+
+                watcher.EnableRaisingEvents = true;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error watching configuration file for changes");
+            }
+        }
+
         private void Save()
         {
+            _lastSaved = DateTime.Now; //must be before .Save() to be able to ignore changes by current process
+
             Properties.Settings.Default.UserSettings = Settings;
 
             Properties.Settings.Default.Save();

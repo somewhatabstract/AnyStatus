@@ -30,6 +30,8 @@ namespace AnyStatus
 
                 _settingsStore.SettingsReset += OnSettingsReset;
 
+                _settingsStore.SettingsChanged += (s, e) => { _logger.Info("Configuration file changed."); };
+
                 _jobScheduler.Start();
 
                 _jobScheduler.Schedule(_settingsStore.Settings.RootItem, true);

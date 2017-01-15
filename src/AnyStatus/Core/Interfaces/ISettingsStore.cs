@@ -6,6 +6,7 @@ namespace AnyStatus
 {
     public interface ISettingsStore : INotifyPropertyChanged
     {
+        event EventHandler SettingsChanged;
         event EventHandler SettingsReset;
 
         UserSettings Settings { get; }
