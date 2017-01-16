@@ -13,7 +13,7 @@ namespace AnyStatus
         private UserSettings _settings;
         private DateTime _lastSaved;
         
-        public event EventHandler SettingsReset;
+        public event EventHandler SettingsChanged;
         public event EventHandler SettingsSourceChanged;
 
         public SettingsStore(ILogger logger)
@@ -139,6 +139,22 @@ namespace AnyStatus
             }
         }
 
+        public void TryReload()
+        {
+            try
+            {
+                Properties.Settings.Default.Reload();
+
+                Settings = Properties.Settings.Default.UserSettings;
+
+                SettingsChanged?.Invoke(this, EventArgs.Empty);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "An error occurred while reloading user settings.");
+            }
+        }
+
         #endregion
 
         #region Helpers
@@ -253,7 +269,7 @@ namespace AnyStatus
 
                 Save();
 
-                SettingsReset?.Invoke(this, EventArgs.Empty);
+                SettingsChanged?.Invoke(this, EventArgs.Empty);
             }
             catch
             {
@@ -295,7 +311,7 @@ namespace AnyStatus
 
             Save();
 
-            SettingsReset?.Invoke(this, EventArgs.Empty);
+            SettingsChanged?.Invoke(this, EventArgs.Empty);
         }
 
         private void Upgrade()

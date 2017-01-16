@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+using Task = System.Threading.Tasks.Task;
 
 namespace AnyStatus.VSPackage
 {
@@ -32,13 +33,7 @@ namespace AnyStatus.VSPackage
 
                 _app = container.Resolve<AnyStatusApp>();
 
-                KnownUIContexts.ShellInitializedContext.WhenActivated(() =>
-                {
-                    System.Threading.Tasks.Task.Run(() =>
-                    {
-                        _app.Start();
-                    });
-                });
+                KnownUIContexts.ShellInitializedContext.WhenActivated(() => Task.Run(() => _app.Start()));
             }
             catch (Exception ex)
             {

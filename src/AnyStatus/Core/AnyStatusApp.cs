@@ -8,16 +8,19 @@ namespace AnyStatus
         private readonly ISettingsStore _settingsStore;
         private readonly IUsageReporter _usageReporter;
         private readonly IJobScheduler _jobScheduler;
+        private readonly IInfoBarService _infoBarService;
 
         public AnyStatusApp(ILogger logger,
                             ISettingsStore settingsStore,
                             IUsageReporter usageReporter,
-                            IJobScheduler jobScheduler)
+                            IJobScheduler jobScheduler,
+                            IInfoBarService infoBarService)
         {
             _logger = Preconditions.CheckNotNull(logger, nameof(logger));
             _jobScheduler = Preconditions.CheckNotNull(jobScheduler, nameof(jobScheduler));
             _settingsStore = Preconditions.CheckNotNull(settingsStore, nameof(settingsStore));
             _usageReporter = Preconditions.CheckNotNull(usageReporter, nameof(usageReporter));
+            _infoBarService = Preconditions.CheckNotNull(infoBarService, nameof(infoBarService));
         }
 
         public void Start()
@@ -26,19 +29,20 @@ namespace AnyStatus
             {
                 _logger.Info("Starting AnyStatus...");
 
-                LoadSettings();
+                if (_settingsStore.TryInitialize() == false)
+                    return;
 
-                _settingsStore.SettingsReset += OnSettingsReset;
+                AssignSettings();
 
-                _settingsStore.SettingsSourceChanged += OnSettingsChanged;
+                _settingsStore.SettingsChanged += OnSettingsChanged;
+
+                _settingsStore.SettingsSourceChanged += OnSettingsSourceChanged;
 
                 _jobScheduler.Start();
 
-                _jobScheduler.Schedule(_settingsStore.Settings.RootItem, true);
+                _jobScheduler.Schedule(_settingsStore.Settings.RootItem, includeChildren: true);
 
                 _usageReporter.ReportStartSession();
-
-                _logger.Info("AnyStatus started.");
             }
             catch (Exception ex)
             {
@@ -46,13 +50,21 @@ namespace AnyStatus
             }
         }
 
+        private void AssignSettings()
+        {
+            //todo: use PropertyChanged event.
+            _logger.IsEnabled = _settingsStore.Settings.DebugMode;
+            _usageReporter.ClientId = _settingsStore.Settings.ClientId;
+            _usageReporter.IsEnabled = _settingsStore.Settings.ReportAnonymousUsage;
+        }
+
         public void Stop()
         {
             try
             {
-                _settingsStore.SettingsReset -= OnSettingsReset;
+                _settingsStore.SettingsChanged -= OnSettingsChanged;
 
-                _settingsStore.SettingsSourceChanged -= OnSettingsChanged;
+                _settingsStore.SettingsSourceChanged -= OnSettingsSourceChanged;
 
                 _jobScheduler.Stop();
 
@@ -64,29 +76,19 @@ namespace AnyStatus
             }
         }
 
-        private void LoadSettings()
+        private void OnSettingsSourceChanged(object sender, EventArgs e)
         {
-            if (!_settingsStore.TryInitialize())
-                return;
+            _logger.Info("The configuration file has been changed.");
 
-            _logger.IsEnabled = _settingsStore.Settings.DebugMode;
-            _usageReporter.ClientId = _settingsStore.Settings.ClientId;
-            _usageReporter.IsEnabled = _settingsStore.Settings.ReportAnonymousUsage;
+            _infoBarService.ShowSettingsChangedInfoBar();
         }
 
         private void OnSettingsChanged(object sender, EventArgs e)
         {
-            _logger.Info("The configuration file has been changed.");
-
-            var infoBarService = TinyIoCContainer.Current.Resolve<IInfoBarService>(); //todo: move to ctor
-
-            infoBarService.ShowSettingsChangedInfoBar();
-        }
-
-        private void OnSettingsReset(object sender, EventArgs e)
-        {
             try
             {
+                AssignSettings();
+
                 _jobScheduler.Restart();
 
                 _jobScheduler.Schedule(_settingsStore.Settings.RootItem, true);

@@ -1,19 +1,21 @@
 ﻿using Microsoft.VisualStudio.Shell;
-using System;
 
 namespace AnyStatus.VSPackage
 {
     public class InfoBarService : IInfoBarService
     {
         private bool _isActive;
-        private readonly ILogger _logger;
-        private readonly IPackage _package;
         private ToolWindowPane _toolWindow;
 
-        public InfoBarService(IPackage package, ILogger logger)
+        private readonly ILogger _logger;
+        private readonly IPackage _package;
+        private readonly ISettingsStore _settingsStore;
+
+        public InfoBarService(IPackage package, ILogger logger, ISettingsStore settingsStore)
         {
             _package = Preconditions.CheckNotNull(package, nameof(package));
             _logger = Preconditions.CheckNotNull(logger, nameof(logger));
+            _settingsStore = Preconditions.CheckNotNull(settingsStore, nameof(settingsStore));
         }
 
         public void ShowSettingsChangedInfoBar()
@@ -21,20 +23,25 @@ namespace AnyStatus.VSPackage
             if (_isActive)
                 return;
 
-            var toolWindow = GetToolWindow();
-
             ThreadHelper.JoinableTaskFactory.Run(async delegate
             {
                 await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 
-                toolWindow.AddInfoBar(new ConfigurationChangedInfoBar());
-
-                toolWindow.InfoBarActionItemClicked += OnInfoBarActionItemClicked;
-
-                toolWindow.InfoBarClosed += OnInfoBarClosed;
+                AddInfoBar(new ConfigurationChangedInfoBar());
 
                 _isActive = true;
             });
+        }
+
+        private void AddInfoBar(ConfigurationChangedInfoBar infoBar)
+        {
+            var toolWindow = GetToolWindow();
+
+            toolWindow.InfoBarClosed += OnInfoBarClosed;
+
+            toolWindow.InfoBarActionItemClicked += OnInfoBarActionItemClicked;
+
+            toolWindow.AddInfoBar(infoBar);
         }
 
         private void OnInfoBarActionItemClicked(object sender, InfoBarActionItemEventArgs e)
@@ -43,9 +50,7 @@ namespace AnyStatus.VSPackage
             {
                 _logger.Info("Reloading configuration settings.");
 
-                var settingsStore = TinyIoCContainer.Current.Resolve<ISettingsStore>();
-
-                //settingsStore.TryReload();
+                _settingsStore.TryReload();
             }
 
             var toolWindow = GetToolWindow();
