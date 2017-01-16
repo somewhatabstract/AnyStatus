@@ -14,7 +14,7 @@ namespace AnyStatus
         private DateTime _lastSaved;
         
         public event EventHandler SettingsReset;
-        public event EventHandler SettingsChanged;
+        public event EventHandler SettingsSourceChanged;
 
         public SettingsStore(ILogger logger)
         {
@@ -168,7 +168,7 @@ namespace AnyStatus
             {
                 var filePath = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
 
-                _logger.Info("Using configuration file: " + filePath);
+                _logger.Info("Configuration: " + filePath);
 
                 var watcher = new FileSystemWatcher();
 
@@ -184,7 +184,7 @@ namespace AnyStatus
                 {
                     if (DateTime.Now.Subtract(_lastSaved) > TimeSpan.FromMilliseconds(500))
                     {
-                        SettingsChanged?.Invoke(s, e);
+                        SettingsSourceChanged?.Invoke(s, e);
                     }
                 };
 

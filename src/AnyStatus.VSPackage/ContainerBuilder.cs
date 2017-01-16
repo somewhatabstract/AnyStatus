@@ -26,7 +26,7 @@ namespace AnyStatus.VSPackage
         private static void RegisterCore(TinyIoCContainer container, AnyStatusPackage package)
         {
             container.Register<IPackage>(package);
-            container.Register<IInfoBarService, InfoBarService>();
+            container.Register<IInfoBarService, InfoBarService>().AsSingleton();
             container.Register<IServiceProvider>(package);
             container.Register<AnyStatusApp>().AsSingleton();
             container.Register<ISettingsStore, SettingsStore>().AsSingleton();

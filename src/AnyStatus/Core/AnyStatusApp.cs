@@ -30,14 +30,7 @@ namespace AnyStatus
 
                 _settingsStore.SettingsReset += OnSettingsReset;
 
-                _settingsStore.SettingsChanged += (s, e) => {
-
-                    _logger.Info("The configuration file has been changed.");
-
-                    var infoBarService = TinyIoCContainer.Current.Resolve<IInfoBarService>();
-
-                    infoBarService.ShowInfoBar();
-                };
+                _settingsStore.SettingsSourceChanged += OnSettingsChanged;
 
                 _jobScheduler.Start();
 
@@ -59,6 +52,8 @@ namespace AnyStatus
             {
                 _settingsStore.SettingsReset -= OnSettingsReset;
 
+                _settingsStore.SettingsSourceChanged -= OnSettingsChanged;
+
                 _jobScheduler.Stop();
 
                 _usageReporter.ReportEndSession();
@@ -77,6 +72,15 @@ namespace AnyStatus
             _logger.IsEnabled = _settingsStore.Settings.DebugMode;
             _usageReporter.ClientId = _settingsStore.Settings.ClientId;
             _usageReporter.IsEnabled = _settingsStore.Settings.ReportAnonymousUsage;
+        }
+
+        private void OnSettingsChanged(object sender, EventArgs e)
+        {
+            _logger.Info("The configuration file has been changed.");
+
+            var infoBarService = TinyIoCContainer.Current.Resolve<IInfoBarService>(); //todo: move to ctor
+
+            infoBarService.ShowSettingsChangedInfoBar();
         }
 
         private void OnSettingsReset(object sender, EventArgs e)

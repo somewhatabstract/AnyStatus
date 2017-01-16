@@ -60,6 +60,7 @@
     <Compile Include="Services\GeneralOptions.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Services\ConfigurationChangedInfoBar.cs" />
     <Compile Include="Services\InfoBarService.cs" />
     <Compile Include="Services\Logger.cs" />
     <Compile Include="Services\UserInterfaceOptions.cs">

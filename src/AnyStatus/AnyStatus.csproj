@@ -145,6 +145,7 @@
     <Compile Include="Core\Interfaces\ICanStartWindowsService.cs" />
     <Compile Include="Core\Interfaces\ICanStopWindowsService.cs" />
     <Compile Include="Core\Interfaces\ICanTriggerBuild.cs" />
+    <Compile Include="Core\Interfaces\IInfoBar.cs" />
     <Compile Include="Core\Interfaces\IInfoBarService.cs" />
     <Compile Include="Core\Interfaces\IMonitor.cs" />
     <Compile Include="Core\Interfaces\IPackage.cs" />
@@ -152,7 +153,6 @@
     <Compile Include="Core\Interfaces\IStartWindowsService.cs" />
     <Compile Include="Core\Interfaces\IStopWindowsService.cs" />
     <Compile Include="Core\Interfaces\ITask.cs" />
-    <Compile Include="Core\Interfaces\IToolWindow.cs" />
     <Compile Include="Core\Interfaces\ITriggerBuild.cs" />
     <Compile Include="Core\Interfaces\ICommandRegistry.cs" />
     <Compile Include="Core\Interfaces\IMediator.cs" />

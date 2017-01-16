@@ -6,8 +6,8 @@ namespace AnyStatus
 {
     public interface ISettingsStore : INotifyPropertyChanged
     {
-        event EventHandler SettingsChanged;
         event EventHandler SettingsReset;
+        event EventHandler SettingsSourceChanged;
 
         UserSettings Settings { get; }
 
@@ -16,6 +16,8 @@ namespace AnyStatus
         Task<bool> TryInitializeAsync();
 
         bool TrySave();
+
+        //bool TryReload();
 
         bool TryRestoreDefaultSettings();
 

@@ -6,6 +6,6 @@
 
         void ShowToolWindow();
 
-        IToolWindow FindToolWindow();
+        object FindToolWindow();
     }
 }

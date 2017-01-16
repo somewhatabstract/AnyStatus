@@ -62,7 +62,7 @@ namespace AnyStatus.VSPackage
         {
             var toolWindow = FindToolWindow(typeof(ToolWindowHost), 0, true);
 
-            if ((null == toolWindow) || (null == toolWindow.Frame))
+            if (toolWindow == null || toolWindow.Frame == null)
             {
                 throw new NotSupportedException("Cannot create tool window");
             }
@@ -71,10 +71,10 @@ namespace AnyStatus.VSPackage
 
             Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.Show());
         }
-        
-        public IToolWindow FindToolWindow()
+
+        public object FindToolWindow()
         {
-            return (IToolWindow)FindToolWindow(typeof(ToolWindowHost), 0, false);
+            return FindToolWindow(typeof(ToolWindowHost), 0, false);
         }
     }
 }

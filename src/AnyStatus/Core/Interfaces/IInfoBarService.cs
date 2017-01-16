@@ -2,6 +2,6 @@
 {
     public interface IInfoBarService
     {
-        void ShowInfoBar();
+        void ShowSettingsChangedInfoBar();
     }
 }
