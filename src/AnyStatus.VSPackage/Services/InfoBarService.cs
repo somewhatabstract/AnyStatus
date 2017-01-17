@@ -46,7 +46,7 @@ namespace AnyStatus.VSPackage
 
         private void OnInfoBarActionItemClicked(object sender, InfoBarActionItemEventArgs e)
         {
-            if (e.ActionItem.Text == "Reload")
+            if (e.ActionItem.ActionContext == ConfigurationChangedInfoBar.ReloadButtonContext)
             {
                 _logger.Info("Reloading configuration settings.");
 
