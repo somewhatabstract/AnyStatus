@@ -56,12 +56,11 @@ namespace AnyStatus
         [DebuggerStepThrough]
         public void Handle(WindowsService windowsService)
         {
-            using (var sc = GetServiceController(windowsService))
-            {
-                SetState(windowsService, sc);
+            var sc = GetServiceController(windowsService);
 
-                sc.Close();
-            }
+            SetState(windowsService, sc);
+
+            sc.Close();
         }
     }
 
