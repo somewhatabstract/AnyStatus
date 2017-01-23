@@ -37,7 +37,7 @@ namespace AnyStatus
 
     public class AppVeyorBuildMonitor : IMonitor<AppVeyorBuild>
     {
-        //[DebuggerStepThrough]
+        [DebuggerStepThrough]
         public void Handle(AppVeyorBuild item)
         {
             var build = GetBuildDetailsAsync(item).Result;
