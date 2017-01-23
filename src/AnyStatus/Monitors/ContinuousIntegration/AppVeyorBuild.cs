@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Net.Http;
@@ -36,27 +37,30 @@ namespace AnyStatus
 
     public class AppVeyorBuildMonitor : IMonitor<AppVeyorBuild>
     {
-        [DebuggerStepThrough]
+        //[DebuggerStepThrough]
         public void Handle(AppVeyorBuild item)
         {
             var build = GetBuildDetailsAsync(item).Result;
 
-            switch (build.Status)
+            item.State = GetState(build.Status);
+        }
+
+        private State GetState(string status)
+        {
+            switch (status)
             {
                 case "success":
-                    item.State = State.Ok;
-                    break;
+                    return State.Ok;
                 case "failed":
                 case "failure":
-                    item.State = State.Failed;
-                    break;
+                    return State.Failed;
+                case "cancelled":
+                    return State.Canceled;
                 case "queued":
                 case "running":
-                    item.State = State.Running;
-                    break;
+                    return State.Running;
                 default:
-                    item.State = State.Unknown;
-                    break;
+                    return State.Unknown;
             }
         }
 
