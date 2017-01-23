@@ -1,4 +1,6 @@
-﻿# AnyStatus Visual Studio Extension
+# AnyStatus extension for Visual Studio
+
+Control and monitor the health, status and availability of services
 
 [![Build status](https://ci.appveyor.com/api/projects/status/bqr0m4e08nfkb6g2?svg=true)](https://ci.appveyor.com/project/AlonAmsalem/anystatus)
 [![Release](https://img.shields.io/badge/release-v0.12-blue.svg)](https://visualstudiogallery.msdn.microsoft.com/d2262fef-aeca-45dd-9c8c-87c290ee4eb0)
