@@ -42,34 +42,36 @@ namespace AnyStatus
         [DebuggerStepThrough]
         public void Handle(UptimeRobot uptimeRobot)
         {
-            Status status;
+            UptimeRobotMonitorStatus status;
 
             if (string.IsNullOrEmpty(uptimeRobot.MonitorName))
             {
                 var monitors = GetMonitors(uptimeRobot);
+
                 status = monitors.Max(k => k.status);
             }
             else
             {
                 var monitor = GetMonitor(uptimeRobot);
+
                 status = monitor.status;
             }
 
             uptimeRobot.State = GetState(status);
         }
 
-        private static State GetState(Status status)
+        private static State GetState(UptimeRobotMonitorStatus status)
         {
             switch (status)
             {
-                case Status.Pause:
+                case UptimeRobotMonitorStatus.Pause:
                     return State.Disabled;
-                case Status.NotChecked:
+                case UptimeRobotMonitorStatus.NotChecked:
                     return State.None;
-                case Status.Up:
+                case UptimeRobotMonitorStatus.Up:
                     return State.Ok;
-                case Status.SeemsDown:
-                case Status.Down:
+                case UptimeRobotMonitorStatus.SeemsDown:
+                case UptimeRobotMonitorStatus.Down:
                     return State.Failed;
                 default:
                     return State.Unknown;
@@ -144,7 +146,7 @@ namespace AnyStatus
 
         public class Monitor
         {
-            public Status status { get; set; }
+            public UptimeRobotMonitorStatus status { get; set; }
         }
 
         public class Monitors
@@ -160,7 +162,7 @@ namespace AnyStatus
             public Monitors monitors { get; set; }
         }
 
-        public enum Status
+        public enum UptimeRobotMonitorStatus
         {
             Pause = 0,
             NotChecked = 1,
