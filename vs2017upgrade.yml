@@ -1,0 +1,34 @@
+version: 0.13.{build}
+
+skip_commits:
+  files:
+    - art/*
+    - '**/*.md'
+  
+branches:
+  only:
+  - master
+
+configuration: Release
+
+platform: Any CPU
+
+environment:
+    COVERALLS_REPO_TOKEN:
+        secure: jlcm0lBlKUqgOgzGEtwALYs3UT1LcHOJ8gTw4/Z+BrHnXharzwEh1FM+fDYEQ715
+    
+install:
+  - ps: (new-object Net.WebClient).DownloadString("https://raw.github.com/madskristensen/ExtensionScripts/master/AppVeyor/vsix.ps1") | iex
+
+before_build:
+  - cmd: nuget restore src\AnyStatus.sln
+  - ps: Vsix-IncrementVsixVersion | Vsix-UpdateBuildVersion
+
+build_script:
+  - msbuild src\AnyStatus.sln /p:configuration=Release /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m
+
+after_test:
+  - ps: Vsix-PushArtifacts | Vsix-PublishToGallery
+  - cmd: src\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -filter:"+[AnyStatus*]* -[AnyStatus.Tests]* -[AnyStatus.Integration.Tests]* -[FluentScheduler]*" -target:"C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\MSTest.exe" -targetargs:"/testcontainer:src/AnyStatus.Tests/bin/Release/AnyStatus.Tests.dll /testcontainer:src/AnyStatus.Integration.Tests/bin/Release/AnyStatus.Integration.Tests.dll" -output:coverage.xml
+  - cmd: src\packages\coveralls.io.1.3.4\tools\coveralls.net.exe --opencover coverage.xml
+
