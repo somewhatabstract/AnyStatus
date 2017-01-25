@@ -13,6 +13,8 @@ configuration: Release
 
 platform: Any CPU
 
+image: Visual Studio 2017 RC
+
 environment:
     COVERALLS_REPO_TOKEN:
         secure: jlcm0lBlKUqgOgzGEtwALYs3UT1LcHOJ8gTw4/Z+BrHnXharzwEh1FM+fDYEQ715
