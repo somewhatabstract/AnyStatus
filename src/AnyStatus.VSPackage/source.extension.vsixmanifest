@@ -4,7 +4,7 @@
     <Identity Id="AnyStatus.VSPackage.6f25620d-ff50-42d1-89da-709a45cebe10" Version="0.12" Language="en-US" Publisher="Alon Amsalem" />
     <DisplayName>AnyStatus</DisplayName>
     <Description xml:space="preserve">Monitor the health, status and availability of services</Description>
-    <MoreInfo>http://www.anystat.us/</MoreInfo>
+    <MoreInfo>http://www.anystat.us</MoreInfo>
     <License>Resources\License.txt</License>
     <ReleaseNotes>http://www.anystat.us/changelog</ReleaseNotes>
     <Icon>Resources\StatusSecurityOK_cyan_128x.png</Icon>
@@ -12,7 +12,7 @@
     <Tags>Monitoring, Monitor, Status, Build, TFS, Jenkins, TeamCity, CI, Cloud, AppVeyor, Travis CI</Tags>
   </Metadata>
   <Installation>
-    <InstallationTarget Version="[14.0]" Id="Microsoft.VisualStudio.Community" />
+    <InstallationTarget Version="[14.0,16.0)" Id="Microsoft.VisualStudio.Community" />
   </Installation>
   <Dependencies>
     <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
@@ -21,4 +21,7 @@
   <Assets>
     <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
   </Assets>
+  <Prerequisites>
+    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,16.0)" DisplayName="Visual Studio core editor" />
+  </Prerequisites>
 </PackageManifest>
