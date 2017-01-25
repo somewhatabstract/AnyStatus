@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="AnyStatus.VSPackage.6f25620d-ff50-42d1-89da-709a45cebe10" Version="0.12" Language="en-US" Publisher="Alon Amsalem" />
+    <Identity Id="AnyStatus.VSPackage.6f25620d-ff50-42d1-89da-709a45cebe10" Version="0.13" Language="en-US" Publisher="Alon Amsalem" />
     <DisplayName>AnyStatus</DisplayName>
     <Description xml:space="preserve">Monitor the health, status and availability of services</Description>
     <MoreInfo>http://www.anystat.us</MoreInfo>
