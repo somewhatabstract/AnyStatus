@@ -21,19 +21,26 @@ namespace AnyStatus
         [Required]
         [PropertyOrder(10)]
         [Category(Category)]
+        [DisplayName("API Key")]
+        [Description("Required. Pingdom API key. Generate your application key using Pingdom control panel.")]
+        public string ApiKey { get; set; }
+
+        [Required]
+        [PropertyOrder(20)]
+        [Category(Category)]
         [DisplayName("User Name")]
         [Description("Required. Pingdom account user name (Email).")]
         public string UserName { get; set; }
 
         [Required]
-        [PropertyOrder(20)]
+        [PropertyOrder(30)]
         [Category(Category)]
         [DisplayName("Password")]
         [Description("Required. Pingdom account password.")]
         [Editor(typeof(PasswordEditor), typeof(PasswordEditor))]
         public string Password { get; set; }
 
-        [PropertyOrder(30)]
+        [PropertyOrder(40)]
         [Category(Category)]
         [DisplayName("Check Id")]
         [Description("Optional. Leave empty for the overall status of all checks.")]
@@ -42,7 +49,6 @@ namespace AnyStatus
 
     public class PingdomMonitor : IMonitor<Pingdom>
     {
-        private const string ApiKey = "mrrbba50jz2zjmrar2uqbj5rovtijq1b";
         private const string ServerAddress = "https://api.pingdom.com/api/2.0/checks/";
 
         [DebuggerStepThrough]
@@ -52,13 +58,13 @@ namespace AnyStatus
             
             if (string.IsNullOrWhiteSpace(pingdom.CheckId))
             {
-                var checkList = GetChecks<CheckList>(ServerAddress,pingdom.UserName, pingdom.Password);
+                var checkList = GetChecks<CheckList>(ServerAddress,pingdom.UserName, pingdom.Password, pingdom.ApiKey);
 
                 status = checkList.Checks.Max(k=>k.Status);
             }
             else
             {
-                var check = GetChecks<Check>(ServerAddress + pingdom.CheckId, pingdom.UserName, pingdom.Password);
+                var check = GetChecks<Check>(ServerAddress + pingdom.CheckId, pingdom.UserName, pingdom.Password, pingdom.ApiKey);
 
                 status = check.Status;
             }
@@ -85,14 +91,14 @@ namespace AnyStatus
             }
         }
 
-        private T GetChecks<T>(string endpoint, string username, string password)
+        private T GetChecks<T>(string endpoint, string username, string password, string apiKey)
         {
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
                             Convert.ToBase64String(Encoding.ASCII.GetBytes($"{username}:{password}")));
 
-                client.DefaultRequestHeaders.Add("App-Key", ApiKey);
+                client.DefaultRequestHeaders.Add("App-Key", apiKey);
 
                 var httpResponse = client.GetAsync(ServerAddress).Result;
 
