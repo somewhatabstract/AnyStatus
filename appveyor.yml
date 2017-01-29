@@ -34,5 +34,5 @@ build_script:
 # - ps: Vsix-PushArtifacts | Vsix-PublishToGallery
 # - cmd: src\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -filter:"+[AnyStatus*]* -[AnyStatus.Tests]* -[AnyStatus.Integration.Tests]* -[FluentScheduler]*" -target:"C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\MSTest.exe" -targetargs:"/testcontainer:src/AnyStatus.Tests/bin/$(configuration)/AnyStatus.Tests.dll /testcontainer:src/AnyStatus.Integration.Tests/bin/$(configuration)/AnyStatus.Integration.Tests.dll" -output:coverage.xml
 
-  test_script:
-	- vstest.console /logger:Appveyor ".\src\AnyStatus.Integration.Tests\bin\$(configuration)\AnyStatus.Integration.Tests.dll" ".\src\AnyStatus.Tests\bin\$(configuration)\AnyStatus.Tests.dll"
+test_script:
+- vstest.console /logger:Appveyor ".\src\AnyStatus.Integration.Tests\bin\$(configuration)\AnyStatus.Integration.Tests.dll" ".\src\AnyStatus.Tests\bin\$(configuration)\AnyStatus.Tests.dll"
