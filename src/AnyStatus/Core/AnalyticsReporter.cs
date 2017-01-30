@@ -22,7 +22,7 @@ namespace AnyStatus
     {
         #region Fields
 
-        private const string AppVersion = "0.12";
+        private const string AppVersion = "0.13";
 
         private static TimeSpan Timeout = TimeSpan.FromSeconds(3);
 
