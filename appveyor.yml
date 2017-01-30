@@ -42,5 +42,8 @@ after_test:
 artifacts:
  - path: src\AnyStatus.VSPackage\bin\Release\AnyStatus.vsix
 
+cache:
+ - packages -> **\packages.config
+
 # test_script:
 # - vstest.console /logger:Appveyor ".\src\AnyStatus.Tests\bin\Release\AnyStatus.Tests.dll"
