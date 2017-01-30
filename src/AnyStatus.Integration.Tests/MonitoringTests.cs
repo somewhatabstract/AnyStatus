@@ -53,7 +53,6 @@ namespace AnyStatus.Integration.Tests
             Assert.AreSame(State.Ok, request.State);
         }
 
-        //[Ignore]
         [TestMethod]
         public void GitHubIssueHandler()
         {
@@ -109,22 +108,6 @@ namespace AnyStatus.Integration.Tests
             };
 
             new UptimeRobotMonitor(logger).Handle(request);
-
-            Assert.AreNotSame(State.None, request.State);
-        }
-
-        //[TestMethod]
-        public void PingdomCheck()
-        {
-            var logger = Substitute.For<ILogger>();
-
-            var request = new Pingdom
-            {
-                UserName = "alon.amsalem@gmail.com",
-                Password = ""
-            };
-
-            new PingdomMonitor().Handle(request);
 
             Assert.AreNotSame(State.None, request.State);
         }
