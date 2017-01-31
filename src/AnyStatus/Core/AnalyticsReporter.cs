@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -22,7 +21,7 @@ namespace AnyStatus
     {
         #region Fields
 
-        private const string AppVersion = "0.13";
+        private const string AppVersion = "1.0";
 
         private static TimeSpan Timeout = TimeSpan.FromSeconds(3);
 

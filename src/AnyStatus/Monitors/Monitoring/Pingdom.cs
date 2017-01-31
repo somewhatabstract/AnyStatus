@@ -13,7 +13,7 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 namespace AnyStatus
 {
     [DisplayName("Pingdom")]
-    [DisplayColumn("General")]
+    [DisplayColumn("Monitoring")]
     public class Pingdom : Item, IScheduledItem
     {
         private const string Category = "Pingdom";
@@ -22,7 +22,7 @@ namespace AnyStatus
         [PropertyOrder(10)]
         [Category(Category)]
         [DisplayName("API Key")]
-        [Description("Required. Pingdom API key. Generate your application key using Pingdom control panel.")]
+        [Description("Required. Pingdom API key. Generate your API Key using Pingdom Control Panel.")]
         public string ApiKey { get; set; }
 
         [Required]
@@ -43,7 +43,7 @@ namespace AnyStatus
         [PropertyOrder(40)]
         [Category(Category)]
         [DisplayName("Check Id")]
-        [Description("Optional. Leave empty for the overall status of all checks.")]
+        [Description("Optional. Leave empty for the overall status of all checks. The Check Id can be found in the URL address of the check.")]
         public string CheckId { get; set; }
     }
 
@@ -58,6 +58,8 @@ namespace AnyStatus
             
             if (string.IsNullOrWhiteSpace(pingdom.CheckId))
             {
+                //todo: support paging. pingdom api limits the number of results.
+
                 var checkList = GetChecks<CheckList>(ServerAddress,pingdom.UserName, pingdom.Password, pingdom.ApiKey);
 
                 status = checkList.Checks.Max(k=>k.Status);

@@ -192,8 +192,8 @@
     <Compile Include="Monitors\ContinuousIntegration\Coveralls.cs" />
     <Compile Include="Monitors\General\PerformanceCounter.cs" />
     <Compile Include="Monitors\General\CpuUsage.cs" />
-    <Compile Include="Monitors\General\Pingdom.cs" />
-    <Compile Include="Monitors\General\UptimeRobot.cs" />
+    <Compile Include="Monitors\Monitoring\Pingdom.cs" />
+    <Compile Include="Monitors\Monitoring\UptimeRobot.cs" />
     <Compile Include="Monitors\Network\UDP.cs" />
     <Compile Include="Features\ToolWindow\ItemStyleSelector.cs" />
     <Compile Include="Features\ToolWindow\ItemTemplateSelector.cs" />

@@ -10,7 +10,7 @@ using System.Web.Script.Serialization;
 namespace AnyStatus
 {
     [DisplayName("Uptime Robot")]
-    [DisplayColumn("General")]
+    [DisplayColumn("Monitoring")]
     public class UptimeRobot : Item, IScheduledItem
     {
         private const string Category = "Uptime Robot";
@@ -23,7 +23,7 @@ namespace AnyStatus
 
         [DisplayName("Monitor Name")]
         [Category(Category)]
-        [Description("Optional. Leave empty for overall status.")]
+        [Description("Optional. Leave empty for the overall status of all monitors.")]
         public string MonitorName { get; set; }
     }
 

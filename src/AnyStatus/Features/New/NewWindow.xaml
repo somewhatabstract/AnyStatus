@@ -13,6 +13,11 @@
              Title="New Item..."
              WindowStartupLocation="CenterScreen"
              d:DataContext="{d:DesignInstance Type=local:NewViewModel}">
+
+    <vsp:DialogWindow.Resources>
+        <local:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+    </vsp:DialogWindow.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition MinWidth="180" Width="Auto"></ColumnDefinition>
@@ -35,7 +40,7 @@
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate>
-                                        <Expander Padding="2" IsExpanded="True">
+                                        <Expander Padding="2" IsExpanded="False">
                                             <Expander.Header>
                                                 <TextBlock Text="{Binding Name}" FontWeight="Bold" />
                                             </Expander.Header>
@@ -57,7 +62,6 @@
 
         <!--PropertyGrid-->
         <StackPanel Grid.Column="2" Grid.Row="0" Orientation="Vertical">
-
             <xctk:PropertyGrid Margin="0,0,11,0"
                            ShowSearchBox="False" 
                            ShowSortOptions="False"
@@ -69,8 +73,9 @@
                            SelectedObject="{Binding SelectedTemplate.Item}"
                            SelectedObjectTypeName="{Binding SelectedTemplate.Name}">
             </xctk:PropertyGrid>
-            
         </StackPanel>
+
+        <TextBlock Text="Please select a type from the list" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding Converter={StaticResource NullToVisibilityConverter}, Path=SelectedTemplate}"/>
 
         <!--Buttons-->
         <DockPanel Grid.Column="2" Grid.Row="1">
@@ -81,6 +86,6 @@
                 <TextBlock Text="{Binding Message}" VerticalAlignment="Center" Margin="5" />
             </StackPanel>
         </DockPanel>
-        
+
     </Grid>
 </vsp:DialogWindow>
